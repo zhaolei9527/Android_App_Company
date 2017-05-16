@@ -2,9 +2,12 @@ package com.zzcn77.android_app_company;
 
 import android.app.Application;
 
-import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+
+import cn.refactor.multistatelayout.MultiStateConfiguration;
+import cn.refactor.multistatelayout.MultiStateLayout;
+
 
 /**
  * Created by 赵磊 on 2017/5/12.
@@ -27,5 +30,11 @@ public class App extends Application {
 
             }
         });
+
+        MultiStateConfiguration.Builder builder = new MultiStateConfiguration.Builder();
+        builder.setCommonEmptyLayout(R.layout.layout_empty)
+                .setCommonErrorLayout(R.layout.layout_error)
+                .setCommonLoadingLayout(R.layout.layout_loading);
+        MultiStateLayout.setConfiguration(builder);
     }
 }

@@ -1,12 +1,12 @@
 package com.zzcn77.android_app_company.Base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.badoo.mobile.util.WeakHandler;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.ButterKnife;
 
@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by 赵磊 on 2017/5/12.
  */
 
-public abstract class BaseActivity extends AutoLayoutActivity {
+public abstract class BaseActivity extends Activity {
     protected WeakHandler mHandler;
     protected Context context;
 
