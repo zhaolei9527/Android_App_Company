@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/x15">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/SimpleDraweeView"
+        android:layout_width="@dimen/x150"
+        android:layout_height="@dimen/y90"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/x15"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x15"
+        android:background="@android:color/white"
+        fresco:placeholderImage="@drawable/imgloading" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/y20"
+        android:layout_toLeftOf="@id/SimpleDraweeView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="@dimen/y115"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="无线网络摄像头，断开网线后无法连接？"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="@dimen/y120"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="摄像机wifi模式设置：首先摄像机wifi模式设置摄像机wifi模式设置"
+            android:textSize="@dimen/x11" />
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_marginTop="@dimen/x15"
+        android:layout_width="@dimen/x65"
+        android:layout_height="@dimen/y20"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_bg"
+        android:text="查看详情"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout" />
+
+</RelativeLayout>

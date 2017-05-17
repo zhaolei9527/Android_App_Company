@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Android_App_Company</string>
+    <string name="home">首页</string>
+    <string name="product">产品</string>
+    <string name="scheme">方案</string>
+    <string name="demo">演示</string>
+    <string name="me">我的</string>
+    <string name="company">公司简介</string>
+    <string name="news">最新动态</string>
+    <string name="details">查看详情</string>
+    <string name="more">更多</string>
+    <string name="Promotion">促销活动</string>
 </resources>
