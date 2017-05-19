@@ -2,8 +2,11 @@ package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,6 +72,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void ready() {
+        super.ready();
+        smoothSwitchScreen();
+    }
+
+    @Override
     protected int setthislayout() {
         return R.layout.activity_main;
     }
@@ -76,6 +85,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initview() {
         views = new TextView[]{tvHome, tvDemo, tvMe, tvProduct, tvScheme};
+    }
+
+    private void smoothSwitchScreen() {
+        // 5.0以上修复了此bug
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            ViewGroup rootView = ((ViewGroup) this.findViewById(android.R.id.content));
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            int statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+            rootView.setPadding(0, statusBarHeight, 0, 0);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
     @Override

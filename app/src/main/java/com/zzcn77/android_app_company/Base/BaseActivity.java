@@ -21,6 +21,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ready();
         setContentView(setthislayout());
         context = this;
         ButterKnife.bind(this);
@@ -30,6 +31,12 @@ public abstract class BaseActivity extends Activity {
         initListener();
         initData();
     }
+
+    protected void ready() {
+
+    }
+
+    ;
 
     protected abstract int setthislayout();
 
