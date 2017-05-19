@@ -10,6 +10,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 /**
  * Created by 赵磊 on 2017/5/11.
  */
@@ -147,17 +152,38 @@ public class Utils {
         activity.startActivityForResult(intent, 0);
     }
 
-    public static String gethtmlimgcss() {
 
-
-        return "<style>\n" +
-                " \n" +
-                "img{\n" +
-                " max-width:100%;\n" +
-                " height:auto;\n" +
-                "}\n" +
-                " \n" +
-                "</style>";
+    public static String getNewContent(String htmltext) {
+        Document doc = Jsoup.parse(htmltext);
+        Elements elements = doc.getElementsByTag("img");
+        for (Element element : elements) {
+            element.attr("width", "100%").attr("height", "auto");
+        }
+        Log.d("VACK", doc.toString());
+        return doc.toString();
     }
 
+    public static String decode(String unicodeStr) {
+        if (unicodeStr == null) {
+            return null;
+        }
+        StringBuffer retBuf = new StringBuffer();
+        int maxLoop = unicodeStr.length();
+        for (int i = 0; i < maxLoop; i++) {
+            if (unicodeStr.charAt(i) == '\\') {
+                if ((i < maxLoop - 5) && ((unicodeStr.charAt(i + 1) == 'u') || (unicodeStr.charAt(i + 1) == 'U')))
+                    try {
+                        retBuf.append((char) Integer.parseInt(unicodeStr.substring(i + 2, i + 6), 16));
+                        i += 5;
+                    } catch (NumberFormatException localNumberFormatException) {
+                        retBuf.append(unicodeStr.charAt(i));
+                    }
+                else
+                    retBuf.append(unicodeStr.charAt(i));
+            } else {
+                retBuf.append(unicodeStr.charAt(i));
+            }
+        }
+        return retBuf.toString();
+    }
 }

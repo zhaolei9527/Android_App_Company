@@ -1,17 +1,17 @@
 package com.zzcn77.android_app_company.Fragment;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -22,21 +22,33 @@ import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
+import com.zzcn77.android_app_company.Adapter.Promotionadapter;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
+import butterknife.Unbinder;
 
 /**
  * Created by 赵磊 on 2017/5/17.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements android.view.View.OnClickListener {
 
 
     @BindView(R.id.RollPagerView)
     com.jude.rollviewpager.RollPagerView RollPagerView;
+    @BindView(R.id.View)
+    android.view.View View;
+    @BindView(R.id.img_Company_Details)
+    ImageView imgCompanyDetails;
+    @BindView(R.id.tv_Company_Details)
+    TextView tvCompanyDetails;
     @BindView(R.id.SimpleDraweeView)
     com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView;
     @BindView(R.id.tv_title)
@@ -45,10 +57,26 @@ public class HomeFragment extends BaseFragment {
     TextView tvMessage;
     @BindView(R.id.ll_callphone)
     LinearLayout llCallphone;
+    @BindView(R.id.rl_Company_Details)
+    RelativeLayout rlCompanyDetails;
+    @BindView(R.id.View2)
+    android.view.View View2;
+    @BindView(R.id.img2)
+    ImageView img2;
     @BindView(R.id.vp_news)
     ViewPager vpNews;
+    @BindView(R.id.tv_new_item)
+    TextView tvNewItem;
+    @BindView(R.id.View3)
+    android.view.View View3;
+    @BindView(R.id.img_morePromtion)
+    ImageView img_morePromtion;
     @BindView(R.id.lv_Promotion)
     ListView lvPromotion;
+    @BindView(R.id.tv_morePromtion)
+    TextView tvMorePromtion;
+    Unbinder unbinder;
+    //最新动态列表
     private PagerAdapter newsAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
@@ -80,60 +108,76 @@ public class HomeFragment extends BaseFragment {
             return inflate;
         }
     };
+    //最新动态
+    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    public class ViewHolder {
-        public View rootView;
-        public com.facebook.drawee.view.SimpleDraweeView DraweeView;
-        public FrameLayout fl;
-        public TextView tv_title;
-        public TextView tv_message;
-        public TextView tv_dis;
+        }
 
-        public ViewHolder(View rootView) {
-            this.rootView = rootView;
-            this.DraweeView = (com.facebook.drawee.view.SimpleDraweeView) rootView.findViewById(R.id.SimpleDraweeView);
-            this.fl = (FrameLayout) rootView.findViewById(R.id.fl);
-            this.tv_title = (TextView) rootView.findViewById(R.id.tv_title);
-            this.tv_message = (TextView) rootView.findViewById(R.id.tv_message);
-            this.tv_dis = (TextView) rootView.findViewById(R.id.tv_dis);
+        @Override
+        public void onPageSelected(int position) {
+
+            tvNewItem.setText(String.valueOf(position + 1) + "/10");
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
+    @Override
+    public void onClick(View v) {
+
+
+        switch (v.getId()) {
+            case R.id.img_Company_Details:
+            case R.id.tv_Company_Details:
+            case R.id.rl_Company_Details:
+                startActivity(new Intent(mActivity, CompanyDetailsActivity.class));
+                break;
+
+            case R.id.img_morePromtion:
+            case R.id.tv_morePromtion:
+                startActivity(new Intent(mActivity, PromotionActivity.class));
+                break;
+
         }
 
     }
 
-    private BaseAdapter adapter = new BaseAdapter() {
+    //轮播图
+    private class LoopAdapter extends LoopPagerAdapter {
+        private int[] imgs = {
+                R.drawable.i_banner,
+                R.drawable.i_banner,
+                R.drawable.i_banner,
+                R.drawable.i_banner,
+        };
 
-
-        @Override
-        public int getCount() {
-            return 3;
+        public LoopAdapter(RollPagerView viewPager) {
+            super(viewPager);
         }
 
         @Override
-        public Object getItem(int position) {
-            return null;
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
         }
 
         @Override
-        public long getItemId(int position) {
-            return 0;
+        public int getRealCount() {
+            return imgs.length;
         }
+    }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
 
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                convertView = View.inflate(mActivity, R.layout.promotion_layout, null);
-                viewHolder = new ViewHolder(convertView);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            viewHolder.DraweeView.setImageURI(Uri.parse("http://img12.360buyimg.com/n1/s180x180_jfs/t2860/4/1183024733/452142/9149c9e7/5736c828N85887f78.png"));
-            return convertView;
-        }
-    };
-
+    //测量ListView高度
     public void setListViewHeightBasedOnChildren(ListView listView) {
         // 获取ListView对应的Adapter
         ListAdapter listAdapter = listView.getAdapter();
@@ -169,7 +213,7 @@ public class HomeFragment extends BaseFragment {
 
 
         RollPagerView.setHintView(new IconHintView(mActivity, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(mActivity, 20)));
-        RollPagerView.setAdapter(new TestLoopAdapter(RollPagerView));
+        RollPagerView.setAdapter(new LoopAdapter(RollPagerView));
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -191,37 +235,25 @@ public class HomeFragment extends BaseFragment {
                 .setOldController(SimpleDraweeView.getController())
                 .build();
         SimpleDraweeView.setController(controller);
-        lvPromotion.setAdapter(adapter);
 
+        //假数据
+        ArrayList arrayList = new ArrayList();
+        arrayList.add("");
+        arrayList.add("");
+        arrayList.add("");
+        lvPromotion.setAdapter(new Promotionadapter(mActivity, arrayList));
 
         vpNews.setAdapter(newsAdapter);
 
+
+        vpNews.addOnPageChangeListener(onPageChangeListener);
+
+        imgCompanyDetails.setOnClickListener(this);
+        tvCompanyDetails.setOnClickListener(this);
+        rlCompanyDetails.setOnClickListener(this);
+        img_morePromtion.setOnClickListener(this);
+        tvMorePromtion.setOnClickListener(this);
     }
 
-    private class TestLoopAdapter extends LoopPagerAdapter {
-        private int[] imgs = {
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-        };
 
-        public TestLoopAdapter(RollPagerView viewPager) {
-            super(viewPager);
-        }
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return view;
-        }
-
-        @Override
-        public int getRealCount() {
-            return imgs.length;
-        }
-    }
 }

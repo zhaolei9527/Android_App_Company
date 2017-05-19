@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fbfbfb"
+    android:paddingBottom="@dimen/x15">
+
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="@dimen/x162"
+        android:layout_height="@dimen/y92"
+        android:layout_marginLeft="@dimen/x14"
+        android:layout_marginTop="@dimen/y23"
+        android:background="#1ed8ff">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/SimpleDraweeView"
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y90"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            fresco:placeholderImage="@drawable/imgloading" />
+
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="@dimen/x115"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/x10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="9"
+            android:singleLine="true"
+            android:text="超导科技，风暖护眼"
+            android:textColor="@color/text_gray"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="全金属烤瓷机身全金属全金属全金属全金属全金属全金属"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="现"
+                android:textColor="#666"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_dis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7折"
+                android:textColor="#ffa919"
+                android:textSize="@dimen/x25"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x150"
+        android:layout_marginTop="@dimen/y10"
+        android:background="@mipmap/i_sale" />
+</RelativeLayout>

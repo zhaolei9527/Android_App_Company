@@ -24,8 +24,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x15"
-        android:layout_marginRight="@dimen/x10"
         android:layout_marginTop="@dimen/y20"
         android:layout_toLeftOf="@id/SimpleDraweeView"
         android:gravity="center"
@@ -56,16 +54,16 @@
 
 
     <Button
-        android:layout_marginTop="@dimen/x15"
         android:layout_width="@dimen/x65"
         android:layout_height="@dimen/y20"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/x15"
         android:background="@drawable/btn_bg"
         android:text="查看详情"
         android:textColor="@android:color/white"
-        android:textSize="12sp"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignRight="@+id/linearLayout"
-        android:layout_alignEnd="@+id/linearLayout" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

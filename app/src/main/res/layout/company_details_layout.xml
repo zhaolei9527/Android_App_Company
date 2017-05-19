@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,39 +24,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/Promotion"
+            android:text="@string/Company_Details"
             android:textColor="@android:color/white"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/SwipeRefreshLayout"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-            android:id="@+id/swipeToLoadLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/swipe_target"
+            <com.jude.rollviewpager.RollPagerView
+                android:id="@+id/RollPagerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y115" />
+
+
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/forum_context"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <com.zzcn77.android_app_company.View.LoadMoreFooterView
-                android:id="@id/swipe_load_more_footer"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="#00000000"
-                android:gravity="center">
 
-            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+        </LinearLayout>
 
-        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+    </ScrollView>
 
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

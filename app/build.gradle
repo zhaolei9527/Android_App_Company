@@ -10,6 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters"armeabi","armeabi-v7a","x86","mips"
+        }
     }
     buildTypes {
         release {
@@ -35,4 +38,6 @@ dependencies {
     compile 'com.github.andyxialm:MultiStateLayout:0.1.0'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.jude:rollviewpager:1.4.6'
+    compile 'org.jsoup:jsoup:1.10.2'
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
 }
