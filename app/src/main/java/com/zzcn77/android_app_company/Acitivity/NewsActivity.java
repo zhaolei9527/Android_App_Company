@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.zzcn77.android_app_company.Adapter.Promotionadapter;
+import com.zzcn77.android_app_company.Adapter.Newsadapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
@@ -23,7 +24,7 @@ import butterknife.BindView;
  * Created by 赵磊 on 2017/5/19.
  */
 
-public class PromotionActivity extends BaseActivity implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class NewsActivity extends BaseActivity implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @BindView(R.id.img_back)
     ImageView imgBack;
@@ -35,7 +36,9 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
-    private Promotionadapter promotionadapter;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    private Newsadapter newsadapter;
 
     @Override
     protected int setthislayout() {
@@ -46,6 +49,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     protected void initview() {
         //改变加载显示的颜色
         SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        tvTitle.setText(R.string.recentnews);
     }
 
     @Override
@@ -84,8 +88,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         arrayList.add("");
         arrayList.add("");
         arrayList.add("");
-        promotionadapter = new Promotionadapter(context, arrayList);
-        lvSwipeTarget.setAdapter(promotionadapter);
+        newsadapter = new Newsadapter(context, arrayList);
+        lvSwipeTarget.setAdapter(newsadapter);
     }
 
     //上拉加载
@@ -96,13 +100,13 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = promotionadapter.getDatas();
+                ArrayList datas = newsadapter.getDatas();
                 datas.add("");
                 datas.add("");
                 datas.add("");
                 datas.add("");
-                promotionadapter.setDatas(datas);
-                promotionadapter.notifyDataSetChanged();
+                newsadapter.setDatas(datas);
+                newsadapter.notifyDataSetChanged();
                 swipeToLoadLayout.setLoadingMore(false);
                 lvSwipeTarget.setEnabled(true);
                 SwipeRefreshLayout.setEnabled(true);
@@ -127,8 +131,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                 arrayList.add("");
                 arrayList.add("");
                 arrayList.add("");
-                promotionadapter.setDatas(arrayList);
-                promotionadapter.notifyDataSetChanged();
+                newsadapter.setDatas(arrayList);
+                newsadapter.notifyDataSetChanged();
                 lvSwipeTarget.setEnabled(true);
                 SwipeRefreshLayout.setRefreshing(false);
             }
@@ -141,6 +145,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
             case R.id.img_back:
                 finish();
                 break;
+
         }
+
     }
 }

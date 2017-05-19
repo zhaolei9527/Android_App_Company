@@ -4,19 +4,22 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.Utils;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by 赵磊 on 2017/5/19.
  */
 
-public class Promotionadapter extends BaseAdapter {
+public class Newsadapter extends BaseAdapter {
 
 
     private Context context;
@@ -31,7 +34,7 @@ public class Promotionadapter extends BaseAdapter {
 
     private ArrayList datas = new ArrayList();
 
-    public Promotionadapter(Context context, ArrayList datas) {
+    public Newsadapter(Context context, ArrayList datas) {
         this.context = context;
         this.datas = datas;
 
@@ -57,32 +60,33 @@ public class Promotionadapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.promotion_item, null);
+            convertView = View.inflate(context, R.layout.news_content_item_layout, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu, viewHolder.DraweeView);
+        Utils.displayImageFresco(R.drawable.tu_r1_c1, viewHolder.imageView);
         return convertView;
     }
 
-    public class ViewHolder {
-        public View rootView;
-        public com.facebook.drawee.view.SimpleDraweeView DraweeView;
-        public FrameLayout fl;
-        public TextView tv_title;
-        public TextView tv_message;
-        public TextView tv_dis;
 
-        public ViewHolder(View rootView) {
-            this.rootView = rootView;
-            this.DraweeView = (com.facebook.drawee.view.SimpleDraweeView) rootView.findViewById(R.id.SimpleDraweeView);
-            this.fl = (FrameLayout) rootView.findViewById(R.id.fl);
-            this.tv_title = (TextView) rootView.findViewById(R.id.tv_title);
-            this.tv_message = (TextView) rootView.findViewById(R.id.tv_message);
-            this.tv_dis = (TextView) rootView.findViewById(R.id.tv_dis);
+    static class ViewHolder {
+        @BindView(R.id.imageView)
+        SimpleDraweeView imageView;
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.tv_releaseTime)
+        TextView tvReleaseTime;
+        @BindView(R.id.tv_time_year)
+        TextView tvTimeYear;
+        @BindView(R.id.tv_time_hour)
+        TextView tvTimeHour;
+        @BindView(R.id.tv_Content)
+        TextView tvContent;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
-
     }
 }

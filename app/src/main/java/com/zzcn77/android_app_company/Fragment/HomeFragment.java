@@ -23,6 +23,7 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.NewsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
 import com.zzcn77.android_app_company.R;
@@ -32,7 +33,6 @@ import com.zzcn77.android_app_company.Utils.EasyToast;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * Created by 赵磊 on 2017/5/17.
@@ -75,7 +75,14 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     ListView lvPromotion;
     @BindView(R.id.tv_morePromtion)
     TextView tvMorePromtion;
-    Unbinder unbinder;
+    @BindView(R.id.rl_title_Company_Details)
+    RelativeLayout rlTitleCompanyDetails;
+    @BindView(R.id.tv_more)
+    TextView tvMore;
+    @BindView(R.id.rl_title_news_more)
+    RelativeLayout rlTitleNewsMore;
+    @BindView(R.id.rl_title_promotion_more)
+    RelativeLayout rlTitlePromotionMore;
     //最新动态列表
     private PagerAdapter newsAdapter = new PagerAdapter() {
         @Override
@@ -133,15 +140,15 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
 
         switch (v.getId()) {
-            case R.id.img_Company_Details:
-            case R.id.tv_Company_Details:
             case R.id.rl_Company_Details:
+            case R.id.rl_title_Company_Details:
                 startActivity(new Intent(mActivity, CompanyDetailsActivity.class));
                 break;
-
-            case R.id.img_morePromtion:
-            case R.id.tv_morePromtion:
+            case R.id.rl_title_promotion_more:
                 startActivity(new Intent(mActivity, PromotionActivity.class));
+                break;
+            case R.id.rl_title_news_more:
+                startActivity(new Intent(mActivity, NewsActivity.class));
                 break;
 
         }
@@ -245,14 +252,13 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
         vpNews.setAdapter(newsAdapter);
 
-
         vpNews.addOnPageChangeListener(onPageChangeListener);
 
-        imgCompanyDetails.setOnClickListener(this);
-        tvCompanyDetails.setOnClickListener(this);
         rlCompanyDetails.setOnClickListener(this);
-        img_morePromtion.setOnClickListener(this);
-        tvMorePromtion.setOnClickListener(this);
+        rlTitleCompanyDetails.setOnClickListener(this);
+        rlTitleNewsMore.setOnClickListener(this);
+        rlTitlePromotionMore.setOnClickListener(this);
+
     }
 
 

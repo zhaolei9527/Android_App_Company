@@ -40,6 +40,7 @@
                 android:background="#d0d0d0"></View>
 
             <RelativeLayout
+                android:id="@+id/rl_title_Company_Details"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
                 android:layout_marginTop="@dimen/y5"
@@ -165,6 +166,7 @@
                 android:background="#d0d0d0"></View>
 
             <RelativeLayout
+                android:id="@+id/rl_title_news_more"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
                 android:layout_marginTop="@dimen/y5"
@@ -198,6 +200,7 @@
                     android:background="@mipmap/i_you" />
 
                 <TextView
+                    android:id="@+id/tv_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -248,6 +251,7 @@
                 android:background="#d0d0d0"></View>
 
             <RelativeLayout
+                android:id="@+id/rl_title_promotion_more"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
                 android:layout_marginTop="@dimen/y5"

@@ -37,5 +37,7 @@
     <string name="readloading">释放开始加载</string>
     <string name="uploading">上拉加载更多</string>
     <string name="loadingisok">加载完成</string>
+    <string name="releaseTime">发布时间：</string>
+    <string name="recentnews">最新动态</string>
 
 </resources>

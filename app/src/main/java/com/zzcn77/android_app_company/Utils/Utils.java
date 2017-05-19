@@ -8,7 +8,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.util.Log;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -185,5 +192,15 @@ public class Utils {
             }
         }
         return retBuf.toString();
+    }
+
+    public static void displayImageFresco(int drawableid, SimpleDraweeView draweeView) {
+        String url = "res:// com.zzcn77.android_app_company /" + drawableid;
+        Uri uri = Uri.parse(url);
+        draweeView.setImageURI(uri);
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri).build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request).setAutoPlayAnimations(true).build();
+        draweeView.setController(controller);
     }
 }
