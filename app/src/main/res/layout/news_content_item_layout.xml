@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y106"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -72,34 +72,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/y4"
                 android:ellipsize="end"
+                android:maxLength="60"
                 android:maxLines="3"
                 android:text="掌上智能看家摄像机I8 MINI--萌萌的外表下有一颗负责任的心表下有一颗负责任的心萌萌的外表下有一颗负责任的心表下有一颗负责任的心"
                 android:textColor="#999"
                 android:textSize="@dimen/x9" />
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details" />
+
+                <ImageView
+                    android:layout_width="@dimen/x13"
+                    android:layout_height="@dimen/x13"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@mipmap/i_you" />
+            </LinearLayout>
+
         </LinearLayout>
 
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/x10"
-        android:layout_marginRight="@dimen/x10"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/details" />
-
-        <ImageView
-            android:layout_width="@dimen/x13"
-            android:layout_height="@dimen/x13"
-            android:layout_marginLeft="@dimen/x5"
-            android:background="@mipmap/i_you" />
-    </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

@@ -1,10 +1,13 @@
 package com.zzcn77.android_app_company;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.zzcn77.android_app_company.Service.AdvanceLoadX5Service;
 import com.zzcn77.android_app_company.Utils.Utils;
 
 import cn.refactor.multistatelayout.MultiStateConfiguration;
@@ -43,5 +46,16 @@ public class App extends Application {
                 .setCommonLoadingLayout(R.layout.layout_loading);
         MultiStateLayout.setConfiguration(builder);
         Fresco.initialize(this);
+        preinitX5WebCore();
+        //预加载x5内核
+        Intent intent = new Intent(this, AdvanceLoadX5Service.class);
+        startService(intent);
     }
+    private void preinitX5WebCore() {
+        if (!QbSdk.isTbsCoreInited()) {
+            QbSdk.preInit(getApplicationContext(), null);// 设置X5初始化完成的回调接口
+        }
+    }
+
+
 }

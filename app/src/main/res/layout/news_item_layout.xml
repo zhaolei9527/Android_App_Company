@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:maxLength="18"
             android:text="无线网络摄像头，断开网线后无法连接？"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/x13" />

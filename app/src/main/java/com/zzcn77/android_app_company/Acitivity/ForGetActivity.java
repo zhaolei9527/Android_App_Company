@@ -55,6 +55,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.btn_get:
                 getcaptcha();

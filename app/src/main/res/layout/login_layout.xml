@@ -32,17 +32,14 @@
             android:background="@mipmap/d_yonghu" />
 
         <EditText
+            android:layout_centerVertical="true"
             android:id="@+id/et_account"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y33"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/x16"
             android:layout_toRightOf="@id/img_yonghu"
             android:background="@null"
             android:hint="@string/account"
-            android:maxEms="8"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textColorHint="#50f0f0f0" />
@@ -69,15 +66,13 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y33"
-            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x16"
             android:layout_toRightOf="@id/img_mima"
             android:background="@null"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:maxEms="18"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
+            android:maxLength="18"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textColorHint="#50f0f0f0" />

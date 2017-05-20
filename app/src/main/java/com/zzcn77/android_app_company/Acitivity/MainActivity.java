@@ -1,18 +1,19 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Fragment.DemoFragment;
 import com.zzcn77.android_app_company.Fragment.HomeFragment;
@@ -21,6 +22,8 @@ import com.zzcn77.android_app_company.Fragment.ProductFragment;
 import com.zzcn77.android_app_company.Fragment.SchemeFragment;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.Other;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -74,7 +77,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void ready() {
         super.ready();
-        smoothSwitchScreen();
     }
 
     @Override
@@ -87,18 +89,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         views = new TextView[]{tvHome, tvDemo, tvMe, tvProduct, tvScheme};
     }
 
-    private void smoothSwitchScreen() {
-        // 5.0以上修复了此bug
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-
-            ViewGroup rootView = ((ViewGroup) this.findViewById(android.R.id.content));
-            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-            int statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-            rootView.setPadding(0, statusBarHeight, 0, 0);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
-    }
 
     @Override
     protected void initListener() {
@@ -116,6 +106,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         HomeFragment homeFragment = new HomeFragment();
         transaction.replace(R.id.fl_main, homeFragment);
         transaction.commit();
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setDeniedMessage(getString(R.string.requstPerminssions))
+                /*以下为自定义提示语、按钮文字
+                .setDeniedMessage()
+                .setDeniedCloseBtn()
+                .setDeniedSettingBtn()
+                .setRationalMessage()
+                .setRationalBtn()*/
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        Toast.makeText(context, "权限申请被拒绝", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
     //--------------使用onKeyDown()干掉他--------------
@@ -140,6 +152,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.ll_home:
                 if (!thispage.equals(Other.HOME)) {

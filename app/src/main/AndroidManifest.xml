@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -18,23 +19,22 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="591563ac734be4094a00089d"></meta-data>
+            android:value="591563ac734be4094a00089d" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="ec6249e370e5fb66f6a55238ffc93e24"></meta-data>
-
+            android:value="ec6249e370e5fb66f6a55238ffc93e24" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="应用宝"></meta-data>
+            android:value="应用宝" />
 
         <activity
             android:name=".Acitivity.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme_Umeng_Push_Splash">
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,30 +45,51 @@
             android:name=".Acitivity.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
+            android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
             android:name=".Acitivity.ForGetActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
-
+            android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
             android:name=".Acitivity.CompanyDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.RegisterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
+            android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
             android:name=".Acitivity.PromotionActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.NewsActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.NewsDetailsActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.tencent.smtt.sdk.VideoActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Acitivity.PeomotionDetailsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <service android:name=".Service.AdvanceLoadX5Service"></service>
+        <service android:name=".Service.DownloadService"></service>
     </application>
 
 </manifest>

@@ -39,5 +39,8 @@
     <string name="loadingisok">加载完成</string>
     <string name="releaseTime">发布时间：</string>
     <string name="recentnews">最新动态</string>
+    <string name="News_Details">最新动态</string>
+    <string name="Peomotion_Details">促销活动</string>
+    <string name="requstPerminssions">应用需要此权限保证功能完善</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.zzcn77.android_app_company.Utils;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.zzcn77.android_app_company.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -203,4 +205,34 @@ public class Utils {
                 .setImageRequest(request).setAutoPlayAnimations(true).build();
         draweeView.setController(controller);
     }
+
+
+
+    public static void inSetWebView(String htmlString, com.tencent.smtt.sdk.WebView forumContext,Context context) {
+        if (htmlString.contains("img src=\"")) {
+            htmlString = htmlString.replace("img src=\"", "img src=\"http://1415.tt.100help.net");
+        }
+        String sb = "<html><head>"+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "+"</head><body>" + htmlString +
+                "</body></html>";
+        forumContext.getSettings().setJavaScriptEnabled(true);// 支持js
+
+        forumContext.getSettings().setLoadWithOverviewMode(true);
+        forumContext.getSettings().setUseWideViewPort(true);
+        forumContext.loadDataWithBaseURL("about:blank", Utils.getNewContent(sb), "text/html", "utf-8", null);
+    }
+
+    /**
+     * 显示正在加载动画
+     * @param context
+     */
+    public static Dialog showLoadingDialog(Context context){
+        //创建Dialog并传递style文件
+        final Dialog dialog = new Dialog(context, R.style.dialog);
+        // 设置它的ContentView
+        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+        dialog.setContentView(R.layout.dialog_loading_layout);
+        dialog.show();//显示dialog
+        return dialog;
+    }
+
 }

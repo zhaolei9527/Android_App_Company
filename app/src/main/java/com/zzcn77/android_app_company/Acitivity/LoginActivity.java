@@ -1,5 +1,6 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     TextView tvForgetPassword;
     private String accountor;
     private String password;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -83,12 +85,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 getetcontent();
                 break;
             case R.id.btn_btn_skip:
+
                 gotoMain();
                 break;
             case R.id.tv_forgetPassword:
+
                 startActivity(new Intent(context, ForGetActivity.class));
                 break;
             case R.id.tv_register:
+
                 startActivity(new Intent(context, RegisterActivity.class));
                 break;
 

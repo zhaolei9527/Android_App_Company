@@ -2,11 +2,11 @@ package com.zzcn77.android_app_company.Fragment;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -14,25 +14,28 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsActivity;
+import com.zzcn77.android_app_company.Acitivity.NewsDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.PeomotionDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.Utils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.Unbinder;
+
+import static com.zzcn77.android_app_company.R.id.ll_callphone;
 
 /**
  * Created by 赵磊 on 2017/5/17.
@@ -55,7 +58,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     TextView tvTitle;
     @BindView(R.id.tv_message)
     TextView tvMessage;
-    @BindView(R.id.ll_callphone)
+    @BindView(ll_callphone)
     LinearLayout llCallphone;
     @BindView(R.id.rl_Company_Details)
     RelativeLayout rlCompanyDetails;
@@ -83,6 +86,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     RelativeLayout rlTitleNewsMore;
     @BindView(R.id.rl_title_promotion_more)
     RelativeLayout rlTitlePromotionMore;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    Unbinder unbinder;
     //最新动态列表
     private PagerAdapter newsAdapter = new PagerAdapter() {
         @Override
@@ -105,12 +111,20 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
             View inflate = View.inflate(mActivity, R.layout.news_item_layout, null);
             com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView = (com.facebook.drawee.view.SimpleDraweeView) inflate.findViewById(R.id.SimpleDraweeView);
-            SimpleDraweeView.setImageURI(Uri.parse("http://img12.360buyimg.com/n1/s180x180_jfs/t2860/4/1183024733/452142/9149c9e7/5736c828N85887f78.png"));
+            Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
             container.addView(inflate);
+
+            inflate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.startActivity(new Intent(mActivity, NewsDetailsActivity.class));
+                }
+            });
+
 
             return inflate;
         }
@@ -149,6 +163,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 break;
             case R.id.rl_title_news_more:
                 startActivity(new Intent(mActivity, NewsActivity.class));
+                break;
+            case ll_callphone:
+                CallPhoneUtils.CallPhone(mActivity, tvPhone.getText().toString());
                 break;
 
         }
@@ -219,7 +236,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         super.initView();
 
 
-        RollPagerView.setHintView(new IconHintView(mActivity, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(mActivity, 20)));
+        RollPagerView.setHintView(new IconHintView(mActivity, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(mActivity, getResources().getDimension(R.dimen.x7))));
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView));
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -234,14 +251,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 setListViewHeightBasedOnChildren(lvPromotion);
             }
         });
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse("http://img12.360buyimg.com/n1/s180x180_jfs/t2860/4/1183024733/452142/9149c9e7/5736c828N85887f78.png"))
-                .setProgressiveRenderingEnabled(true)
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(SimpleDraweeView.getController())
-                .build();
-        SimpleDraweeView.setController(controller);
+        Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
 
         //假数据
         ArrayList arrayList = new ArrayList();
@@ -254,10 +264,17 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
         vpNews.addOnPageChangeListener(onPageChangeListener);
 
+        llCallphone.setOnClickListener(this);
         rlCompanyDetails.setOnClickListener(this);
         rlTitleCompanyDetails.setOnClickListener(this);
         rlTitleNewsMore.setOnClickListener(this);
         rlTitlePromotionMore.setOnClickListener(this);
+        lvPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(mActivity, PeomotionDetailsActivity.class));
+            }
+        });
 
     }
 

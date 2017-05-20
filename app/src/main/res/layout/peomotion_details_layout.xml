@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y35"
+        android:background="@color/text_blue"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/y20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x13"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/Peomotion_Details"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/SimpleDraweeView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y130"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/white"
+                fresco:placeholderImage="@drawable/imgloading" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginTop="@dimen/x10"
+                    android:text="超导科技，风暖护眼"
+                    android:textColor="@color/text_gray"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginRight="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="现"
+                        android:textColor="#666"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/tv_dis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7折"
+                        android:textColor="#ffa919"
+                        android:textSize="@dimen/x25"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/forum_context"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/y10"
+                android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x10" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

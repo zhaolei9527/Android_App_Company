@@ -1,8 +1,10 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -23,7 +25,7 @@ import butterknife.BindView;
  * Created by 赵磊 on 2017/5/19.
  */
 
-public class PromotionActivity extends BaseActivity implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class PromotionActivity extends BaseActivity implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     @BindView(R.id.img_back)
     ImageView imgBack;
@@ -74,6 +76,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                 SwipeRefreshLayout.setEnabled(enable);
             }
         });
+
+        lvSwipeTarget.setOnItemClickListener(this);
     }
 
     @Override
@@ -137,10 +141,16 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.img_back:
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(new Intent(context, PeomotionDetailsActivity.class));
     }
 }

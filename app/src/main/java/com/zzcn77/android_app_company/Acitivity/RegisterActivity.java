@@ -61,6 +61,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.tv_register:
                 finish();
