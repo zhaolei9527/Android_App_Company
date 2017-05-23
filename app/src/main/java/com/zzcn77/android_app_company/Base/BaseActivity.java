@@ -1,14 +1,12 @@
 package com.zzcn77.android_app_company.Base;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.badoo.mobile.util.WeakHandler;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
-import com.zzcn77.android_app_company.Utils.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,7 +19,6 @@ public abstract class BaseActivity extends Activity {
     protected WeakHandler mHandler;
     protected Context context;
     private Unbinder bind;
-    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +32,6 @@ public abstract class BaseActivity extends Activity {
         initview();
         initListener();
         initData();
-        dialog = Utils.showLoadingDialog(context);
     }
 
 
@@ -60,17 +56,13 @@ public abstract class BaseActivity extends Activity {
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
+
+
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
     }
 
 }

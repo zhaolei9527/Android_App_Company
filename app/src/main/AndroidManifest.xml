@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
 
     <application
         android:name=".App"
@@ -30,7 +35,8 @@
         <activity
             android:name=".Acitivity.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Acitivity.SplashActivity"
             android:screenOrientation="portrait"
@@ -73,6 +79,14 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".Acitivity.SettingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Acitivity.LanguageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -87,6 +101,13 @@
             android:name=".Acitivity.PeomotionDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".Acitivity.DemoPlayActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
 
         <service android:name=".Service.AdvanceLoadX5Service"></service>
         <service android:name=".Service.DownloadService"></service>

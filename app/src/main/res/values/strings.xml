@@ -42,5 +42,13 @@
     <string name="News_Details">最新动态</string>
     <string name="Peomotion_Details">促销活动</string>
     <string name="requstPerminssions">应用需要此权限保证功能完善</string>
+    <string name="setting">设置</string>
+    <string name="changepassword">修改密码</string>
+    <string name="myconsult">我的咨询</string>
+    <string name="mycollect">我的收藏</string>
+    <string name="language">多语言</string>
+    <string name="exit">退出</string>
+    <string name="update_version">检查更新</string>
+    <string name="auto">跟随系统</string>
 
 </resources>

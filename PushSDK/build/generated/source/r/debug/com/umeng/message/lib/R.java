@@ -10,13 +10,16 @@ package com.umeng.message.lib;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static int primary_material_light=0x7f030000;
+    }
     public static final class id {
-        public static int notification_large_icon1=0x7f030001;
-        public static int notification_large_icon2=0x7f030005;
-        public static int notification_text=0x7f030003;
-        public static int notification_title=0x7f030002;
-        public static int upush_notification1=0x7f030000;
-        public static int upush_notification2=0x7f030004;
+        public static int notification_large_icon1=0x7f040001;
+        public static int notification_large_icon2=0x7f040005;
+        public static int notification_text=0x7f040003;
+        public static int notification_title=0x7f040002;
+        public static int upush_notification1=0x7f040000;
+        public static int upush_notification2=0x7f040004;
     }
     public static final class layout {
         public static int upush_notification=0x7f020000;

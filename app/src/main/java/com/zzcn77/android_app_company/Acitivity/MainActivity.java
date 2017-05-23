@@ -21,6 +21,7 @@ import com.zzcn77.android_app_company.Fragment.MeFragment;
 import com.zzcn77.android_app_company.Fragment.ProductFragment;
 import com.zzcn77.android_app_company.Fragment.SchemeFragment;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.IntentUtil;
 import com.zzcn77.android_app_company.Utils.Other;
 
 import java.util.List;
@@ -101,11 +102,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        HomeFragment homeFragment = new HomeFragment();
-        transaction.replace(R.id.fl_main, homeFragment);
-        transaction.commit();
+        if (!IntentUtil.isBundleEmpty(getIntent())) {
+            int thispage = getIntent().getIntExtra("thispage", 0);
+            if (thispage == 4) {
+                this.thispage = Other.ME;
+            }
+        }
+        changecheck(thispage);
         Acp.getInstance(context).request(new AcpOptions.Builder()
                         .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                         .setDeniedMessage(getString(R.string.requstPerminssions))

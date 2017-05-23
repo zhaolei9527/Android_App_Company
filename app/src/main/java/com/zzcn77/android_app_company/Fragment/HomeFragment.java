@@ -2,6 +2,7 @@ package com.zzcn77.android_app_company.Fragment;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -9,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +28,7 @@ import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.View.MyListView;
 
 import java.util.ArrayList;
 
@@ -75,7 +75,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     @BindView(R.id.img_morePromtion)
     ImageView img_morePromtion;
     @BindView(R.id.lv_Promotion)
-    ListView lvPromotion;
+    MyListView lvPromotion;
     @BindView(R.id.tv_morePromtion)
     TextView tvMorePromtion;
     @BindView(R.id.rl_title_Company_Details)
@@ -200,32 +200,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         }
     }
 
-
-    //测量ListView高度
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
-    }
-
     @Override
     protected int setLayoutResouceId() {
         return R.layout.f_home_layout;
@@ -234,7 +208,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     @Override
     protected void initView() {
         super.initView();
-
 
         RollPagerView.setHintView(new IconHintView(mActivity, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(mActivity, getResources().getDimension(R.dimen.x7))));
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView));
@@ -245,12 +218,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             }
         });
         RollPagerView.setPlayDelay(3000);
-        lvPromotion.post(new Runnable() {
-            @Override
-            public void run() {
-                setListViewHeightBasedOnChildren(lvPromotion);
-            }
-        });
+
         Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
 
         //假数据
@@ -259,9 +227,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         arrayList.add("");
         arrayList.add("");
         lvPromotion.setAdapter(new Promotionadapter(mActivity, arrayList));
-
         vpNews.setAdapter(newsAdapter);
-
         vpNews.addOnPageChangeListener(onPageChangeListener);
 
         llCallphone.setOnClickListener(this);
@@ -278,5 +244,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
     }
 
+    @Override
+    protected void initData(Bundle arguments) {
+        super.initData(arguments);
 
+    }
 }
