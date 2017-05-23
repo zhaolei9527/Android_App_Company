@@ -23,16 +23,15 @@
             android:background="@android:color/white"
             fresco:placeholderImage="@drawable/imgloading" />
 
-
     </FrameLayout>
-
 
     <LinearLayout
         android:layout_width="@dimen/x115"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x5"
         android:layout_marginRight="@dimen/x10"
+        android:layout_toRightOf="@id/img"
         android:orientation="vertical">
 
         <TextView
@@ -80,6 +79,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x150"

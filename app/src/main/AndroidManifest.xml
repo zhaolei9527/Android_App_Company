@@ -87,6 +87,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".Acitivity.SchemeAcitivty"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"

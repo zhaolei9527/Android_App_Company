@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
-    <TextView
-        android:text="@string/product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y38"
+        android:background="@color/text_blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/x10">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/product"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/y28"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_search"
+            android:paddingLeft="@dimen/x9">
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="@dimen/x21"
+                android:layout_height="@dimen/y20"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/y_sou2" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y33"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x9"
+                android:layout_toRightOf="@id/img_search"
+                android:background="@null"
+                android:hint="智能监控系统"
+                android:imeOptions="actionSearch"
+                android:maxLength="18"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="#fff" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/x21"
+            android:layout_height="@dimen/y20"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/x5"
+            android:src="@mipmap/chanpin_r1_c10" />
+
+    </LinearLayout>
+
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:scrollbars="none"
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null" />
+
+        <com.zzcn77.android_app_company.View.LoadMoreFooterView
+            android:id="@id/swipe_load_more_footer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#00000000"
+            android:gravity="center">
+
+        </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
 
 </LinearLayout>

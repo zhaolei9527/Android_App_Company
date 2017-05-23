@@ -2,12 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y38"
+        android:background="@color/text_blue"
+        android:gravity="center"
+        android:paddingLeft="@dimen/x10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/demo"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefreshLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/scheme" />
+        android:layout_height="wrap_content">
+
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null" />
+
+            <com.zzcn77.android_app_company.View.LoadMoreFooterView
+                android:id="@id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#00000000"
+                android:gravity="center">
+
+            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

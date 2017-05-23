@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_scheme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:layout_margin="@dimen/x12"
+        fresco:placeholderImage="@drawable/imgloading" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="配电房环境检测系统配电房环境检测系统"
+        android:textColor="#333"
+        android:textSize="@dimen/y18" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d4d4d4"></View>
+
+</LinearLayout>

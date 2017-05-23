@@ -6,6 +6,8 @@ import android.view.WindowManager;
 
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 
 /**
  * Created by 赵磊 on 2017/5/17.
@@ -38,7 +40,14 @@ public class SplashActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(context, LoginActivity.class));
+                String account = (String) SPUtil.get(context, "account", "");
+                String password = (String) SPUtil.get(context, "password", "");
+                if (account.trim().isEmpty() || password.trim().isEmpty()) {
+                    startActivity(new Intent(context, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(context, MainActivity.class));
+                    EasyToast.showLong(context, "欢迎回来");
+                }
                 finish();
             }
         }, 1000);

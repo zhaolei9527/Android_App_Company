@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 
 import butterknife.BindView;
 
@@ -67,11 +68,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             // TODO: 2017/5/18
             //登录校验密码，
+            SPUtil.putAndApply(context, "account", accountor);
+            SPUtil.putAndApply(context, "password", password);
             gotoMain();
         }
     }
 
     private void gotoMain() {
+
 
         startActivity(new Intent(context, MainActivity.class));
         finish();

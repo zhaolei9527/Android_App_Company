@@ -28,11 +28,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y7"
-        android:background="#E7E7E7"></View>
-
     <RelativeLayout
         android:id="@+id/rl_update_version"
         android:layout_width="match_parent"
@@ -64,7 +59,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#E7E7E7"></View>
+        android:background="#d4d4d4"></View>
 
     <RelativeLayout
         android:id="@+id/rl_language"
@@ -97,7 +92,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#E7E7E7"></View>
+        android:background="#d4d4d4"></View>
 
     <RelativeLayout
         android:id="@+id/rl_exit"
@@ -121,5 +116,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#E7E7E7"></View>
+        android:background="#d4d4d4"></View>
 </LinearLayout>

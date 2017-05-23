@@ -47,7 +47,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     private AdapterView.OnItemClickListener wvPalyClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             startActivity(new Intent(mActivity, DemoPlayActivity.class));
         }
     };
