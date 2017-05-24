@@ -55,6 +55,7 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/img_power_search"
             android:layout_width="@dimen/x21"
             android:layout_height="@dimen/y20"
             android:layout_centerVertical="true"

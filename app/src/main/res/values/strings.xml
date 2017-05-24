@@ -50,5 +50,18 @@
     <string name="exit">退出</string>
     <string name="update_version">检查更新</string>
     <string name="auto">跟随系统</string>
+    <string name="oldpassword">原密码</string>
+    <string name="newpassword">新密码</string>
+    <string name="newpasswordagain">确认新密码</string>
+    <string name="save">保存</string>
+    <string name="name">请输入姓名</string>
+    <string name="filter">筛选</string>
+    <string name="producttype">产品类型</string>
+    <string name="brand">品牌</string>
+    <string name="price">价格区间</string>
+    <string name="lowprice">最低价</string>
+    <string name="highprice">最高价</string>
+    <string name="resulotion">分辨率</string>
+    <string name="reset">重置</string>
 
 </resources>

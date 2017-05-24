@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.zzcn77.android_app_company.Acitivity.ChangePasswordActivity;
+import com.zzcn77.android_app_company.Acitivity.ConsultActivity;
+import com.zzcn77.android_app_company.Acitivity.MyCollectActivity;
 import com.zzcn77.android_app_company.Acitivity.SettingActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.SPUtil;
@@ -58,13 +60,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.rl_change_password:
-                Toast.makeText(mActivity, "更改密码", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mActivity, ChangePasswordActivity.class));
                 break;
             case R.id.rl_collect:
-                Toast.makeText(mActivity, "我的收藏", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mActivity, MyCollectActivity.class));
                 break;
             case R.id.rl_consult:
-                Toast.makeText(mActivity, "我的咨询", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mActivity, ConsultActivity.class));
                 break;
             case R.id.rl_setting:
                 startActivity(new Intent(mActivity, SettingActivity.class));

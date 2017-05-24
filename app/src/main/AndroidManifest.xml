@@ -87,7 +87,19 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".Acitivity.ChangePasswordActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Acitivity.ConsultActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".Acitivity.SchemeAcitivty"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Acitivity.MyCollectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
         <activity

@@ -10,11 +10,12 @@ import android.widget.RelativeLayout;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.zzcn77.android_app_company.Adapter.GVProuctAdapter;
-import com.zzcn77.android_app_company.Adapter.SchemeAdapter;
+import com.zzcn77.android_app_company.Adapter.ProductAdapter;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 import com.zzcn77.android_app_company.View.MyGridView;
+import com.zzcn77.android_app_company.View.PowersearchDialog;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ import butterknife.BindView;
  * Created by 赵磊 on 2017/5/17.
  */
 
-public class ProductFragment extends BaseFragment implements OnLoadMoreListener {
+public class ProductFragment extends BaseFragment implements OnLoadMoreListener, View.OnClickListener {
     @BindView(R.id.img_search)
     ImageView imgSearch;
     @BindView(R.id.et_search)
@@ -38,7 +39,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener 
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
     MyGridView gvSwipeTarget;
-    private SchemeAdapter adapter;
+    @BindView(R.id.img_power_search)
+    ImageView imgPowerSearch;
+    private ProductAdapter adapter;
 
     @Override
     protected int setLayoutResouceId() {
@@ -60,9 +63,10 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener 
         View head = View.inflate(mActivity, R.layout.product_head_layout, null);
         gvSwipeTarget = (MyGridView) head.findViewById(R.id.gv_swipe_target);
         swipeTarget.addHeaderView(head);
-        adapter = new SchemeAdapter(mActivity, dates);
+        adapter = new ProductAdapter(mActivity, dates);
         swipeTarget.setAdapter(adapter);
         gvSwipeTarget.setAdapter(new GVProuctAdapter(mActivity, dates));
+        imgPowerSearch.setOnClickListener(this);
     }
 
     @Override
@@ -93,4 +97,13 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener 
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_power_search:
+                new PowersearchDialog.Builder(mActivity).create().show();
+                break;
+
+        }
+    }
 }

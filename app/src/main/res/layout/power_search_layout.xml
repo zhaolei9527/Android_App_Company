@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="@dimen/x246"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y30"
+            android:background="#EAEAEA"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/x9"
+            android:text="@string/filter"
+            android:textColor="#999"
+            android:textSize="@dimen/x13" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/x9"
+                    android:text="@string/producttype"
+                    android:textColor="#333"
+                    android:textSize="@dimen/x13" />
+
+                <com.zzcn77.android_app_company.View.MyGridView
+                    android:id="@+id/gv_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/x10"
+                    android:divider="@null"
+                    android:horizontalSpacing="@dimen/x5"
+                    android:numColumns="3"
+                    android:paddingLeft="@dimen/x5"
+                    android:paddingRight="@dimen/x5"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/x5" />
+
+                <View
+                    android:layout_marginTop="@dimen/x5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#E8E8E8"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/x9"
+                    android:text="@string/brand"
+                    android:textColor="#333"
+                    android:textSize="@dimen/x13" />
+
+                <com.zzcn77.android_app_company.View.MyGridView
+                    android:id="@+id/gv_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/x10"
+                    android:divider="@null"
+                    android:horizontalSpacing="@dimen/x5"
+                    android:numColumns="3"
+                    android:paddingLeft="@dimen/x5"
+                    android:paddingRight="@dimen/x5"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/x5" />
+                <View
+                    android:layout_marginTop="@dimen/x5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#E8E8E8"></View>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/x9"
+                    android:text="@string/price"
+                    android:textColor="#333"
+                    android:textSize="@dimen/x13" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:background="#EAEAEA"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_lowprice"
+                        android:layout_width="@dimen/x90"
+                        android:layout_height="@dimen/y20"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:layout_marginTop="@dimen/x5"
+                        android:background="@drawable/price_edittext"
+                        android:gravity="center"
+                        android:hint="@string/lowprice"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="#333"
+                        android:textColorHint="#999"
+                        android:textSize="@dimen/x12" />
+
+                    <View
+                        android:layout_width="@dimen/x10"
+                        android:layout_height="@dimen/y2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginRight="@dimen/x5"
+                        android:background="#B7B7B7"></View>
+
+                    <EditText
+                        android:id="@+id/et_highprice"
+                        android:layout_width="@dimen/x90"
+                        android:layout_height="@dimen/y20"
+                        android:background="@drawable/price_edittext"
+                        android:gravity="center"
+                        android:hint="@string/highprice"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="#333"
+                        android:textColorHint="#999"
+                        android:textSize="@dimen/x12" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/x5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#E8E8E8"></View>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/x9"
+                    android:text="@string/resulotion"
+                    android:textColor="#333"
+                    android:textSize="@dimen/x13" />
+
+                <com.zzcn77.android_app_company.View.MyGridView
+                    android:id="@+id/gv_resulotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/x10"
+                    android:divider="@null"
+                    android:horizontalSpacing="@dimen/x5"
+                    android:numColumns="3"
+                    android:paddingLeft="@dimen/x5"
+                    android:paddingRight="@dimen/x5"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/x5" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/x10"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="@dimen/x113"
+                android:layout_height="@dimen/y31"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@drawable/reset_bg"
+                android:text="@string/reset"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/x17" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="@dimen/x113"
+                android:layout_height="@dimen/y31"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/search_bg"
+                android:text="@string/ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/x17" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
