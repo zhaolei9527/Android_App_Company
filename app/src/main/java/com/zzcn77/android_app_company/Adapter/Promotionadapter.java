@@ -7,10 +7,12 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 赵磊 on 2017/5/19.
@@ -29,11 +31,11 @@ public class Promotionadapter extends BaseAdapter {
         this.datas = datas;
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<IndexBean.ResBean.HuodongBean> datas = new ArrayList();
 
-    public Promotionadapter(Context context, ArrayList datas) {
+    public Promotionadapter(Context context, List datas) {
         this.context = context;
-        this.datas = datas;
+        this.datas = (ArrayList) datas;
 
     }
 
@@ -63,7 +65,10 @@ public class Promotionadapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu, viewHolder.DraweeView);
+        viewHolder.DraweeView.setImageURI(UrlUtils.BaseImg+datas.get(position).getImgurl());
+        viewHolder.tv_title.setText(datas.get(position).getTitle());
+        viewHolder.tv_message.setText(datas.get(position).getKeywords());
+        viewHolder.tv_dis.setText(datas.get(position).getZhe()+"折");
         return convertView;
     }
 

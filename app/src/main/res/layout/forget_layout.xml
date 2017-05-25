@@ -32,6 +32,7 @@
             android:background="@mipmap/z_mail" />
 
         <EditText
+            android:inputType="textEmailAddress"
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y33"

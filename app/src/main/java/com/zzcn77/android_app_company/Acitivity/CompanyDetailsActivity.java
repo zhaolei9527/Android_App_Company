@@ -9,6 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
@@ -17,10 +25,19 @@ import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.CompanyDetailsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.VolleyLoadPicture;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -35,13 +52,6 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
     com.tencent.smtt.sdk.WebView forumContext;
     @BindView(R.id.img_back)
     ImageView imgBack;
-
-    public static String html = "&lt;p&gt;\\U8bf7\\U4ed4\\U7ec6\\U9605\\U8bfb\\U672c\\U534f\\U8bae\\Uff0cApp\\U5e73\\U53f0\\U5c06\\U4f9d\\U636e\\U4ee5\\U4e0b\\U6761\\U4ef6\\U548c\\U6761\\U6b3e\\U4e3a\\U60a8\\U63d0\\U4f9b\\U670d\\U52a1\\U3002&lt;br/&gt;&lt;br/&gt;\\U6b22\\U8fce\\U9605\\U8bfbApp\\U5e73\\U53f0\\U7528\\U6237\\U534f\\U8bae(\\U4e0b\\U79f0\\U201c\\U672c\\U534f\\U8bae\\U201d)\\U3002\\U672c\\U534f\\U8bae\\U9610\\U8ff0\\U4e4b\\U6761\\U6b3e\\U548c\\U6761\\U4ef6\\U9002\\U7528\\U4e8e\\U60a8\\U4f7f\\U7528App\\U5e73\\U53f0\\U6240\\U63d0\\U4f9b\\U7684\\U5404\\U79cd\\U5de5\\U5177\\U548c\\U670d\\U52a1(\\U4e0b\\U79f0\\U201c\\U670d\\U52a1\\U201d)&lt;br/&gt;&lt;br/&gt;1\\Uff0e\\U670d\\U52a1\\U6761\\U6b3e\\U7684\\U786e\\U8ba4\\U5e73\\U53f0\\U6839\\U636e\\U672c\\U670d\\U52a1\\U6761\\U6b3e\\U53ca\\U5bf9\\U8be5\\U6761\\U6b3e\\U7684\\U4fee\\U6539\\U5411\\U7528\\U6237\\U63d0\\U4f9b\\U670d\\U52a1\\U3002\\U672c\\U670d\\U52a1\\U6761\\U6b3e\\U5177\\U6709\\U5408\\U540c\\U6cd5\\U4e0a\\U7684\\U6cd5\\U5f8b\\U6548\\U529b\\U3002&lt;br/&gt;\\U5982\\U679c\\U60a8\\U5bf9\\U534f\\U8bae\\U7684\\U4efb\\U4f55\\U6761\\U6b3e\\U8868\\U793a\\U5f02\\U8bae\\Uff0c\\U60a8\\U53ef\\U4ee5\\U9009\\U62e9\\U4e0d\\U6ce8\\U518c\\Uff0c\\U4e00\\U65e6\\U60a8\\U70b9\\U9009\\U201c\\U6ce8\\U518c\\U201d\\U5e76\\U901a\\U8fc7\\U6ce8\\U518c\\U7a0b\\U5e8f\\Uff0c\\U5373\\U8868\\U793a\\U60a8\\U81ea\\U613f\\U63a5\\U53d7\\U672c\\U534f\\U8bae\\U4e4b\\U6240\\U6709\\U6761\\U6b3e\\Uff0c\\U5e76\\U5df2\\U6210\\U4e3aApp\\U5e73\\U53f0\\U7684\\U6ce8\\U518c\\U4f1a\\U5458\\U3002\\U7528\\U6237\\U5728\\U4f7f\\U7528App\\U5e73\\U53f0\\U7684\\U540c\\U65f6\\Uff0c\\U540c\\U610f\\U63a5\\U53d7App\\U5e73\\U53f0\\U4f1a\\U5458\\U670d\\U52a1\\U63d0\\U4f9b\\U7684\\U5404\\U7c7b\\U4fe1\\U606f\\U670d\\U52a1&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20161217/1481957560686270.png&quot; title=&quot;1481957560686270.png&quot; alt=&quot;\\U5c4f\\U5e55\\U5feb\\U7167 2016-12-17 \\U4e0b\\U53482.51.17.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;2.\\U7b26\\U5408\\U4e0b\\U5217\\U6761\\U4ef6\\U4e4b\\U4e00\\U7684\\U4e2a\\U4eba\\U3001\\U7ec4\\U7ec7\\Uff0c\\U624d\\U80fd\\U7533\\U8bf7\\U6210\\U4e3aApp\\U5e73\\U53f0\\U7528\\U6237\\U3001\\U4f7f\\U7528\\U672c\\U534f\\U8bae\\U9879\\U4e0b\\U7684\\U670d\\U52a1\\Uff1a&lt;br/&gt;3.\\U5e74\\U6ee1\\U5341\\U516b\\U5468\\U5c81\\Uff0c\\U5e76\\U5177\\U6709\\U6c11\\U4e8b\\U6743\\U5229\\U80fd\\U529b\\U548c\\U6c11\\U4e8b\\U884c\\U4e3a\\U80fd\\U529b\\U7684\\U81ea\\U7136\\U4eba\\Uff1b&lt;br/&gt;4. \\U672a\\U6ee1\\U5341\\U516b\\U5468\\U5c81\\Uff0c\\U4f46\\U76d1\\U62a4\\U4eba\\Uff08\\U5305\\U62ec\\U4f46\\U4e0d\\U4ec5\\U9650\\U4e8e\\U7236\\U6bcd\\Uff09\\U4e88\\U4ee5\\U4e66\\U9762\\U540c\\U610f\\U7684\\U81ea\\U7136\\U4eba\\Uff1b&lt;br/&gt;5. \\U6839\\U636e\\U4e2d\\U56fd\\U6cd5\\U5f8b\\U3001\\U6cd5\\U89c4\\U6210\\U7acb\\U5e76\\U5408\\U6cd5\\U5b58\\U5728\\U7684\\U516c\\U53f8\\U7b49\\U4f01\\U4e1a\\U6cd5\\U4eba\\U3001\\U4e8b\\U4e1a\\U5355\\U4f4d\\U3001\\U793e\\U56e2\\U7ec4\\U7ec7\\U548c\\U5176\\U4ed6\\U7ec4\\U7ec7\\U3002\\U65e0\\U6c11\\U4e8b\\U884c\\U4e3a\\U80fd\\U529b\\U4eba\\U3001\\U9650\\U5236\\U6c11\\U4e8b\\U884c\\U4e3a\\U80fd\\U529b\\U4eba\\U4ee5\\U53ca\\U65e0\\U7ecf\\U8425\\U6216\\U7279\\U5b9a\\U7ecf\\U8425\\U8d44\\U683c\\U7684\\U7ec4\\U7ec7\\U4e0d\\U5f53\\U6ce8\\U518c\\U4e3a\\U7528\\U6237\\U7684\\Uff0c\\U5176\\U4e0e\\U672c\\U516c\\U53f8\\U4e4b\\U95f4\\U7684\\U534f\\U8bae\\U81ea\\U59cb\\U65e0\\U6548\\Uff0c\\U672c\\U516c\\U53f8\\U4e00\\U7ecf\\U53d1\\U73b0\\Uff0c\\U6709\\U6743\\U7acb\\U5373\\U6ce8\\U9500\\U8be5\\U7528\\U6237\\U3002&lt;br/&gt;6.\\U7528\\U6237\\U6709\\U6743\\U6309\\U7167App\\U5e73\\U53f0\\U89c4\\U5b9a\\U7684\\U7a0b\\U5e8f\\U548c\\U8981\\U6c42\\U4f7f\\U7528App\\U5e73\\U53f0\\U5411\\U4f1a\\U5458\\U63d0\\U4f9b\\U7684\\U5404\\U9879\\U7f51\\U7edc\\U670d\\U52a1\\Uff0c\\U5982\\U679c\\U4f1a\\U5458\\U5bf9\\U8be5\\U670d\\U52a1\\U6709\\U5f02\\U8bae\\Uff0c\\U53ef\\U4ee5\\U4e0e\\U6f6eApp\\U5e73\\U53f0\\U8054\\U7cfb\\U4ee5\\U4fbf\\U5f97\\U5230\\U53ca\\U65f6\\U89e3\\U51b3\\U3002&lt;br/&gt;7. \\U7528\\U6237\\U5728\\U7533\\U8bf7\\U4f7f\\U7528App\\U5e73\\U53f0\\U7f51\\U7edc\\U670d\\U52a1\\U65f6\\Uff0c\\U5fc5\\U987b\\U5411App\\U5e73\\U53f0\\U63d0\\U4f9b\\U51c6\\U786e\\U7684\\U4e2a\\U4eba\\U8d44\\U6599\\Uff0c\\U5982\\U4e2a\\U4eba\\U8d44\\U6599\\U6709\\U4efb\\U4f55\\U53d8\\U52a8\\Uff0c\\U5fc5\\U987b\\U53ca\\U65f6\\U66f4\\U65b0\\U3002&lt;br/&gt;8. \\U7528\\U6237\\U987b\\U540c\\U610f\\U63a5\\U53d7App\\U5e73\\U53f0\\U901a\\U8fc7\\U7535\\U5b50\\U90ae\\U4ef6\\U6216\\U5176\\U4ed6\\U65b9\\U5f0f\\U5411\\U4f1a\\U5458\\U53d1\\U9001\\U76f8\\U5173\\U5546\\U4e1a\\U4fe1\\U606f\\U3002&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;";
-
-    public static final String html2 = "<p>请仔细阅读本协议，App平台将依据以下条件和条款为您提供服务。<br/><br/>欢迎阅读App平台用户协议(下称“本协议”)。本协议阐述之条款和条件适用于您使用App平台所提供的各种工具和服务(下称“服务”)<br/><br/>1．服务条款的确认平台根据本服务条款及对该条款的修改向用户提供服务。本服务条款具有合同法上的法律效力。<br/>如果您对协议的任何条款表示异议，您可以选择不注册，一旦您点选“注册”并通过注册程序，即表示您自愿接受本协议之所有条款，并已成为App平台的注册会员。用户在使用App平台的同时，同意接受App平台会员服务提供的各类信息服务<br/></p><p><br/></p><p><img src=\"/ueditor/php/upload/image/20161217/1481957560686270.png\" title=\"1481957560686270.png\" alt=\"屏幕快照 2016-12-17 下午2.51.17.png\"/></p><p>2.符合下列条件之一的个人、组织，才能申请成为App平台用户、使用本协议项下的服务：<br/>3.年满十八周岁，并具有民事权利能力和民事行为能力的自然人；<br/>4. 未满十八周岁，但监护人（包括但不仅限于父母）予以书面同意的自然人；<br/>5. 根据中国法律、法规成立并合法存在的公司等企业法人、事业单位、社团组织和其他组织。无民事行为能力人、限制民事行为能力人以及无经营或特定经营资格的组织不当注册为用户的，其与本公司之间的协议自始无效，本公司一经发现，有权立即注销该用户。<br/>6.用户有权按照App平台规定的程序和要求使用App平台向会员提供的各项网络服务，如果会员对该服务有异议，可以与潮App平台联系以便得到及时解决。<br/>7. 用户在申请使用App平台网络服务时，必须向App平台提供准确的个人资料，如个人资料有任何变动，必须及时更新。<br/>8. 用户须同意接受App平台通过电子邮件或其他方式向会员发送相关商业信息。<br/><br/></p>";
-    String html3 = "\\u7b80\\u5355\\u8bf4\\u4e00\\u4e0b\\u4e1a\\u52a1\\u573a\\u666f\\uff0c\\u524d\\u53f0\\u7528\\u6237\\u901a\\u8fc7\\u0069\\u006e\\u0070\\u0075\\u0074\\u8f93\\u5165\\u5185\\u5bb9\\uff0c\\u5728\\u79bb\\u5f00\\u7126\\u70b9\\u65f6\\uff0c\\u5c06\\u5185\\u5bb9\\u5728\\u0064\\u0069\\u0076\\u4e2d\\u663e\\u793a\\u3002\\u0020\\u000d\\u000a\\u8fd9\\u65f6\\u9047\\u5230\\u4e00\\u4e2a\\u95ee\\u9898\\uff0c\\u5982\\u679c\\u7528\\u6237\\u8f93\\u5165\\u4e86\\u0068\\u0074\\u006d\\u006c\\u6807\\u7b7e\\uff0c\\u5219\\u5728\\u0064\\u0069\\u0076\\u663e\\u793a\\u4e2d\\uff0c\\u6807\\u7b7e\\u88ab\\u89e3\\u6790\\u3002\\u0020\\u000d\\u000a\\u7531\\u4e8e\\u662f\\u7eaf\\u524d\\u7aef\\u64cd\\u4f5c\\uff0c\\u4e0d\\u6d89\\u53ca\\u540e\\u7aef\\uff0c\\u56e0\\u6b64\\u9700\\u8981\\u901a\\u8fc7\\u006a\\u0073\\u5bf9\\u8f93\\u5165\\u5185\\u5bb9\\u8fdb\\u884c\\u8f6c\\u4e49\\u3002\\u000d\\u000a\\u000d\\u000a\\u8fd9\\u91cc\\u63d0\\u4f9b\\u4e00\\u4e2a\\u975e\\u5e38\\u7b80\\u5355\\u6709\\u6548\\u7684\\u8f6c\\u4e49\\u65b9\\u6848\\uff0c\\u5229\\u7528\\u4e86\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u548c\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\u0020\\u000d\\u000a\\u6ce8\\uff1a\\u706b\\u72d0\\u4e0d\\u652f\\u6301\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff0c\\u9700\\u8981\\u4f7f\\u7528\\u0020\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\u0020\\u5c5e\\u6027\\uff0c\\u800c\\u0049\\u0045\\u65e9\\u671f\\u7248\\u672c\\u4e0d\\u652f\\u6301\\u6b64\\u5c5e\\u6027\\uff0c\\u4e3a\\u4e86\\u540c\\u65f6\\u517c\\u5bb9\\u0049\\u0045\\u53ca\\u706b\\u72d0\\uff0c\\u9700\\u8981\\u8fdb\\u884c\\u5224\\u65ad\\u64cd\\u4f5c\\u002e\\u000d\\u000a\\u000d\\u000a\\u56e0\\u4e3a\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff08\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\uff09\\u4f1a\\u83b7\\u53d6\\u7eaf\\u6587\\u672c\\u5185\\u5bb9\\uff0c\\u5ffd\\u7565\\u0068\\u0074\\u006d\\u006c\\u8282\\u70b9\\u6807\\u7b7e\\uff0c\\u800c\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u4f1a\\u663e\\u793a\\u6807\\u7b7e\\u5185\\u5bb9\\uff0c\\u0020\\u000d\\u000a\\u6240\\u4ee5\\u6211\\u4eec\\u5148\\u5c06\\u9700\\u8f6c\\u4e49\\u7684\\u5185\\u5bb9\\u8d4b\\u503c\\u7ed9\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff08\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\uff09\\uff0c\\u518d\\u83b7\\u53d6\\u5b83\\u7684\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u5c5e\\u6027\\uff0c\\u8fd9\\u65f6\\u83b7\\u53d6\\u5230\\u7684\\u5c31\\u662f\\u8f6c\\u4e49\\u540e\\u6587\\u672c\\u5185\\u5bb9\\u3002\\u0020\\u000d\\u000a\\u4ee3\\u7801\\u5982\\u4e0b\\uff1a";
-    String html4="\\u0026\\u006c\\u0074\\u003b\\u0070\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0074\\u006f\\u0070\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0062\\u006f\\u0074\\u0074\\u006f\\u006d\\u003a\\u0020\\u0031\\u002e\\u0031\\u0065\\u006d\\u003b\\u0020\\u0070\\u0061\\u0064\\u0064\\u0069\\u006e\\u0067\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0066\\u0061\\u006d\\u0069\\u006c\\u0079\\u003a\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0069\\u0063\\u0072\\u006f\\u0073\\u006f\\u0066\\u0074\\u0020\\u0079\\u0061\\u0068\\u0065\\u0069\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0073\\u0069\\u007a\\u0065\\u003a\\u0020\\u0031\\u0034\\u0070\\u0078\\u003b\\u0020\\u0077\\u0068\\u0069\\u0074\\u0065\\u002d\\u0073\\u0070\\u0061\\u0063\\u0065\\u003a\\u0020\\u006e\\u006f\\u0072\\u006d\\u0061\\u006c\\u003b\\u0020\\u0062\\u0061\\u0063\\u006b\\u0067\\u0072\\u006f\\u0075\\u006e\\u0064\\u002d\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0020\\u0072\\u0067\\u0062\\u0028\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u0029\\u003b\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u0020\\u0020\\u0020\\u7b80\\u5355\\u8bf4\\u4e00\\u4e0b\\u4e1a\\u52a1\\u573a\\u666f\\uff0c\\u524d\\u53f0\\u7528\\u6237\\u901a\\u8fc7\\u0069\\u006e\\u0070\\u0075\\u0074\\u8f93\\u5165\\u5185\\u5bb9\\uff0c\\u5728\\u79bb\\u5f00\\u7126\\u70b9\\u65f6\\uff0c\\u5c06\\u5185\\u5bb9\\u5728\\u0064\\u0069\\u0076\\u4e2d\\u663e\\u793a\\u3002\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u8fd9\\u65f6\\u9047\\u5230\\u4e00\\u4e2a\\u95ee\\u9898\\uff0c\\u5982\\u679c\\u7528\\u6237\\u8f93\\u5165\\u4e86\\u0068\\u0074\\u006d\\u006c\\u6807\\u7b7e\\uff0c\\u5219\\u5728\\u0064\\u0069\\u0076\\u663e\\u793a\\u4e2d\\uff0c\\u6807\\u7b7e\\u88ab\\u89e3\\u6790\\u3002\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u7531\\u4e8e\\u662f\\u7eaf\\u524d\\u7aef\\u64cd\\u4f5c\\uff0c\\u4e0d\\u6d89\\u53ca\\u540e\\u7aef\\uff0c\\u56e0\\u6b64\\u9700\\u8981\\u901a\\u8fc7\\u006a\\u0073\\u5bf9\\u8f93\\u5165\\u5185\\u5bb9\\u8fdb\\u884c\\u8f6c\\u4e49\\u3002\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u0070\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0074\\u006f\\u0070\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0062\\u006f\\u0074\\u0074\\u006f\\u006d\\u003a\\u0020\\u0031\\u002e\\u0031\\u0065\\u006d\\u003b\\u0020\\u0070\\u0061\\u0064\\u0064\\u0069\\u006e\\u0067\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0066\\u0061\\u006d\\u0069\\u006c\\u0079\\u003a\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0069\\u0063\\u0072\\u006f\\u0073\\u006f\\u0066\\u0074\\u0020\\u0079\\u0061\\u0068\\u0065\\u0069\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0073\\u0069\\u007a\\u0065\\u003a\\u0020\\u0031\\u0034\\u0070\\u0078\\u003b\\u0020\\u0077\\u0068\\u0069\\u0074\\u0065\\u002d\\u0073\\u0070\\u0061\\u0063\\u0065\\u003a\\u0020\\u006e\\u006f\\u0072\\u006d\\u0061\\u006c\\u003b\\u0020\\u0062\\u0061\\u0063\\u006b\\u0067\\u0072\\u006f\\u0075\\u006e\\u0064\\u002d\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0020\\u0072\\u0067\\u0062\\u0028\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u0029\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u0020\\u0020\\u0020\\u8fd9\\u91cc\\u63d0\\u4f9b\\u4e00\\u4e2a\\u975e\\u5e38\\u7b80\\u5355\\u6709\\u6548\\u7684\\u8f6c\\u4e49\\u65b9\\u6848\\uff0c\\u5229\\u7528\\u4e86\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u548c\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u0065\\u006d\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u6ce8\\uff1a\\u706b\\u72d0\\u4e0d\\u652f\\u6301\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff0c\\u9700\\u8981\\u4f7f\\u7528\\u0026\\u006c\\u0074\\u003b\\u002f\\u0065\\u006d\\u0026\\u0067\\u0074\\u003b\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0065\\u006d\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u5c5e\\u6027\\uff0c\\u800c\\u0049\\u0045\\u65e9\\u671f\\u7248\\u672c\\u4e0d\\u652f\\u6301\\u6b64\\u5c5e\\u6027\\uff0c\\u4e3a\\u4e86\\u540c\\u65f6\\u517c\\u5bb9\\u0049\\u0045\\u53ca\\u706b\\u72d0\\uff0c\\u9700\\u8981\\u8fdb\\u884c\\u5224\\u65ad\\u64cd\\u4f5c\\u002e\\u0026\\u006c\\u0074\\u003b\\u002f\\u0065\\u006d\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u0070\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0074\\u006f\\u0070\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u006d\\u0061\\u0072\\u0067\\u0069\\u006e\\u002d\\u0062\\u006f\\u0074\\u0074\\u006f\\u006d\\u003a\\u0020\\u0031\\u002e\\u0031\\u0065\\u006d\\u003b\\u0020\\u0070\\u0061\\u0064\\u0064\\u0069\\u006e\\u0067\\u003a\\u0020\\u0030\\u0070\\u0078\\u003b\\u0020\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0066\\u0061\\u006d\\u0069\\u006c\\u0079\\u003a\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u006d\\u0069\\u0063\\u0072\\u006f\\u0073\\u006f\\u0066\\u0074\\u0020\\u0079\\u0061\\u0068\\u0065\\u0069\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u003b\\u0020\\u0066\\u006f\\u006e\\u0074\\u002d\\u0073\\u0069\\u007a\\u0065\\u003a\\u0020\\u0031\\u0034\\u0070\\u0078\\u003b\\u0020\\u0077\\u0068\\u0069\\u0074\\u0065\\u002d\\u0073\\u0070\\u0061\\u0063\\u0065\\u003a\\u0020\\u006e\\u006f\\u0072\\u006d\\u0061\\u006c\\u003b\\u0020\\u0062\\u0061\\u0063\\u006b\\u0067\\u0072\\u006f\\u0075\\u006e\\u0064\\u002d\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0020\\u0072\\u0067\\u0062\\u0028\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u002c\\u0020\\u0032\\u0035\\u0035\\u0029\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u0020\\u0020\\u0020\\u56e0\\u4e3a\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff08\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\uff09\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u4f1a\\u83b7\\u53d6\\u7eaf\\u6587\\u672c\\u5185\\u5bb9\\uff0c\\u5ffd\\u7565\\u0068\\u0074\\u006d\\u006c\\u8282\\u70b9\\u6807\\u7b7e\\uff0c\\u800c\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u4f1a\\u663e\\u793a\\u6807\\u7b7e\\u5185\\u5bb9\\uff0c\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u6240\\u4ee5\\u6211\\u4eec\\u5148\\u5c06\\u9700\\u8f6c\\u4e49\\u7684\\u5185\\u5bb9\\u8d4b\\u503c\\u7ed9\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0054\\u0065\\u0078\\u0074\\uff08\\u0074\\u0065\\u0078\\u0074\\u0043\\u006f\\u006e\\u0074\\u0065\\u006e\\u0074\\uff09\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\uff0c\\u518d\\u83b7\\u53d6\\u5b83\\u7684\\u0026\\u006c\\u0074\\u003b\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0062\\u006f\\u0078\\u002d\\u0073\\u0069\\u007a\\u0069\\u006e\\u0067\\u003a\\u0020\\u0062\\u006f\\u0072\\u0064\\u0065\\u0072\\u002d\\u0062\\u006f\\u0078\\u003b\\u005c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u0069\\u006e\\u006e\\u0065\\u0072\\u0048\\u0054\\u004d\\u004c\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0074\\u0072\\u006f\\u006e\\u0067\\u0026\\u0067\\u0074\\u003b\\u5c5e\\u6027\\uff0c\\u8fd9\\u65f6\\u83b7\\u53d6\\u5230\\u7684\\u5c31\\u662f\\u8f6c\\u4e49\\u540e\\u6587\\u672c\\u5185\\u5bb9\\u3002\\u0026\\u006e\\u0062\\u0073\\u0070\\u003b\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u4ee3\\u7801\\u5982\\u4e0b\\uff1a\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u0070\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u0020\\u0020\\u0020\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u002f\\u0026\\u0067\\u0074\\u003b\\u005c\\u006e\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u002b\\u000d\\u000a\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0020\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b";
-    String html5="\\u0026\\u006c\\u0074\\u003b\\u0070\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0009\\u0026\\u006c\\u0074\\u003b\\u0068\\u0034\\u0020\\u0063\\u006c\\u0061\\u0073\\u0073\\u003d\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0048\\u0065\\u0061\\u0064\\u0048\\u0034\\u0020\\u0059\\u0061\\u0048\\u0065\\u0069\\u0020\\u0066\\u007a\\u0031\\u0036\\u0020\\u0063\\u006f\\u006c\\u002d\\u0062\\u006c\\u0075\\u0065\\u0030\\u0032\\u0020\\u0066\\u0077\\u006e\\u006f\\u006e\\u0065\\u0020\\u0066\\u006c\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0066\\u006f\\u006e\\u0074\\u002d\\u0066\\u0061\\u006d\\u0069\\u006c\\u0079\\u003a\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0066\\u006f\\u006e\\u0074\\u002d\\u0077\\u0065\\u0069\\u0067\\u0068\\u0074\\u003a\\u006e\\u006f\\u0072\\u006d\\u0061\\u006c\\u003b\\u0066\\u006f\\u006e\\u0074\\u002d\\u0073\\u0069\\u007a\\u0065\\u003a\\u0031\\u0036\\u0070\\u0078\\u003b\\u0062\\u0061\\u0063\\u006b\\u0067\\u0072\\u006f\\u0075\\u006e\\u0064\\u002d\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0023\\u0046\\u0046\\u0046\\u0046\\u0046\\u0046\\u003b\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0023\\u0030\\u0034\\u0037\\u0034\\u0043\\u0038\\u0020\\u0021\\u0069\\u006d\\u0070\\u006f\\u0072\\u0074\\u0061\\u006e\\u0074\\u003b\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0009\\u0009\\u0026\\u006c\\u0074\\u003b\\u0073\\u0070\\u0061\\u006e\\u0020\\u0073\\u0074\\u0079\\u006c\\u0065\\u003d\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0063\\u006f\\u006c\\u006f\\u0072\\u003a\\u0023\\u0030\\u0030\\u0044\\u0035\\u0046\\u0046\\u003b\\u0026\\u0071\\u0075\\u006f\\u0074\\u003b\\u0026\\u0067\\u0074\\u003b\\u5de5\\u5177\\u7b80\\u4ecb\\u0026\\u006c\\u0074\\u003b\\u002f\\u0073\\u0070\\u0061\\u006e\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0009\\u0026\\u006c\\u0074\\u003b\\u002f\\u0068\\u0034\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0026\\u006c\\u0074\\u003b\\u0070\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0009\\u0026\\u006c\\u0074\\u003b\\u0062\\u0072\\u0020\\u002f\\u0026\\u0067\\u0074\\u003b\\u000d\\u000a\\u0026\\u006c\\u0074\\u003b\\u002f\\u0070\\u0026\\u0067\\u0074\\u003b";
     private Dialog dialog;
 
     @Override
@@ -51,21 +61,19 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
 
 
     private class LoopAdapter extends LoopPagerAdapter {
-        private int[] imgs = {
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-        };
 
-        public LoopAdapter(com.jude.rollviewpager.RollPagerView viewPager) {
+        ArrayList<CompanyDetailsBean.ResBean.LunboBean> datas = new ArrayList();
+
+        public LoopAdapter(com.jude.rollviewpager.RollPagerView viewPager, List datas) {
             super(viewPager);
+            this.datas = (ArrayList<CompanyDetailsBean.ResBean.LunboBean>) datas;
         }
 
         @Override
         public View getView(ViewGroup container, int position) {
             ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
+            VolleyLoadPicture vlp = new VolleyLoadPicture(container.getContext(), view);
+            vlp.getmImageLoader().get(UrlUtils.BaseImg + datas.get(position).getImg(), vlp.getOne_listener());
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return view;
@@ -73,14 +81,13 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
 
         @Override
         public int getRealCount() {
-            return imgs.length;
+            return datas.size();
         }
     }
 
     @Override
     protected void initview() {
         RollPagerView.setHintView(new IconHintView(context, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(context, getResources().getDimension(R.dimen.x7))));
-        RollPagerView.setAdapter(new LoopAdapter(RollPagerView));
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -88,15 +95,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             }
         });
         RollPagerView.setPlayDelay(3000);
-        forumContext.getSettings().setDefaultTextEncodingName("UTF-8");
-        forumContext.post(new Runnable() {
-            @Override
-            public void run() {
-                String decode = Utils.decode(html5);
-                Spanned spanned = Html.fromHtml(decode);
-                Utils.inSetWebView(spanned.toString(), forumContext, context);
-            }
-        });
+
     }
 
     @Override
@@ -135,7 +134,69 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initData() {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "jianjie", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.isEmpty()) {
+                    getCompanyDetails();
 
+                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                } else {
+                    CompanyDetailsBean companyDetailsBean = new Gson().fromJson(decode, CompanyDetailsBean.class);
+                    if (companyDetailsBean.getStu().equals("1")) {
+                        SPUtil.putAndApply(context, "jianjie", s);
+
+                        getCompanyDetails();
+
+                    } else {
+                        getCompanyDetails();
+
+                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                getCompanyDetails();
+
+                EasyToast.showShort(context, "网络异常，请稍后再试");
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                return map;
+            }
+        };
+
+        boolean connected = Utils.isConnected(context);
+        if (connected) {
+            requestQueue.add(stringRequest);
+        } else {
+            getCompanyDetails();
+
+            EasyToast.showShort(context, "网络异常，未连接网络");
+        }
+
+    }
+
+    private void getCompanyDetails() {
+        final CompanyDetailsBean jianjie = new Gson().fromJson(SPUtil.get(context, "jianjie", "").toString(), CompanyDetailsBean.class);
+        forumContext.post(new Runnable() {
+            @Override
+            public void run() {
+                String decode = Utils.decode(jianjie.getRes().getJianjie().getContent());
+                Spanned spanned = Html.fromHtml(decode);
+                Utils.inSetWebView(spanned.toString(), forumContext, context);
+            }
+        });
+        RollPagerView.setAdapter(new LoopAdapter(RollPagerView,jianjie.getRes().getLunbo()));
     }
 
     @Override

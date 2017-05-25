@@ -51,8 +51,8 @@ public abstract class BaseFragment extends Fragment {
         mRootView = inflater.inflate(setLayoutResouceId(), container, false);
         unbinder = ButterKnife.bind(this, mRootView);
         mActivity = (MainActivity) getActivity();
-        initData(getArguments());
         initView();
+        initData(getArguments());
         mIsPrepare = true;
         onLazyLoad();
         setListener();

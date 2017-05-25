@@ -7,8 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zzcn77.android_app_company.Bean.NewsBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -29,15 +30,14 @@ public class Newsadapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<NewsBean.ResBean> datas = new ArrayList();
 
     public Newsadapter(Context context, ArrayList datas) {
         this.context = context;
         this.datas = datas;
-
     }
 
     @Override
@@ -66,7 +66,11 @@ public class Newsadapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu_r1_c1, viewHolder.imageView);
+
+        viewHolder.imageView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
+        viewHolder.title.setText(datas.get(position).getTitle());
+        viewHolder.tvContent.setText(datas.get(position).getKeywords());
+
         return convertView;
     }
 

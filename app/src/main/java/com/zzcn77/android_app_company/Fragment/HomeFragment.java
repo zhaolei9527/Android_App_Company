@@ -11,29 +11,33 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jude.rollviewpager.OnItemClickListener;
-import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PeomotionDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
+import com.zzcn77.android_app_company.Adapter.LoopAdapter;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
+import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.MyListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 import static com.zzcn77.android_app_company.R.id.ll_callphone;
 
@@ -58,8 +62,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     TextView tvTitle;
     @BindView(R.id.tv_message)
     TextView tvMessage;
-    @BindView(ll_callphone)
-    LinearLayout llCallphone;
     @BindView(R.id.rl_Company_Details)
     RelativeLayout rlCompanyDetails;
     @BindView(R.id.View2)
@@ -88,18 +90,28 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     RelativeLayout rlTitlePromotionMore;
     @BindView(R.id.tv_phone)
     TextView tvPhone;
-    Unbinder unbinder;
+    @BindView(R.id.ll_callphone)
+    LinearLayout llCallphone;
+    @BindView(R.id.sv)
+    ScrollView sv;
+
     //最新动态列表
-    private PagerAdapter newsAdapter = new PagerAdapter() {
+    class newsAdapter extends PagerAdapter {
+
+        ArrayList<IndexBean.ResBean.DongtaiBean> datas = new ArrayList<>();
+
+        public newsAdapter(List datas) {
+            this.datas = (ArrayList<IndexBean.ResBean.DongtaiBean>) datas;
+        }
+
         @Override
         public int getCount() {
-            return 10;
+            return datas.size();
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
-
         }
 
         @Override
@@ -115,7 +127,12 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
             View inflate = View.inflate(mActivity, R.layout.news_item_layout, null);
             com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView = (com.facebook.drawee.view.SimpleDraweeView) inflate.findViewById(R.id.SimpleDraweeView);
-            Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
+            TextView tv_title = (TextView) inflate.findViewById(R.id.tv_title);
+            TextView tvmessage = (TextView) inflate.findViewById(R.id.tv_message);
+            tv_title.setText(datas.get(position).getTitle());
+            tvmessage.setText(datas.get(position).getKeywords());
+            SimpleDraweeView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
+
             container.addView(inflate);
 
             inflate.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +141,11 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                     mActivity.startActivity(new Intent(mActivity, NewsDetailsActivity.class));
                 }
             });
-
-
             return inflate;
         }
-    };
+    }
+
+
     //最新动态
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -139,7 +156,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         @Override
         public void onPageSelected(int position) {
 
-            tvNewItem.setText(String.valueOf(position + 1) + "/10");
+            tvNewItem.setText(String.valueOf(position + 1) + "/" + vpNews.getAdapter().getCount());
 
         }
 
@@ -172,33 +189,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
     }
 
-    //轮播图
-    private class LoopAdapter extends LoopPagerAdapter {
-        private int[] imgs = {
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-                R.drawable.i_banner,
-        };
-
-        public LoopAdapter(RollPagerView viewPager) {
-            super(viewPager);
-        }
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return view;
-        }
-
-        @Override
-        public int getRealCount() {
-            return imgs.length;
-        }
-    }
 
     @Override
     protected int setLayoutResouceId() {
@@ -208,9 +198,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     @Override
     protected void initView() {
         super.initView();
-
         RollPagerView.setHintView(new IconHintView(mActivity, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(mActivity, getResources().getDimension(R.dimen.x7))));
-        RollPagerView.setAdapter(new LoopAdapter(RollPagerView));
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -218,18 +206,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             }
         });
         RollPagerView.setPlayDelay(3000);
-
         Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
-
         //假数据
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        lvPromotion.setAdapter(new Promotionadapter(mActivity, arrayList));
-        vpNews.setAdapter(newsAdapter);
         vpNews.addOnPageChangeListener(onPageChangeListener);
-
         llCallphone.setOnClickListener(this);
         rlCompanyDetails.setOnClickListener(this);
         rlTitleCompanyDetails.setOnClickListener(this);
@@ -244,9 +223,23 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
     }
 
+    private void getindex() {
+        IndexBean index = new Gson().fromJson(SPUtil.get(mActivity, "index", "").toString(), IndexBean.class);
+        lvPromotion.setAdapter(new Promotionadapter(mActivity, index.getRes().getHuodong()));
+        RollPagerView.setAdapter(new LoopAdapter(RollPagerView, index.getRes().getLunbo()));
+        tvTitle.setText(index.getRes().getJianjie().getTitle());
+        SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getPic());
+        tvMessage.setText(index.getRes().getJianjie().getKeywords());
+        tvPhone.setText(index.getRes().getJianjie().getTel());
+        vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
+        tvNewItem.setText(String.valueOf(1) + "/" + vpNews.getAdapter().getCount());
+        sv.scrollTo(0, 0);
+
+    }
+
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
-
+        getindex();
     }
 }

@@ -1,19 +1,39 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.app.Dialog;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.ConsultBean;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
+
+import static com.zzcn77.android_app_company.R.id.btn_save;
 
 /**
  * Created by 赵磊 on 2017/5/24.
  */
 
-public class ConsultActivity extends BaseActivity {
+public class ConsultActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.et_title)
@@ -26,8 +46,9 @@ public class ConsultActivity extends BaseActivity {
     EditText etEmail;
     @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.btn_save)
+    @BindView(btn_save)
     Button btnSave;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -42,6 +63,9 @@ public class ConsultActivity extends BaseActivity {
     @Override
     protected void initListener() {
 
+        imgBack.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+
     }
 
     @Override
@@ -49,4 +73,116 @@ public class ConsultActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
+            case btn_save:
+                dialog = Utils.showLoadingDialog(context);
+                final String title = etTitle.getText().toString();
+                final String content = etContent.getText().toString();
+                final String email = etEmail.getText().toString();
+                final String name = etName.getText().toString();
+                final String phone = etPhone.getText().toString();
+
+                if (title.trim().isEmpty()) {
+                    Toast.makeText(context, etTitle.getHint().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (content.trim().isEmpty()) {
+                    Toast.makeText(context, etContent.getText().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (phone.trim().isEmpty()) {
+                    Toast.makeText(context, etPhone.getHint().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (email.trim().isEmpty()) {
+                    Toast.makeText(context, etEmail.getHint().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (name.trim().isEmpty()) {
+                    Toast.makeText(context, etName.getHint().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!phone.matches("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")) {
+                    EasyToast.showShort(context, getResources().getString(R.string.phoneisnotregx));
+                    return;
+                }
+
+                if (!email.matches("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")) {
+                    EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
+                    return;
+                }
+
+
+                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "consult", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        String decode = Utils.decode(s);
+                        if (decode.isEmpty()) {
+                            dialog.dismiss();
+
+                            EasyToast.showShort(context, "网络异常，请稍后再试");
+
+                        } else {
+                            ConsultBean consultBean = new Gson().fromJson(decode, ConsultBean.class);
+                            if (String.valueOf(consultBean.getStu()).equals("1")) {
+                                // TODO: 2017/5/19 注册
+                                dialog.dismiss();
+
+                                EasyToast.showShort(context, "提交成功");
+                                etName.setText("");
+                                etEmail.setText("");
+                                etContent.setText("");
+                                etPhone.setText("");
+                                etTitle.setText("");
+                            } else {
+                                dialog.dismiss();
+                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        dialog.dismiss();
+                        volleyError.printStackTrace();
+                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                    }
+                })
+
+                {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("key", UrlUtils.key);
+                        map.put("id","962870");
+                        map.put("title",title);
+                        map.put("content",content);
+                        map.put("tel",phone);
+                        map.put("email",email);
+                        map.put("name",name);
+                        return map;
+                    }
+                };
+
+                boolean connected = Utils.isConnected(context);
+                if (connected) {
+                    requestQueue.add(stringRequest);
+                } else {
+                    dialog.dismiss();
+                    EasyToast.showShort(context, "网络异常，未连接网络");
+                }
+
+                break;
+        }
+    }
 }
