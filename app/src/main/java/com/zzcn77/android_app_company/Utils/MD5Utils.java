@@ -1,5 +1,7 @@
 package com.zzcn77.android_app_company.Utils;
 
+import android.text.TextUtils;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -9,18 +11,26 @@ import java.security.NoSuchAlgorithmException;
 
 public class MD5Utils {
 
-    public static String getMD5(String val) throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.update(val.getBytes());
-        byte[] m = md5.digest();//加密
-        return getString(m);
-    }
-
-    private static String getString(byte[] b) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < b.length; i++) {
-            sb.append(b[i]);
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
         }
-        return sb.toString();
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

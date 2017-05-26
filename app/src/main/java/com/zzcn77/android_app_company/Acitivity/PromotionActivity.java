@@ -7,16 +7,30 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.zzcn77.android_app_company.Adapter.Promotionadapter;
+import com.google.gson.Gson;
+import com.zzcn77.android_app_company.Adapter.PromotionListAdapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.CuxiaoBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -37,8 +51,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
-    private Promotionadapter promotionadapter;
-
+    private int page = 1;
+    private PromotionListAdapter promotionListAdapter;
     @Override
     protected int setthislayout() {
         return R.layout.promotion_layout;
@@ -82,14 +96,54 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
 
     @Override
     protected void initData() {
-        //假数据
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        promotionadapter = new Promotionadapter(context, arrayList);
-        lvSwipeTarget.setAdapter(promotionadapter);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "cuxiao", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.contains("code\":\"111\"")) {
+                    Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+                    page = page - 1;
+                    return;
+                } else {
+                    CuxiaoBean cuxiaoBean = new Gson().fromJson(decode, CuxiaoBean.class);
+                    if (cuxiaoBean.getStu().equals("1")) {
+                        if (page == 1) {
+                            promotionListAdapter = new PromotionListAdapter(context, cuxiaoBean.getRes());
+                            lvSwipeTarget.setAdapter(promotionListAdapter);
+                        } else {
+                            promotionListAdapter.setDatas((ArrayList) cuxiaoBean.getRes());
+                        }
+                        promotionListAdapter.notifyDataSetChanged();
+                    } else {
+                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                EasyToast.showShort(context, "网络异常，请稍后再试");
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                map.put("p", String.valueOf(page));
+                return map;
+            }
+        };
+        boolean connected = Utils.isConnected(context);
+        if (connected) {
+            requestQueue.add(stringRequest);
+        } else {
+            EasyToast.showShort(context, "网络异常，未连接网络");
+        }
     }
 
     //上拉加载
@@ -100,17 +154,11 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = promotionadapter.getDatas();
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                promotionadapter.setDatas(datas);
-                promotionadapter.notifyDataSetChanged();
+                page = page + 1;
+                initData();
                 swipeToLoadLayout.setLoadingMore(false);
                 lvSwipeTarget.setEnabled(true);
                 SwipeRefreshLayout.setEnabled(true);
-                EasyToast.showShort(context, "加载完成");
             }
         }, 2000);
 
@@ -124,15 +172,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList arrayList = new ArrayList();
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                promotionadapter.setDatas(arrayList);
-                promotionadapter.notifyDataSetChanged();
+                page = 1;
+                initData();
                 lvSwipeTarget.setEnabled(true);
                 SwipeRefreshLayout.setRefreshing(false);
             }
@@ -151,6 +192,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(context, PeomotionDetailsActivity.class));
+        Intent intent = new Intent(context, PeomotionDetailsActivity.class);
+        intent.putExtra("id",promotionListAdapter.getItem(position));
+        startActivity(intent);
     }
 }

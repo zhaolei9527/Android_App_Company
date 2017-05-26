@@ -25,7 +25,6 @@ import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,15 +88,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             // TODO: 2017/5/18
             //登录校验密码，
-            try {
-                passwordmd5 = MD5Utils.getMD5(MD5Utils.getMD5(password).toLowerCase().toString());
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-                dialog.dismiss();
-                EasyToast.showShort(context, "网络异常，请稍后再试");
-                return;
-            }
-
+                passwordmd5 = MD5Utils.md5(password);
+                passwordmd5 = MD5Utils.md5(passwordmd5);
 
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "login", new Response.Listener<String>() {

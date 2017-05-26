@@ -23,7 +23,6 @@ import com.zzcn77.android_app_company.Utils.MD5Utils;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +125,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        if (password.length() < 6) {
+            EasyToast.showShort(context,"密码长度过短，最少六位密码");
+            return;
+        }
+
         passwordAgain = etPasswordAgain.getText().toString().trim();
         if (passwordAgain.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.passwordagain));
@@ -139,14 +143,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
         final Dialog dialog = Utils.showLoadingDialog(context);
 
-        try {
-            passwordmd5 = MD5Utils.getMD5(MD5Utils.getMD5(passwordAgain).toLowerCase().toString());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            dialog.dismiss();
-            EasyToast.showShort(context, "网络异常，请稍后再试");
-            return;
-        }
+            passwordmd5 = MD5Utils.md5(passwordAgain);
+            passwordmd5 = MD5Utils.md5(passwordmd5);
+
 
         Toast.makeText(context, account, Toast.LENGTH_SHORT).show();
         Toast.makeText(context, phone, Toast.LENGTH_SHORT).show();
@@ -163,16 +162,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     RegistBean registBean = new Gson().fromJson(decode, RegistBean.class);
                     if (registBean.getStu().equals("1")) {
                         // TODO: 2017/5/19 注册
-                        if (registBean.getMsg().contains("注册成功")){
+                        if (registBean.getMsg().contains("注册成功")) {
                             EasyToast.showShort(context, getResources().getString(R.string.goodregister));
                             finish();
-                        }else {
+                        } else {
 
                         }
                     } else {
-                        if (registBean.getMsg().contains("该用户名已注册")){
-                            Toast.makeText(context,"用户名已存在", Toast.LENGTH_LONG).show();
-                        }else {
+                        if (registBean.getMsg().contains("该用户名已注册")) {
+                            Toast.makeText(context, "用户名已存在", Toast.LENGTH_LONG).show();
+                        } else if (registBean.getMsg().contains("该邮箱已注册")) {
+                            Toast.makeText(context, "该邮箱已注册", Toast.LENGTH_LONG).show();
+                        } else if (registBean.getMsg().contains("该手机号已注册")) {
+                            Toast.makeText(context, "该手机号已注册", Toast.LENGTH_LONG).show();
+                        } else {
                             EasyToast.showShort(context, "服务器异常，请稍后再试");
                         }
                         dialog.dismiss();
@@ -192,11 +195,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
-                map.put("username",account);
-                map.put("tel",phone);
+                map.put("username", account);
+                map.put("tel", phone);
                 map.put("email", emali);
                 map.put("password", passwordmd5);
-
 
 
                 return map;

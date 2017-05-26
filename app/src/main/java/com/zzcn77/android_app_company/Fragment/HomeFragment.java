@@ -21,6 +21,7 @@ import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PeomotionDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
 import com.zzcn77.android_app_company.Adapter.LoopAdapter;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
@@ -28,7 +29,6 @@ import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
-import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
@@ -94,6 +94,8 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     LinearLayout llCallphone;
     @BindView(R.id.sv)
     ScrollView sv;
+    private Promotionadapter promotionadapter;
+    private IndexBean index;
 
     //最新动态列表
     class newsAdapter extends PagerAdapter {
@@ -138,7 +140,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             inflate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.startActivity(new Intent(mActivity, NewsDetailsActivity.class));
+                    Intent intent = new Intent(mActivity, NewsDetailsActivity.class);
+                    intent.putExtra("id", String.valueOf(datas.get(position).getId()));
+                    mActivity.startActivity(intent);
                 }
             });
             return inflate;
@@ -202,7 +206,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                EasyToast.showShort(mActivity, "position" + position);
+                Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
+                intent.putExtra("id",index.getRes().getLunbo().get(position).getId());
+                startActivity(intent);
             }
         });
         RollPagerView.setPlayDelay(3000);
@@ -215,17 +221,23 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         rlTitleNewsMore.setOnClickListener(this);
         rlTitlePromotionMore.setOnClickListener(this);
         lvPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            private Intent intent;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mActivity, PeomotionDetailsActivity.class));
+                intent = new Intent(mActivity, PeomotionDetailsActivity.class);
+                intent.putExtra("id",promotionadapter.getItem(position));
+                startActivity(intent);
             }
         });
 
     }
 
     private void getindex() {
-        IndexBean index = new Gson().fromJson(SPUtil.get(mActivity, "index", "").toString(), IndexBean.class);
-        lvPromotion.setAdapter(new Promotionadapter(mActivity, index.getRes().getHuodong()));
+        index = new Gson().fromJson(SPUtil.get(mActivity, "index", "").toString(), IndexBean.class);
+        promotionadapter = new Promotionadapter(mActivity, index.getRes().getHuodong());
+        lvPromotion.setAdapter(promotionadapter);
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView, index.getRes().getLunbo()));
         tvTitle.setText(index.getRes().getJianjie().getTitle());
         SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getPic());

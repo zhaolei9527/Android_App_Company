@@ -19,6 +19,7 @@ import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Bean.ConsultBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
@@ -80,7 +81,6 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case btn_save:
-                dialog = Utils.showLoadingDialog(context);
                 final String title = etTitle.getText().toString();
                 final String content = etContent.getText().toString();
                 final String email = etEmail.getText().toString();
@@ -120,8 +120,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
                     return;
                 }
-
-
+                dialog = Utils.showLoadingDialog(context);
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "consult", new Response.Listener<String>() {
                     @Override
@@ -158,13 +157,12 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                         EasyToast.showShort(context, "网络异常，请稍后再试");
                     }
                 })
-
                 {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("key", UrlUtils.key);
-                        map.put("id","962870");
+                        map.put("id", String.valueOf(SPUtil.get(context,"id","")));
                         map.put("title",title);
                         map.put("content",content);
                         map.put("tel",phone);

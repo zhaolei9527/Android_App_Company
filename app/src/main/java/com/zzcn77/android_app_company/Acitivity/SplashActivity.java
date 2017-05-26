@@ -71,7 +71,7 @@ public class SplashActivity extends BaseActivity {
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, "服务器异常，请稍后再试");
                 } else {
                     IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
                     if (indexBean.getStu().equals("1")) {
@@ -165,6 +165,7 @@ public class SplashActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
                 EasyToast.showShort(context, "服务器异常，请稍后再试");
             }
         })
@@ -183,6 +184,8 @@ public class SplashActivity extends BaseActivity {
             requestQueue.add(stringRequest);
         } else {
             EasyToast.showShort(context, "网络异常，未连接网络");
+            startActivity(new Intent(context, LoginActivity.class));
+            finish();
         }
     }
 }

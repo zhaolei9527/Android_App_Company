@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.zzcn77.android_app_company.Bean.IndexBean;
+import com.zzcn77.android_app_company.Bean.CuxiaoBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by 赵磊 on 2017/5/19.
  */
 
-public class Promotionadapter extends BaseAdapter {
+public class PromotionListAdapter extends BaseAdapter {
 
 
     private Context context;
@@ -28,15 +28,14 @@ public class Promotionadapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
-    private ArrayList<IndexBean.ResBean.HuodongBean> datas = new ArrayList();
+    private ArrayList<CuxiaoBean.ResBean> datas = new ArrayList();
 
-    public Promotionadapter(Context context, List datas) {
+    public PromotionListAdapter(Context context, List datas) {
         this.context = context;
         this.datas = (ArrayList) datas;
-
     }
 
     @Override

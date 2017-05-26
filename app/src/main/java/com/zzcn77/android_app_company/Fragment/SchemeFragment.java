@@ -7,16 +7,30 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Acitivity.SchemeAcitivty;
 import com.zzcn77.android_app_company.Adapter.SchemeAdapter;
+import com.zzcn77.android_app_company.Bean.FangAnBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -34,6 +48,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
     @BindView(R.id.SwipeRefreshLayout)
     android.support.v4.widget.SwipeRefreshLayout SwipeRefreshLayout;
     private SchemeAdapter schemeAdapter;
+    private int page = 1;
 
     @Override
     protected int setLayoutResouceId() {
@@ -47,11 +62,23 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
-
+        SwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(true);
+                }
+            }
+        });
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            private Intent intent;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mActivity, SchemeAcitivty.class));
+                intent = new Intent(mActivity, SchemeAcitivty.class);
+                intent.putExtra("id",schemeAdapter.getItem(position));
+                startActivity(intent);
             }
         });
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -77,19 +104,87 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         });
     }
 
+    private FangAnBean fangAnBean;
+
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
-        //假数据
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        schemeAdapter = new SchemeAdapter(mActivity, arrayList);
-        swipeTarget.setAdapter(schemeAdapter);
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "fang", new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String s) {
+                    String decode = Utils.decode(s);
+                    if (decode.isEmpty()) {
+                        EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                    } else {
+                        if (decode.contains("code\":\"111\"")) {
+                            Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
+                            page = page - 1;
+                            swipeToLoadLayout.setLoadingMore(false);
+                            swipeTarget.setEnabled(true);
+                            SwipeRefreshLayout.setEnabled(true);
+                            return;
+                        }
+                        fangAnBean = new Gson().fromJson(decode, FangAnBean.class);
+                        if (fangAnBean.getStu().equals("1")) {
+                            if (page == 1) {
+                                if (swipeTarget != null) {
+                                    schemeAdapter = new SchemeAdapter(mActivity, (ArrayList) fangAnBean.getRes());
+                                    swipeTarget.setAdapter(schemeAdapter);
+                                    swipeTarget.setEnabled(true);
+                                    SwipeRefreshLayout.setRefreshing(false);
+                                }
+                            } else {
+                                schemeAdapter.setDatas((ArrayList) fangAnBean.getRes());
+                                swipeToLoadLayout.setLoadingMore(false);
+                                swipeTarget.setEnabled(true);
+                                SwipeRefreshLayout.setEnabled(true);
+                            }
+                            if (schemeAdapter != null) {
+                                schemeAdapter.notifyDataSetChanged();
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                if (SwipeRefreshLayout.isRefreshing()) {
+                                    SwipeRefreshLayout.setRefreshing(false);
+                                }
+                            }
+                        } else {
+                            EasyToast.showShort(mActivity, "服务器异常，请稍后再试");
+                        }
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                }
+            })
+
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("key", UrlUtils.key);
+                    map.put("p", String.valueOf(page));
+                    return map;
+                }
+            };
+
+            boolean connected = Utils.isConnected(mActivity);
+            if (connected) {
+                requestQueue.add(stringRequest);
+            } else {
+                EasyToast.showShort(mActivity, "网络异常，未连接网络");
+            }
+        } catch (Exception e) {
+            // 可忽略的异常
+            Toast.makeText(mActivity, "界面切换的太快了", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     //上拉加载
@@ -100,20 +195,10 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = schemeAdapter.getDatas();
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                schemeAdapter.setDatas(datas);
-                schemeAdapter.notifyDataSetChanged();
-                swipeToLoadLayout.setLoadingMore(false);
-                swipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setEnabled(true);
-                EasyToast.showShort(mActivity, "加载完成");
+                page = page + 1;
+                initData(null);
             }
-        }, 2000);
-
+        }, 1000);
     }
 
     //下拉刷新
@@ -121,24 +206,16 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
     @Override
     public void onRefresh() {
         swipeTarget.setEnabled(false);
-
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = schemeAdapter.getDatas();
-                datas.clear();
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                schemeAdapter.setDatas(datas);
-                schemeAdapter.notifyDataSetChanged();
+                page = 1;
 
-                swipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setRefreshing(false);
+                initData(null);
+
+
             }
-        }, 2000);
+        }, 1000);
     }
 
 

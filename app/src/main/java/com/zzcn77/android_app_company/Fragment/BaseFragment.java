@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.zzcn77.android_app_company.Acitivity.MainActivity;
 
@@ -53,6 +54,8 @@ public abstract class BaseFragment extends Fragment {
         mActivity = (MainActivity) getActivity();
         initView();
         initData(getArguments());
+
+
         mIsPrepare = true;
         onLazyLoad();
         setListener();

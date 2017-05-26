@@ -14,15 +14,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Acitivity.DemoPlayActivity;
 import com.zzcn77.android_app_company.Adapter.Demosadapter;
+import com.zzcn77.android_app_company.Bean.FangAnBean;
+import com.zzcn77.android_app_company.Bean.YanShiBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -30,7 +44,7 @@ import butterknife.BindView;
  * Created by 赵磊 on 2017/5/17.
  */
 
-public class DemoFragment extends BaseFragment implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener {
+public class DemoFragment extends BaseFragment implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, View.OnClickListener {
     @BindView(R.id.img_search)
     ImageView imgSearch;
     @BindView(R.id.et_search)
@@ -44,28 +58,33 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     @BindView(R.id.SwipeRefreshLayout)
     android.support.v4.widget.SwipeRefreshLayout SwipeRefreshLayout;
     private Demosadapter demosadapter;
-    private AdapterView.OnItemClickListener wvPalyClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            startActivity(new Intent(mActivity, DemoPlayActivity.class));
-        }
-    };
+    private Intent intent;
+    private int page = 1;
+
 
     @Override
     protected int setLayoutResouceId() {
         return R.layout.f_demo_layout;
     }
 
+
     @Override
     protected void initView() {
         super.initView();
         //改变加载显示的颜色
+        imgSearch.setOnClickListener(this);
         SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
-
-        swipeTarget.setOnItemClickListener(wvPalyClickListener);
-
+        SwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(true);
+                }
+            }
+        });
+        swipeTarget.setOnItemClickListener(this);
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -87,37 +106,116 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 SwipeRefreshLayout.setEnabled(enable);
             }
         });
+
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
                 // TODO Auto-generated method stub
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH) {
-                    String content = arg0.getText().toString().trim();
-                    if (content.isEmpty()) {
-                        content = etSearch.getHint().toString().trim();
-                    }
-                    Toast.makeText(mActivity, content, Toast.LENGTH_SHORT).show();
-                    // search pressed and perform your functionality.
+                    search();
                 }
                 return false;
             }
+
 
         });
 
     }
 
+    public void search() {
+        String content = etSearch.getText().toString().trim();
+        if (content.isEmpty()) {
+            content = etSearch.getHint().toString().trim();
+        }
+
+        Toast.makeText(mActivity, content, Toast.LENGTH_SHORT).show();
+        // search pressed and perform your functionality.
+    }
+
+    private FangAnBean fangAnBean;
+
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
-        //假数据
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        demosadapter = new Demosadapter(mActivity, arrayList);
-        swipeTarget.setAdapter(demosadapter);
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "yanshi", new Response.Listener<String>() {
+
+
+                @Override
+                public void onResponse(String s) {
+                    String decode = Utils.decode(s);
+                    if (decode.isEmpty()) {
+                        EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                    } else {
+                        if (decode.contains("code\":\"111\"")) {
+                            Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
+                            page = page - 1;
+                            swipeToLoadLayout.setLoadingMore(false);
+                            swipeTarget.setEnabled(true);
+                            SwipeRefreshLayout.setEnabled(true);
+                            return;
+                        }
+                        YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
+                        if (yanShiBean.getStu().equals("1")) {
+                            if (page == 1) {
+                                if (swipeTarget != null) {
+                                    demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
+                                    swipeTarget.setAdapter(demosadapter);
+                                    swipeTarget.setEnabled(true);
+                                    SwipeRefreshLayout.setRefreshing(false);
+                                }
+                            } else {
+                                demosadapter.setDatas((ArrayList) yanShiBean.getRes());
+                                swipeToLoadLayout.setLoadingMore(false);
+                                swipeTarget.setEnabled(true);
+                                SwipeRefreshLayout.setEnabled(true);
+                            }
+
+
+                            if (demosadapter != null) {
+                                demosadapter.notifyDataSetChanged();
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                if (SwipeRefreshLayout.isRefreshing()) {
+                                    SwipeRefreshLayout.setRefreshing(false);
+                                }
+                            }
+                        } else {
+                            EasyToast.showShort(mActivity, "服务器异常，请稍后再试");
+                        }
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                }
+            })
+
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("key", UrlUtils.key);
+                    map.put("p", String.valueOf(page));
+                    return map;
+                }
+            };
+
+            boolean connected = Utils.isConnected(mActivity);
+            if (connected) {
+                requestQueue.add(stringRequest);
+            } else {
+                EasyToast.showShort(mActivity, "网络异常，未连接网络");
+            }
+        } catch (Exception e) {
+            // 可忽略的异常
+            Toast.makeText(mActivity, "界面切换的太快了", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     //上拉加载
@@ -128,20 +226,10 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = demosadapter.getDatas();
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                demosadapter.setDatas(datas);
-                demosadapter.notifyDataSetChanged();
-                swipeToLoadLayout.setLoadingMore(false);
-                swipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setEnabled(true);
-                EasyToast.showShort(mActivity, "加载完成");
+                page = page + 1;
+                initData(null);
             }
-        }, 2000);
-
+        }, 1000);
     }
 
     //下拉刷新
@@ -149,23 +237,30 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     @Override
     public void onRefresh() {
         swipeTarget.setEnabled(false);
-
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList arrayList = new ArrayList();
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                arrayList.add("");
-                demosadapter.setDatas(arrayList);
-                demosadapter.notifyDataSetChanged();
-                swipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setRefreshing(false);
+                page = 1;
+                initData(null);
+
             }
-        }, 2000);
+        }, 1000);
     }
 
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        intent = new Intent(mActivity, DemoPlayActivity.class);
+        intent.putExtra("id", demosadapter.getItem(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_search:
+                search();
+                break;
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.zzcn77.android_app_company.Service.AdvanceLoadX5Service;
 import com.zzcn77.android_app_company.Utils.Utils;
@@ -24,6 +25,9 @@ public class App extends Application {
         super.onCreate();
         PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDisplayNotificationNumber(0);
+        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER); //声音
+        mPushAgent.setNotificationPlayLights(MsgConstant.NOTIFICATION_PLAY_SERVER);//呼吸灯
+        mPushAgent.setNotificationPlayVibrate(MsgConstant.NOTIFICATION_PLAY_SERVER);//振动
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
             @Override

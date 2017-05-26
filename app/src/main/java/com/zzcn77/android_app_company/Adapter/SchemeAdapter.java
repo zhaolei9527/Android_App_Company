@@ -13,8 +13,9 @@ import com.hitomi.tilibrary.style.progress.ProgressPieIndicator;
 import com.hitomi.tilibrary.transfer.TransferConfig;
 import com.hitomi.tilibrary.transfer.Transferee;
 import com.hitomi.universalloader.UniversalImageLoader;
+import com.zzcn77.android_app_company.Bean.FangAnBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class SchemeAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<String> sourceImageList = null;
-    private ArrayList datas = new ArrayList();
+    private ArrayList<FangAnBean.ResBean> datas = new ArrayList();
     private List<ImageView> originImgList;
     private final Transferee transferee;
 
@@ -46,7 +47,7 @@ public class SchemeAdapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
     @Override
@@ -55,8 +56,8 @@ public class SchemeAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public String getItem(int position) {
+        return datas.get(position).getId();
     }
 
     @Override
@@ -75,9 +76,8 @@ public class SchemeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu, viewHolder.imgScheme);
-        viewHolder.tvTitle.setText(String.valueOf(position));
-
+        viewHolder.imgScheme.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
+        viewHolder.tvTitle.setText(datas.get(position).getTitle());
         final ViewHolder finalViewHolder = viewHolder;
         viewHolder.imgScheme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class SchemeAdapter extends BaseAdapter {
                 sourceImageList = new ArrayList<>();
                 for (int i = 0; i < datas.size(); i++) {
                     originImgList.add(finalViewHolder.imgScheme);
-                    sourceImageList.add("http://7xi8d6.com1.z0.glb.clouddn.com/2017-04-16-17934400_1738549946443321_2924146161843437568_n.jpg");
+                    sourceImageList.add(UrlUtils.BaseImg+datas.get(i).getImgurl());
                 }
                 TransferConfig config = TransferConfig.build()
                         .setNowThumbnailIndex(position)

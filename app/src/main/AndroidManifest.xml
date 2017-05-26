@@ -77,31 +77,53 @@
         <activity
             android:name=".Acitivity.NewsDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.SettingActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.LanguageActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.ChangePasswordActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.ConsultActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.SchemeAcitivty"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Acitivity.MyCollectActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".Acitivity.ProductDetailsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
             android:alwaysRetainTaskState="true"
@@ -116,17 +138,25 @@
         <activity
             android:name=".Acitivity.PeomotionDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <activity
             android:name=".Acitivity.DemoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
+            android:theme="@style/Theme_Umeng_Push_Splash">
 
-        <service android:name=".Service.AdvanceLoadX5Service"></service>
-        <service android:name=".Service.DownloadService"></service>
+        </activity>
+
+        <service android:name=".Service.AdvanceLoadX5Service">
+
+        </service>
+        <service android:name=".Service.DownloadService">
+
+        </service>
     </application>
 
 </manifest>

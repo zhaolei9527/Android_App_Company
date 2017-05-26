@@ -108,8 +108,18 @@ public class DateUtil {
      */
     public static String getMillon(long time) {
 
-        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(time);
+        return new SimpleDateFormat("HH：mm：ss").format(time*1000);
 
+    }
+   //strTime要转换的string类型的时间，formatType要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日
+    // HH时mm分ss秒，
+    // strTime的时间格式必须要与formatType的时间格式相同
+    public static Date stringToDate(String strTime, String formatType)
+            throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+        Date date = null;
+        date = formatter.parse(strTime);
+        return date;
     }
 
     /**
@@ -119,7 +129,7 @@ public class DateUtil {
      */
     public static String getDay(long time) {
 
-        return new SimpleDateFormat("yyyy-MM-dd").format(time);
+        return new SimpleDateFormat("yyyy-MM-dd").format(time*1000);
 
     }
 

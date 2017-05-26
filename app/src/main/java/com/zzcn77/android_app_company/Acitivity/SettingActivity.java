@@ -84,8 +84,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.rl_exit:
+                SPUtil.remove(context, "id");
                 SPUtil.remove(context, "account");
                 SPUtil.remove(context, "password");
+                SPUtil.remove(context, "email");
                 startActivity(new Intent(context, LoginActivity.class));
                 finish();
                 break;

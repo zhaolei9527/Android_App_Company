@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,37 +28,50 @@ import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zzcn77.android_app_company.Base.BaseActivity;
-import com.zzcn77.android_app_company.Bean.FangAnDetailBean;
+import com.zzcn77.android_app_company.Bean.Goods_NYBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.IntentUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 
 /**
- * Created by 赵磊 on 2017/5/22.
+ * Created by 赵磊 on 2017/5/26.
  */
 
-public class SchemeAcitivty extends BaseActivity implements View.OnClickListener {
+public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.SimpleDraweeView)
     com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_model)
+    TextView tvModel;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
     @BindView(R.id.forum_context)
     WebView forumContext;
     @BindView(R.id.sv)
     ScrollView sv;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.cb_collect)
+    CheckBox cbCollect;
+    @BindView(R.id.ll_collect)
+    LinearLayout llCollect;
+    @BindView(R.id.rl_call_phone)
+    RelativeLayout rlCallPhone;
+    @BindView(R.id.rl_download)
+    RelativeLayout rlDownload;
     private Dialog dialog;
+
     @Override
     protected int setthislayout() {
-        return R.layout.secheme_details_layout;
+        return R.layout.product_details_layout;
     }
 
     @Override
@@ -96,6 +112,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
+                Toast.makeText(context, "webResourceError.getErrorCode():" + webResourceError.getErrorCode(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
             }
         });
@@ -104,24 +121,28 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
+
         final Intent intent = getIntent();
         if (!IntentUtil.isBundleEmpty(intent)) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "f_detail", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods_ny", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
                         EasyToast.showShort(context, "网络异常，请稍后再试");
                     } else {
-                        final FangAnDetailBean fangAnDetailBean = new Gson().fromJson(decode, FangAnDetailBean.class);
-                        if (fangAnDetailBean.getStu().equals("1")) {
-                            tvTitle.setText(fangAnDetailBean.getRes().getTitle());
-                            SimpleDraweeView.setImageURI(UrlUtils.BaseImg+fangAnDetailBean.getRes().getImgurl());
+                        final Goods_NYBean goods_nyBean = new Gson().fromJson(decode, Goods_NYBean.class);
+                        if (goods_nyBean.getStu().equals("1")) {
                             forumContext.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    String decode = Utils.decode(fangAnDetailBean.getRes().getContent());
+                                    tvTitle.setText(goods_nyBean.getRes().getTitle());
+                                    tvModel.setText(goods_nyBean.getRes().getX_num());
+                                    tvPhone.setText(goods_nyBean.getRes().getTel());
+                                    tvPrice.setText(goods_nyBean.getRes().getPrice());
+                                    SimpleDraweeView.setImageURI(UrlUtils.BaseImg + goods_nyBean.getRes().getImg_lb());
+                                    String decode = Utils.decode(goods_nyBean.getRes().getContent());
                                     Spanned spanned = Html.fromHtml(decode);
                                     Utils.inSetWebView(spanned.toString(), forumContext, context);
                                 }
@@ -159,7 +180,9 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
         } else {
             Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
         }
+
     }
+
 
     @Override
     public void onClick(View v) {
@@ -167,6 +190,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.img_back:
                 finish();
+                startActivity(new Intent(context, MainActivity.class));
                 break;
         }
     }

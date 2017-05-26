@@ -1,20 +1,38 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.CX_DetailBean;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.IntentUtil;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -24,7 +42,6 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
     ImageView imgBack;
     @BindView(R.id.forum_context)
     WebView forumContext;
-    public static String html = "<p>请仔细阅读本协议，App平台将依据以下条件和条款为您提供服务。<br/><br/>欢迎阅读App平台用户协议(下称“本协议”)。本协议阐述之条款和条件适用于您使用App平台所提供的各种工具和服务(下称“服务”)<br/><br/>1．服务条款的确认平台根据本服务条款及对该条款的修改向用户提供服务。本服务条款具有合同法上的法律效力。<br/>如果您对协议的任何条款表示异议，您可以选择不注册，一旦您点选“注册”并通过注册程序，即表示您自愿接受本协议之所有条款，并已成为App平台的注册会员。用户在使用App平台的同时，同意接受App平台会员服务提供的各类信息服务<br/></p><p><br/></p><p><img src=\"/ueditor/php/upload/image/20161217/1481957560686270.png\" title=\"1481957560686270.png\" alt=\"屏幕快照 2016-12-17 下午2.51.17.png\"/></p><p>2.符合下列条件之一的个人、组织，才能申请成为App平台用户、使用本协议项下的服务：<br/>3.年满十八周岁，并具有民事权利能力和民事行为能力的自然人；<br/>4. 未满十八周岁，但监护人（包括但不仅限于父母）予以书面同意的自然人；<br/>5. 根据中国法律、法规成立并合法存在的公司等企业法人、事业单位、社团组织和其他组织。无民事行为能力人、限制民事行为能力人以及无经营或特定经营资格的组织不当注册为用户的，其与本公司之间的协议自始无效，本公司一经发现，有权立即注销该用户。<br/>6.用户有权按照App平台规定的程序和要求使用App平台向会员提供的各项网络服务，如果会员对该服务有异议，可以与潮App平台联系以便得到及时解决。<br/>7. 用户在申请使用App平台网络服务时，必须向App平台提供准确的个人资料，如个人资料有任何变动，必须及时更新。<br/>8. 用户须同意接受App平台通过电子邮件或其他方式向会员发送相关商业信息。<br/><br/></p>";
     @BindView(R.id.SimpleDraweeView)
     com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView;
     @BindView(R.id.tv_title)
@@ -84,12 +101,64 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initData() {
-        forumContext.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.inSetWebView(html, forumContext, context);
+
+        final Intent intent = getIntent();
+        if (!IntentUtil.isBundleEmpty(intent)) {
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "cx_detail", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+                    String decode = Utils.decode(s);
+                    if (decode.isEmpty()) {
+                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                    } else {
+                        final CX_DetailBean cx_detailBean = new Gson().fromJson(decode, CX_DetailBean.class);
+                        if (cx_detailBean.getStu().equals("1")) {
+                            forumContext.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvDis.setText(cx_detailBean.getRes().getZhe()+"折");
+                                    tvTitle.setText(cx_detailBean.getRes().getTitle());
+                                    SimpleDraweeView.setImageURI(UrlUtils.BaseImg+cx_detailBean.getRes().getImgurl());
+                                    String decode = Utils.decode(cx_detailBean.getRes().getContent());
+                                    Spanned spanned = Html.fromHtml(decode);
+                                    Utils.inSetWebView(spanned.toString(), forumContext, context);
+                                }
+                            });
+                        } else {
+                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        }
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                }
+            })
+
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("key", UrlUtils.key);
+                    map.put("id", intent.getStringExtra("id"));
+                    return map;
+                }
+            };
+
+            boolean connected = Utils.isConnected(context);
+            if (connected) {
+                requestQueue.add(stringRequest);
+            } else {
+                EasyToast.showShort(context, "网络异常，未连接网络");
             }
-        });
+
+        } else {
+            Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
@@ -99,6 +168,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.img_back:
                 finish();
+                startActivity(new Intent(context,MainActivity.class));
                 break;
         }
     }

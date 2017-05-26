@@ -22,7 +22,6 @@ import com.zzcn77.android_app_company.Utils.MD5Utils;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +46,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     Button btnGet;
     public static final int time = 30;
     private Thread thread;
+    private String md5password;
 
     @Override
     protected int setthislayout() {
@@ -79,7 +79,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (btnGet!=null){
+                                if (btnGet != null) {
                                     btnGet.setEnabled(false);
                                     btnGet.setText(String.valueOf(finalI));
                                     if (btnGet.getText().toString().equals("1")) {
@@ -149,14 +149,8 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         // TODO: 2017/5/18  重置密码
-        final String md5password;
-        try {
-            md5password = MD5Utils.getMD5(MD5Utils.getMD5(etPasswordAgain.getText().toString().trim()).toString()).toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            EasyToast.showShort(context, "网络异常，请稍后再试");
-            return;
-        }
+            md5password = MD5Utils.md5(etPassword.getText().toString());
+            md5password = MD5Utils.md5(md5password);
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "findpwd", new Response.Listener<String>() {

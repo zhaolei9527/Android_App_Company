@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -23,6 +24,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.IntentUtil;
 import com.zzcn77.android_app_company.Utils.TagUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
@@ -110,7 +112,13 @@ public class DemoPlayActivity extends BaseActivity {
         forumContext.post(new Runnable() {
             @Override
             public void run() {
-                forumContext.loadUrl("http://m.bilibili.com/video/av9988478.html");
+                if (!IntentUtil.isBundleEmpty(getIntent())) {
+                    forumContext.loadUrl(getIntent().getStringExtra("id"));
+                    //forumContext.loadUrl("http://m.bilibili.com/video/av9988478.html");
+                } else {
+                    Toast.makeText(context, "出错了", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         forumContext.getSettings().setDomStorageEnabled(true);

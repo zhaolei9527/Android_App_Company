@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zzcn77.android_app_company.Bean.NewsBean;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.DateUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class Newsadapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public NewsBean.ResBean getItem(int position) {
+        return datas.get(position);
     }
 
     @Override
@@ -70,7 +71,8 @@ public class Newsadapter extends BaseAdapter {
         viewHolder.imageView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
         viewHolder.title.setText(datas.get(position).getTitle());
         viewHolder.tvContent.setText(datas.get(position).getKeywords());
-
+        viewHolder.tvTimeYear.setText(DateUtil.getDay(Long.parseLong(datas.get(position).getAdd_time())));
+        viewHolder.tvTimeHour.setText(DateUtil.getMillon(Long.parseLong(datas.get(position).getAdd_time())));
         return convertView;
     }
 

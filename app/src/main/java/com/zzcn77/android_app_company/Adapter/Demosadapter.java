@@ -7,8 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zzcn77.android_app_company.Bean.YanShiBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class Demosadapter extends BaseAdapter {
         this.datas = datas;
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<YanShiBean.ResBean> datas = new ArrayList();
 
     public Demosadapter(Context context, ArrayList datas) {
         this.context = context;
@@ -46,8 +47,9 @@ public class Demosadapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public String getItem(int position) {
+
+        return datas.get(position).getUrl();
     }
 
     @Override
@@ -66,13 +68,11 @@ public class Demosadapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (position%2==1){
-            Utils.displayImageFresco(R.drawable.y_tu1, viewHolder.imageView);
-        }else {
-            Utils.displayImageFresco(R.drawable.y_tu2, viewHolder.imageView);
-        }
+        viewHolder.imageView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
+        viewHolder.title.setText(datas.get(position).getTitle());
         return convertView;
     }
+
 
     static class ViewHolder {
         @BindView(R.id.imageView)

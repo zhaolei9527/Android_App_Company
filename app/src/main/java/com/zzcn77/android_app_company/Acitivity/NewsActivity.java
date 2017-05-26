@@ -56,6 +56,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     TextView tvTitle;
     private Newsadapter newsadapter;
     private int page = 1;
+    private Intent intent;
 
     @Override
     protected int setthislayout() {
@@ -136,6 +137,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
                 EasyToast.showShort(context, "网络异常，请稍后再试");
             }
         })
@@ -183,7 +185,6 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     @Override
     public void onRefresh() {
         lvSwipeTarget.setEnabled(false);
-
         page = 1;
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -210,8 +211,9 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     //条目点击事件
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        startActivity(new Intent(context, NewsDetailsActivity.class));
+        intent = new Intent(context, NewsDetailsActivity.class);
+        intent.putExtra("id", String.valueOf(newsadapter.getItem(position).getId()));
+        startActivity(intent);
 
     }
 }
