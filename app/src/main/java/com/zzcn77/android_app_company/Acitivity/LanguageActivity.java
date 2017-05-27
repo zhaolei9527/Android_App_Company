@@ -31,13 +31,24 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
     RelativeLayout rlCn;
     @BindView(R.id.rl_en)
     RelativeLayout rlEn;
+
     @Override
     protected int setthislayout() {
         return R.layout.language_layout;
     }
+
     @Override
     protected void initview() {
-
+        String language = (String) SPUtil.get(context, "Lanuage", "");
+        if (language.isEmpty()) {
+            cbAuto.setChecked(true);
+        }
+        if (language.equals("cn")) {
+            cbCn.setChecked(true);
+        }
+        if (language.equals("en")) {
+            cbEn.setChecked(true);
+        }
     }
 
     @Override
@@ -65,24 +76,24 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
                 cbEn.setChecked(false);
                 cbCn.setChecked(false);
                 cbAuto.setChecked(true);
-                SPUtil.remove(context, "language");
+                SPUtil.remove(context, "Lanuage");
                 break;
             case R.id.rl_cn:
                 EasyToast.showShort(context, "简体中文");
                 cbEn.setChecked(false);
                 cbAuto.setChecked(false);
                 cbCn.setChecked(true);
-                SPUtil.putAndApply(context, "language", "cn");
+                SPUtil.putAndApply(context, "Lanuage", "cn");
                 break;
             case R.id.rl_en:
                 EasyToast.showShort(context, "English");
                 cbAuto.setChecked(false);
                 cbCn.setChecked(false);
                 cbEn.setChecked(true);
-                SPUtil.putAndApply(context, "language", "en");
+                SPUtil.putAndApply(context, "Lanuage", "en");
                 break;
         }
-
     }
+
 
 }

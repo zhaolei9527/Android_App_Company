@@ -30,6 +30,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rll_deleteall"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y32"
         android:orientation="horizontal"
@@ -68,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
+
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="wrap_content"
@@ -87,22 +90,37 @@
 
         </RelativeLayout>
     </RelativeLayout>
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/swipe_target"
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_empty"></include>
+
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null" />
-        <com.zzcn77.android_app_company.View.LoadMoreFooterView
-            android:id="@id/swipe_load_more_footer"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#00000000"
-            android:gravity="center">
-        </com.zzcn77.android_app_company.View.LoadMoreFooterView>
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null" />
+
+            <com.zzcn77.android_app_company.View.LoadMoreFooterView
+                android:id="@id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#00000000"
+                android:gravity="center">
+
+            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    </RelativeLayout>
+
 
 </LinearLayout>

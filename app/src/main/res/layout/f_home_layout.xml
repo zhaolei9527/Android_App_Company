@@ -11,11 +11,10 @@
         android:background="@color/text_blue"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/x10">
-
         <ImageView
-            android:layout_width="@dimen/x135"
-            android:layout_height="@dimen/y28"
-            android:background="@mipmap/i_logo" />
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/y30"
+            android:src="@mipmap/i_logo" />
     </LinearLayout>
 
     <ScrollView

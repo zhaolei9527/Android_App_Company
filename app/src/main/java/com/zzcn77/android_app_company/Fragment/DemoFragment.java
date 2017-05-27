@@ -25,11 +25,13 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Acitivity.DemoPlayActivity;
+import com.zzcn77.android_app_company.Acitivity.DemoSerachActivity;
 import com.zzcn77.android_app_company.Adapter.Demosadapter;
 import com.zzcn77.android_app_company.Bean.FangAnBean;
 import com.zzcn77.android_app_company.Bean.YanShiBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -60,6 +62,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     private Demosadapter demosadapter;
     private Intent intent;
     private int page = 1;
+    private Intent intent1;
 
 
     @Override
@@ -120,6 +123,13 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
 
         });
 
+        String demo = (String) SPUtil.get(mActivity, "demo", "");
+        if (!demo.isEmpty()) {
+            YanShiBean yanShiBean = new Gson().fromJson(demo, YanShiBean.class);
+            demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
+            swipeTarget.setAdapter(demosadapter);
+        }
+
     }
 
     public void search() {
@@ -127,9 +137,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         if (content.isEmpty()) {
             content = etSearch.getHint().toString().trim();
         }
-
-        Toast.makeText(mActivity, content, Toast.LENGTH_SHORT).show();
-        // search pressed and perform your functionality.
+        intent1 = new Intent(mActivity, DemoSerachActivity.class);
+        intent1.putExtra("title", content);
+        startActivity(intent1);
     }
 
     private FangAnBean fangAnBean;
@@ -160,6 +170,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                         if (yanShiBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
+                                    SPUtil.putAndApply(mActivity,"demo",decode);
                                     demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
                                     swipeTarget.setAdapter(demosadapter);
                                     swipeTarget.setEnabled(true);
@@ -212,7 +223,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
             }
         } catch (Exception e) {
             // 可忽略的异常
-            Toast.makeText(mActivity, "界面切换的太快了", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -257,7 +267,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_search:
                 search();
                 break;

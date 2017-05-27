@@ -52,10 +52,20 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         String email = (String) SPUtil.get(mActivity, "email", "");
         if (account.trim().isEmpty()) {
             tvAccount.setText("暂未登录");
+            tvAccount.setEnabled(true
+            );
+            tvAccount.setOnClickListener(this);
         } else {
             tvAccount.setText(account);
+            tvAccount.setEnabled(false);
         }
         tvEmail.setText(email);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
     }
 
     @Override
@@ -88,7 +98,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.rl_setting:
                 startActivity(new Intent(mActivity, SettingActivity.class));
-                mActivity.finish();
+                break;
+            case R.id.tv_account:
+                startActivity(new Intent(mActivity, LoginActivity.class));
                 break;
         }
     }

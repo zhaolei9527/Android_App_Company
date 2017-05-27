@@ -1,23 +1,41 @@
 package com.zzcn77.android_app_company.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.google.gson.Gson;
+import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.Adapter.GVProuctAdapter;
 import com.zzcn77.android_app_company.Adapter.ProductAdapter;
+import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 import com.zzcn77.android_app_company.View.MyGridView;
 import com.zzcn77.android_app_company.View.PowersearchDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -25,7 +43,7 @@ import butterknife.BindView;
  * Created by 赵磊 on 2017/5/17.
  */
 
-public class ProductFragment extends BaseFragment implements OnLoadMoreListener, View.OnClickListener {
+public class ProductFragment extends BaseFragment implements OnLoadMoreListener, View.OnClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.img_search)
     ImageView imgSearch;
     @BindView(R.id.et_search)
@@ -42,6 +60,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     @BindView(R.id.img_power_search)
     ImageView imgPowerSearch;
     private ProductAdapter adapter;
+    private int page = 1;
+    private ProductAdapter productAdapter;
+    private GVProuctAdapter gvProuctAdapter;
 
     @Override
     protected int setLayoutResouceId() {
@@ -51,27 +72,103 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     @Override
     protected void initView() {
         super.initView();
-        ArrayList<Object> dates = new ArrayList<>();
-        dates.add("");
-        dates.add("");
-        dates.add("");
-        dates.add("");
-        dates.add("");
-        dates.add("");
-        dates.add("");
         swipeToLoadLayout.setOnLoadMoreListener(this);
         View head = View.inflate(mActivity, R.layout.product_head_layout, null);
         gvSwipeTarget = (MyGridView) head.findViewById(R.id.gv_swipe_target);
         swipeTarget.addHeaderView(head);
-        adapter = new ProductAdapter(mActivity, dates);
-        swipeTarget.setAdapter(adapter);
-        gvSwipeTarget.setAdapter(new GVProuctAdapter(mActivity, dates));
         imgPowerSearch.setOnClickListener(this);
+        String product = (String) SPUtil.get(mActivity, "product", "");
+        if (!product.isEmpty()) {
+            GoodsBean goodsBean = new Gson().fromJson(product, GoodsBean.class);
+            productAdapter = new ProductAdapter(mActivity, (ArrayList) goodsBean.getRes().getGoodsmx());
+            gvProuctAdapter = new GVProuctAdapter(mActivity, (ArrayList) goodsBean.getRes().getCate());
+            gvSwipeTarget.setAdapter(gvProuctAdapter);
+            swipeTarget.setAdapter(productAdapter);
+        }
+
+        swipeTarget.setOnItemClickListener(this);
     }
 
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+                    String decode = Utils.decode(s);
+                    if (decode.isEmpty()) {
+                        EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                    } else {
+                        if (decode.contains("code\":\"111\"")) {
+                            Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
+                            page = page - 1;
+                            swipeToLoadLayout.setLoadingMore(false);
+                            swipeTarget.setEnabled(true);
+                            return;
+                        } else {
+                            GoodsBean goodsBean = new Gson().fromJson(decode, GoodsBean.class);
+                            if (goodsBean.getStu().equals("1")) {
+                                if (page == 1) {
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setEnabled(true);
+                                    }
+                                    SPUtil.putAndApply(mActivity, "product", decode);
+                                    productAdapter = new ProductAdapter(mActivity, (ArrayList) goodsBean.getRes().getGoodsmx());
+                                    gvProuctAdapter = new GVProuctAdapter(mActivity, (ArrayList) goodsBean.getRes().getCate());
+                                    if (gvSwipeTarget != null) {
+                                        gvSwipeTarget.setAdapter(gvProuctAdapter);
+                                    }
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setAdapter(productAdapter);
+                                    }
+                                } else {
+                                    productAdapter.setDatas((ArrayList) goodsBean.getRes().getGoodsmx());
+                                    gvProuctAdapter.setDatas((ArrayList) goodsBean.getRes().getCate());
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                    swipeTarget.setEnabled(true);
+                                }
+                                if (productAdapter != null) {
+                                    productAdapter.notifyDataSetChanged();
+                                }
+                            } else {
+                                EasyToast.showShort(mActivity, "服务器异常，请稍后再试");
+                            }
+
+
+                        }
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                }
+            })
+
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("key", UrlUtils.key);
+                    map.put("p", String.valueOf(page));
+                    return map;
+                }
+            };
+
+            boolean connected = Utils.isConnected(mActivity);
+            if (connected) {
+                requestQueue.add(stringRequest);
+            } else {
+                EasyToast.showShort(mActivity, "网络异常，未连接网络");
+            }
+        } catch (Exception e) {
+            // 可忽略的异常
+        }
+
 
     }
 
@@ -82,16 +179,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList datas = adapter.getDatas();
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                datas.add("");
-                adapter.setDatas(datas);
-                adapter.notifyDataSetChanged();
-                swipeToLoadLayout.setLoadingMore(false);
-                swipeTarget.setEnabled(true);
-                EasyToast.showShort(mActivity, "加载完成");
+                page = page + 1;
+                initData(null);
+
             }
         }, 2000);
 
@@ -105,5 +195,13 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String item = productAdapter.getItem(position);
+        Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
+        intent.putExtra("id", item);
+        startActivity(intent);
     }
 }

@@ -7,8 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 public class ProductAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList datas = new ArrayList();
+    private ArrayList<GoodsBean.ResBean.GoodsmxBean> datas = new ArrayList();
 
     public ProductAdapter(Context context, ArrayList datas) {
         this.context = context;
@@ -34,7 +35,7 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
     @Override
@@ -43,8 +44,8 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public String getItem(int position) {
+        return datas.get(position-1).getId();
     }
 
     @Override
@@ -59,12 +60,11 @@ public class ProductAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.scheme_item_layout, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
-
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu, viewHolder.imgScheme);
-        viewHolder.tvTitle.setText(String.valueOf(position));
+        viewHolder.imgScheme.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
+        viewHolder.tvTitle.setText(datas.get(position).getTitle());
         return convertView;
     }
 
@@ -73,7 +73,6 @@ public class ProductAdapter extends BaseAdapter {
         SimpleDraweeView imgScheme;
         @BindView(R.id.tv_title)
         TextView tvTitle;
-
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

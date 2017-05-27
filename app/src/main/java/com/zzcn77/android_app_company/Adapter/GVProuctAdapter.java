@@ -7,8 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -29,10 +30,10 @@ public class GVProuctAdapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<GoodsBean.ResBean.CateBean> datas = new ArrayList();
 
     public GVProuctAdapter(Context context, ArrayList datas) {
         this.context = context;
@@ -66,12 +67,8 @@ public class GVProuctAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.title.setText("类型" + position);
-        if (position % 2 == 1) {
-            Utils.displayImageFresco(R.drawable.y_tu1, viewHolder.imageView);
-        } else {
-            Utils.displayImageFresco(R.drawable.y_tu2, viewHolder.imageView);
-        }
+        viewHolder.imageView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
+        viewHolder.title.setText(datas.get(position).getTitle());
         return convertView;
     }
 

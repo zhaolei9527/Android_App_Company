@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title"
-                    android:layout_marginRight="@dimen/x10"
+                    android:layout_marginLeft="@dimen/x10"
                     android:layout_marginTop="@dimen/y10">
 
                     <TextView
@@ -122,8 +122,7 @@
                 android:id="@+id/forum_context"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/y10"
-             />
+                android:layout_marginTop="@dimen/y10" />
 
         </LinearLayout>
     </ScrollView>
@@ -131,7 +130,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/y39"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
@@ -182,6 +181,12 @@
             android:layout_marginLeft="1px"
             android:background="#ffce7d">
 
+            <com.zzcn77.android_app_company.View.ProgressButton
+                android:id="@+id/btn_progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
             <ImageView
                 android:id="@+id/img2"
                 android:layout_width="@dimen/x20"
@@ -191,7 +196,7 @@
                 android:background="@mipmap/dowmload" />
 
             <TextView
-                android:id="@id/tv"
+                android:id="@+id/tv_download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

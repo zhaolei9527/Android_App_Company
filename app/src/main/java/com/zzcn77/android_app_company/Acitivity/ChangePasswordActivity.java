@@ -111,6 +111,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                 final String finalNewpasswordagain = newpasswordagain;
+                final String finalOldpassword = Oldpassword;
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "editpwd", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
@@ -146,7 +147,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("key", UrlUtils.key);
                         map.put("id", String.valueOf(SPUtil.get(context, "id", "")));
-                        map.put("oldpwd", etOldpassword.getText().toString());
+                        map.put("oldpwd", finalOldpassword);
                         map.put("newpwd", finalNewpasswordagain);
                         return map;
                     }

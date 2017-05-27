@@ -11,6 +11,7 @@ import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.zzcn77.android_app_company.Service.DownloadService;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class UpDateDialog {
 
-    public void UpDateDialog(final Context mContext,String title,String message) {
+    public void UpDateDialog(final Context mContext, String title, String message, final String downloadurl) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(title);
         builder.setMessage(message);
@@ -49,7 +50,7 @@ public class UpDateDialog {
                                 dialog.dismiss();
                                 Intent intent = new Intent(mContext, DownloadService.class);
                                 //apk下载地址
-                                intent.putExtra("url", "http://www.cn77.cn/anli/apkdownload");
+                                intent.putExtra("url", UrlUtils.BaseImg+downloadurl);
                                 mContext.startService(intent);
                             }
 

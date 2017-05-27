@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.zzcn77.android_app_company.Bean.CollBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -29,10 +30,10 @@ public class CollectAdapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<CollBean.ResBean> datas = new ArrayList();
 
     public CollectAdapter(Context context, ArrayList datas) {
         this.context = context;
@@ -65,7 +66,10 @@ public class CollectAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Utils.displayImageFresco(R.drawable.tu,viewHolder.imgConllect);
+        viewHolder.imgConllect.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
+        viewHolder.tvModel.setText(datas.get(position).getX_num());
+        viewHolder.tvPrice.setText(datas.get(position).getPrice());
+        viewHolder.tvTitle.setText(datas.get(position).getTitle());
         return convertView;
     }
 

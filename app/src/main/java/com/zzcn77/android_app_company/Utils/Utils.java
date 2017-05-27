@@ -210,12 +210,11 @@ public class Utils {
 
     public static void inSetWebView(String htmlString, com.tencent.smtt.sdk.WebView forumContext,Context context) {
         if (htmlString.contains("img src=\"")) {
-            htmlString = htmlString.replace("img src=\"", "img src=\"http://192.168.0.66");
+            htmlString = htmlString.replace("img src=\"", "img src=\"http://jk.tt.100help.net/");
         }
         String sb = "<html><head>"+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "+"</head><body>" + htmlString +
                 "</body></html>";
         forumContext.getSettings().setJavaScriptEnabled(true);// 支持js
-
         forumContext.getSettings().setLoadWithOverviewMode(true);
         forumContext.getSettings().setUseWideViewPort(true);
         forumContext.loadDataWithBaseURL("about:blank", Utils.getNewContent(sb), "text/html", "utf-8", null);

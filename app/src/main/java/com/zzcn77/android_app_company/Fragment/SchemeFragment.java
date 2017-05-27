@@ -24,6 +24,7 @@ import com.zzcn77.android_app_company.Adapter.SchemeAdapter;
 import com.zzcn77.android_app_company.Bean.FangAnBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -77,7 +78,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, SchemeAcitivty.class);
-                intent.putExtra("id",schemeAdapter.getItem(position));
+                intent.putExtra("id", schemeAdapter.getItem(position));
                 startActivity(intent);
             }
         });
@@ -102,6 +103,13 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                 SwipeRefreshLayout.setEnabled(enable);
             }
         });
+
+        String scheme = (String) SPUtil.get(mActivity, "scheme", "");
+        if (!scheme.isEmpty()) {
+            fangAnBean = new Gson().fromJson(scheme, FangAnBean.class);
+            schemeAdapter = new SchemeAdapter(mActivity, (ArrayList) fangAnBean.getRes());
+            swipeTarget.setAdapter(schemeAdapter);
+        }
     }
 
     private FangAnBean fangAnBean;
@@ -131,6 +139,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                         if (fangAnBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
+                                    SPUtil.putAndApply(mActivity, "scheme", decode);
                                     schemeAdapter = new SchemeAdapter(mActivity, (ArrayList) fangAnBean.getRes());
                                     swipeTarget.setAdapter(schemeAdapter);
                                     swipeTarget.setEnabled(true);
@@ -181,7 +190,6 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
             }
         } catch (Exception e) {
             // 可忽略的异常
-            Toast.makeText(mActivity, "界面切换的太快了", Toast.LENGTH_SHORT).show();
         }
 
 

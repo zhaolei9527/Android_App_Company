@@ -34,7 +34,7 @@
 
         <activity
             android:name=".Acitivity.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -138,16 +138,19 @@
         <activity
             android:name=".Acitivity.PeomotionDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".Acitivity.DemoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme_Umeng_Push_Splash">
+            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
+
+        <activity
+            android:name=".Acitivity.DemoSerachActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
 
         </activity>
 
@@ -157,6 +160,10 @@
         <service android:name=".Service.DownloadService">
 
         </service>
+        <service android:name=".Service.DownloadPDF">
+
+        </service>
+
     </application>
 
 </manifest>

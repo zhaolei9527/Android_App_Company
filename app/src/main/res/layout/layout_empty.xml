@@ -3,18 +3,19 @@
     android:id="@+id/ll_empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingTop="@dimen/y90"
     android:visibility="gone">
 
     <ImageView
         android:layout_width="@dimen/x150"
         android:layout_height="@dimen/x150"
-        android:background="@mipmap/empty" />
+        android:background="@drawable/ic_empty_dark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有找到相关内容"
+        android:text="暂无相关内容"
         android:textColor="#666" />
 </LinearLayout>

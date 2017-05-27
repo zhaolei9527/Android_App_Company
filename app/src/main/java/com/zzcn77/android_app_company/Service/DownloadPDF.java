@@ -16,6 +16,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.zzcn77.android_app_company.Acitivity.MainActivity;
+import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.HttpStatus;
 
@@ -26,11 +27,13 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.zzcn77.android_app_company.Service.DownloadService.installApk;
+
 /**
  * Created by 赵磊 on 2017/5/20.
  */
 
-public class DownloadService  extends Service {
+public class DownloadPDF extends Service {
 
     public static final String DOWNLOAD_PATH =
             Environment.getExternalStorageDirectory().getAbsolutePath() +
@@ -47,30 +50,31 @@ public class DownloadService  extends Service {
     private static final int URL_ERROR = 1;
     private static final int NET_ERROR = 2;
     private static final int DOWNLOAD_SUCCESS = 3;
+    private String id;
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case MSG_INIT:
                     length = (int) msg.obj;
-                    new DownloadThread(url, length).start();
+                    new DownloadThread(url, length, id).start();
                     createNotification();
                     break;
                 case DOWNLOAD_SUCCESS:
                     //下载完成
                     notifyNotification(100, 100);
-                    installApk(DownloadService.this, new File(DOWNLOAD_PATH, fileName));
-                    Toast.makeText(DownloadService.this, "下载完成", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, "下载完成", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, "文件已经下载到:" + file.getName(), Toast.LENGTH_SHORT).show();
                     break;
                 case URL_ERROR:
-                    Toast.makeText(DownloadService.this, "下载地址错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, "下载地址错误", Toast.LENGTH_SHORT).show();
                     break;
                 case NET_ERROR:
-                    Toast.makeText(DownloadService.this, "连接失败，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, "连接失败，请检查网络设置", Toast.LENGTH_SHORT).show();
             }
         }
-
-        ;
     };
+    private File file;
+    private long aLong;
 
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
@@ -86,6 +90,7 @@ public class DownloadService  extends Service {
             } else {
                 mHandler.sendEmptyMessage(URL_ERROR);
             }
+            id = intent.getStringExtra("id");
 
         }
         return super.onStartCommand(intent, flags, startId);
@@ -125,8 +130,8 @@ public class DownloadService  extends Service {
                     dir.mkdir();
                 }
                 fileName = this.url.substring(this.url.lastIndexOf("/") + 1, this.url.length());
-                if (fileName == null && TextUtils.isEmpty(fileName) && !fileName.contains(".apk")) {
-                    fileName = getPackageName() + ".apk";
+                if (fileName == null && TextUtils.isEmpty(fileName) && !fileName.contains(".pdf")) {
+                    fileName = getPackageName() + ".pdf";
                 }
                 File file = new File(dir, fileName);
                 raf = new RandomAccessFile(file, "rwd");
@@ -155,10 +160,12 @@ public class DownloadService  extends Service {
     class DownloadThread extends Thread {
         String url;
         int length;
+        String id;
 
-        public DownloadThread(String url, int length) {
+        public DownloadThread(String url, int length, String id) {
             this.url = url;
             this.length = length;
+            this.id = id;
         }
 
         @Override
@@ -176,7 +183,7 @@ public class DownloadService  extends Service {
                 int start = 0;
                 conn.setRequestProperty("Range", "bytes=" + 0 + "-" + length);
                 //设置文件写入位置
-                File file = new File(DownloadService.DOWNLOAD_PATH, fileName);
+                file = new File(DownloadPDF.DOWNLOAD_PATH, fileName);
                 raf = new RandomAccessFile(file, "rwd");
                 raf.seek(start);
                 long mFinished = 0;
@@ -197,8 +204,13 @@ public class DownloadService  extends Service {
                         speed += len;
                         if (System.currentTimeMillis() - time > 1000) {
                             time = System.currentTimeMillis();
-
                             notifyNotification(mFinished, length);
+                            Intent intent = new Intent();
+                            aLong = mFinished * 100 / length;
+                            intent.setAction("pdfisdownloading");
+                            intent.putExtra("progress", aLong);
+                            intent.putExtra("id", id);
+                            sendBroadcast(intent);
                             Log.i(TAG, "mFinished==" + mFinished);
                             Log.i(TAG, "length==" + length);
                             Log.i(TAG, "speed==" + speed);
@@ -240,7 +252,7 @@ public class DownloadService  extends Service {
     public void createNotification() {
         notification = new Notification(
                 R.mipmap.icon,//应用的图标
-                "安装包正在下载...",
+                "资料正在下载...",
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_ONGOING_EVENT;
         //notification.flags = Notification.FLAG_AUTO_CANCEL;
@@ -260,32 +272,20 @@ public class DownloadService  extends Service {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //设置notification的PendingIntent
-        Intent intt = new Intent(this, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this,100, intt,Intent.FLAG_ACTIVITY_NEW_TASK	| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-		notification.contentIntent = pi;
+        Intent intt = new Intent(this, ProductDetailsActivity.class);
+        intt.putExtra("id", id);
+        notification.contentIntent = PendingIntent.getActivity(this, 100, intt,
+                Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationManager.notify(R.layout.notification_item, notification);
     }
 
     private void notifyNotification(long percent, long length) {
+        aLong = percent * 100 / length;
+        contentView.setTextViewText(R.id.tv_progress, aLong + "%");
 
-        contentView.setTextViewText(R.id.tv_progress, (percent * 100 / length) + "%");
         contentView.setProgressBar(R.id.progress, (int) length, (int) percent, false);
         notification.contentView = contentView;
         notificationManager.notify(R.layout.notification_item, notification);
     }
 
-    /**
-     * 安装apk
-     *
-     * @param context 上下文
-     * @param file    APK文件
-     */
-    public static void installApk(Context context, File file) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file),
-                "application/vnd.android.package-archive");
-        context.startActivity(intent);
-    }
 }
