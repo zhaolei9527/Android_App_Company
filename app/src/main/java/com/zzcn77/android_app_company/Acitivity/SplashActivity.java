@@ -113,7 +113,8 @@ public class SplashActivity extends BaseActivity {
                                                 finish();
                                             } else if (loginBean.getMsg().contains("密码有误")) {
                                                 Toast.makeText(context, "帐号或密码有误", Toast.LENGTH_LONG).show();
-                                                gotoMain();
+                                                startActivity(new Intent(context, LoginActivity.class));
+                                                finish();
                                             } else if (loginBean.getMsg().contains("用户名不存在")) {
                                                 Toast.makeText(context, "用户名不存在", Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(context, LoginActivity.class));

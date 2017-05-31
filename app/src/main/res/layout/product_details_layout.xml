@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/Peomotion_Details"
+            android:text="@string/productdetails"
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
@@ -180,13 +180,6 @@
             android:layout_height="@dimen/y39"
             android:layout_marginLeft="1px"
             android:background="#ffce7d">
-
-            <com.zzcn77.android_app_company.View.ProgressButton
-                android:id="@+id/btn_progress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent" />
-
             <ImageView
                 android:id="@+id/img2"
                 android:layout_width="@dimen/x20"

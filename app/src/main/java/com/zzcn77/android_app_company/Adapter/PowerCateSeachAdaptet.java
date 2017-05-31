@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.R;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by 赵磊 on 2017/5/24.
  */
 
-public class PowerSeachAdaptet extends BaseAdapter {
+public class PowerCateSeachAdaptet extends BaseAdapter {
     private Context context;
 
     public ArrayList getDatas() {
@@ -28,9 +29,9 @@ public class PowerSeachAdaptet extends BaseAdapter {
         this.datas = datas;
     }
 
-    private ArrayList datas = new ArrayList();
+    private ArrayList<GoodsBean.ResBean.CateBean> datas = new ArrayList();
 
-    public PowerSeachAdaptet(Context context, ArrayList datas) {
+    public PowerCateSeachAdaptet(Context context, ArrayList datas) {
         this.context = context;
         this.datas = datas;
 
@@ -42,8 +43,8 @@ public class PowerSeachAdaptet extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public ArrayList<GoodsBean.ResBean.CateBean> getItem(int position) {
+        return datas;
     }
 
     @Override
@@ -62,6 +63,17 @@ public class PowerSeachAdaptet extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.tvTitle.setText(datas.get(position).getTitle());
+
+        if (datas.get(position).getIscheck()) {
+            viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.noraml));
+            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbgioff));
+        } else {
+            viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.text_check));
+            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbg));
+        }
+
+
         return convertView;
     }
 

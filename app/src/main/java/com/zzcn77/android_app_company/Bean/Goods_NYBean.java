@@ -5,9 +5,10 @@ package com.zzcn77.android_app_company.Bean;
  */
 
 public class Goods_NYBean {
+
     /**
      * stu : 1
-     * res : {"title":"安防警报系统套装","img_lb":"/Public/uploads/goods/img_lb/2017-05-24/592524de579eb.png","x_num":"2010X","price":"100.00","pdf":"/Public/uploads/goods/pdf/2017-05-24/592527dbe79c9.pdf","tel":"4009998852","content":"&lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20170524/1495606471543663.png&quot; title=&quot;1495606471543663.png&quot; alt=&quot;图片1.png&quot;/&gt;&lt;/p&gt;"}
+     * res : {"title":"停车场明星监控套装","img_lb":"/Public/uploads/goods/img_lb/2017-05-24/59252ed636682.png","x_num":"1251","price":"500.00","pdf":"/Public/uploads/goods/pdf/2017-05-24/59252ed637df2.pdf","pdf_title":"监控器必读手册.pdf","tel":"13165828017","content":"&lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20170524/1495609114813429.png&quot; title=&quot;1495609114813429.png&quot; alt=&quot;图片1.png&quot;/&gt;&lt;/p&gt;","coll":"0"}
      */
 
     private String stu;
@@ -31,13 +32,15 @@ public class Goods_NYBean {
 
     public static class ResBean {
         /**
-         * title : 安防警报系统套装
-         * img_lb : /Public/uploads/goods/img_lb/2017-05-24/592524de579eb.png
-         * x_num : 2010X
-         * price : 100.00
-         * pdf : /Public/uploads/goods/pdf/2017-05-24/592527dbe79c9.pdf
-         * tel : 4009998852
-         * content : &lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20170524/1495606471543663.png&quot; title=&quot;1495606471543663.png&quot; alt=&quot;图片1.png&quot;/&gt;&lt;/p&gt;
+         * title : 停车场明星监控套装
+         * img_lb : /Public/uploads/goods/img_lb/2017-05-24/59252ed636682.png
+         * x_num : 1251
+         * price : 500.00
+         * pdf : /Public/uploads/goods/pdf/2017-05-24/59252ed637df2.pdf
+         * pdf_title : 监控器必读手册.pdf
+         * tel : 13165828017
+         * content : &lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20170524/1495609114813429.png&quot; title=&quot;1495609114813429.png&quot; alt=&quot;图片1.png&quot;/&gt;&lt;/p&gt;
+         * coll : 0
          */
 
         private String title;
@@ -45,8 +48,10 @@ public class Goods_NYBean {
         private String x_num;
         private String price;
         private String pdf;
+        private String pdf_title;
         private String tel;
         private String content;
+        private String coll;
 
         public String getTitle() {
             return title;
@@ -88,6 +93,14 @@ public class Goods_NYBean {
             this.pdf = pdf;
         }
 
+        public String getPdf_title() {
+            return pdf_title;
+        }
+
+        public void setPdf_title(String pdf_title) {
+            this.pdf_title = pdf_title;
+        }
+
         public String getTel() {
             return tel;
         }
@@ -102,6 +115,14 @@ public class Goods_NYBean {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public String getColl() {
+            return coll;
+        }
+
+        public void setColl(String coll) {
+            this.coll = coll;
         }
     }
 }

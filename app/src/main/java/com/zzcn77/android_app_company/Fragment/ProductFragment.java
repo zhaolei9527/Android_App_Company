@@ -2,12 +2,16 @@ package com.zzcn77.android_app_company.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,6 +25,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.ProductSearchActivity;
 import com.zzcn77.android_app_company.Adapter.GVProuctAdapter;
 import com.zzcn77.android_app_company.Adapter.ProductAdapter;
 import com.zzcn77.android_app_company.Bean.GoodsBean;
@@ -59,10 +64,14 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     MyGridView gvSwipeTarget;
     @BindView(R.id.img_power_search)
     ImageView imgPowerSearch;
+    @BindView(R.id.ll_empty)
+    LinearLayout llEmpty;
     private ProductAdapter adapter;
     private int page = 1;
     private ProductAdapter productAdapter;
     private GVProuctAdapter gvProuctAdapter;
+    private Intent intent;
+    private GoodsBean goodsBean;
 
     @Override
     protected int setLayoutResouceId() {
@@ -85,8 +94,36 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             gvSwipeTarget.setAdapter(gvProuctAdapter);
             swipeTarget.setAdapter(productAdapter);
         }
-
+        imgSearch.setOnClickListener(this);
         swipeTarget.setOnItemClickListener(this);
+        gvSwipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent(mActivity, ProductSearchActivity.class);
+                intent.putExtra("cid", gvProuctAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+                // TODO Auto-generated method stub
+                if (arg1 == EditorInfo.IME_ACTION_SEARCH) {
+                    search();
+                }
+                return false;
+            }
+        });
+    }
+
+    private void search() {
+        String content = etSearch.getText().toString().trim();
+        if (content.isEmpty()) {
+            content = etSearch.getHint().toString().trim();
+        }
+        Intent intent1 = new Intent(mActivity, ProductSearchActivity.class);
+        intent1.putExtra("keywords", content);
+        startActivity(intent1);
     }
 
     @Override
@@ -102,13 +139,20 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                         EasyToast.showShort(mActivity, "网络异常，请稍后再试");
                     } else {
                         if (decode.contains("code\":\"111\"")) {
-                            Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
-                            page = page - 1;
+                            if (page == 1) {
+                                llEmpty.setVisibility(View.VISIBLE);
+                            } else {
+                                Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
+                                page = page - 1;
+                            }
                             swipeToLoadLayout.setLoadingMore(false);
                             swipeTarget.setEnabled(true);
                             return;
                         } else {
-                            GoodsBean goodsBean = new Gson().fromJson(decode, GoodsBean.class);
+                            if (llEmpty!=null){
+                                llEmpty.setVisibility(View.GONE);
+                            }
+                            goodsBean = new Gson().fromJson(decode, GoodsBean.class);
                             if (goodsBean.getStu().equals("1")) {
                                 if (page == 1) {
                                     if (swipeTarget != null) {
@@ -169,7 +213,6 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             // 可忽略的异常
         }
 
-
     }
 
     //上拉加载
@@ -191,8 +234,12 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_power_search:
-                new PowersearchDialog.Builder(mActivity).create().show();
+                new PowersearchDialog.Builder(mActivity,goodsBean).create().show();
                 break;
+            case R.id.img_search:
+                search();
+                break;
+
 
         }
     }
@@ -204,4 +251,6 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         intent.putExtra("id", item);
         startActivity(intent);
     }
+
+
 }

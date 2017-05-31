@@ -154,6 +154,17 @@
 
         </activity>
 
+        <activity
+            android:name=".Acitivity.PdfActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".Acitivity.ProductSearchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            ></activity>
+
         <service android:name=".Service.AdvanceLoadX5Service">
 
         </service>

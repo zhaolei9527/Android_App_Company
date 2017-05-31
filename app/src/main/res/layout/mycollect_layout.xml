@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y35"
@@ -30,42 +29,15 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rll_deleteall"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y32"
-        android:orientation="horizontal"
         android:paddingLeft="@dimen/x15"
-        android:paddingRight="@dimen/x10">
+        android:paddingRight="@dimen/x10"
+        android:visibility="gone">
 
-        <RelativeLayout
-            android:id="@+id/rl_checkall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
-
-            <CheckBox
-                android:id="@+id/cb_all"
-                android:layout_width="@dimen/y15"
-                android:layout_height="@dimen/y15"
-                android:layout_marginRight="@dimen/x10"
-                android:background="@drawable/checkboxbg"
-                android:button="@null"
-                android:checked="false"
-                android:clickable="false" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/cb_all"
-                android:text="全选"
-                android:textSize="@dimen/y15" />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
+        <LinearLayout
+            android:layout_alignParentRight="true"
             android:id="@+id/rl_deleteall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,6 +59,30 @@
                 android:layout_marginRight="@dimen/x10"
                 android:layout_toLeftOf="@id/tv"
                 android:background="@mipmap/collect_r1_c4" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_checkall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/img_all"
+                android:layout_width="@dimen/y15"
+                android:layout_height="@dimen/y15"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@drawable/check_false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/img_all"
+                android:text="全选"
+                android:textSize="@dimen/y15" />
 
         </RelativeLayout>
     </RelativeLayout>

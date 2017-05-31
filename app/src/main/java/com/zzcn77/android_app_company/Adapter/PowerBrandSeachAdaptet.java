@@ -6,10 +6,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.UrlUtils;
 
 import java.util.ArrayList;
 
@@ -17,12 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by 赵磊 on 2017/5/19.
+ * Created by 赵磊 on 2017/5/24.
  */
 
-public class GVProuctAdapter extends BaseAdapter {
-
-
+public class PowerBrandSeachAdaptet extends BaseAdapter {
     private Context context;
 
     public ArrayList getDatas() {
@@ -30,12 +26,12 @@ public class GVProuctAdapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas.addAll(datas);
+        this.datas = datas;
     }
 
-    private ArrayList<GoodsBean.ResBean.CateBean> datas = new ArrayList();
+    private ArrayList<GoodsBean.ResBean.BrandBean> datas = new ArrayList();
 
-    public GVProuctAdapter(Context context, ArrayList datas) {
+    public PowerBrandSeachAdaptet(Context context, ArrayList datas) {
         this.context = context;
         this.datas = datas;
 
@@ -47,8 +43,8 @@ public class GVProuctAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
-        return datas.get(position).getId();
+    public ArrayList<GoodsBean.ResBean.BrandBean> getItem(int position) {
+        return datas;
     }
 
     @Override
@@ -57,26 +53,30 @@ public class GVProuctAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.product_item_layout, null);
+            convertView = View.inflate(context, R.layout.power_search_itemlayout, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.imageView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
-        viewHolder.title.setText(datas.get(position).getTitle());
+        viewHolder.tvTitle.setText(datas.get(position).getTitle());
+        if (datas.get(position).getIscheck()) {
+            viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.noraml));
+            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbgioff));
+        } else {
+            viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.text_check));
+            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbg));
+        }
         return convertView;
     }
 
     static class ViewHolder {
-        @BindView(R.id.imageView)
-        SimpleDraweeView imageView;
-        @BindView(R.id.title)
-        TextView title;
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

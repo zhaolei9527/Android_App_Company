@@ -8,28 +8,24 @@ import android.widget.GridView;
  * Created by 赵磊 on 2017/5/23.
  */
 
-public class MyGridView extends GridView {
-    public MyGridView(Context context) {
-        super(context);
-    }
-
+public class MyGridView  extends GridView{
     public MyGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyGridView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public MyGridView(Context context) {
+        super(context);
     }
 
-    /**   只重写该方法，达到使ListView适应ScrollView的效果   */
+    public MyGridView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-
                 MeasureSpec.AT_MOST);
-
         super.onMeasure(widthMeasureSpec, expandSpec);
-
     }
 }

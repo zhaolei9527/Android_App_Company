@@ -11,7 +11,7 @@ public class GoodsBean {
 
     /**
      * stu : 1
-     * res : {"cate":[{"title":"视频监控明星产品","img":"/Public/uploads/goods/img/2017-05-24/5925302bdb558.png","id":"6"},{"title":"停车场明星监控套装","img":"/Public/uploads/goods/img/2017-05-24/59252ed637622.png","id":"5"},{"title":"视频监控系统","img":"/Public/uploads/goods/img/2017-05-24/592525370f9dd.png","id":"4"},{"title":"综合布线监控套装","img":"/Public/uploads/goods/img/2017-05-24/5925251ac74dd.png","id":"3"},{"title":"安防警报系统套装","img":"/Public/uploads/goods/img/2017-05-24/592524de5df7d.png","id":"2"},{"title":"停车场监控套装","img":"/Public/uploads/goods/img/2017-05-24/5925229af0a99.png","id":"1"}],"goodsmx":[{"title":"视频监控明星产品","img":"/Public/uploads/goods/img/2017-05-24/5925302bdb558.png","id":"6"},{"title":"停车场明星监控套装","img":"/Public/uploads/goods/img/2017-05-24/59252ed637622.png","id":"5"}]}
+     * res : {"cate":[{"title":"视频监控系统","img":"/Public/uploads/cate/2017-05-23/5923f57e4554f.png","id":"4"},{"title":"楼宇对讲系统","img":"/Public/uploads/cate/2017-05-23/5923f5694603e.png","id":"5"},{"title":"停车场系统","img":"/Public/uploads/cate/2017-05-23/5923f598cbfad.png","id":"1"},{"title":"安防警报系统","img":"/Public/uploads/cate/2017-05-23/5923f5c6186fa.png","id":"2"},{"title":"综合布线系统","img":"/Public/uploads/cate/2017-05-23/5923f5ddb0dda.png","id":"3"},{"title":"有线电视系统","img":"/Public/uploads/cate/2017-05-23/5923f5f85476c.png","id":"6"}],"brand":[{"title":"天地伟业","id":"4"},{"title":"海康威视Hikvision","id":"5"},{"title":"泰科安防Tyco","id":"1"},{"title":"齐盛科技","id":"2"},{"title":"深圳帝之特","id":"3"},{"title":"深圳视鑫电子","id":"6"}],"px":[{"w_px":"352","h_px":"288","id":"4"},{"w_px":"704","h_px":"546","id":"5"},{"w_px":"960","h_px":"576","id":"1"},{"w_px":"1280","h_px":"720","id":"2"},{"w_px":"1920","h_px":"1080","id":"3"},{"w_px":"960","h_px":"600","id":"6"}],"goodsmx":[{"title":"停车场明星监控套装","img":"/Public/uploads/goods/img/2017-05-24/59252ed637622.png","id":"5"},{"title":"start","img":"/Public/uploads/goods/img/2017-05-25/59268a45b6278.png","id":"7"},{"title":"视频监控明星产品","img":"/Public/uploads/goods/img/2017-05-24/5925302bdb558.png","id":"6"}]}
      */
 
     private String stu;
@@ -35,6 +35,8 @@ public class GoodsBean {
 
     public static class ResBean {
         private List<CateBean> cate;
+        private List<BrandBean> brand;
+        private List<PxBean> px;
         private List<GoodsmxBean> goodsmx;
 
         public List<CateBean> getCate() {
@@ -43,6 +45,22 @@ public class GoodsBean {
 
         public void setCate(List<CateBean> cate) {
             this.cate = cate;
+        }
+
+        public List<BrandBean> getBrand() {
+            return brand;
+        }
+
+        public void setBrand(List<BrandBean> brand) {
+            this.brand = brand;
+        }
+
+        public List<PxBean> getPx() {
+            return px;
+        }
+
+        public void setPx(List<PxBean> px) {
+            this.px = px;
         }
 
         public List<GoodsmxBean> getGoodsmx() {
@@ -54,10 +72,20 @@ public class GoodsBean {
         }
 
         public static class CateBean {
+            private boolean ischeck=false;
+
+            public boolean getIscheck() {
+                return ischeck;
+            }
+
+            public void setIscheck(boolean ischeck) {
+                this.ischeck = ischeck;
+            }
+
             /**
-             * title : 视频监控明星产品
-             * img : /Public/uploads/goods/img/2017-05-24/5925302bdb558.png
-             * id : 6
+             * title : 视频监控系统
+             * img : /Public/uploads/cate/2017-05-23/5923f57e4554f.png
+             * id : 4
              */
 
             private String title;
@@ -89,11 +117,90 @@ public class GoodsBean {
             }
         }
 
+        public static class BrandBean {
+            /**
+             * title : 天地伟业
+             * id : 4
+             */
+
+            private boolean ischeck=false;
+
+            public boolean getIscheck() {
+                return ischeck;
+            }
+
+            public void setIscheck(boolean ischeck) {
+                this.ischeck = ischeck;
+            }
+            private String title;
+            private String id;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+        }
+
+        public static class PxBean {
+            /**
+             * w_px : 352
+             * h_px : 288
+             * id : 4
+             */
+            private boolean ischeck=false;
+
+            public boolean getIscheck() {
+                return ischeck;
+            }
+
+            public void setIscheck(boolean ischeck) {
+                this.ischeck = ischeck;
+            }
+            private String w_px;
+            private String h_px;
+            private String id;
+
+            public String getW_px() {
+                return w_px;
+            }
+
+            public void setW_px(String w_px) {
+                this.w_px = w_px;
+            }
+
+            public String getH_px() {
+                return h_px;
+            }
+
+            public void setH_px(String h_px) {
+                this.h_px = h_px;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+        }
+
         public static class GoodsmxBean {
             /**
-             * title : 视频监控明星产品
-             * img : /Public/uploads/goods/img/2017-05-24/5925302bdb558.png
-             * id : 6
+             * title : 停车场明星监控套装
+             * img : /Public/uploads/goods/img/2017-05-24/59252ed637622.png
+             * id : 5
              */
 
             private String title;

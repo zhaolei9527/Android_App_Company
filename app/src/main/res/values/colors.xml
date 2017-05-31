@@ -5,9 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="text_blue">#1Ed8ff</color>
     <color name="text_gray">#333</color>
+    <color name="text_check">#666</color>
     <color name="noraml">#fff</color>
     <color name="bg">#E7E7E7</color>
-    <color name="purple_progress">#62b974</color>
+    <color name="purple_progress">#2f992a</color>
     <color name="progress_bg">#ffce7d</color>
     <color name="blue_normal">#000</color>
 </resources>

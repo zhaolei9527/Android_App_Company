@@ -62,8 +62,11 @@ public class DownloadPDF extends Service {
                 case DOWNLOAD_SUCCESS:
                     //下载完成
                     notifyNotification(100, 100);
-                    Toast.makeText(DownloadPDF.this, "下载完成", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(DownloadPDF.this, "文件已经下载到:" + file.getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, "文件已经下载到:" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setAction("pdfisdownloading");
+                    intent.putExtra("id",id);
+                    sendBroadcast(intent);
                     break;
                 case URL_ERROR:
                     Toast.makeText(DownloadPDF.this, "下载地址错误", Toast.LENGTH_SHORT).show();
@@ -205,12 +208,7 @@ public class DownloadPDF extends Service {
                         if (System.currentTimeMillis() - time > 1000) {
                             time = System.currentTimeMillis();
                             notifyNotification(mFinished, length);
-                            Intent intent = new Intent();
-                            aLong = mFinished * 100 / length;
-                            intent.setAction("pdfisdownloading");
-                            intent.putExtra("progress", aLong);
-                            intent.putExtra("id", id);
-                            sendBroadcast(intent);
+
                             Log.i(TAG, "mFinished==" + mFinished);
                             Log.i(TAG, "length==" + length);
                             Log.i(TAG, "speed==" + speed);
