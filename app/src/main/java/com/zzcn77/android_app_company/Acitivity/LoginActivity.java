@@ -60,7 +60,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initview() {
 
     }
-
     @Override
     protected void initListener() {
         btnLogin.setOnClickListener(this);
@@ -69,18 +68,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvForgetPassword.setOnClickListener(this);
 
     }
-
     @Override
     protected void initData() {
 
     }
-
     String passwordmd5;
-
     private void getetcontent() {
-
-        final Dialog dialog = Utils.showLoadingDialog(context);
-
         accountor = etAccount.getText().toString();
         password = etPassword.getText().toString();
         if (accountor.trim().isEmpty() || password.trim().isEmpty()) {
@@ -90,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //登录校验密码，
                 passwordmd5 = MD5Utils.md5(password);
                 passwordmd5 = MD5Utils.md5(passwordmd5);
-
+            final Dialog dialog = Utils.showLoadingDialog(context);
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "login", new Response.Listener<String>() {
                 @Override

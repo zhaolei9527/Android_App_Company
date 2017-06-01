@@ -78,6 +78,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         swipeTarget.setOnItemClickListener(this);
         rlCheckall.setOnClickListener(this);
         rlDeleteall.setOnClickListener(this);
+        imgBack.setOnClickListener(this);
     }
 
     @Override
@@ -234,6 +235,9 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                     }
 
                 }
+                break;
+            case  R.id.img_back:
+                finish();
                 break;
         }
     }

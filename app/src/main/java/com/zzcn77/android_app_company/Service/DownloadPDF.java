@@ -2,11 +2,9 @@ package com.zzcn77.android_app_company.Service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
@@ -15,8 +13,6 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.zzcn77.android_app_company.Acitivity.MainActivity;
-import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.HttpStatus;
 
@@ -26,8 +22,6 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static com.zzcn77.android_app_company.Service.DownloadService.installApk;
 
 /**
  * Created by 赵磊 on 2017/5/20.
@@ -217,14 +211,10 @@ public class DownloadPDF extends Service {
                     }
                     mHandler.sendEmptyMessage(DOWNLOAD_SUCCESS);
                     Log.i(TAG, "下载完成了。。。");
-                    contentView.setTextViewText(R.id.tv_title, getString(R.string.downloadcompletes));
                 } else {
                     Log.i(TAG, "下载出错了。。。" + conn.getResponseCode() + conn.getURL());
                     mHandler.sendEmptyMessage(NET_ERROR);
-                    contentView.setTextViewText(R.id.tv_title, getString(R.string.hasError));
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -250,7 +240,7 @@ public class DownloadPDF extends Service {
     public void createNotification() {
         notification = new Notification(
                 R.mipmap.icon,//应用的图标
-                "资料正在下载...",
+                "资料下载...",
                 System.currentTimeMillis());
         notification.flags = Notification.FLAG_ONGOING_EVENT;
         //notification.flags = Notification.FLAG_AUTO_CANCEL;
@@ -270,17 +260,16 @@ public class DownloadPDF extends Service {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //设置notification的PendingIntent
-        Intent intt = new Intent(this, ProductDetailsActivity.class);
-        intt.putExtra("id", id);
-        notification.contentIntent = PendingIntent.getActivity(this, 100, intt,
-                Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Intent intt = new Intent(this, ProductDetailsActivity.class);
+//        intt.putExtra("id", id);
+//        notification.contentIntent = PendingIntent.getActivity(this, 100, intt,
+//                Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationManager.notify(R.layout.notification_item, notification);
     }
 
     private void notifyNotification(long percent, long length) {
         aLong = percent * 100 / length;
         contentView.setTextViewText(R.id.tv_progress, aLong + "%");
-
         contentView.setProgressBar(R.id.progress, (int) length, (int) percent, false);
         notification.contentView = contentView;
         notificationManager.notify(R.layout.notification_item, notification);

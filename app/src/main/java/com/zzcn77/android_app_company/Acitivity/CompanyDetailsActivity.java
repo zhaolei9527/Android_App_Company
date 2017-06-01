@@ -98,7 +98,6 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             }
         });
         RollPagerView.setPlayDelay(3000);
-
     }
 
     @Override
@@ -149,12 +148,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
                     CompanyDetailsBean companyDetailsBean = new Gson().fromJson(decode, CompanyDetailsBean.class);
                     if (companyDetailsBean.getStu().equals("1")) {
                         SPUtil.putAndApply(context, "jianjie", s);
-
                         getCompanyDetails();
-
                     } else {
                         getCompanyDetails();
-
                         EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
@@ -182,7 +178,6 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             requestQueue.add(stringRequest);
         } else {
             getCompanyDetails();
-
             EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 

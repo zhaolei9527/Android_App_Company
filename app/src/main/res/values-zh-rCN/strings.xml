@@ -87,7 +87,7 @@
     <string name="cancelcollection">取消收藏</string>
     <string name="discount">折</string>
     <string name="openfile">打开文件</string>
-    <string name="downloading">开始下载</string>
+    <string name="downloading">正在下载</string>
     <string name="message">提示</string>
     <string name="Youarenotcurrentlyloggedin">您当前未登录！</string>
     <string name="loginnow">立刻登录</string>

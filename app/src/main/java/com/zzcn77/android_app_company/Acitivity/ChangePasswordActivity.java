@@ -56,7 +56,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initListener() {
-
+        imgBack.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +68,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
             case R.id.btn_save:
                 String Oldpassword = etOldpassword.getText().toString().trim();
                 String Newpassword = etNewpassword.getText().toString().trim();

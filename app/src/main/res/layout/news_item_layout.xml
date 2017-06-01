@@ -34,8 +34,8 @@
             android:layout_width="@dimen/y115"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
             android:maxLength="18"
+            android:maxLines="2"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/x13" />
 
@@ -52,7 +52,7 @@
     </LinearLayout>
 
 
-    <Button
+    <LinearLayout
         android:layout_width="@dimen/x65"
         android:layout_height="@dimen/y20"
         android:layout_alignEnd="@+id/linearLayout"
@@ -61,8 +61,15 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="@dimen/x15"
         android:background="@drawable/btn_bg"
-        android:text="@string/details"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

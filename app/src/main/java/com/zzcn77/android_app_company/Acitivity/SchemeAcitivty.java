@@ -60,7 +60,6 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initview() {
-        Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
         dialog = Utils.showLoadingDialog(context);
         IX5WebViewExtension ix5 = forumContext.getX5WebViewExtension();
         if (null != ix5) {

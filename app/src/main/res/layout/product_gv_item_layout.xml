@@ -79,6 +79,7 @@
             android:layout_height="@dimen/y20"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
+            android:layout_marginRight="@dimen/x10"
             android:layout_marginBottom="@dimen/x5"
             android:background="@mipmap/shoucang_off" />
 
