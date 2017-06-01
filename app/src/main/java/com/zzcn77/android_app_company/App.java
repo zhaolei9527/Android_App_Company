@@ -9,10 +9,12 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.zzcn77.android_app_company.Service.AdvanceLoadX5Service;
+import com.zzcn77.android_app_company.Utils.CrashHandler;
 import com.zzcn77.android_app_company.Utils.Utils;
 
 import cn.refactor.multistatelayout.MultiStateConfiguration;
 import cn.refactor.multistatelayout.MultiStateLayout;
+
 
 
 /**
@@ -23,6 +25,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler handler = CrashHandler.getInstance();
+        handler.init(getApplicationContext());
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
         PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDisplayNotificationNumber(0);
         mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER); //声音

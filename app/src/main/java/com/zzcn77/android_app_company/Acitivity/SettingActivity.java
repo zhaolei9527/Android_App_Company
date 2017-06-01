@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -145,6 +146,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                         dialog.dismiss();
                                         UpDateDialog upDateDialog = new UpDateDialog();
                                         upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(),versionBean.getRes().getAndroid());
+                                    }else {
+                                        dialog.dismiss();
+                                        Toast.makeText(context, R.string.Isthelatestversion, Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -153,7 +157,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 }
                             } else {
                                 dialog.dismiss();
-
                                 EasyToast.showShort(context,getString(R.string.Abnormalserver));
                             }
                         }
