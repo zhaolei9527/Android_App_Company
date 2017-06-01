@@ -126,7 +126,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         if (password.length() < 6) {
-            EasyToast.showShort(context,"密码长度过短，最少六位密码");
+            EasyToast.showShort(context,getString(R.string.passwordistolow));
             return;
         }
 
@@ -156,7 +156,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
                     dialog.dismiss();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     dialog.dismiss();
                     RegistBean registBean = new Gson().fromJson(decode, RegistBean.class);
@@ -170,13 +170,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         }
                     } else {
                         if (registBean.getMsg().contains("该用户名已注册")) {
-                            Toast.makeText(context, "用户名已存在", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.Theusernamealreadyexists, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该邮箱已注册")) {
-                            Toast.makeText(context, "该邮箱已注册", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.Themailboxhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该手机号已注册")) {
-                            Toast.makeText(context, "该手机号已注册", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.Thephonenumberhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context,getString(R.string.Abnormalserver));
                         }
                         dialog.dismiss();
                     }
@@ -186,7 +186,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
                 dialog.dismiss();
 
             }
@@ -210,7 +210,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             requestQueue.add(stringRequest);
         } else {
             dialog.dismiss();
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
 

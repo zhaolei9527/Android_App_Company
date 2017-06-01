@@ -116,7 +116,7 @@ public class DemoPlayActivity extends BaseActivity {
                     forumContext.loadUrl(getIntent().getStringExtra("id"));
                     //forumContext.loadUrl("http://m.bilibili.com/video/av9988478.html");
                 } else {
-                    Toast.makeText(context, "出错了", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

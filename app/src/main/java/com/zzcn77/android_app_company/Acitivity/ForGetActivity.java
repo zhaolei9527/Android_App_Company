@@ -158,24 +158,24 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     FindpwdBean findpwdBean = new Gson().fromJson(decode, FindpwdBean.class);
                     if (String.valueOf(findpwdBean.getStu()).equals("1")) {
                         if (findpwdBean.getMsg().contains("密码找回成功")) {
-                            Toast.makeText(context, "密码找回成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.PASSWORDFORGET, Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     } else {
                         Toast.makeText(context, findpwdBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context,  getString(R.string.Abnormalserver));
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -195,7 +195,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
     }
@@ -218,29 +218,29 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     EmailCodeBean emailCodeBean = new Gson().fromJson(decode, EmailCodeBean.class);
                     if (String.valueOf(emailCodeBean.getStu()).equals("1")) {
                         if (emailCodeBean.getMsg().contains("发送成功")) {
-                            Toast.makeText(context, "发送成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.sendsuccessfully, Toast.LENGTH_SHORT).show();
                             thread.start();
                         }
                     } else {
                         if (emailCodeBean.getMsg().toString().contains("该邮箱还没有注册")) {
-                            Toast.makeText(context, "该邮箱还没有注册", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.mailboxnotregistered, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, emailCodeBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
 
                         }
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context,  getString(R.string.Abnormalserver));
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -258,7 +258,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
 

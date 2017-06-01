@@ -36,7 +36,6 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:maxLength="18"
-            android:text="无线网络摄像头，断开网线后无法连接？"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/x13" />
 
@@ -47,7 +46,6 @@
             android:layout_marginTop="@dimen/x10"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="摄像机wifi模式设置：首先摄像机wifi模式设置摄像机wifi模式设置"
             android:textSize="@dimen/x11" />
 
 
@@ -63,7 +61,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="@dimen/x15"
         android:background="@drawable/btn_bg"
-        android:text="查看详情"
+        android:text="@string/details"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
 

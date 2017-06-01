@@ -46,7 +46,7 @@
                 android:layout_marginLeft="@dimen/x9"
                 android:layout_toRightOf="@id/img_search"
                 android:background="@null"
-                android:hint="智能监控系统"
+                android:hint="监控"
                 android:imeOptions="actionSearch"
                 android:maxLength="18"
                 android:singleLine="true"

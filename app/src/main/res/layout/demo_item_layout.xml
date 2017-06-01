@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="掌上智能看家摄像机I8 MINI--萌萌的外表下有一颗负责任的心"
                 android:textColor="#333"
                 android:textSize="@dimen/x13" />
         </LinearLayout>

@@ -97,7 +97,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         if (dialog != null) {
                             dialog.dismiss();
@@ -111,7 +111,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 swipeToLoadLayout.setLoadMoreEnabled(false);
                                 return;
                             }
-                            Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         rllDeleteall.setVisibility(View.VISIBLE);
@@ -132,7 +132,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 collectAdapter.notifyDataSetChanged();
                             }
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -140,7 +140,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -159,7 +159,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, "网络异常，未连接网络");
+                EasyToast.showShort(context, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -201,19 +201,19 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                             String decode = Utils.decode(s);
                             DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                             if (docollBean.getStu().equals("1")) {
-                                Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
                                 swipeTarget.setAdapter(new CollectAdapter(context, new ArrayList()));
                                 llEmpty.setVisibility(View.VISIBLE);
                                 rllDeleteall.setVisibility(View.GONE);
                             } else {
-                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
                             volleyError.printStackTrace();
-                            EasyToast.showShort(context, "网络异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                         }
                     })
 
@@ -230,7 +230,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                     if (connected) {
                         requestQueue.add(stringRequest);
                     } else {
-                        EasyToast.showShort(context, "网络异常，未连接网络");
+                        EasyToast.showShort(context, getString(R.string.Notconnect));
                     }
 
                 }

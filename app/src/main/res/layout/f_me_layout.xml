@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/demo"
+            android:text="@string/me"
             android:textColor="@android:color/white"
             android:textSize="22sp" />
 
@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y9"
-            android:text="飞鱼飞向南非拉"
             android:textColor="#fff"
             android:textSize="@dimen/x16" />
 
@@ -50,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y9"
-            android:text="123456789@qq.com"
             android:textColor="#CDCDCD"
             android:textSize="@dimen/x16" />
 

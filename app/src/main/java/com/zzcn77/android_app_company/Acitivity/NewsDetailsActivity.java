@@ -104,7 +104,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -121,7 +121,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         final AdvertNyBean advertNyBean = new Gson().fromJson(decode, AdvertNyBean.class);
                         if (advertNyBean.getStu().equals("1")) {
@@ -137,7 +137,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                 }
                             });
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -145,7 +145,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -163,11 +163,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, "网络异常，未连接网络");
+                EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
 
 

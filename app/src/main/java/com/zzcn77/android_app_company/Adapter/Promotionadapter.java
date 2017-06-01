@@ -68,7 +68,7 @@ public class Promotionadapter extends BaseAdapter {
         viewHolder.DraweeView.setImageURI(UrlUtils.BaseImg+datas.get(position).getImgurl());
         viewHolder.tv_title.setText(datas.get(position).getTitle());
         viewHolder.tv_message.setText(datas.get(position).getKeywords());
-        viewHolder.tv_dis.setText(datas.get(position).getZhe()+"折");
+        viewHolder.tv_dis.setText(datas.get(position).getZhe()+context.getString(R.string.discount));
         return convertView;
     }
 

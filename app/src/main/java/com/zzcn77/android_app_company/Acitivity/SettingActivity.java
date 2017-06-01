@@ -133,7 +133,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            EasyToast.showShort(context, "网络异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                             dialog.dismiss();
                         } else {
                             VersionBean versionBean = new Gson().fromJson(decode, VersionBean.class);
@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                     if (versionCode<Android_bnum){
                                         dialog.dismiss();
                                         UpDateDialog upDateDialog = new UpDateDialog();
-                                        upDateDialog.UpDateDialog(context, "重要更新", versionBean.getRes().getAndroid_content(),versionBean.getRes().getAndroid());
+                                        upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(),versionBean.getRes().getAndroid());
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -154,7 +154,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             } else {
                                 dialog.dismiss();
 
-                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                EasyToast.showShort(context,getString(R.string.Abnormalserver));
                             }
                         }
                     }
@@ -162,7 +162,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context,getString(R.string.Networkexception));
                         dialog.dismiss();
 
                     }
@@ -181,7 +181,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context, "网络异常，未连接网络");
+                    EasyToast.showShort(context,getString(R.string.Notconnect));
                     dialog.dismiss();
 
                 }

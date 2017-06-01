@@ -10,7 +10,6 @@
         android:layout_height="@dimen/y30"
         android:background="@drawable/price_searchbg"
         android:padding="@dimen/x5"
-        android:text="视屏监控系统"
         android:textColor="#666"
         android:textSize="@dimen/x11" />
 

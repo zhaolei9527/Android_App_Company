@@ -120,7 +120,6 @@
                         android:id="@+id/tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="七七监控中心"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/x15" />
 
@@ -129,7 +128,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/y55"
                         android:layout_marginTop="@dimen/y5"
-                        android:text="七七监控中心有限公司是一家专业从事安防监控产品研发生产销售为一体的高薪企业..."
                         android:textColor="#666"
                         android:textSize="@dimen/x12" />
 
@@ -153,7 +151,6 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/x5"
                             android:gravity="center"
-                            android:text="13027641111"
                             android:textColor="@color/text_gray"
                             android:textSize="@dimen/x13" />
 

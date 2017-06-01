@@ -114,7 +114,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            EasyToast.showShort(context, "网络异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                         } else {
                             if (decode.contains("code\":\"111\"")) {
                                 page = page - 1;
@@ -134,7 +134,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                     return;
                                 }
                                 dialog.dismiss();
-                                Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, R.string.NOTMORE, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             if (swipeToLoadLayout != null) {
@@ -169,7 +169,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                     }
                                 }
                             } else {
-                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
                     }
@@ -177,7 +177,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                     }
                 })
 
@@ -196,7 +196,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context, "网络异常，未连接网络");
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
                 }
             } catch (Exception e) {
                 // 可忽略的异常

@@ -60,7 +60,7 @@ public class PowerPxSeachAdaptet extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvTitle.setText(datas.get(position).getW_px()+"*"+datas.get(position).getW_px());
+        viewHolder.tvTitle.setText(datas.get(position).getW_px()+"*"+datas.get(position).getH_px());
 
         if (datas.get(position).getIscheck()) {
             viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.noraml));

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="我的咨询"
+            android:text="@string/Myadvice"
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
@@ -48,7 +48,7 @@
                 android:layout_height="@dimen/y33"
                 android:layout_centerVertical="true"
                 android:background="@null"
-                android:hint="请输入您的咨询标题"
+                android:hint="@string/Pleaseenteryourconsultingtitle"
                 android:inputType="text"
                 android:paddingLeft="@dimen/x10"
                 android:singleLine="true"
@@ -71,7 +71,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:gravity="start"
-                android:hint="请输入您的咨询详情"
+                android:hint="@string/Pleaseenteryourconsultingdetails"
                 android:inputType="text"
                 android:paddingLeft="@dimen/x10"
                 android:paddingTop="@dimen/x10"
@@ -193,7 +193,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/x10"
         android:background="@mipmap/r12_c2"
-        android:text="提交"
+        android:text="@string/Commit"
         android:textColor="@android:color/white"
         android:textSize="@dimen/x20" />
 </LinearLayout>

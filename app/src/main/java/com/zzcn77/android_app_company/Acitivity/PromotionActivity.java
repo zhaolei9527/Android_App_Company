@@ -1,5 +1,6 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
@@ -53,6 +54,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     SwipeToLoadLayout swipeToLoadLayout;
     private int page = 1;
     private PromotionListAdapter promotionListAdapter;
+    private Dialog dialog;
+
     @Override
     protected int setthislayout() {
         return R.layout.promotion_layout;
@@ -62,6 +65,10 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     protected void initview() {
         //改变加载显示的颜色
         SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+
+        dialog = Utils.showLoadingDialog(context);
+        dialog.show();
+
     }
 
     @Override
@@ -69,6 +76,14 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         imgBack.setOnClickListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
+        SwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(true);
+                }
+            }
+        });
         lvSwipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -101,8 +116,9 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
+                dialog.dismiss();
                 if (decode.contains("code\":\"111\"")) {
-                    Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                     page = page - 1;
                     return;
                 } else {
@@ -116,7 +132,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                         }
                         promotionListAdapter.notifyDataSetChanged();
                     } else {
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
 
                 }
@@ -125,7 +141,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -142,7 +158,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
     }
 

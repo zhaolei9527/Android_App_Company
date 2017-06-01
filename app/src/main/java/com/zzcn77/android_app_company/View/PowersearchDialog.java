@@ -2,6 +2,7 @@ package com.zzcn77.android_app_company.View;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zzcn77.android_app_company.Acitivity.ProductSearchActivity;
 import com.zzcn77.android_app_company.Adapter.PowerBrandSeachAdaptet;
 import com.zzcn77.android_app_company.Adapter.PowerCateSeachAdaptet;
 import com.zzcn77.android_app_company.Adapter.PowerPxSeachAdaptet;
@@ -32,8 +34,11 @@ public class PowersearchDialog extends Dialog {
     private static PowerCateSeachAdaptet catepowerSeachAdaptet;
     private static PowerBrandSeachAdaptet brandpowerSeachAdaptet;
     private static PowerPxSeachAdaptet pxpowerSeachAdaptet;
-    private static String cid;
-    private static String px_id;
+    private static String cid = "";
+    private static String px_id = "";
+    private static String start_price;
+    private static String end_price;
+    private static String bid = "";
 
     public PowersearchDialog(Context context) {
         super(context);
@@ -41,6 +46,9 @@ public class PowersearchDialog extends Dialog {
 
     public PowersearchDialog(Context context, int theme) {
         super(context, theme);
+        cid = "";
+        px_id = "";
+        bid = "";
     }
 
     public static class Builder implements View.OnClickListener {
@@ -65,7 +73,6 @@ public class PowersearchDialog extends Dialog {
         private Context context;
         private PowersearchDialog dialog;
         private GoodsBean goodsBean;
-        private String bid;
 
         public Builder(Context context, GoodsBean goodsBean) {
             this.context = context;
@@ -182,18 +189,54 @@ public class PowersearchDialog extends Dialog {
                     }
                     brandpowerSeachAdaptet.notifyDataSetChanged();
                     for (int i = 0; i < catepowerSeachAdaptet.getItem(0).size(); i++) {
-                        if (catepowerSeachAdaptet.getItem(0).get(i).getIscheck()){
+                        if (catepowerSeachAdaptet.getItem(0).get(i).getIscheck()) {
                             cid = catepowerSeachAdaptet.getItem(0).get(i).getId();
                         }
 
                     }
                     catepowerSeachAdaptet.notifyDataSetChanged();
                     for (int i = 0; i < pxpowerSeachAdaptet.getItem(0).size(); i++) {
-                        if (pxpowerSeachAdaptet.getItem(0).get(i).getIscheck()){
+                        if (pxpowerSeachAdaptet.getItem(0).get(i).getIscheck()) {
                             px_id = pxpowerSeachAdaptet.getItem(0).get(i).getId();
                         }
                     }
+                    if (etLowprice.getText().toString().isEmpty()) {
+                        start_price = "0";
+                    } else {
+                        start_price = etLowprice.getText().toString().trim();
+                    }
 
+                    if (etHighprice.getText().toString().isEmpty()) {
+                        end_price = String.valueOf(Integer.MAX_VALUE);
+                    } else {
+                        end_price = etHighprice.getText().toString().trim();
+                    }
+
+                    dialog.dismiss();
+                    Intent intent = new Intent(context, ProductSearchActivity.class);
+                    Intent intent1 = new Intent();
+                    intent1.setAction("PoswerSearch");
+                    if (!cid.isEmpty()) {
+                        intent.putExtra("cid", cid);
+                        intent1.putExtra("cid", cid);
+
+                    }
+                    if (!bid.isEmpty()) {
+                        intent.putExtra("bid", bid);
+                        intent1.putExtra("bid", bid);
+
+                    }
+                    if (!px_id.isEmpty()) {
+                        intent.putExtra("px_id", px_id);
+                        intent1.putExtra("px_id", px_id);
+
+                    }
+                    intent.putExtra("start_price", start_price);
+                    intent1.putExtra("start_price", start_price);
+                    intent.putExtra("end_price", end_price);
+                    intent1.putExtra("end_price", end_price);
+                    context.startActivity(intent);
+                    context.sendBroadcast(intent1);
                     break;
             }
         }

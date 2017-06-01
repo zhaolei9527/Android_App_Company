@@ -8,7 +8,7 @@
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="版本升级"
+        android:text="@string/updateviesion"
         />
 	
 </LinearLayout>

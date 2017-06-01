@@ -84,7 +84,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/x10"
             android:background="@drawable/delete_bg"
-            android:text="删除" />
+            android:text="@string/delete" />
 
     </RelativeLayout>
 

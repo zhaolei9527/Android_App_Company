@@ -71,7 +71,7 @@ public class SplashActivity extends BaseActivity {
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, "服务器异常，请稍后再试");
+                    EasyToast.showShort(context,getString(R.string.Abnormalserver));
                 } else {
                     IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
                     if (indexBean.getStu().equals("1")) {
@@ -90,14 +90,14 @@ public class SplashActivity extends BaseActivity {
                                     String decode = Utils.decode(s);
                                     if (decode.isEmpty()) {
                                         dialog.dismiss();
-                                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                                        EasyToast.showShort(context, getString(R.string.Networkexception));
                                     } else {
                                         dialog.dismiss();
                                         LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                                         if (loginBean.getStu().equals("1")) {
                                             // TODO: 2017/5/19 注册
                                             if (loginBean.getMsg().contains("登陆成功")) {
-                                                Toast.makeText(context, "欢迎回来", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, R.string.welcomeback, Toast.LENGTH_SHORT).show();
                                                 SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
                                                 SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                                 SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
@@ -108,19 +108,19 @@ public class SplashActivity extends BaseActivity {
                                             }
                                         } else {
                                             if (loginBean.getMsg().contains("您已被封号")) {
-                                                Toast.makeText(context, "您已被封号", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(context, LoginActivity.class));
                                                 finish();
                                             } else if (loginBean.getMsg().contains("密码有误")) {
-                                                Toast.makeText(context, "帐号或密码有误", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(context, LoginActivity.class));
                                                 finish();
                                             } else if (loginBean.getMsg().contains("用户名不存在")) {
-                                                Toast.makeText(context, "用户名不存在", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(context, LoginActivity.class));
                                                 finish();
                                             } else {
-                                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                                                 gotoMain();
                                             }
                                             dialog.dismiss();
@@ -131,7 +131,7 @@ public class SplashActivity extends BaseActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
                                     volleyError.printStackTrace();
-                                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                                    EasyToast.showShort(context, getString(R.string.Networkexception));
                                     dialog.dismiss();
                                     gotoMain();
 
@@ -152,14 +152,14 @@ public class SplashActivity extends BaseActivity {
                                 requestQueue.add(stringRequest);
                             } else {
                                 dialog.dismiss();
-                                EasyToast.showShort(context, "网络异常，未连接网络");
+                                EasyToast.showShort(context, getString(R.string.Notconnect));
                             }
 
                         }
 
 
                     } else {
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -167,7 +167,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                EasyToast.showShort(context,getString(R.string.Abnormalserver));
             }
         })
 
@@ -184,7 +184,7 @@ public class SplashActivity extends BaseActivity {
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
             startActivity(new Intent(context, LoginActivity.class));
             finish();
         }

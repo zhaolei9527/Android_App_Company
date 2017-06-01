@@ -156,10 +156,10 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                     } else {
                         if (decode.contains("code\":\"111\"")) {
-                            Toast.makeText(mActivity, "没有更多了", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             page = page - 1;
                             swipeToLoadLayout.setLoadingMore(false);
                             swipeTarget.setEnabled(true);
@@ -193,7 +193,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                 }
                             }
                         } else {
-                            EasyToast.showShort(mActivity, "服务器异常，请稍后再试");
+                            EasyToast.showShort(mActivity,getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -201,7 +201,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(mActivity, "网络异常，请稍后再试");
+                    EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                 }
             })
 
@@ -219,7 +219,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(mActivity, "网络异常，未连接网络");
+                EasyToast.showShort(mActivity, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常

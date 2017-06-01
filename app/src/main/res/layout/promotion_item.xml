@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:maxEms="9"
             android:singleLine="true"
-            android:text="超导科技，风暖护眼"
             android:textColor="@color/text_gray"
             android:textSize="15sp" />
 
@@ -51,7 +50,6 @@
             android:layout_marginTop="@dimen/x10"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="全金属烤瓷机身全金属全金属全金属全金属全金属全金属"
             android:textSize="12sp" />
 
         <LinearLayout
@@ -62,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="现"
+                android:text="@string/now"
                 android:textColor="#666"
                 android:textSize="@dimen/x13" />
 
@@ -70,7 +68,6 @@
                 android:id="@+id/tv_dis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7折"
                 android:textColor="#ffa919"
                 android:textSize="@dimen/x25"
                 android:textStyle="bold" />

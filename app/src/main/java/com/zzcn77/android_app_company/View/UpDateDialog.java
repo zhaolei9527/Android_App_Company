@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Service.DownloadService;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 
@@ -25,13 +26,13 @@ public class UpDateDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setNegativeButton("稍后再说", new AlertDialog.OnClickListener() {
+        builder.setNegativeButton(R.string.Latertosayagain, new AlertDialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.setPositiveButton("马上更新", new AlertDialog.OnClickListener() {
+        builder.setPositiveButton(R.string.Updateimmediately, new AlertDialog.OnClickListener() {
 
             @Override
             public void onClick(final DialogInterface dialog, int which) {
@@ -56,7 +57,7 @@ public class UpDateDialog {
 
                             @Override
                             public void onDenied(List<String> permissions) {
-                                Toast.makeText(mContext, "权限申请被拒绝", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext,mContext.getString(R.string.Thepermissionapplicationisrejected), Toast.LENGTH_SHORT).show();
                             }
                         });
 

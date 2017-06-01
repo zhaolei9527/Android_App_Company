@@ -62,7 +62,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5"
                     android:layout_marginTop="@dimen/x10"
-                    android:text="配电房环境监控系统"
                     android:textColor="@color/text_gray"
                     android:textSize="20sp"
                     android:textStyle="bold" />

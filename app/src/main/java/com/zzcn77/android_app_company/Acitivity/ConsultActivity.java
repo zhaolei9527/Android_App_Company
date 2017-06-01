@@ -129,15 +129,14 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                         if (decode.isEmpty()) {
                             dialog.dismiss();
 
-                            EasyToast.showShort(context, "网络异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
 
                         } else {
                             ConsultBean consultBean = new Gson().fromJson(decode, ConsultBean.class);
                             if (String.valueOf(consultBean.getStu()).equals("1")) {
                                 // TODO: 2017/5/19 注册
                                 dialog.dismiss();
-
-                                EasyToast.showShort(context, "提交成功");
+                                EasyToast.showShort(context, getString(R.string.submitsuccessfully));
                                 etName.setText("");
                                 etEmail.setText("");
                                 etContent.setText("");
@@ -145,7 +144,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                                 etTitle.setText("");
                             } else {
                                 dialog.dismiss();
-                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
                     }
@@ -154,7 +153,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     public void onErrorResponse(VolleyError volleyError) {
                         dialog.dismiss();
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context,getString(R.string.Networkexception));
                     }
                 })
                 {
@@ -177,7 +176,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     requestQueue.add(stringRequest);
                 } else {
                     dialog.dismiss();
-                    EasyToast.showShort(context, "网络异常，未连接网络");
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
                 }
 
                 break;

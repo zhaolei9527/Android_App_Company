@@ -1,4 +1,4 @@
-package com.zzcn77.android_app_company.Adapter;
+package com.zzcn77.android_app_company.Bean;
 
 /**
  * Created by 赵磊 on 2017/5/26.

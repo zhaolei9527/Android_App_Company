@@ -62,17 +62,17 @@ public class DownloadPDF extends Service {
                 case DOWNLOAD_SUCCESS:
                     //下载完成
                     notifyNotification(100, 100);
-                    Toast.makeText(DownloadPDF.this, "文件已经下载到:" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, getString(R.string.Thefilehasbeendownloaded) + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
                     intent.setAction("pdfisdownloading");
                     intent.putExtra("id",id);
                     sendBroadcast(intent);
                     break;
                 case URL_ERROR:
-                    Toast.makeText(DownloadPDF.this, "下载地址错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, getString(R.string.Downloadaddresserror), Toast.LENGTH_SHORT).show();
                     break;
                 case NET_ERROR:
-                    Toast.makeText(DownloadPDF.this, "连接失败，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadPDF.this, getString(R.string.Networkexception), Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -217,11 +217,11 @@ public class DownloadPDF extends Service {
                     }
                     mHandler.sendEmptyMessage(DOWNLOAD_SUCCESS);
                     Log.i(TAG, "下载完成了。。。");
-                    contentView.setTextViewText(R.id.tv_title, "下载完成");
+                    contentView.setTextViewText(R.id.tv_title, getString(R.string.downloadcompletes));
                 } else {
                     Log.i(TAG, "下载出错了。。。" + conn.getResponseCode() + conn.getURL());
                     mHandler.sendEmptyMessage(NET_ERROR);
-                    contentView.setTextViewText(R.id.tv_title, "出错了。。。");
+                    contentView.setTextViewText(R.id.tv_title, getString(R.string.hasError));
 
                 }
 

@@ -87,6 +87,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initview() {
+        dialog = Utils.showLoadingDialog(context);
+        dialog.show();
+
         RollPagerView.setHintView(new IconHintView(context, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(context, getResources().getDimension(R.dimen.x7))));
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -121,13 +124,12 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
                 super.onPageStarted(webView, s, bitmap);
-                dialog = Utils.showLoadingDialog(context);
             }
 
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.hasError, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -142,7 +144,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
                 if (decode.isEmpty()) {
                     getCompanyDetails();
 
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     CompanyDetailsBean companyDetailsBean = new Gson().fromJson(decode, CompanyDetailsBean.class);
                     if (companyDetailsBean.getStu().equals("1")) {
@@ -153,7 +155,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
                     } else {
                         getCompanyDetails();
 
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -162,7 +164,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             public void onErrorResponse(VolleyError volleyError) {
                 getCompanyDetails();
 
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -181,7 +183,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
         } else {
             getCompanyDetails();
 
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
     }

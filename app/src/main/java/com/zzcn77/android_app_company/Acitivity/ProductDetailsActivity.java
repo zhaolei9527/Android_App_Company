@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -145,14 +147,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,getString(R.string.hasError), Toast.LENGTH_SHORT).show();
             }
         });
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
-                    tvDownload.setText("打开文件");
+                    tvDownload.setText(R.string.openfile);
                     rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
                     isDownload = 1;
                 }
@@ -172,7 +174,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context,getString(R.string.Networkexception));
                     } else {
                         goods_nyBean = new Gson().fromJson(decode, Goods_NYBean.class);
                         if (goods_nyBean.getStu().equals("1")) {
@@ -192,7 +194,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             }
                             file = new File(dir + "/" + fileName);
                             if (file.exists()) {
-                                tvDownload.setText("打开文件");
+                                tvDownload.setText(getString(R.string.openfile));
                                 rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
                                 isDownload = 1;
                             }
@@ -210,7 +212,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                                 }
                             });
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -218,7 +220,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -237,11 +239,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, "网络异常，未连接网络");
+                EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -262,7 +264,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     intent.putExtra("file", file.getAbsolutePath().toString());
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "开始下载", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.downloading), Toast.LENGTH_SHORT).show();
                     Acp.getInstance(context).request(new AcpOptions.Builder()
                                     .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 /*以下为自定义提示语、按钮文字
@@ -281,66 +283,85 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                                     intent.putExtra("url", UrlUtils.BaseImg + goods_nyBean.getRes().getPdf());
                                     intent.putExtra("id", intent.getStringExtra("id"));
                                     context.startService(intent);
-                                    tvDownload.setText("正在下载");
+                                    tvDownload.setText(getString(R.string.downloading));
                                 }
 
                                 @Override
                                 public void onDenied(List<String> permissions) {
-                                    Toast.makeText(mContext, "权限申请被拒绝", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, getString(R.string.Thepermissionapplicationisrejected), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
 
                 break;
             case R.id.ll_collect:
-                RequestQueue requestQueue = Volley.newRequestQueue(context);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "docoll", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        String decode = Utils.decode(s);
-                        DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
-                        if (docollBean.getStu().equals("1")) {
-                            if (cbCollect.isChecked()) {
-                                Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(context, "已取消收藏", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                if (String.valueOf(SPUtil.get(context, "id", "")).isEmpty()) {
+                    // TODO Auto-generated method stub
+                    new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                            .setMessage(R.string.Youarenotcurrentlyloggedin)//设置显示的内容
+                            .setPositiveButton(R.string.loginnow, new DialogInterface.OnClickListener() {//添加确定按钮
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                                    // TODO Auto-generated method stub
+                                    dialog.dismiss();
+                                    startActivity(new Intent(context,LoginActivity.class));
+                                }
+                            }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {//响应事件
+                            dialog.dismiss();
                         }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        volleyError.printStackTrace();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
-                    }
-                })
-
-                {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("key", UrlUtils.key);
-                        map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
-                        map.put("gid", String.valueOf(getIntent().getStringExtra("id")));
-                        map.put("stu", stu);
-                        return map;
-                    }
-                };
-                boolean connected = Utils.isConnected(context);
-                if (connected) {
-                    requestQueue.add(stringRequest);
-                    if (cbCollect.isChecked()) {
-                        stu = "2";
-                    } else {
-                        stu = "1";
-                    }
-                    cbCollect.setChecked(!cbCollect.isChecked());
-
+                    }).show();//在按键响应事件中显示此对话框
                 } else {
-                    EasyToast.showShort(context, "网络异常，未连接网络");
+                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "docoll", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            String decode = Utils.decode(s);
+                            DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
+                            if (docollBean.getStu().equals("1")) {
+                                if (cbCollect.isChecked()) {
+                                    Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            volleyError.printStackTrace();
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                        }
+                    })
+
+                    {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("key", UrlUtils.key);
+                            map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+                            map.put("gid", String.valueOf(getIntent().getStringExtra("id")));
+                            map.put("stu", stu);
+                            return map;
+                        }
+                    };
+                    boolean connected = Utils.isConnected(context);
+                    if (connected) {
+                        requestQueue.add(stringRequest);
+                        if (cbCollect.isChecked()) {
+                            stu = "2";
+                        } else {
+                            stu = "1";
+                        }
+                        cbCollect.setChecked(!cbCollect.isChecked());
+
+                    } else {
+                        EasyToast.showShort(context,getString(R.string.Notconnect));
+                    }
                 }
 
                 break;

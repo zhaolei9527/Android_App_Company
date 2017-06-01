@@ -57,7 +57,6 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initview() {
-        Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
         dialog = Utils.showLoadingDialog(context);
         IX5WebViewExtension ix5 = forumContext.getX5WebViewExtension();
         if (null != ix5) {
@@ -93,7 +92,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,14 +109,14 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         final CX_DetailBean cx_detailBean = new Gson().fromJson(decode, CX_DetailBean.class);
                         if (cx_detailBean.getStu().equals("1")) {
                             forumContext.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    tvDis.setText(cx_detailBean.getRes().getZhe()+"折");
+                                    tvDis.setText(cx_detailBean.getRes().getZhe()+getString(R.string.discount));
                                     tvTitle.setText(cx_detailBean.getRes().getTitle());
                                     SimpleDraweeView.setImageURI(UrlUtils.BaseImg+cx_detailBean.getRes().getImgurl());
                                     String decode = Utils.decode(cx_detailBean.getRes().getContent());
@@ -126,7 +125,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                                 }
                             });
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -134,7 +133,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -152,11 +151,11 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, "网络异常，未连接网络");
+                EasyToast.showShort(context,getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, "出错啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
 
     }

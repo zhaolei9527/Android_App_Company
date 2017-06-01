@@ -1,6 +1,10 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,7 +15,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Adapter.ProductSearchAdapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.GoodsBean;
 import com.zzcn77.android_app_company.Bean.Goods_ListsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
@@ -36,6 +40,7 @@ import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
+import com.zzcn77.android_app_company.View.PowersearchDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +80,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private String end_price = "";
     private ProductSearchAdapter productSearchAdapter;
     private int position;
-    private int scrolledX;
-    private int scrolledY;
+    private int scrolledX = 0;
+    private int scrolledY = 0;
+    private Dialog dialog;
 
     @Override
     protected int setthislayout() {
@@ -96,16 +102,24 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             px_id = getIntent().getStringExtra("px_id");
             start_price = getIntent().getStringExtra("start_price");
             end_price = getIntent().getStringExtra("end_price");
-
         }
-
     }
 
+    public int getScrollY() {
+        View c = swipeTarget.getChildAt(0);
+        if (c == null) {
+            return 0;
+        }
+        int firstVisiblePosition = swipeTarget.getFirstVisiblePosition();
+        int top = c.getTop();
+        return -top + firstVisiblePosition * c.getHeight();
+    }
 
     @Override
     protected void initListener() {
         //改变加载显示的颜色
         imgSearch.setOnClickListener(this);
+        imgPowerSearch.setOnClickListener(this);
         SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
@@ -118,7 +132,12 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             }
         });
 
-        swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dialog = Utils.showLoadingDialog(context);
+        dialog.show();
+
+        swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener()
+
+        {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -129,15 +148,14 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
 
             }
         });
-        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
+        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener()
+
+        {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // 不滚动时保存当前滚动到的位置
-                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
-                    scrolledX = swipeTarget.getScrollX();
-                    scrolledY = swipeTarget.getScrollY();
-                }
+                scrolledY = getScrollY();
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
@@ -154,15 +172,45 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             }
         });
 
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener()
+
+        {
             @Override
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
                 // TODO Auto-generated method stub
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH) {
+
+                    dialog.show();
+                    String content = etSearch.getText().toString().trim();
+                    if (content.isEmpty()) {
+                        content = etSearch.getHint().toString().trim();
+                    }
+                    keywords = content;
+                    swipeTarget.setAdapter(null);
+                    initData();
                 }
                 return false;
             }
         });
+
+
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!IntentUtil.isBundleEmpty(intent)) {
+                    cid = intent.getStringExtra("cid");
+                    bid = intent.getStringExtra("bid");
+                    px_id = intent.getStringExtra("px_id");
+                    start_price = intent.getStringExtra("start_price");
+                    end_price = intent.getStringExtra("end_price");
+                }
+                dialog.show();
+                swipeTarget.setAdapter(null);
+                initData();
+            }
+        }, new IntentFilter("PoswerSearch"));
+
+
     }
 
     //上拉加载
@@ -198,20 +246,25 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     if (decode.contains("code\":\"111\"")) {
                         if (page == 1) {
                             llEmpty.setVisibility(View.VISIBLE);
                         } else {
-                            Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             page = page - 1;
                         }
                         swipeToLoadLayout.setLoadingMore(false);
                         SwipeRefreshLayout.setEnabled(true);
                         return;
                     }
-                    llEmpty.setVisibility(View.GONE);
+                    if (llEmpty != null) {
+                        llEmpty.setVisibility(View.GONE);
+                    }
                     Goods_ListsBean goods_listsBean = new Gson().fromJson(decode, Goods_ListsBean.class);
                     if (goods_listsBean.getStu().equals("1")) {
                         if (page == 1) {
@@ -228,16 +281,24 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
 
                         if (productSearchAdapter != null) {
                             productSearchAdapter.notifyDataSetChanged();
+                            if (swipeTarget != null) {
+                                swipeTarget.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeTarget.smoothScrollBy(scrolledY, 0);
+                                    }
+                                });
+                            }
+
                         }
 
                         if (SwipeRefreshLayout != null) {
                             if (SwipeRefreshLayout.isRefreshing()) {
                                 SwipeRefreshLayout.setRefreshing(false);
-                                swipeTarget.scrollTo(scrolledX, scrolledY);
                             }
                         }
                     } else {
-                        EasyToast.showShort(context, "服务器异常，请稍后再试");
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -245,7 +306,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, "网络异常，请稍后再试");
+                EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -282,7 +343,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, "网络异常，未连接网络");
+            EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
 
@@ -299,15 +360,22 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_search:
+                dialog.show();
                 String content = etSearch.getText().toString().trim();
                 if (content.isEmpty()) {
                     content = etSearch.getHint().toString().trim();
                 }
                 keywords = content;
+                swipeTarget.setAdapter(null);
                 initData();
                 break;
             case R.id.img_power_search:
-                // new PowersearchDialog.Builder(context,goodsBean).create().show();
+                dialog.dismiss();
+                String product = (String) SPUtil.get(context, "product", "");
+                if (!product.isEmpty()) {
+                    GoodsBean goodsBean = new Gson().fromJson(product, GoodsBean.class);
+                    new PowersearchDialog.Builder(context, goodsBean).create().show();
+                }
                 break;
         }
     }

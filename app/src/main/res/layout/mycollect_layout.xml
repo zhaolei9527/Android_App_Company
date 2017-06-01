@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="删除"
+                android:text="@string/delete"
                 android:textSize="@dimen/y15" />
 
             <ImageView
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/img_all"
-                android:text="全选"
+                android:text="@string/checkall"
                 android:textSize="@dimen/y15" />
 
         </RelativeLayout>

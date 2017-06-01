@@ -51,7 +51,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         account = (String) SPUtil.get(mActivity, "account", "");
         String email = (String) SPUtil.get(mActivity, "email", "");
         if (account.trim().isEmpty()) {
-            tvAccount.setText("暂未登录");
+            tvAccount.setText(getString(R.string.Youarenotcurrentlyloggedin));
             tvAccount.setEnabled(true
             );
             tvAccount.setOnClickListener(this);
@@ -74,7 +74,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.rl_change_password:
                 if (account.trim().isEmpty()) {
-                    Toast.makeText(mActivity, "您暂未登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity,getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mActivity, LoginActivity.class));
                 } else {
                     startActivity(new Intent(mActivity, ChangePasswordActivity.class));
@@ -82,7 +82,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.rl_collect:
                 if (account.trim().isEmpty()) {
-                    Toast.makeText(mActivity, "您暂未登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mActivity, LoginActivity.class));
                 } else {
                     startActivity(new Intent(mActivity, MyCollectActivity.class));
@@ -90,7 +90,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.rl_consult:
                 if (account.trim().isEmpty()) {
-                    Toast.makeText(mActivity, "您暂未登录", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mActivity, LoginActivity.class));
                 } else {
                     startActivity(new Intent(mActivity, ConsultActivity.class));

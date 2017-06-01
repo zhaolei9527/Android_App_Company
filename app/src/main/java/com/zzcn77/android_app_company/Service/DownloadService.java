@@ -59,13 +59,13 @@ public class DownloadService  extends Service {
                     //下载完成
                     notifyNotification(100, 100);
                     installApk(DownloadService.this, new File(DOWNLOAD_PATH, fileName));
-                    Toast.makeText(DownloadService.this, "下载完成", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadService.this, getString(R.string.downloadcompletes), Toast.LENGTH_SHORT).show();
                     break;
                 case URL_ERROR:
-                    Toast.makeText(DownloadService.this, "下载地址错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadService.this, getString(R.string.Downloadaddresserror), Toast.LENGTH_SHORT).show();
                     break;
                 case NET_ERROR:
-                    Toast.makeText(DownloadService.this, "连接失败，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadService.this, getString(R.string.Networkexception), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -207,11 +207,11 @@ public class DownloadService  extends Service {
                     }
                     mHandler.sendEmptyMessage(DOWNLOAD_SUCCESS);
                     Log.i(TAG, "下载完成了。。。");
-                    contentView.setTextViewText(R.id.tv_title, "下载完成");
+                    contentView.setTextViewText(R.id.tv_title,getString(R.string.downloadcompletes));
                 } else {
                     Log.i(TAG, "下载出错了。。。" + conn.getResponseCode() + conn.getURL());
                     mHandler.sendEmptyMessage(NET_ERROR);
-                    contentView.setTextViewText(R.id.tv_title, "出错了。。。");
+                    contentView.setTextViewText(R.id.tv_title, getString(R.string.hasError));
 
                 }
 

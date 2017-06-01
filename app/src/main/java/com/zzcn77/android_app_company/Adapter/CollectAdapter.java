@@ -82,7 +82,7 @@ public class CollectAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.imgConllect.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
-        viewHolder.tvModel.setText(datas.get(position).getX_num());
+        viewHolder.tvModel.setText(context.getString(R.string.now)+datas.get(position).getX_num());
         viewHolder.tvPrice.setText(datas.get(position).getPrice());
         viewHolder.tvTitle.setText(datas.get(position).getTitle());
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +96,11 @@ public class CollectAdapter extends BaseAdapter {
                         String decode = Utils.decode(s);
                         DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                         if (docollBean.getStu().equals("1")) {
-                            Toast.makeText(context, "已取消收藏", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
                             datas.remove(position);
                             notifyDataSetChanged();
                         } else {
-                            EasyToast.showShort(context, "服务器异常，请稍后再试");
+                            EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
                         }
 
                     }
@@ -108,7 +108,7 @@ public class CollectAdapter extends BaseAdapter {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context, context.getString(R.string.Networkexception));
                     }
                 })
 
@@ -127,7 +127,7 @@ public class CollectAdapter extends BaseAdapter {
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context, "网络异常，未连接网络");
+                    EasyToast.showShort(context, context.getString(R.string.Notconnect));
                 }
 
             }

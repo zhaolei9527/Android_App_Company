@@ -84,7 +84,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x5"
-            android:text="跟随系统"
+            android:text="@string/auto"
             android:textColor="#666" />
 
     </RelativeLayout>

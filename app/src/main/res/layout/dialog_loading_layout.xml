@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/x90"
+    android:layout_height="@dimen/x90"
     android:background="@drawable/tips_bg"
     android:padding="@dimen/x10">
 
@@ -21,6 +21,6 @@
         android:layout_below="@id/reg_req_code_gif_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/x10"
-        android:text="正在加载中..."
+        android:text="@string/loading"
         android:textColor="#fff" />
 </RelativeLayout>

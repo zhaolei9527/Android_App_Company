@@ -3,6 +3,8 @@ package com.zzcn77.android_app_company.Acitivity;
 import android.Manifest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,20 +13,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.VersionBean;
 import com.zzcn77.android_app_company.Fragment.DemoFragment;
 import com.zzcn77.android_app_company.Fragment.HomeFragment;
 import com.zzcn77.android_app_company.Fragment.MeFragment;
 import com.zzcn77.android_app_company.Fragment.ProductFragment;
 import com.zzcn77.android_app_company.Fragment.SchemeFragment;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.IntentUtil;
 import com.zzcn77.android_app_company.Utils.Other;
+import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.View.UpDateDialog;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -100,8 +117,69 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         llScheme.setOnClickListener(this);
     }
 
+    private int getversionCode() throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+        int versionCode = packInfo.versionCode;
+        return versionCode;
+    }
+
     @Override
     protected void initData() {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "version", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.isEmpty()) {
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                } else {
+                    VersionBean versionBean = new Gson().fromJson(decode, VersionBean.class);
+                    if (String.valueOf(versionBean.getStu()).equals("1")) {
+                        try {
+                            int versionCode = getversionCode();
+                            int Android_bnum = Integer.parseInt(versionBean.getRes().getAndroid_bnum());
+                            if (versionCode < Android_bnum) {
+                                UpDateDialog upDateDialog = new UpDateDialog();
+                                upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(), versionBean.getRes().getAndroid());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+                        }
+                    } else {
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                EasyToast.showShort(context, getString(R.string.Networkexception));
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                return map;
+            }
+        };
+
+        boolean connected = Utils.isConnected(context);
+        if (connected) {
+            requestQueue.add(stringRequest);
+        } else {
+            EasyToast.showShort(context, getString(R.string.Notconnect));
+
+        }
+
+
         if (!IntentUtil.isBundleEmpty(getIntent())) {
             int thispage = getIntent().getIntExtra("thispage", 0);
             if (thispage == 4) {
@@ -127,7 +205,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                     @Override
                     public void onDenied(List<String> permissions) {
-                        Toast.makeText(context, "权限申请被拒绝", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.Thepermissionapplicationisrejected, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -142,7 +220,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (System.currentTimeMillis() - firstTime > 2000) {
-                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Clicktheexitprogramagain, Toast.LENGTH_SHORT).show();
                 firstTime = System.currentTimeMillis();
             } else {
                 finish();

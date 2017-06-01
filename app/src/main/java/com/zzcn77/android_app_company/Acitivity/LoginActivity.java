@@ -98,14 +98,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
                         dialog.dismiss();
-                        EasyToast.showShort(context, "网络异常，请稍后再试");
+                        EasyToast.showShort(context,getString(R.string.Networkexception));
                     } else {
                         dialog.dismiss();
                         LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                         if (loginBean.getStu().equals("1")) {
                             // TODO: 2017/5/19 注册
                             if (loginBean.getMsg().contains("登陆成功")) {
-                                EasyToast.showShort(context, "登录成功");
+                                EasyToast.showShort(context, getString(R.string.loginsuccessfully));
                                 SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
                                 SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                 SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
@@ -117,14 +117,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             }
                         } else {
                             if (loginBean.getMsg().contains("您已被封号")) {
-                                Toast.makeText(context, "您已被封号", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
                             } else if (loginBean.getMsg().contains("密码有误")) {
-                                Toast.makeText(context, "帐号或密码有误", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
                             }else if (loginBean.getMsg().contains("用户名不存在")) {
-                                Toast.makeText(context, "用户名不存在", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
                             }
                             else{
-                                EasyToast.showShort(context, "服务器异常，请稍后再试");
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                             dialog.dismiss();
                         }
@@ -134,7 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, "网络异常，请稍后再试");
+                    EasyToast.showShort(context,  getString(R.string.Networkexception));
                     dialog.dismiss();
 
                 }
@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 requestQueue.add(stringRequest);
             } else {
                 dialog.dismiss();
-                EasyToast.showShort(context, "网络异常，未连接网络");
+                EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         }
@@ -175,7 +175,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 getetcontent();
                 break;
             case R.id.btn_btn_skip:
-
+                SPUtil.remove(context, "id");
+                SPUtil.remove(context, "account");
+                SPUtil.remove(context, "password");
+                SPUtil.remove(context, "email");
                 gotoMain();
                 break;
             case R.id.tv_forgetPassword:
