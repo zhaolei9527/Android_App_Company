@@ -42,12 +42,19 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
         String language = (String) SPUtil.get(context, "Lanuage", "");
         if (language.isEmpty()) {
             cbAuto.setChecked(true);
+            cbCn.setChecked(false);
+            cbEn.setChecked(false);
+
         }
         if (language.equals("cn")) {
+            cbAuto.setChecked(false);
+            cbEn.setChecked(false);
             cbCn.setChecked(true);
         }
         if (language.equals("en")) {
             cbEn.setChecked(true);
+            cbAuto.setChecked(false);
+            cbCn.setChecked(false);
         }
     }
 

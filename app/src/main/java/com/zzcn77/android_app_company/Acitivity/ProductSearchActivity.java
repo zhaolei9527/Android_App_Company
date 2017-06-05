@@ -83,6 +83,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private int scrolledX = 0;
     private int scrolledY = 0;
     private Dialog dialog;
+    private int po;
 
     @Override
     protected int setthislayout() {
@@ -117,6 +118,27 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initListener() {
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!IntentUtil.isBundleEmpty(intent)) {
+                    boolean inched = intent.getBooleanExtra("inched",false);
+                    if (inched){
+                        ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
+                        datas.get(po).setColl("1");
+                        productSearchAdapter=new ProductSearchAdapter(context,datas);
+                        swipeTarget.setAdapter(productSearchAdapter);
+                    }else {
+                        ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
+                        datas.get(po).setColl("2");
+                        productSearchAdapter=new ProductSearchAdapter(context,datas);
+                        swipeTarget.setAdapter(productSearchAdapter);
+                    }
+                    swipeTarget.setSelection(scrolledY);
+                }
+            }
+        }, new IntentFilter("notifyData"));
+
         //改变加载显示的颜色
         imgSearch.setOnClickListener(this);
         imgPowerSearch.setOnClickListener(this);
@@ -141,6 +163,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                po = position;
+
                 String item = productSearchAdapter.getItem(position);
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("id", item);
@@ -153,7 +177,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                scrolledY = getScrollY();
+                // 不滚动时保存当前滚动到的位置
+                        scrolledY =view.getFirstVisiblePosition()+2;
             }
 
             @Override
@@ -187,22 +212,36 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     }
                     keywords = content;
                     swipeTarget.setAdapter(null);
+                    page = 1;
+                    cid = "";
+                    bid = "";
+                    px_id = "";
+                    start_price = "";
+                    end_price = "";
+                    scrolledY = 0;
                     initData();
                 }
                 return false;
             }
         });
 
-
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
+                    page = 1;
+                    keywords = "";
+                    cid = "";
+                    bid = "";
+                    px_id = "";
+                    start_price = "";
+                    end_price = "";
                     cid = intent.getStringExtra("cid");
                     bid = intent.getStringExtra("bid");
                     px_id = intent.getStringExtra("px_id");
                     start_price = intent.getStringExtra("start_price");
                     end_price = intent.getStringExtra("end_price");
+                    scrolledY = -2;
                 }
                 dialog.show();
                 swipeTarget.setAdapter(null);
@@ -277,21 +316,10 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                             productSearchAdapter.setDatas((ArrayList) goods_listsBean.getRes().getGoods());
                             swipeToLoadLayout.setLoadingMore(false);
                             SwipeRefreshLayout.setEnabled(true);
-                        }
-
-                        if (productSearchAdapter != null) {
-                            productSearchAdapter.notifyDataSetChanged();
-                            if (swipeTarget != null) {
-                                swipeTarget.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        swipeTarget.smoothScrollBy(scrolledY, 0);
-                                    }
-                                });
+                            if (swipeTarget!=null){
+                                productSearchAdapter.notifyDataSetChanged();
                             }
-
                         }
-
                         if (SwipeRefreshLayout != null) {
                             if (SwipeRefreshLayout.isRefreshing()) {
                                 SwipeRefreshLayout.setRefreshing(false);
@@ -345,15 +373,10 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         } else {
             EasyToast.showShort(context, getString(R.string.Notconnect));
         }
-
-
     }
-
-
     @Override
     public void onResume() {
         super.onResume();
-        initData();
     }
 
     @Override
@@ -367,6 +390,14 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 }
                 keywords = content;
                 swipeTarget.setAdapter(null);
+                page = 1;
+                cid = "";
+                bid = "";
+                px_id = "";
+                start_price = "";
+                end_price = "";
+                scrolledY = 0;
+
                 initData();
                 break;
             case R.id.img_power_search:

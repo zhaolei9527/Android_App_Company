@@ -108,7 +108,7 @@ public class DateUtil {
      */
     public static String getMillon(long time) {
 
-        return new SimpleDateFormat("HH：mm：ss").format(time*1000);
+        return new SimpleDateFormat("HH:mm:ss").format(time*1000);
 
     }
    //strTime要转换的string类型的时间，formatType要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日

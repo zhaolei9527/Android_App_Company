@@ -49,7 +49,7 @@
     <string name="language">Language</string>
     <string name="exit"> Quit</string>
     <string name="update_version">Check for updates</string>
-    <string name="auto">following system</string>
+    <string name="auto">Following System</string>
     <string name="cn">简体中文</string>
     <string name="en">English</string>
     <string name="oldpassword">old password</string>
@@ -117,5 +117,9 @@
     <string name="TOEFL">TOEFL</string>
     <string name="Jarrow">Jarrow</string>
     <string name="Isthelatestversion">Is the lates tversion</string>
+    <string name="deleteall">Confirm delete all？</string>
+    <string name="Pricerangeerror">Price range error</string>
+    <string name="Thereisnorelevantcontent">There is no relevant content</string>
+    <string name="Thecaptchahasfailed">The captcha is error</string>
 
 </resources>

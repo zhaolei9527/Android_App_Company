@@ -79,6 +79,14 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     Toast.makeText(context, etOldpassword.getHint(), Toast.LENGTH_SHORT).show();
                     return;
                 }
+                final String oldpassword = MD5Utils.md5(Oldpassword);
+                Oldpassword = MD5Utils.md5(oldpassword);
+                password = SPUtil.get(context, "password", "");
+                if (!Oldpassword.equals(password)) {
+                    Toast.makeText(context, R.string.OldPassWordIsError, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (Newpassword.isEmpty()) {
                     Toast.makeText(context, etNewpassword.getHint(), Toast.LENGTH_SHORT).show();
                     return;
@@ -89,13 +97,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                 }
                 if (!Newpassword.equals(Newpasswordagain)) {
                     Toast.makeText(context, getResources().getString(R.string.passwordisinconformity), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                final String oldpassword = MD5Utils.md5(Oldpassword);
-                Oldpassword = MD5Utils.md5(oldpassword);
-                password = SPUtil.get(context, "password", "");
-                if (!Oldpassword.equals(password)) {
-                    Toast.makeText(context, R.string.OldPassWordIsError, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

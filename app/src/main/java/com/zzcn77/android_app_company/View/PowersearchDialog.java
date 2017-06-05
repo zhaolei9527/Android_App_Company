@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zzcn77.android_app_company.Acitivity.ProductSearchActivity;
 import com.zzcn77.android_app_company.Adapter.PowerBrandSeachAdaptet;
@@ -200,10 +201,14 @@ public class PowersearchDialog extends Dialog {
                             px_id = pxpowerSeachAdaptet.getItem(0).get(i).getId();
                         }
                     }
+
                     if (etLowprice.getText().toString().isEmpty()) {
-                        start_price = "0";
+                        start_price = "0.01";
                     } else {
                         start_price = etLowprice.getText().toString().trim();
+                        if (start_price.equals("0")){
+                            start_price = "0.01";
+                        }
                     }
 
                     if (etHighprice.getText().toString().isEmpty()) {
@@ -211,6 +216,14 @@ public class PowersearchDialog extends Dialog {
                     } else {
                         end_price = etHighprice.getText().toString().trim();
                     }
+
+
+                    if (Double.parseDouble(start_price)>Double.parseDouble(end_price)){
+                        Toast.makeText(context, R.string.Pricerangeerror, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+
 
                     dialog.dismiss();
                     Intent intent = new Intent(context, ProductSearchActivity.class);

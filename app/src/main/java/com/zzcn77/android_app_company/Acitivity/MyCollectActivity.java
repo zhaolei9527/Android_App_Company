@@ -1,8 +1,11 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,12 +69,21 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     private int page = 1;
     private Dialog dialog;
     private boolean cball = false;
+    private int scrolledY = 0;
 
     @Override
     protected int setthislayout() {
         return R.layout.mycollect_layout;
     }
-
+    public int getScrollY() {
+        View c = swipeTarget.getChildAt(0);
+        if (c == null) {
+            return 0;
+        }
+        int firstVisiblePosition = swipeTarget.getFirstVisiblePosition();
+        int top = c.getTop();
+        return -top + firstVisiblePosition * c.getHeight();
+    }
     @Override
     protected void initListener() {
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -79,6 +91,28 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         rlCheckall.setOnClickListener(this);
         rlDeleteall.setOnClickListener(this);
         imgBack.setOnClickListener(this);
+        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener()
+
+        {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                scrolledY = getScrollY();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if (swipeTarget != null && swipeTarget.getChildCount() > 0) {
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = swipeTarget.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = swipeTarget.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+            }
+        });
     }
 
     @Override
@@ -111,6 +145,12 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 llEmpty.setVisibility(View.VISIBLE);
                                 swipeToLoadLayout.setLoadMoreEnabled(false);
                                 return;
+                            }else if (collectAdapter!=null){
+                                swipeTarget.setVisibility(View.GONE);
+                                rllDeleteall.setVisibility(View.GONE);
+                                llEmpty.setVisibility(View.VISIBLE);
+                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                return;
                             }
                             Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             return;
@@ -120,7 +160,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                         if (collBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                    collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes());
+                                    collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
                                     swipeTarget.setAdapter(collectAdapter);
                                     swipeTarget.setEnabled(true);
                                 }
@@ -128,7 +168,17 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 collectAdapter.setDatas((ArrayList) collBean.getRes());
                                 swipeToLoadLayout.setLoadingMore(false);
                                 swipeTarget.setEnabled(true);
+
                             }
+                            if (swipeTarget != null) {
+                                swipeTarget.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeTarget.smoothScrollBy(scrolledY, 0);
+                                    }
+                                });
+                            }
+
                             if (collectAdapter != null) {
                                 collectAdapter.notifyDataSetChanged();
                             }
@@ -165,8 +215,14 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         } catch (Exception e) {
             // 可忽略的异常
         }
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: 2017/6/5
+        page = 1;
+        initData();
     }
 
     //上拉加载
@@ -195,48 +251,64 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.rl_deleteall:
                 if (cball) {
-                    RequestQueue requestQueue = Volley.newRequestQueue(context);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "muti_coll", new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String s) {
-                            String decode = Utils.decode(s);
-                            DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
-                            if (docollBean.getStu().equals("1")) {
-                                Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
-                                swipeTarget.setAdapter(new CollectAdapter(context, new ArrayList()));
-                                llEmpty.setVisibility(View.VISIBLE);
-                                rllDeleteall.setVisibility(View.GONE);
-                            } else {
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            volleyError.printStackTrace();
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
-                        }
-                    })
+                    new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                            .setMessage(R.string.deleteall)//设置显示的内容
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {//添加确定按钮
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                                    // TODO Auto-generated method stub
+                                    dialog.dismiss();
 
-                    {
+                                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "muti_coll", new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String s) {
+                                            String decode = Utils.decode(s);
+                                            DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
+                                            if (docollBean.getStu().equals("1")) {
+                                                Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
+                                                swipeTarget.setAdapter(new CollectAdapter(context, new ArrayList(), rllDeleteall, llEmpty));
+                                                llEmpty.setVisibility(View.VISIBLE);
+                                                rllDeleteall.setVisibility(View.GONE);
+                                            } else {
+                                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError volleyError) {
+                                            volleyError.printStackTrace();
+                                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                                        }
+                                    })
+
+                                    {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> map = new HashMap<String, String>();
+                                            map.put("key", UrlUtils.key);
+                                            map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+                                            return map;
+                                        }
+                                    };
+                                    boolean connected = Utils.isConnected(context);
+                                    if (connected) {
+                                        requestQueue.add(stringRequest);
+                                    } else {
+                                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                                    }
+                                }
+                            }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
                         @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("key", UrlUtils.key);
-                            map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
-                            return map;
+                        public void onClick(DialogInterface dialog, int which) {//响应事件
+                            dialog.dismiss();
                         }
-                    };
-                    boolean connected = Utils.isConnected(context);
-                    if (connected) {
-                        requestQueue.add(stringRequest);
-                    } else {
-                        EasyToast.showShort(context, getString(R.string.Notconnect));
-                    }
+                    }).show();//在按键响应事件中显示此对话框
+
 
                 }
                 break;
-            case  R.id.img_back:
+            case R.id.img_back:
                 finish();
                 break;
         }

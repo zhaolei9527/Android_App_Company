@@ -133,7 +133,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         passwordAgain = etPasswordAgain.getText().toString().trim();
         if (passwordAgain.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.passwordagain));
-
             return;
         }
 
@@ -146,9 +145,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             passwordmd5 = MD5Utils.md5(passwordAgain);
             passwordmd5 = MD5Utils.md5(passwordmd5);
 
-
-        Toast.makeText(context, account, Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, phone, Toast.LENGTH_SHORT).show();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "regist", new Response.Listener<String>() {
             @Override

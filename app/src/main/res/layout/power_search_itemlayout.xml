@@ -7,9 +7,10 @@
         android:gravity="center"
         android:id="@+id/tv_title"
         android:layout_width="@dimen/x70"
-        android:layout_height="@dimen/y30"
+        android:layout_height="@dimen/y35"
         android:background="@drawable/price_searchbg"
         android:padding="@dimen/x5"
+        android:maxLines="2"
         android:textColor="#666"
         android:textSize="@dimen/x11" />
 

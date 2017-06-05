@@ -25,12 +25,12 @@ public class ProductSearchAdapter extends BaseAdapter {
 
     private Context context;
 
-    public ArrayList getDatas() {
+    public ArrayList<Goods_ListsBean.ResBean.GoodsBean> getDatas() {
         return datas;
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
     private ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = new ArrayList();

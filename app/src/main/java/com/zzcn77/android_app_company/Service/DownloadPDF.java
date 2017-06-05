@@ -2,6 +2,7 @@ package com.zzcn77.android_app_company.Service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.HttpStatus;
 
@@ -88,7 +90,6 @@ public class DownloadPDF extends Service {
                 mHandler.sendEmptyMessage(URL_ERROR);
             }
             id = intent.getStringExtra("id");
-
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -249,6 +250,7 @@ public class DownloadPDF extends Service {
         contentView = new RemoteViews(getPackageName(), R.layout.notification_item);
         contentView.setProgressBar(R.id.progress, 100, 0, false);
         contentView.setTextViewText(R.id.tv_progress, "0%");
+        contentView.setTextViewText(R.id.tv_title,getResources().getString(R.string.TOEFL));
         notification.contentView = contentView;
 
         /*updateIntent = new Intent(this, AboutActivity.class);
@@ -260,10 +262,10 @@ public class DownloadPDF extends Service {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //设置notification的PendingIntent
-//        Intent intt = new Intent(this, ProductDetailsActivity.class);
-//        intt.putExtra("id", id);
-//        notification.contentIntent = PendingIntent.getActivity(this, 100, intt,
-//                Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intt = new Intent(this, ProductDetailsActivity.class);
+        intt.putExtra("id", id);
+        notification.contentIntent = PendingIntent.getActivity(this, 100, intt,
+                Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationManager.notify(R.layout.notification_item, notification);
     }
 
@@ -271,6 +273,7 @@ public class DownloadPDF extends Service {
         aLong = percent * 100 / length;
         contentView.setTextViewText(R.id.tv_progress, aLong + "%");
         contentView.setProgressBar(R.id.progress, (int) length, (int) percent, false);
+        contentView.setTextViewText(R.id.tv_title,getResources().getString(R.string.TOEFL));
         notification.contentView = contentView;
         notificationManager.notify(R.layout.notification_item, notification);
     }

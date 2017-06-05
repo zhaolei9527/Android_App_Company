@@ -44,7 +44,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     Button btnOk;
     @BindView(R.id.btn_get)
     Button btnGet;
-    public static final int time = 30;
+    public static final int time = 60;
     private Thread thread;
     private String md5password;
 
@@ -139,6 +139,11 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             return;
         }
 
+        if (etPassword.getText().toString().length() < 6) {
+            EasyToast.showShort(context, getResources().getString(R.string.password));
+            return;
+        }
+
         if (etPasswordAgain.getText().toString().trim().isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.passwordagain));
             return;
@@ -149,8 +154,8 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         // TODO: 2017/5/18  重置密码
-            md5password = MD5Utils.md5(etPassword.getText().toString());
-            md5password = MD5Utils.md5(md5password);
+        md5password = MD5Utils.md5(etPassword.getText().toString());
+        md5password = MD5Utils.md5(md5password);
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "findpwd", new Response.Listener<String>() {
@@ -167,8 +172,11 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                             finish();
                         }
                     } else {
-                        Toast.makeText(context, findpwdBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
-                        EasyToast.showShort(context,  getString(R.string.Abnormalserver));
+                        if (findpwdBean.getMsg().contains("该邮箱验证码已失效")) {
+                            Toast.makeText(context, R.string.Thecaptchahasfailed, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, findpwdBean.getMsg(),Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -211,6 +219,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
             return;
         }
+        thread.start();
         //// TODO: 2017/5/18  发送验证码
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "emailcode", new Response.Listener<String>() {
@@ -224,16 +233,13 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                     if (String.valueOf(emailCodeBean.getStu()).equals("1")) {
                         if (emailCodeBean.getMsg().contains("发送成功")) {
                             Toast.makeText(context, R.string.sendsuccessfully, Toast.LENGTH_SHORT).show();
-                            thread.start();
                         }
                     } else {
                         if (emailCodeBean.getMsg().toString().contains("该邮箱还没有注册")) {
                             Toast.makeText(context, R.string.mailboxnotregistered, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, emailCodeBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
-
                         }
-                        EasyToast.showShort(context,  getString(R.string.Abnormalserver));
                     }
                 }
             }

@@ -204,7 +204,7 @@ public class GoodsBean {
              */
 
             private String title;
-            private String img;
+            private String img_lb;
             private String id;
 
             public String getTitle() {
@@ -215,12 +215,12 @@ public class GoodsBean {
                 this.title = title;
             }
 
-            public String getImg() {
-                return img;
+            public String getImg_lb() {
+                return img_lb;
             }
 
-            public void setImg(String img) {
-                this.img = img;
+            public void setImg(String Img_lb) {
+                this.img_lb = Img_lb;
             }
 
             public String getId() {

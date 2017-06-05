@@ -177,10 +177,11 @@
         </ScrollView>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/x3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y31"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/x5"
+            android:layout_marginBottom="@dimen/x3"
             android:gravity="center"
             android:orientation="horizontal">
 

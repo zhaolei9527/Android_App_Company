@@ -63,7 +63,7 @@ public class ProductAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.imgScheme.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
+        viewHolder.imgScheme.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg_lb());
         viewHolder.tvTitle.setText(datas.get(position).getTitle());
         return convertView;
     }

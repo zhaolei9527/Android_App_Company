@@ -92,7 +92,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
                 if (content.trim().isEmpty()) {
-                    Toast.makeText(context, etContent.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, etContent.getHint().toString(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -101,23 +101,21 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
 
-                if (email.trim().isEmpty()) {
-                    Toast.makeText(context, etEmail.getHint().toString(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (name.trim().isEmpty()) {
-                    Toast.makeText(context, etName.getHint().toString(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 if (!phone.matches("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")) {
                     EasyToast.showShort(context, getResources().getString(R.string.phoneisnotregx));
                     return;
                 }
 
+                if (email.trim().isEmpty()) {
+                    Toast.makeText(context, etEmail.getHint().toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!email.matches("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")) {
                     EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
+                    return;
+                }
+                if (name.trim().isEmpty()) {
+                    Toast.makeText(context, etName.getHint().toString(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 dialog = Utils.showLoadingDialog(context);

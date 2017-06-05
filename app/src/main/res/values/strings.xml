@@ -117,5 +117,9 @@
     <string name="TOEFL">资料下载</string>
     <string name="Jarrow">明星产品</string>
     <string name="Isthelatestversion">已是最新版本</string>
+    <string name="deleteall">确认删除全部吗？</string>
+    <string name="Pricerangeerror">价格区间错误</string>
+    <string name="Thereisnorelevantcontent">暂无相关内容</string>
+    <string name="Thecaptchahasfailed">验证码错误</string>
 
 </resources>

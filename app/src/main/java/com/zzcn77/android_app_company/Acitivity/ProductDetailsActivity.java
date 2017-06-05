@@ -101,6 +101,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     private BroadcastReceiver receiver;
     private Intent intent;
     private File file;
+    private String id;
 
     @Override
     protected int setthislayout() {
@@ -147,7 +148,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context,getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
             }
         });
         receiver = new BroadcastReceiver() {
@@ -168,13 +169,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         final Intent intent = getIntent();
         if (!IntentUtil.isBundleEmpty(intent)) {
+            id = intent.getStringExtra("id");
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods_ny", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context,getString(R.string.Networkexception));
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         goods_nyBean = new Gson().fromJson(decode, Goods_NYBean.class);
                         if (goods_nyBean.getStu().equals("1")) {
@@ -229,8 +231,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
-                    map.put("id", intent.getStringExtra("id"));
-                    map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+                    map.put("id", id);
+                    if (!String.valueOf(SPUtil.get(context, "id", "")).toString().isEmpty())
+                    {
+                        map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+                    }
                     return map;
                 }
             };
@@ -281,7 +286,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                                     Intent intent = new Intent(context, DownloadPDF.class);
                                     //apk下载地址
                                     intent.putExtra("url", UrlUtils.BaseImg + goods_nyBean.getRes().getPdf());
-                                    intent.putExtra("id", intent.getStringExtra("id"));
+                                    intent.putExtra("id", id);
                                     context.startService(intent);
                                     tvDownload.setText(getString(R.string.downloading));
                                 }
@@ -304,7 +309,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                                 public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                     // TODO Auto-generated method stub
                                     dialog.dismiss();
-                                    startActivity(new Intent(context,LoginActivity.class));
+                                    startActivity(new Intent(context, LoginActivity.class));
                                 }
                             }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
                         @Override
@@ -320,15 +325,17 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             String decode = Utils.decode(s);
                             DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                             if (docollBean.getStu().equals("1")) {
-                                if (cbCollect.isChecked()) {
-                                    Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
+
+                                if (cbCollect!=null){
+                                    if (cbCollect.isChecked()) {
+                                        Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(context, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } else {
                                 EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
-
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -358,9 +365,18 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             stu = "1";
                         }
                         cbCollect.setChecked(!cbCollect.isChecked());
-
+                        Intent intent = new Intent();
+                        intent.setAction("notifyData");
+                        if (cbCollect!=null){
+                            if (cbCollect.isChecked()) {
+                                intent.putExtra("inched",true);
+                            } else {
+                                intent.putExtra("inched",false);
+                            }
+                        }
+                        sendBroadcast(intent);
                     } else {
-                        EasyToast.showShort(context,getString(R.string.Notconnect));
+                        EasyToast.showShort(context, getString(R.string.Notconnect));
                     }
                 }
 
