@@ -2,7 +2,6 @@ package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -64,7 +63,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     @Override
     protected void initview() {
         //改变加载显示的颜色
-        SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
 
         dialog = Utils.showLoadingDialog(context);
         dialog.show();

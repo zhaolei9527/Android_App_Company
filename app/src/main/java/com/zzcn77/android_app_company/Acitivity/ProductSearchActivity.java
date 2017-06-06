@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -84,6 +83,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private int scrolledY = 0;
     private Dialog dialog;
     private int po;
+    private BroadcastReceiver broadcastReceiver;
+    private BroadcastReceiver receiver;
 
     @Override
     protected int setthislayout() {
@@ -118,31 +119,32 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initListener() {
-        registerReceiver(new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
-                    boolean inched = intent.getBooleanExtra("inched",false);
-                    if (inched){
+                    boolean inched = intent.getBooleanExtra("inched", false);
+                    if (inched) {
                         ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
                         datas.get(po).setColl("1");
-                        productSearchAdapter=new ProductSearchAdapter(context,datas);
+                        productSearchAdapter = new ProductSearchAdapter(context, datas);
                         swipeTarget.setAdapter(productSearchAdapter);
-                    }else {
+                    } else {
                         ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
                         datas.get(po).setColl("2");
-                        productSearchAdapter=new ProductSearchAdapter(context,datas);
+                        productSearchAdapter = new ProductSearchAdapter(context, datas);
                         swipeTarget.setAdapter(productSearchAdapter);
                     }
                     swipeTarget.setSelection(scrolledY);
                 }
             }
-        }, new IntentFilter("notifyData"));
+        };
+        registerReceiver(receiver, new IntentFilter("notifyData"));
 
         //改变加载显示的颜色
         imgSearch.setOnClickListener(this);
         imgPowerSearch.setOnClickListener(this);
-        SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
         SwipeRefreshLayout.post(new Runnable() {
@@ -178,7 +180,11 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 // 不滚动时保存当前滚动到的位置
-                        scrolledY =view.getFirstVisiblePosition()+2;
+                if (scrolledY != 0) {
+                    scrolledY = view.getFirstVisiblePosition() + 2;
+                } else {
+                    scrolledY = 1;
+                }
             }
 
             @Override
@@ -205,11 +211,12 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 // TODO Auto-generated method stub
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH) {
 
-                    dialog.show();
                     String content = etSearch.getText().toString().trim();
                     if (content.isEmpty()) {
-                        content = etSearch.getHint().toString().trim();
+                        EasyToast.showShort(context, etSearch.getHint().toString().trim());
+                        return false;
                     }
+                    dialog.show();
                     keywords = content;
                     swipeTarget.setAdapter(null);
                     page = 1;
@@ -225,7 +232,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             }
         });
 
-        registerReceiver(new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
@@ -247,7 +254,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 swipeTarget.setAdapter(null);
                 initData();
             }
-        }, new IntentFilter("PoswerSearch"));
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("PoswerSearch"));
 
 
     }
@@ -272,6 +280,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void run() {
                 page = 1;
+                scrolledY=1;
                 initData();
             }
         }, 1000);
@@ -288,7 +297,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     if (dialog.isShowing()) {
-                        dialog.dismiss();
+                        if (dialog!=null){
+                            dialog.dismiss();
+                        }
                     }
                     if (decode.contains("code\":\"111\"")) {
                         if (page == 1) {
@@ -316,9 +327,10 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                             productSearchAdapter.setDatas((ArrayList) goods_listsBean.getRes().getGoods());
                             swipeToLoadLayout.setLoadingMore(false);
                             SwipeRefreshLayout.setEnabled(true);
-                            if (swipeTarget!=null){
-                                productSearchAdapter.notifyDataSetChanged();
-                            }
+                        }
+                        if (productSearchAdapter != null) {
+                          //  productSearchAdapter.notifyDataSetChanged();
+                            swipeTarget.setSelection(scrolledY);
                         }
                         if (SwipeRefreshLayout != null) {
                             if (SwipeRefreshLayout.isRefreshing()) {
@@ -374,6 +386,14 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             EasyToast.showShort(context, getString(R.string.Notconnect));
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+        unregisterReceiver(receiver);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -383,11 +403,12 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_search:
-                dialog.show();
                 String content = etSearch.getText().toString().trim();
                 if (content.isEmpty()) {
-                    content = etSearch.getHint().toString().trim();
+                    EasyToast.showShort(context, etSearch.getHint().toString().trim());
+                    return;
                 }
+                dialog.show();
                 keywords = content;
                 swipeTarget.setAdapter(null);
                 page = 1;

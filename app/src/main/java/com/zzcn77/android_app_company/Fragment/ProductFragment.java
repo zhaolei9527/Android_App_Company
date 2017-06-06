@@ -119,7 +119,8 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     private void search() {
         String content = etSearch.getText().toString().trim();
         if (content.isEmpty()) {
-            content = etSearch.getHint().toString().trim();
+            EasyToast.showShort(mActivity, etSearch.getHint().toString().trim());
+            return;
         }
         Intent intent1 = new Intent(mActivity, ProductSearchActivity.class);
         intent1.putExtra("keywords", content);
@@ -136,20 +137,20 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(mActivity,  getString(R.string.Networkexception));
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                     } else {
                         if (decode.contains("code\":\"111\"")) {
                             if (page == 1) {
                                 llEmpty.setVisibility(View.VISIBLE);
                             } else {
-                                Toast.makeText(mActivity,  getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mActivity, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                                 page = page - 1;
                             }
                             swipeToLoadLayout.setLoadingMore(false);
                             swipeTarget.setEnabled(true);
                             return;
                         } else {
-                            if (llEmpty!=null){
+                            if (llEmpty != null) {
                                 llEmpty.setVisibility(View.GONE);
                             }
                             goodsBean = new Gson().fromJson(decode, GoodsBean.class);
@@ -189,7 +190,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(mActivity,  getString(R.string.Networkexception));
+                    EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                 }
             })
 
@@ -207,7 +208,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(mActivity,  getString(R.string.Notconnect));
+                EasyToast.showShort(mActivity, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -226,7 +227,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 initData(null);
 
             }
-        }, 2000);
+        }, 500);
 
     }
 
@@ -234,8 +235,8 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_power_search:
-                if (goodsBean!=null){
-                    new PowersearchDialog.Builder(mActivity,goodsBean).create().show();
+                if (goodsBean != null) {
+                    new PowersearchDialog.Builder(mActivity, goodsBean).create().show();
                 }
                 break;
             case R.id.img_search:

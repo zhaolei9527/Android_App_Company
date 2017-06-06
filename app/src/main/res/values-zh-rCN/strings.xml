@@ -120,4 +120,8 @@
     <string name="deleteall">确认删除全部吗？</string>
     <string name="Pricerangeerror">价格区间错误</string>
     <string name="Thecaptchahasfailed">验证码错误</string>
+    <string name="Thereisnorelevantcontent">暂无相关内容</string>
+    <string name="Enterthesearch">请输入搜索内容</string>
+    <string name="Areyouexit">确定退出吗？</string>
+
 </resources>

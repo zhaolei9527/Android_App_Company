@@ -2,7 +2,6 @@ package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -89,7 +88,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
     public void initListener() {
         imgBack.setOnClickListener(this);
         //改变加载显示的颜色
-        SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
         swipeTarget.setOnItemClickListener(this);

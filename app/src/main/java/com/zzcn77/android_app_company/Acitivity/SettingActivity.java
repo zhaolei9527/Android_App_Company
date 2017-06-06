@@ -1,9 +1,11 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -114,12 +116,32 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.rl_exit:
-                SPUtil.remove(context, "id");
-                SPUtil.remove(context, "account");
-                SPUtil.remove(context, "password");
-                SPUtil.remove(context, "email");
-                startActivity(new Intent(context, LoginActivity.class));
-                finish();
+                if (!SPUtil.get(context, "id", "").toString().isEmpty()) {
+                    // TODO Auto-generated method stub
+                    new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                            .setMessage(R.string.Areyouexit)//设置显示的内容
+                            .setPositiveButton(R.string.exit, new DialogInterface.OnClickListener() {//添加确定按钮
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                                    // TODO Auto-generated method stub
+                                    dialog.dismiss();
+                                    SPUtil.remove(context, "id");
+                                    SPUtil.remove(context, "account");
+                                    SPUtil.remove(context, "password");
+                                    SPUtil.remove(context, "email");
+                                    startActivity(new Intent(context, LoginActivity.class));
+                                    finish();
+                                }
+                            }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {//响应事件
+                            dialog.dismiss();
+                        }
+                    }).show();//在按键响应事件中显示此对话框
+
+
+                }
+
                 break;
             case R.id.rl_language:
                 startActivity(new Intent(context, LanguageActivity.class));
@@ -141,12 +163,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             if (String.valueOf(versionBean.getStu()).equals("1")) {
                                 try {
                                     int versionCode = getversionCode();
-                                    int Android_bnum= Integer.parseInt(versionBean.getRes().getAndroid_bnum());
-                                    if (versionCode<Android_bnum){
+                                    int Android_bnum = Integer.parseInt(versionBean.getRes().getAndroid_bnum());
+                                    if (versionCode < Android_bnum) {
                                         dialog.dismiss();
                                         UpDateDialog upDateDialog = new UpDateDialog();
-                                        upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(),versionBean.getRes().getAndroid());
-                                    }else {
+                                        upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(), versionBean.getRes().getAndroid());
+                                    } else {
                                         dialog.dismiss();
                                         Toast.makeText(context, R.string.Isthelatestversion, Toast.LENGTH_SHORT).show();
                                     }
@@ -157,7 +179,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 }
                             } else {
                                 dialog.dismiss();
-                                EasyToast.showShort(context,getString(R.string.Abnormalserver));
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
                     }
@@ -165,7 +187,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context,getString(R.string.Networkexception));
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                         dialog.dismiss();
 
                     }
@@ -184,7 +206,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context,getString(R.string.Notconnect));
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
                     dialog.dismiss();
 
                 }

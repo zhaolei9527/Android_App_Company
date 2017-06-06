@@ -1,7 +1,6 @@
 package com.zzcn77.android_app_company.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -60,7 +59,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
     protected void initView() {
         super.initView();
         //改变加载显示的颜色
-        SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
         SwipeRefreshLayout.post(new Runnable() {

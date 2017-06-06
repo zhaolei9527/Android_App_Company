@@ -1,6 +1,8 @@
 package com.zzcn77.android_app_company.Acitivity;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.Html;
@@ -34,6 +36,7 @@ import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -179,10 +182,34 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
         switch (v.getId()) {
             case R.id.img_back:
-                finish();
-                startActivity(new Intent(context,MainActivity.class));
+                boolean existMainActivity = isExistMainActivity(MainActivity.class);
+                if (existMainActivity){
+                    finish();
+                }else {
+                    finish();
+                    startActivity(new Intent(context,MainActivity.class));
+                }
                 break;
         }
     }
+
+    //判断某一个类是否存在任务栈里面
+    private boolean isExistMainActivity(Class<?> activity){
+        Intent intent = new Intent(this, activity);
+        ComponentName cmpName = intent.resolveActivity(getPackageManager());
+        boolean flag = false;
+        if (cmpName != null) { // 说明系统中存在这个activity
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);  //获取从栈顶开始往下查找的10个activity
+            for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                if (taskInfo.baseActivity.equals(cmpName)) { // 说明它已经启动了
+                    flag = true;
+                    break;  //跳出循环，优化效率
+                }
+            }
+        }
+        return flag;
+    }
+
 
 }

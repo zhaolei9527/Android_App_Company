@@ -40,10 +40,10 @@
                 android:background="#d0d0d0"></View>
 
             <RelativeLayout
+                android:layout_marginTop="@dimen/x3"
                 android:id="@+id/rl_title_Company_Details"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
-                android:layout_marginTop="@dimen/y5"
                 android:background="@android:color/white">
 
                 <View
@@ -162,14 +162,13 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="#d0d0d0"></View>
+                android:layout_height="@dimen/y5"
+                android:background="#e7e7e7"></View>
 
             <RelativeLayout
                 android:id="@+id/rl_title_news_more"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
-                android:layout_marginTop="@dimen/y5"
                 android:background="@android:color/white">
 
                 <View
@@ -239,22 +238,19 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/x5"
-                    android:text="1/10"
-                    android:textColor="#333" />
+                    android:textColor="#666" />
 
             </RelativeLayout>
 
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="#d0d0d0"></View>
+                android:layout_height="@dimen/y5"
+                android:background="#e7e7e7"></View>
 
             <RelativeLayout
                 android:id="@+id/rl_title_promotion_more"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y34"
-                android:layout_marginTop="@dimen/y5"
                 android:background="@android:color/white">
 
                 <View

@@ -1,7 +1,6 @@
 package com.zzcn77.android_app_company.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -76,7 +75,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         super.initView();
         //改变加载显示的颜色
         imgSearch.setOnClickListener(this);
-        SwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED);
+        SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
         swipeToLoadLayout.setOnLoadMoreListener(this);
         SwipeRefreshLayout.setOnRefreshListener(this);
         SwipeRefreshLayout.post(new Runnable() {
@@ -135,7 +134,8 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     public void search() {
         String content = etSearch.getText().toString().trim();
         if (content.isEmpty()) {
-            content = etSearch.getHint().toString().trim();
+            EasyToast.showShort(mActivity, etSearch.getHint().toString().trim());
+            return;
         }
         intent1 = new Intent(mActivity, DemoSerachActivity.class);
         intent1.putExtra("title", content);
@@ -170,7 +170,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                         if (yanShiBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                    SPUtil.putAndApply(mActivity,"demo",decode);
+                                    SPUtil.putAndApply(mActivity, "demo", decode);
                                     demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
                                     swipeTarget.setAdapter(demosadapter);
                                     swipeTarget.setEnabled(true);
@@ -193,7 +193,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                 }
                             }
                         } else {
-                            EasyToast.showShort(mActivity,getString(R.string.Abnormalserver));
+                            EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
                         }
                     }
                 }

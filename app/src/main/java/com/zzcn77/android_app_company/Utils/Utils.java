@@ -161,7 +161,6 @@ public class Utils {
         activity.startActivityForResult(intent, 0);
     }
 
-
     public static String getNewContent(String htmltext) {
         Document doc = Jsoup.parse(htmltext);
         Elements elements = doc.getElementsByTag("img");
@@ -205,8 +204,6 @@ public class Utils {
                 .setImageRequest(request).setAutoPlayAnimations(true).build();
         draweeView.setController(controller);
     }
-
-
 
     public static void inSetWebView(String htmlString, com.tencent.smtt.sdk.WebView forumContext,Context context) {
         if (htmlString.contains("img src=\"")) {

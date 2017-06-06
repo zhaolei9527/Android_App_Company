@@ -1,8 +1,10 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -182,9 +184,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         if (goods_nyBean.getStu().equals("1")) {
                             String coll = goods_nyBean.getRes().getColl();
                             if (coll.equals("1")) {
-                                cbCollect.setChecked(true);
+                                if (cbCollect != null)
+                                    cbCollect.setChecked(true);
                             } else if (coll.equals("-1")) {
-                                cbCollect.setChecked(false);
+                                if (cbCollect != null)
+                                    cbCollect.setChecked(false);
                             }
                             File dir = new File(DOWNLOAD_PATH);
                             if (!dir.exists()) {
@@ -232,8 +236,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
                     map.put("id", id);
-                    if (!String.valueOf(SPUtil.get(context, "id", "")).toString().isEmpty())
-                    {
+                    if (!String.valueOf(SPUtil.get(context, "id", "")).toString().isEmpty()) {
                         map.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
                     }
                     return map;
@@ -251,14 +254,35 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
     }
-
+    //判断某一个类是否存在任务栈里面
+    private boolean isExistMainActivity(Class<?> activity){
+        Intent intent = new Intent(this, activity);
+        ComponentName cmpName = intent.resolveActivity(getPackageManager());
+        boolean flag = false;
+        if (cmpName != null) { // 说明系统中存在这个activity
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);  //获取从栈顶开始往下查找的10个activity
+            for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                if (taskInfo.baseActivity.equals(cmpName)) { // 说明它已经启动了
+                    flag = true;
+                    break;  //跳出循环，优化效率
+                }
+            }
+        }
+        return flag;
+    }
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.img_back:
-                finish();
-                startActivity(new Intent(context, MainActivity.class));
+                boolean existMainActivity = isExistMainActivity(MainActivity.class);
+                if (existMainActivity){
+                    finish();
+                }else {
+                    finish();
+                    startActivity(new Intent(context,MainActivity.class));
+                }
                 break;
             case R.id.rl_call_phone:
                 CallPhoneUtils.CallPhone(ProductDetailsActivity.this, tvPhone.getText().toString());
@@ -326,7 +350,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                             if (docollBean.getStu().equals("1")) {
 
-                                if (cbCollect!=null){
+                                if (cbCollect != null) {
                                     if (cbCollect.isChecked()) {
                                         Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
                                     } else {
@@ -367,11 +391,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         cbCollect.setChecked(!cbCollect.isChecked());
                         Intent intent = new Intent();
                         intent.setAction("notifyData");
-                        if (cbCollect!=null){
+                        if (cbCollect != null) {
                             if (cbCollect.isChecked()) {
-                                intent.putExtra("inched",true);
+                                intent.putExtra("inched", true);
                             } else {
-                                intent.putExtra("inched",false);
+                                intent.putExtra("inched", false);
                             }
                         }
                         sendBroadcast(intent);

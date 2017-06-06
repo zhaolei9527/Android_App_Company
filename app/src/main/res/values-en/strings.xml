@@ -18,7 +18,7 @@
     <string name="skip">Skip</string>
     <string name="toregister">There is no account? Immediately registered</string>
     <string name="AccountorPasswordisEmpty">The account or password cannot be empty</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
     <string name="captcha">captcha</string>
     <string name="get">GET</string>
     <string name="ok">Confirm</string>
@@ -30,7 +30,7 @@
     <string name="passwordisinconformity">Entered passwords differ</string>
     <string name="Company_Details">company Profile</string>
     <string name="regiser"> Register</string>
-    <string name="phone">phone number</string>
+    <string name="phone">Phone number</string>
     <string name="ishaveaccount">Existing account? Login immediately>></string>
     <string name="goodregister">registered successfully</string>
     <string name="loading">  loading...</string>
@@ -56,7 +56,7 @@
     <string name="newpassword">new password</string>
     <string name="newpasswordagain">Confirm New Password</string>
     <string name="save"> Save</string>
-    <string name="name">your name</string>
+    <string name="name">Your name</string>
     <string name="filter">Filter</string>
     <string name="producttype">Product Style</string>
     <string name="brand">Brand</string>
@@ -104,8 +104,8 @@
     <string name="downloadcompletes">Download Complete</string>
     <string name="Latertosayagain">Later to say again</string>
     <string name="Updateimmediately">Update immediately</string>
-    <string name="Pleaseenteryourconsultingtitle">enter your consulting title</string>
-    <string name="Pleaseenteryourconsultingdetails">enter your consulting details</string>
+    <string name="Pleaseenteryourconsultingtitle">Enter your consulting title</string>
+    <string name="Pleaseenteryourconsultingdetails">Enter your consulting details</string>
     <string name="Myadvice">My advice</string>
     <string name="delete">Delete</string>
     <string name="Commit">Commit</string>
@@ -121,5 +121,7 @@
     <string name="Pricerangeerror">Price range error</string>
     <string name="Thereisnorelevantcontent">There is no relevant content</string>
     <string name="Thecaptchahasfailed">The captcha is error</string>
+    <string name="Enterthesearch">Enter the search</string>
+    <string name="Areyouexit">Are you exit？</string>
 
 </resources>

@@ -17,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -89,14 +88,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
     protected void initview() {
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
-
         RollPagerView.setHintView(new IconHintView(context, R.drawable.shape_selected, R.drawable.shape_noraml, DensityUtils.dp2px(context, getResources().getDimension(R.dimen.x7))));
-        RollPagerView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                EasyToast.showShort(context, "position" + position);
-            }
-        });
         RollPagerView.setPlayDelay(3000);
     }
 

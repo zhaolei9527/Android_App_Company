@@ -75,6 +75,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     protected int setthislayout() {
         return R.layout.mycollect_layout;
     }
+
     public int getScrollY() {
         View c = swipeTarget.getChildAt(0);
         if (c == null) {
@@ -84,6 +85,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         int top = c.getTop();
         return -top + firstVisiblePosition * c.getHeight();
     }
+
     @Override
     protected void initListener() {
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -96,7 +98,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                scrolledY = getScrollY();
+                scrolledY = view.getFirstVisiblePosition();
             }
 
             @Override
@@ -138,6 +140,13 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                             dialog.dismiss();
                         }
                         if (decode.contains("code\":\"111\"")) {
+                            if (page == 1) {
+                                swipeTarget.setVisibility(View.GONE);
+                                rllDeleteall.setVisibility(View.GONE);
+                                llEmpty.setVisibility(View.VISIBLE);
+                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                return;
+                            }
                             page = page - 1;
                             swipeToLoadLayout.setLoadingMore(false);
                             swipeTarget.setEnabled(true);
@@ -145,13 +154,8 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 llEmpty.setVisibility(View.VISIBLE);
                                 swipeToLoadLayout.setLoadMoreEnabled(false);
                                 return;
-                            }else if (collectAdapter!=null){
-                                swipeTarget.setVisibility(View.GONE);
-                                rllDeleteall.setVisibility(View.GONE);
-                                llEmpty.setVisibility(View.VISIBLE);
-                                swipeToLoadLayout.setLoadMoreEnabled(false);
-                                return;
                             }
+
                             Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -174,7 +178,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 swipeTarget.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        swipeTarget.smoothScrollBy(scrolledY, 0);
+                                        swipeTarget.setSelection(scrolledY);
                                     }
                                 });
                             }

@@ -109,10 +109,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                 getcaptcha();
                 break;
             case R.id.btn_ok:
-
                 toreset();
-
-
                 break;
         }
     }

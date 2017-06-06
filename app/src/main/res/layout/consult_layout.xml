@@ -68,14 +68,11 @@
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y175"
-                android:layout_centerVertical="true"
                 android:background="@null"
                 android:gravity="start"
                 android:hint="@string/Pleaseenteryourconsultingdetails"
-                android:inputType="text"
                 android:paddingLeft="@dimen/x10"
                 android:paddingTop="@dimen/x10"
-                android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="#999" />
         </RelativeLayout>
