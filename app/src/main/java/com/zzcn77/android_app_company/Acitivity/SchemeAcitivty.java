@@ -53,6 +53,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
     @BindView(R.id.sv)
     ScrollView sv;
     private Dialog dialog;
+
     @Override
     protected int setthislayout() {
         return R.layout.secheme_details_layout;
@@ -95,7 +96,8 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+                if (context != null)
+                    Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -111,22 +113,27 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         final FangAnDetailBean fangAnDetailBean = new Gson().fromJson(decode, FangAnDetailBean.class);
                         if (fangAnDetailBean.getStu().equals("1")) {
-                            tvTitle.setText(fangAnDetailBean.getRes().getTitle());
-                            SimpleDraweeView.setImageURI(UrlUtils.BaseImg+fangAnDetailBean.getRes().getImgurl());
-                            forumContext.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String decode = Utils.decode(fangAnDetailBean.getRes().getContent());
-                                    Spanned spanned = Html.fromHtml(decode);
-                                    Utils.inSetWebView(spanned.toString(), forumContext, context);
-                                }
-                            });
+                            if (tvTitle != null)
+                                tvTitle.setText(fangAnDetailBean.getRes().getTitle());
+                            if (SimpleDraweeView != null)
+                                SimpleDraweeView.setImageURI(UrlUtils.BaseImg + fangAnDetailBean.getRes().getImgurl());
+                            if (forumContext != null)
+                                forumContext.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String decode = Utils.decode(fangAnDetailBean.getRes().getContent());
+                                        Spanned spanned = Html.fromHtml(decode);
+                                        Utils.inSetWebView(spanned.toString(), forumContext, context);
+                                    }
+                                });
                         } else {
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -134,7 +141,8 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context,getString(R.string.Networkexception));
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -152,11 +160,13 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, getString(R.string.Notconnect));
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+            if (context != null)
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
     }
 

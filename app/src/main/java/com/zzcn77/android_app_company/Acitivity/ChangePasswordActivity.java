@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,16 +16,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.zzcn77.android_app_company.Bean.EditpwdBean;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.EditpwdBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.MD5Utils;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.BindView;
 
 /**
@@ -86,7 +89,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     Toast.makeText(context, R.string.OldPassWordIsError, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (Newpassword.isEmpty()) {
                     Toast.makeText(context, etNewpassword.getHint(), Toast.LENGTH_SHORT).show();
                     return;
@@ -118,7 +120,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                            if (context!=null){
+                                EasyToast.showShort(context, getString(R.string.Networkexception));
+                            }
                         } else {
                             EditpwdBean editpwdBean = new Gson().fromJson(decode, EditpwdBean.class);
                             if (editpwdBean.getStu().equals("1")) {
@@ -127,10 +131,14 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                                 SPUtil.remove(context, "account");
                                 SPUtil.remove(context, "password");
                                 SPUtil.remove(context, "email");
-                                Toast.makeText(context, R.string.passwordchangeok, Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(context, LoginActivity.class));
+                                if (context!=null){
+                                    Toast.makeText(context, R.string.passwordchangeok, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(context, LoginActivity.class));
+                                }
                             } else {
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                if (context!=null){
+                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                }
                             }
                         }
                     }
@@ -138,7 +146,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context,getString(R.string.Networkexception));
+                        if (context!=null){
+                            EasyToast.showShort(context,getString(R.string.Networkexception));
+                        }
                     }
                 })
 
@@ -158,7 +168,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context, getString(R.string.Notconnect));
+                    if (context!=null){
+                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                    }
                 }
                 break;
         }

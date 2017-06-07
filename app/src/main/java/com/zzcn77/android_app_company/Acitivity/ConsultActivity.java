@@ -126,45 +126,52 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
                             dialog.dismiss();
-
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Networkexception));
 
                         } else {
                             ConsultBean consultBean = new Gson().fromJson(decode, ConsultBean.class);
                             if (String.valueOf(consultBean.getStu()).equals("1")) {
                                 // TODO: 2017/5/19 注册
                                 dialog.dismiss();
-                                EasyToast.showShort(context, getString(R.string.submitsuccessfully));
-                                etName.setText("");
-                                etEmail.setText("");
-                                etContent.setText("");
-                                etPhone.setText("");
-                                etTitle.setText("");
+                                if (context != null) {
+                                    EasyToast.showShort(context, getString(R.string.submitsuccessfully));
+                                    etName.setText("");
+                                    etEmail.setText("");
+                                    etContent.setText("");
+                                    etPhone.setText("");
+                                    etTitle.setText("");
+                                }
                             } else {
                                 dialog.dismiss();
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                if (context!=null){
+                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                }
                             }
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        dialog.dismiss();
+                        if (dialog!=null){
+                            dialog.dismiss();
+                        }
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context,getString(R.string.Networkexception));
+                        if (context!=null){
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                        }
                     }
-                })
-                {
+                }) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("key", UrlUtils.key);
-                        map.put("id", String.valueOf(SPUtil.get(context,"id","")));
-                        map.put("title",title);
-                        map.put("content",content);
-                        map.put("tel",phone);
-                        map.put("email",email);
-                        map.put("name",name);
+                        map.put("id", String.valueOf(SPUtil.get(context, "id", "")));
+                        map.put("title", title);
+                        map.put("content", content);
+                        map.put("tel", phone);
+                        map.put("email", email);
+                        map.put("name", name);
                         return map;
                     }
                 };
@@ -173,8 +180,12 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    dialog.dismiss();
-                    EasyToast.showShort(context, getString(R.string.Notconnect));
+                    if (dialog!=null){
+                        dialog.dismiss();
+                    }
+                    if (context!=null){
+                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                    }
                 }
 
                 break;

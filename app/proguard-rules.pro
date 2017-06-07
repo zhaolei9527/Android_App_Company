@@ -23,6 +23,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# 系统类不需要混淆
+-keepattributes *Annotation*
+-keep class * extends java.lang.annotation.Annotation { *; }
+-keepattributes Signature
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.support.v7.**
+
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
 }
@@ -33,6 +49,12 @@
 -dontwarn org.apache.thrift.**
 -dontwarn com.xiaomi.**
 -dontwarn com.huawei.**
+# volley工具不需要混淆
+-dontwarn com.android.volley.toolbox**
+-keep class com.android.volley.toolbox{*;}
+# gson工具不需要混淆
+-dontwarn com.google.gson**
+-keep class com.google.gson.**{*;}
 
 -keepattributes *Annotation*
 

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -99,7 +98,9 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
-                SwipeRefreshLayout.setEnabled(enable);
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setEnabled(enable);
+                }
             }
         });
 
@@ -119,19 +120,33 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "fang", new Response.Listener<String>() {
-
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                        if (swipeToLoadLayout != null) {
+                            swipeToLoadLayout.setLoadingMore(false);
+                        }
+                        if (SwipeRefreshLayout != null) {
+                            SwipeRefreshLayout.setRefreshing(false);
+                        }
+                        if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                            EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                     } else {
                         if (decode.contains("code\":\"111\"")) {
-                            Toast.makeText(mActivity, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                            if (SchemeFragment.this != null && SchemeFragment.this.isAdded()) {
+                                EasyToast.showShort(mActivity, getString(R.string.NOTMORE));
+                            }
                             page = page - 1;
-                            swipeToLoadLayout.setLoadingMore(false);
-                            swipeTarget.setEnabled(true);
-                            SwipeRefreshLayout.setEnabled(true);
+                            if (SwipeRefreshLayout != null) {
+                                SwipeRefreshLayout.setEnabled(true);
+                            }
+                            if (swipeToLoadLayout != null) {
+                                swipeToLoadLayout.setLoadingMore(false);
+                            }
+                            if (swipeTarget != null) {
+                                swipeTarget.setEnabled(true);
+                            }
                             return;
                         }
                         fangAnBean = new Gson().fromJson(decode, FangAnBean.class);
@@ -139,16 +154,24 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                             if (page == 1) {
                                 if (swipeTarget != null) {
                                     SPUtil.putAndApply(mActivity, "scheme", decode);
-                                    schemeAdapter = new SchemeAdapter(mActivity, (ArrayList) fangAnBean.getRes());
-                                    swipeTarget.setAdapter(schemeAdapter);
-                                    swipeTarget.setEnabled(true);
-                                    SwipeRefreshLayout.setRefreshing(false);
+                                    if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                                        schemeAdapter = new SchemeAdapter(mActivity, (ArrayList) fangAnBean.getRes());
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setAdapter(schemeAdapter);
+                                        swipeTarget.setEnabled(true);
+                                    }
+                                    if (SwipeRefreshLayout != null)
+                                        SwipeRefreshLayout.setRefreshing(false);
                                 }
                             } else {
-                                schemeAdapter.setDatas((ArrayList) fangAnBean.getRes());
-                                swipeToLoadLayout.setLoadingMore(false);
-                                swipeTarget.setEnabled(true);
-                                SwipeRefreshLayout.setEnabled(true);
+                                if (schemeAdapter != null)
+                                    schemeAdapter.setDatas((ArrayList) fangAnBean.getRes());
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                if (swipeTarget != null)
+                                    swipeTarget.setEnabled(true);
+                                if (SwipeRefreshLayout != null)
+                                    SwipeRefreshLayout.setEnabled(true);
                             }
                             if (schemeAdapter != null) {
                                 schemeAdapter.notifyDataSetChanged();
@@ -159,7 +182,16 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                                 }
                             }
                         } else {
-                            EasyToast.showShort(mActivity,  getString(R.string.Networkexception));
+                            if (swipeToLoadLayout != null) {
+                                swipeToLoadLayout.setLoadingMore(false);
+
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                SwipeRefreshLayout.setRefreshing(false);
+                            }
+
+                            if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                                EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                         }
                     }
                 }
@@ -167,7 +199,15 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(mActivity,  getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+                        ;
+                    }
+                    if (SwipeRefreshLayout != null) {
+                        SwipeRefreshLayout.setRefreshing(false);
+                    }
+                    if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                 }
             })
 
@@ -185,7 +225,14 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(mActivity,  getString(R.string.Notconnect));
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
+                if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                    EasyToast.showShort(mActivity, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -197,32 +244,34 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
     //上拉加载
     @Override
     public void onLoadMore() {
-        swipeTarget.setEnabled(false);
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData(null);
-            }
-        }, 1000);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData(null);
+                }
+            }, 0);
     }
 
     //下拉刷新
 
     @Override
     public void onRefresh() {
-        swipeTarget.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = 1;
-
-                initData(null);
-
-
-            }
-        }, 1000);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = 1;
+                    initData(null);
+                }
+            }, 0);
     }
 
 

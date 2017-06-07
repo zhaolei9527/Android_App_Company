@@ -157,8 +157,13 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
-                    tvDownload.setText(R.string.openfile);
-                    rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
+                    if (rlDownload != null) {
+                        rlDownload.setEnabled(true);
+                    }
+                    if (tvDownload != null)
+                        tvDownload.setText(R.string.openfile);
+                    if (rlDownload != null)
+                        rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
                     isDownload = 1;
                 }
             }
@@ -178,7 +183,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (rlDownload != null) {
+                            rlDownload.setEnabled(true);
+                        }
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         goods_nyBean = new Gson().fromJson(decode, Goods_NYBean.class);
                         if (goods_nyBean.getStu().equals("1")) {
@@ -200,25 +209,33 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             }
                             file = new File(dir + "/" + fileName);
                             if (file.exists()) {
-                                tvDownload.setText(getString(R.string.openfile));
-                                rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
+
+                                if (tvDownload != null)
+                                    tvDownload.setText(getString(R.string.openfile));
+                                if (rlDownload != null)
+                                    rlDownload.setBackgroundColor(getResources().getColor(R.color.purple_progress));
                                 isDownload = 1;
                             }
-                            forumContext.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvTitle.setText(goods_nyBean.getRes().getTitle());
-                                    tvModel.setText(goods_nyBean.getRes().getX_num());
-                                    tvPhone.setText(goods_nyBean.getRes().getTel());
-                                    tvPrice.setText(goods_nyBean.getRes().getPrice());
-                                    SimpleDraweeView.setImageURI(UrlUtils.BaseImg + goods_nyBean.getRes().getImg_lb());
-                                    String decode = Utils.decode(goods_nyBean.getRes().getContent());
-                                    Spanned spanned = Html.fromHtml(decode);
-                                    Utils.inSetWebView(spanned.toString(), forumContext, context);
-                                }
-                            });
+                            if (forumContext != null)
+                                forumContext.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvTitle.setText(goods_nyBean.getRes().getTitle());
+                                        tvModel.setText(goods_nyBean.getRes().getX_num());
+                                        tvPhone.setText(goods_nyBean.getRes().getTel());
+                                        tvPrice.setText(goods_nyBean.getRes().getPrice());
+                                        SimpleDraweeView.setImageURI(UrlUtils.BaseImg + goods_nyBean.getRes().getImg_lb());
+                                        String decode = Utils.decode(goods_nyBean.getRes().getContent());
+                                        Spanned spanned = Html.fromHtml(decode);
+                                        Utils.inSetWebView(spanned.toString(), forumContext, context);
+                                    }
+                                });
                         } else {
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            if (rlDownload != null) {
+                                rlDownload.setEnabled(true);
+                            }
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -226,7 +243,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (rlDownload != null) {
+                        rlDownload.setEnabled(true);
+                    }
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -247,15 +268,24 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, getString(R.string.Notconnect));
+                if (rlDownload != null) {
+                    rlDownload.setEnabled(true);
+                }
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+            if (rlDownload != null) {
+                rlDownload.setEnabled(true);
+            }
+            if (context != null)
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
     }
+
     //判断某一个类是否存在任务栈里面
-    private boolean isExistMainActivity(Class<?> activity){
+    private boolean isExistMainActivity(Class<?> activity) {
         Intent intent = new Intent(this, activity);
         ComponentName cmpName = intent.resolveActivity(getPackageManager());
         boolean flag = false;
@@ -271,56 +301,59 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         }
         return flag;
     }
+
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity){
+                if (existMainActivity) {
                     finish();
-                }else {
+                } else {
                     finish();
-                    startActivity(new Intent(context,MainActivity.class));
+                    startActivity(new Intent(context, MainActivity.class));
                 }
                 break;
             case R.id.rl_call_phone:
                 CallPhoneUtils.CallPhone(ProductDetailsActivity.this, tvPhone.getText().toString());
                 break;
             case rl_download:
-                if (isDownload == 1) {
-                    intent = new Intent(context, PdfActivity.class);
-                    intent.putExtra("file", file.getAbsolutePath().toString());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(context, getString(R.string.downloading), Toast.LENGTH_SHORT).show();
-                    Acp.getInstance(context).request(new AcpOptions.Builder()
-                                    .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (goods_nyBean != null)
+                    if (isDownload == 1) {
+                        intent = new Intent(context, PdfActivity.class);
+                        intent.putExtra("file", file.getAbsolutePath().toString());
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(context, getString(R.string.downloading), Toast.LENGTH_SHORT).show();
+                        Acp.getInstance(context).request(new AcpOptions.Builder()
+                                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 /*以下为自定义提示语、按钮文字
                 .setDeniedMessage()
                 .setDeniedCloseBtn()
                 .setDeniedSettingBtn()
                 .setRationalMessage()
                 .setRationalBtn()*/
-                                    .build(),
-                            new AcpListener() {
-                                @Override
-                                public void onGranted() {
-                                    dialog.dismiss();
-                                    Intent intent = new Intent(context, DownloadPDF.class);
-                                    //apk下载地址
-                                    intent.putExtra("url", UrlUtils.BaseImg + goods_nyBean.getRes().getPdf());
-                                    intent.putExtra("id", id);
-                                    context.startService(intent);
-                                    tvDownload.setText(getString(R.string.downloading));
-                                }
+                                        .build(),
+                                new AcpListener() {
+                                    @Override
+                                    public void onGranted() {
+                                        dialog.dismiss();
+                                        Intent intent = new Intent(context, DownloadPDF.class);
+                                        //apk下载地址
+                                        intent.putExtra("url", UrlUtils.BaseImg + goods_nyBean.getRes().getPdf());
+                                        intent.putExtra("id", id);
+                                        context.startService(intent);
+                                        tvDownload.setText(getString(R.string.downloading));
+                                        rlDownload.setEnabled(false);
+                                    }
 
-                                @Override
-                                public void onDenied(List<String> permissions) {
-                                    Toast.makeText(mContext, getString(R.string.Thepermissionapplicationisrejected), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
+                                    @Override
+                                    public void onDenied(List<String> permissions) {
+                                        Toast.makeText(mContext, getString(R.string.Thepermissionapplicationisrejected), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
 
                 break;
             case R.id.ll_collect:
@@ -352,20 +385,24 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
                                 if (cbCollect != null) {
                                     if (cbCollect.isChecked()) {
-                                        Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
+                                        if (context != null)
+                                            Toast.makeText(context, R.string.Collectionofsuccess, Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(context, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
+                                        if (context != null)
+                                            Toast.makeText(context, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } else {
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                if (context != null)
+                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
                             volleyError.printStackTrace();
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Networkexception));
                         }
                     })
 
@@ -388,7 +425,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         } else {
                             stu = "1";
                         }
-                        cbCollect.setChecked(!cbCollect.isChecked());
+                        if (cbCollect != null)
+                            cbCollect.setChecked(!cbCollect.isChecked());
                         Intent intent = new Intent();
                         intent.setAction("notifyData");
                         if (cbCollect != null) {
@@ -400,12 +438,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         }
                         sendBroadcast(intent);
                     } else {
-                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Notconnect));
                     }
                 }
-
                 break;
-
         }
     }
 

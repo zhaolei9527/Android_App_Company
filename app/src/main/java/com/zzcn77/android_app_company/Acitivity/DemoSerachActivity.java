@@ -113,7 +113,16 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                            if (swipeToLoadLayout != null) {
+                                swipeToLoadLayout.setLoadingMore(false);
+
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                SwipeRefreshLayout.setRefreshing(false);
+                            }
+                            if (context != null) {
+                                EasyToast.showShort(context, getString(R.string.Networkexception));
+                            }
                         } else {
                             if (decode.contains("code\":\"111\"")) {
                                 page = page - 1;
@@ -132,15 +141,23 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                     }
                                     return;
                                 }
-                                dialog.dismiss();
-                                Toast.makeText(context, R.string.NOTMORE, Toast.LENGTH_SHORT).show();
+                                if (dialog != null) {
+                                    dialog.dismiss();
+                                }
+                                if (context != null) {
+                                    Toast.makeText(context, R.string.NOTMORE, Toast.LENGTH_SHORT).show();
+                                }
                                 return;
                             }
                             if (swipeToLoadLayout != null) {
                                 swipeToLoadLayout.setLoadMoreEnabled(true);
                             }
-                            dialog.dismiss();
-                            llEmpty.setVisibility(View.GONE);
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
+                            if (llEmpty != null) {
+                                llEmpty.setVisibility(View.GONE);
+                            }
                             YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
                             if (yanShiBean.getStu().equals("1")) {
                                 if (page == 1) {
@@ -148,16 +165,27 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                         demosadapter = new Demosadapter(context, (ArrayList) yanShiBean.getRes());
                                         swipeTarget.setAdapter(demosadapter);
                                         swipeTarget.setEnabled(true);
-                                        SwipeRefreshLayout.setRefreshing(false);
-                                        swipeToLoadLayout.setLoadingMore(false);
+                                        if (swipeToLoadLayout != null) {
+                                            swipeToLoadLayout.setLoadingMore(false);
+                                        }
+                                        if (SwipeRefreshLayout != null) {
+                                            SwipeRefreshLayout.setRefreshing(false);
+                                        }
                                     }
                                 } else {
-                                    demosadapter.setDatas((ArrayList) yanShiBean.getRes());
-                                    swipeToLoadLayout.setLoadingMore(false);
-                                    swipeTarget.setEnabled(true);
-                                    SwipeRefreshLayout.setEnabled(true);
+                                    if (demosadapter != null) {
+                                        demosadapter.setDatas((ArrayList) yanShiBean.getRes());
+                                    }
+                                    if (SwipeRefreshLayout != null) {
+                                        SwipeRefreshLayout.setEnabled(true);
+                                    }
+                                    if (swipeToLoadLayout != null) {
+                                        swipeToLoadLayout.setLoadingMore(false);
+                                    }
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setEnabled(true);
+                                    }
                                 }
-
 
                                 if (demosadapter != null) {
                                     demosadapter.notifyDataSetChanged();
@@ -168,7 +196,16 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                     }
                                 }
                             } else {
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                if (swipeToLoadLayout != null) {
+                                    swipeToLoadLayout.setLoadingMore(false);
+
+                                }
+                                if (SwipeRefreshLayout != null) {
+                                    SwipeRefreshLayout.setRefreshing(false);
+                                }
+                                if (context != null) {
+                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                }
                             }
                         }
                     }
@@ -176,7 +213,16 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (swipeToLoadLayout != null) {
+                            swipeToLoadLayout.setLoadingMore(false);
+
+                        }
+                        if (SwipeRefreshLayout != null) {
+                            SwipeRefreshLayout.setRefreshing(false);
+                        }
+                        if (context != null) {
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                        }
                     }
                 })
 
@@ -195,15 +241,42 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    EasyToast.showShort(context, getString(R.string.Notconnect));
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+
+                    }
+                    if (SwipeRefreshLayout != null) {
+                        SwipeRefreshLayout.setRefreshing(false);
+                    }
+                    if (context != null) {
+                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                    }
                 }
             } catch (Exception e) {
                 // 可忽略的异常
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
             } finally {
             }
         } else {
-            llEmpty.setVisibility(View.VISIBLE);
-            Toast.makeText(context, "出错了", Toast.LENGTH_SHORT).show();
+            if (llEmpty != null) {
+                llEmpty.setVisibility(View.VISIBLE);
+            }
+            if (context != null) {
+                Toast.makeText(context, "出错了", Toast.LENGTH_SHORT).show();
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
+            }
         }
 
     }
@@ -211,29 +284,40 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
     //上拉加载
     @Override
     public void onLoadMore() {
-        swipeTarget.setEnabled(false);
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData();
-            }
-        }, 1000);
+        if (swipeTarget != null) {
+            swipeTarget.setEnabled(false);
+        }
+        if (SwipeRefreshLayout != null) {
+            SwipeRefreshLayout.setEnabled(false);
+        }
+        if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData();
+                }
+            }, 0);
+        }
     }
 
     //下拉刷新
 
     @Override
     public void onRefresh() {
-        swipeTarget.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = 1;
-                initData();
-            }
-        }, 1000);
+        if (swipeTarget != null) {
+            swipeTarget.setEnabled(false);
+        }
+
+        if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = 1;
+                    initData();
+                }
+            }, 0);
+        }
     }
 
 

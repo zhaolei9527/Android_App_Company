@@ -125,17 +125,23 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 if (!IntentUtil.isBundleEmpty(intent)) {
                     boolean inched = intent.getBooleanExtra("inched", false);
                     if (inched) {
-                        ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
-                        datas.get(po).setColl("1");
-                        productSearchAdapter = new ProductSearchAdapter(context, datas);
-                        swipeTarget.setAdapter(productSearchAdapter);
+                        if (productSearchAdapter != null) {
+                            ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
+                            datas.get(po).setColl("1");
+                            productSearchAdapter = new ProductSearchAdapter(context, datas);
+                            swipeTarget.setAdapter(productSearchAdapter);
+                        }
                     } else {
-                        ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
-                        datas.get(po).setColl("2");
-                        productSearchAdapter = new ProductSearchAdapter(context, datas);
-                        swipeTarget.setAdapter(productSearchAdapter);
+                        if (productSearchAdapter != null) {
+                            ArrayList<Goods_ListsBean.ResBean.GoodsBean> datas = productSearchAdapter.getDatas();
+                            datas.get(po).setColl("2");
+                            productSearchAdapter = new ProductSearchAdapter(context, datas);
+                            swipeTarget.setAdapter(productSearchAdapter);
+                        }
+
                     }
-                    swipeTarget.setSelection(scrolledY);
+                    if (swipeTarget != null)
+                        swipeTarget.setSelection(scrolledY);
                 }
             }
         };
@@ -250,8 +256,10 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     end_price = intent.getStringExtra("end_price");
                     scrolledY = -2;
                 }
-                dialog.show();
-                swipeTarget.setAdapter(null);
+                if (dialog != null)
+                    dialog.show();
+                if (swipeTarget != null)
+                    swipeTarget.setAdapter(null);
                 initData();
             }
         };
@@ -263,27 +271,30 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     //上拉加载
     @Override
     public void onLoadMore() {
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData();
-            }
-        }, 1000);
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData();
+                }
+            }, 1000);
     }
 
     //下拉刷新
     @Override
     public void onRefresh() {
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = 1;
-                scrolledY=1;
-                initData();
-            }
-        }, 1000);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = 1;
+                    scrolledY = 1;
+                    initData();
+                }
+            }, 1000);
     }
 
     @Override
@@ -294,22 +305,31 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null)
+                        swipeToLoadLayout.setLoadingMore(false);
+                    if (SwipeRefreshLayout != null)
+                        SwipeRefreshLayout.setRefreshing(false);
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     if (dialog.isShowing()) {
-                        if (dialog!=null){
+                        if (dialog != null) {
                             dialog.dismiss();
                         }
                     }
                     if (decode.contains("code\":\"111\"")) {
                         if (page == 1) {
-                            llEmpty.setVisibility(View.VISIBLE);
+                            if (llEmpty != null)
+                                llEmpty.setVisibility(View.VISIBLE);
                         } else {
-                            Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                            if (context != null)
+                                Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             page = page - 1;
                         }
-                        swipeToLoadLayout.setLoadingMore(false);
-                        SwipeRefreshLayout.setEnabled(true);
+                        if (swipeToLoadLayout != null)
+                            swipeToLoadLayout.setLoadingMore(false);
+                        if (SwipeRefreshLayout != null)
+                            SwipeRefreshLayout.setEnabled(true);
                         return;
                     }
                     if (llEmpty != null) {
@@ -324,21 +344,28 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                                 SwipeRefreshLayout.setRefreshing(false);
                             }
                         } else {
-                            productSearchAdapter.setDatas((ArrayList) goods_listsBean.getRes().getGoods());
-                            swipeToLoadLayout.setLoadingMore(false);
-                            SwipeRefreshLayout.setEnabled(true);
+                            if (productSearchAdapter != null) {
+                                productSearchAdapter.setDatas((ArrayList) goods_listsBean.getRes().getGoods());
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                if (SwipeRefreshLayout != null)
+                                    SwipeRefreshLayout.setEnabled(true);
+                            }
                         }
-                        if (productSearchAdapter != null) {
-                          //  productSearchAdapter.notifyDataSetChanged();
+                        if (swipeTarget != null)
                             swipeTarget.setSelection(scrolledY);
-                        }
                         if (SwipeRefreshLayout != null) {
                             if (SwipeRefreshLayout.isRefreshing()) {
                                 SwipeRefreshLayout.setRefreshing(false);
                             }
                         }
                     } else {
-                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (swipeToLoadLayout != null)
+                            swipeToLoadLayout.setLoadingMore(false);
+                        if (SwipeRefreshLayout != null)
+                            SwipeRefreshLayout.setRefreshing(false);
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -346,7 +373,12 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (swipeToLoadLayout != null)
+                    swipeToLoadLayout.setLoadingMore(false);
+                if (SwipeRefreshLayout != null)
+                    SwipeRefreshLayout.setRefreshing(false);
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -383,7 +415,12 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (swipeToLoadLayout != null)
+                swipeToLoadLayout.setLoadingMore(false);
+            if (SwipeRefreshLayout != null)
+                SwipeRefreshLayout.setRefreshing(false);
+            if (context != null)
+                EasyToast.showShort(context, getString(R.string.Notconnect));
         }
     }
 

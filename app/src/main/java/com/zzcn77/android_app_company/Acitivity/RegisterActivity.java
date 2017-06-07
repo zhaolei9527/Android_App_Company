@@ -126,7 +126,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         if (password.length() < 6) {
-            EasyToast.showShort(context,getString(R.string.passwordistolow));
+            EasyToast.showShort(context, getString(R.string.passwordistolow));
             return;
         }
 
@@ -142,8 +142,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
         final Dialog dialog = Utils.showLoadingDialog(context);
 
-            passwordmd5 = MD5Utils.md5(passwordAgain);
-            passwordmd5 = MD5Utils.md5(passwordmd5);
+        passwordmd5 = MD5Utils.md5(passwordAgain);
+        passwordmd5 = MD5Utils.md5(passwordmd5);
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "regist", new Response.Listener<String>() {
@@ -151,30 +151,43 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    dialog.dismiss();
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (dialog != null)
+                        dialog.dismiss();
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
-                    dialog.dismiss();
+                    if (dialog != null)
+                        dialog.dismiss();
                     RegistBean registBean = new Gson().fromJson(decode, RegistBean.class);
                     if (registBean.getStu().equals("1")) {
                         // TODO: 2017/5/19 注册
                         if (registBean.getMsg().contains("注册成功")) {
-                            EasyToast.showShort(context, getResources().getString(R.string.goodregister));
-                            finish();
+                            if (context != null) {
+                                EasyToast.showShort(context, getResources().getString(R.string.goodregister));
+                                finish();
+                            }
                         } else {
 
                         }
                     } else {
                         if (registBean.getMsg().contains("该用户名已注册")) {
-                            Toast.makeText(context, R.string.Theusernamealreadyexists, Toast.LENGTH_LONG).show();
+                            if (context != null)
+                                Toast.makeText(context, R.string.Theusernamealreadyexists, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该邮箱已注册")) {
-                            Toast.makeText(context, R.string.Themailboxhasbeenregistered, Toast.LENGTH_LONG).show();
+                            if (context != null)
+
+                                Toast.makeText(context, R.string.Themailboxhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该手机号已注册")) {
-                            Toast.makeText(context, R.string.Thephonenumberhasbeenregistered, Toast.LENGTH_LONG).show();
+                            if (context != null)
+
+                                Toast.makeText(context, R.string.Thephonenumberhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else {
-                            EasyToast.showShort(context,getString(R.string.Abnormalserver));
+                            if (context != null)
+
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
-                        dialog.dismiss();
+                        if (dialog != null)
+                            dialog.dismiss();
                     }
                 }
             }
@@ -182,8 +195,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, getString(R.string.Networkexception));
-                dialog.dismiss();
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (dialog != null)
+                    dialog.dismiss();
 
             }
         }) {
@@ -205,8 +220,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            dialog.dismiss();
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (dialog != null)
+                dialog.dismiss();
+            if (context != null)
+                EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
 

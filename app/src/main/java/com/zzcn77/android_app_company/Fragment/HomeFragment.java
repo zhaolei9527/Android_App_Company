@@ -134,9 +134,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             tv_title.setText(datas.get(position).getTitle());
             tvmessage.setText(datas.get(position).getKeywords());
             SimpleDraweeView.setImageURI(UrlUtils.BaseImg + datas.get(position).getImgurl());
-
             container.addView(inflate);
-
             inflate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,31 +147,21 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         }
     }
 
-
     //最新动态
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
-
         @Override
         public void onPageSelected(int position) {
-
             tvNewItem.setText(String.valueOf(position + 1) + "/" + vpNews.getAdapter().getCount());
-
         }
-
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
-
     @Override
     public void onClick(View v) {
-
-
         switch (v.getId()) {
             case R.id.rl_Company_Details:
             case R.id.rl_title_Company_Details:
@@ -188,17 +176,12 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             case ll_callphone:
                 CallPhoneUtils.CallPhone(mActivity, tvPhone.getText().toString());
                 break;
-
         }
-
     }
-
-
     @Override
     protected int setLayoutResouceId() {
         return R.layout.f_home_layout;
     }
-
     @Override
     protected void initView() {
         super.initView();
@@ -246,7 +229,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
         tvNewItem.setText(String.valueOf(1) + "/" + vpNews.getAdapter().getCount());
         sv.scrollTo(0, 0);
-
     }
 
     @Override

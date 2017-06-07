@@ -122,11 +122,20 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+
+                    }
+                    if (SwipeRefreshLayout != null) {
+                        SwipeRefreshLayout.setRefreshing(false);
+                    }
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
                     dialog.dismiss();
                     if (decode.contains("code\":\"111\"")) {
-                        Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                        if (context != null)
+                            Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                         page = page - 1;
                         return;
                     }
@@ -134,16 +143,27 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                     if (newsBean.getStu().equals("1")) {
                         if (page == 1) {
                             newsadapter = new Newsadapter(context, (ArrayList) newsBean.getRes());
-                            lvSwipeTarget.setAdapter(newsadapter);
+                            if (lvSwipeTarget != null)
+                                lvSwipeTarget.setAdapter(newsadapter);
                         } else {
-                            newsadapter.setDatas((ArrayList) newsBean.getRes());
+                            if (newsadapter != null)
+                                newsadapter.setDatas((ArrayList) newsBean.getRes());
                         }
-                        newsadapter.notifyDataSetChanged();
+                        if (newsadapter != null)
+                            newsadapter.notifyDataSetChanged();
                         if (SwipeRefreshLayout.isRefreshing()) {
                             SwipeRefreshLayout.setRefreshing(false);
                         }
                     } else {
-                        EasyToast.showShort(context,  getString(R.string.Abnormalserver));
+                        if (swipeToLoadLayout != null) {
+                            swipeToLoadLayout.setLoadingMore(false);
+
+                        }
+                        if (SwipeRefreshLayout != null) {
+                            SwipeRefreshLayout.setRefreshing(false);
+                        }
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -151,7 +171,15 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context,  getString(R.string.Networkexception));
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -169,7 +197,15 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context,  getString(R.string.Notconnect));
+            if (swipeToLoadLayout != null) {
+                swipeToLoadLayout.setLoadingMore(false);
+
+            }
+            if (SwipeRefreshLayout != null) {
+                SwipeRefreshLayout.setRefreshing(false);
+            }
+            if (context != null)
+                EasyToast.showShort(context, getString(R.string.Notconnect));
         }
 
 
@@ -179,17 +215,23 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     @Override
     public void onLoadMore() {
         page = page + 1;
-        lvSwipeTarget.setEnabled(false);
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initData();
-                swipeToLoadLayout.setLoadingMore(false);
-                lvSwipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setEnabled(true);
-            }
-        }, 2000);
+        if (lvSwipeTarget != null)
+            lvSwipeTarget.setEnabled(false);
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    initData();
+                    if (SwipeRefreshLayout != null)
+                        SwipeRefreshLayout.setEnabled(true);
+                    if (swipeToLoadLayout != null)
+                        swipeToLoadLayout.setLoadingMore(false);
+                    if (lvSwipeTarget != null)
+                        lvSwipeTarget.setEnabled(true);
+                }
+            }, 2000);
 
     }
 
@@ -197,14 +239,17 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
 
     @Override
     public void onRefresh() {
-        lvSwipeTarget.setEnabled(false);
+        if (lvSwipeTarget != null)
+            lvSwipeTarget.setEnabled(false);
         page = 1;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 initData();
-                lvSwipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setRefreshing(false);
+                if (lvSwipeTarget != null)
+                    lvSwipeTarget.setEnabled(true);
+                if (SwipeRefreshLayout != null)
+                    SwipeRefreshLayout.setRefreshing(false);
             }
         }, 2000);
     }

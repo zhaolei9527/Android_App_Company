@@ -134,45 +134,62 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (swipeToLoadLayout != null)
+                            swipeToLoadLayout.setLoadingMore(false);
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         if (dialog != null) {
                             dialog.dismiss();
                         }
                         if (decode.contains("code\":\"111\"")) {
                             if (page == 1) {
-                                swipeTarget.setVisibility(View.GONE);
-                                rllDeleteall.setVisibility(View.GONE);
-                                llEmpty.setVisibility(View.VISIBLE);
-                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                if (swipeTarget != null)
+                                    swipeTarget.setVisibility(View.GONE);
+                                if (rllDeleteall != null)
+                                    rllDeleteall.setVisibility(View.GONE);
+                                if (llEmpty != null)
+                                    llEmpty.setVisibility(View.VISIBLE);
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadMoreEnabled(false);
                                 return;
                             }
                             page = page - 1;
-                            swipeToLoadLayout.setLoadingMore(false);
-                            swipeTarget.setEnabled(true);
+                            if (swipeToLoadLayout != null)
+                                swipeToLoadLayout.setLoadingMore(false);
+                            if (swipeTarget != null)
+                                swipeTarget.setEnabled(true);
                             if (collectAdapter == null) {
-                                llEmpty.setVisibility(View.VISIBLE);
-                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                if (llEmpty != null)
+                                    llEmpty.setVisibility(View.VISIBLE);
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadMoreEnabled(false);
                                 return;
                             }
-
-                            Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                            if (context != null)
+                                Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        rllDeleteall.setVisibility(View.VISIBLE);
+                        if (rllDeleteall != null)
+                            rllDeleteall.setVisibility(View.VISIBLE);
                         CollBean collBean = new Gson().fromJson(decode, CollBean.class);
                         if (collBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                    collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
-                                    swipeTarget.setAdapter(collectAdapter);
-                                    swipeTarget.setEnabled(true);
+                                    if (collectAdapter != null)
+                                        collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
+                                    if (swipeTarget != null)
+                                        swipeTarget.setAdapter(collectAdapter);
+                                    if (swipeTarget != null)
+                                        swipeTarget.setEnabled(true);
                                 }
                             } else {
-                                collectAdapter.setDatas((ArrayList) collBean.getRes());
-                                swipeToLoadLayout.setLoadingMore(false);
-                                swipeTarget.setEnabled(true);
-
+                                if (collectAdapter != null)
+                                    collectAdapter.setDatas((ArrayList) collBean.getRes());
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                if (swipeTarget != null)
+                                    swipeTarget.setEnabled(true);
                             }
                             if (swipeTarget != null) {
                                 swipeTarget.post(new Runnable() {
@@ -187,7 +204,10 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 collectAdapter.notifyDataSetChanged();
                             }
                         } else {
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            if (swipeToLoadLayout != null)
+                                swipeToLoadLayout.setLoadingMore(false);
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -195,7 +215,10 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null)
+                        swipeToLoadLayout.setLoadingMore(false);
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -214,7 +237,10 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, getString(R.string.Notconnect));
+                if (swipeToLoadLayout != null)
+                    swipeToLoadLayout.setLoadingMore(false);
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -232,14 +258,16 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     //上拉加载
     @Override
     public void onLoadMore() {
-        swipeTarget.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData();
-            }
-        }, 1000);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData();
+                }
+            }, 1000);
     }
 
     @Override
@@ -270,19 +298,25 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                             String decode = Utils.decode(s);
                                             DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                                             if (docollBean.getStu().equals("1")) {
-                                                Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
-                                                swipeTarget.setAdapter(new CollectAdapter(context, new ArrayList(), rllDeleteall, llEmpty));
-                                                llEmpty.setVisibility(View.VISIBLE);
-                                                rllDeleteall.setVisibility(View.GONE);
+                                                if (context != null)
+                                                    Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
+                                                if (swipeTarget != null)
+                                                    swipeTarget.setAdapter(new CollectAdapter(context, new ArrayList(), rllDeleteall, llEmpty));
+                                                if (llEmpty != null)
+                                                    llEmpty.setVisibility(View.VISIBLE);
+                                                if (rllDeleteall != null)
+                                                    rllDeleteall.setVisibility(View.GONE);
                                             } else {
-                                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                                if (context != null)
+                                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
                                             }
                                         }
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             volleyError.printStackTrace();
-                                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                                            if (context != null)
+                                                EasyToast.showShort(context, getString(R.string.Networkexception));
                                         }
                                     })
 
@@ -299,7 +333,8 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                     if (connected) {
                                         requestQueue.add(stringRequest);
                                     } else {
-                                        EasyToast.showShort(context, getString(R.string.Notconnect));
+                                        if (context != null)
+                                            EasyToast.showShort(context, getString(R.string.Notconnect));
                                     }
                                 }
                             }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
@@ -317,8 +352,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String item = collectAdapter.getItem(position);

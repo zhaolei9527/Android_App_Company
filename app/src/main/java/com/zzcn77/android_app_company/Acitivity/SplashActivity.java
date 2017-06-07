@@ -71,95 +71,97 @@ public class SplashActivity extends BaseActivity {
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context,getString(R.string.Abnormalserver));
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
                 } else {
                     IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
                     if (indexBean.getStu().equals("1")) {
-                        SPUtil.putAndApply(context, "index", s);
-                        String account = (String) SPUtil.get(context, "account", "");
-                        String password = (String) SPUtil.get(context, "password", "");
-                        if (account.trim().isEmpty() || password.trim().isEmpty()) {
-                            startActivity(new Intent(context, LoginActivity.class));
-                            finish();
-                        } else {
-                            final Dialog dialog = Utils.showLoadingDialog(context);
-                            RequestQueue requestQueue = Volley.newRequestQueue(context);
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "login", new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    String decode = Utils.decode(s);
-                                    if (decode.isEmpty()) {
-                                        dialog.dismiss();
-                                        EasyToast.showShort(context, getString(R.string.Networkexception));
-                                    } else {
-                                        dialog.dismiss();
-                                        LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
-                                        if (loginBean.getStu().equals("1")) {
-                                            // TODO: 2017/5/19 注册
-                                            if (loginBean.getMsg().contains("登陆成功")) {
-                                                Toast.makeText(context, R.string.welcomeback, Toast.LENGTH_SHORT).show();
-                                                SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
-                                                SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
-                                                SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
-                                                SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
-                                                gotoMain();
-                                            } else {
-
-                                            }
-                                        } else {
-                                            if (loginBean.getMsg().contains("您已被封号")) {
-                                                Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(context, LoginActivity.class));
-                                                finish();
-                                            } else if (loginBean.getMsg().contains("密码有误")) {
-                                                Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(context, LoginActivity.class));
-                                                finish();
-                                            } else if (loginBean.getMsg().contains("用户名不存在")) {
-                                                Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(context, LoginActivity.class));
-                                                finish();
-                                            } else {
-                                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                                                gotoMain();
-                                            }
+                        if (context != null) {
+                            SPUtil.putAndApply(context, "index", s);
+                            String account = (String) SPUtil.get(context, "account", "");
+                            String password = (String) SPUtil.get(context, "password", "");
+                            if (account.trim().isEmpty() || password.trim().isEmpty()) {
+                                startActivity(new Intent(context, LoginActivity.class));
+                                finish();
+                            } else {
+                                final Dialog dialog = Utils.showLoadingDialog(context);
+                                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "login", new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String s) {
+                                        String decode = Utils.decode(s);
+                                        if (decode.isEmpty()) {
                                             dialog.dismiss();
+                                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                                        } else {
+                                            dialog.dismiss();
+                                            LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
+                                            if (loginBean.getStu().equals("1")) {
+                                                // TODO: 2017/5/19 注册
+                                                if (loginBean.getMsg().contains("登陆成功")) {
+                                                    Toast.makeText(context, R.string.welcomeback, Toast.LENGTH_SHORT).show();
+                                                    SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
+                                                    SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
+                                                    SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
+                                                    SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
+                                                    gotoMain();
+                                                } else {
+
+                                                }
+                                            } else {
+                                                if (loginBean.getMsg().contains("您已被封号")) {
+                                                    Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(context, LoginActivity.class));
+                                                    finish();
+                                                } else if (loginBean.getMsg().contains("密码有误")) {
+                                                    Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(context, LoginActivity.class));
+                                                    finish();
+                                                } else if (loginBean.getMsg().contains("用户名不存在")) {
+                                                    Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(context, LoginActivity.class));
+                                                    finish();
+                                                } else {
+                                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                                                    gotoMain();
+                                                }
+                                                dialog.dismiss();
+                                            }
                                         }
                                     }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    volleyError.printStackTrace();
-                                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        volleyError.printStackTrace();
+                                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                                        dialog.dismiss();
+                                        gotoMain();
+
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> map = new HashMap<String, String>();
+                                        map.put("key", UrlUtils.key);
+                                        map.put("username", String.valueOf(SPUtil.get(context, "account", "")));
+                                        map.put("password", String.valueOf(SPUtil.get(context, "password", "")));
+                                        return map;
+                                    }
+                                };
+
+                                boolean connected = Utils.isConnected(context);
+                                if (connected) {
+                                    requestQueue.add(stringRequest);
+                                } else {
                                     dialog.dismiss();
-                                    gotoMain();
-
+                                    EasyToast.showShort(context, getString(R.string.Notconnect));
                                 }
-                            }) {
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> map = new HashMap<String, String>();
-                                    map.put("key", UrlUtils.key);
-                                    map.put("username", String.valueOf(SPUtil.get(context, "account", "")));
-                                    map.put("password", String.valueOf(SPUtil.get(context, "password", "")));
-                                    return map;
-                                }
-                            };
 
-                            boolean connected = Utils.isConnected(context);
-                            if (connected) {
-                                requestQueue.add(stringRequest);
-                            } else {
-                                dialog.dismiss();
-                                EasyToast.showShort(context, getString(R.string.Notconnect));
                             }
-
                         }
-
-
                     } else {
-                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
                 }
             }
@@ -167,7 +169,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context,getString(R.string.Abnormalserver));
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
             }
         })
 
@@ -184,9 +187,11 @@ public class SplashActivity extends BaseActivity {
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, getString(R.string.Notconnect));
-            startActivity(new Intent(context, LoginActivity.class));
-            finish();
+            if (context != null) {
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+                startActivity(new Intent(context, LoginActivity.class));
+                finish();
+            }
         }
     }
 }

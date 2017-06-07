@@ -60,6 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initview() {
 
     }
+
     @Override
     protected void initListener() {
         btnLogin.setOnClickListener(this);
@@ -68,21 +69,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvForgetPassword.setOnClickListener(this);
 
     }
+
     @Override
     protected void initData() {
 
     }
+
     String passwordmd5;
+
     private void getetcontent() {
         accountor = etAccount.getText().toString();
         password = etPassword.getText().toString();
         if (accountor.trim().isEmpty() || password.trim().isEmpty()) {
-            EasyToast.showShort(context, getResources().getString(R.string.AccountorPasswordisEmpty));
+            if (context != null) {
+                EasyToast.showShort(context, getResources().getString(R.string.AccountorPasswordisEmpty));
+            }
         } else {
             // TODO: 2017/5/18
             //登录校验密码，
-                passwordmd5 = MD5Utils.md5(password);
-                passwordmd5 = MD5Utils.md5(passwordmd5);
+            passwordmd5 = MD5Utils.md5(password);
+            passwordmd5 = MD5Utils.md5(passwordmd5);
             final Dialog dialog = Utils.showLoadingDialog(context);
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "login", new Response.Listener<String>() {
@@ -90,36 +96,50 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        dialog.dismiss();
-                        EasyToast.showShort(context,getString(R.string.Networkexception));
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                        if (context != null) {
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
+                        }
                     } else {
-                        dialog.dismiss();
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
                         LoginBean loginBean = new Gson().fromJson(decode, LoginBean.class);
                         if (loginBean.getStu().equals("1")) {
                             // TODO: 2017/5/19 注册
                             if (loginBean.getMsg().contains("登陆成功")) {
-                                EasyToast.showShort(context, getString(R.string.loginsuccessfully));
-                                SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
-                                SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
-                                SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
-                                SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
-                                gotoMain();
-
+                                if (context != null) {
+                                    EasyToast.showShort(context, getString(R.string.loginsuccessfully));
+                                    SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
+                                    SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
+                                    SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
+                                    SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
+                                    gotoMain();
+                                }
                             } else {
 
                             }
                         } else {
                             if (loginBean.getMsg().contains("您已被封号")) {
-                                Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
+                                if (context != null)
+                                    Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
                             } else if (loginBean.getMsg().contains("密码有误")) {
-                                Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
-                            }else if (loginBean.getMsg().contains("用户名不存在")) {
-                                Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
+                                if (context != null)
+
+                                    Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
+                            } else if (loginBean.getMsg().contains("用户名不存在")) {
+                                if (context != null)
+
+                                    Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
+                            } else {
+                                if (context != null)
+
+                                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
-                            else{
-                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                            }
-                            dialog.dismiss();
+                            if (dialog != null)
+                                dialog.dismiss();
                         }
                     }
                 }
@@ -127,8 +147,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context,  getString(R.string.Networkexception));
-                    dialog.dismiss();
+                    if (context != null)
+
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (dialog != null)
+                        dialog.dismiss();
 
                 }
             }) {
@@ -146,16 +169,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                dialog.dismiss();
-                EasyToast.showShort(context, getString(R.string.Notconnect));
+                if (dialog != null)
+                    dialog.dismiss();
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         }
     }
 
     private void gotoMain() {
-
-
         startActivity(new Intent(context, MainActivity.class));
         finish();
     }

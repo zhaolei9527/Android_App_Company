@@ -112,23 +112,29 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         final CX_DetailBean cx_detailBean = new Gson().fromJson(decode, CX_DetailBean.class);
                         if (cx_detailBean.getStu().equals("1")) {
-                            forumContext.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvDis.setText(cx_detailBean.getRes().getZhe()+getString(R.string.discount));
-                                    tvTitle.setText(cx_detailBean.getRes().getTitle());
-                                    SimpleDraweeView.setImageURI(UrlUtils.BaseImg+cx_detailBean.getRes().getImgurl());
-                                    String decode = Utils.decode(cx_detailBean.getRes().getContent());
-                                    Spanned spanned = Html.fromHtml(decode);
-                                    Utils.inSetWebView(spanned.toString(), forumContext, context);
-                                }
-                            });
+                            if (forumContext != null)
+                                forumContext.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (tvDis != null)
+                                            tvDis.setText(cx_detailBean.getRes().getZhe() + getString(R.string.discount));
+                                        if (tvTitle != null)
+                                            tvTitle.setText(cx_detailBean.getRes().getTitle());
+                                        if (SimpleDraweeView != null)
+                                            SimpleDraweeView.setImageURI(UrlUtils.BaseImg + cx_detailBean.getRes().getImgurl());
+                                        String decode = Utils.decode(cx_detailBean.getRes().getContent());
+                                        Spanned spanned = Html.fromHtml(decode);
+                                        Utils.inSetWebView(spanned.toString(), forumContext, context);
+                                    }
+                                });
                         } else {
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -136,7 +142,8 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -154,11 +161,13 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context,getString(R.string.Notconnect));
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+            if (context != null)
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -170,17 +179,18 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity){
+                if (existMainActivity) {
                     finish();
-                }else {
+                } else {
                     finish();
-                    startActivity(new Intent(context,MainActivity.class));
+                    startActivity(new Intent(context, MainActivity.class));
                 }
                 break;
         }
     }
+
     //判断某一个类是否存在任务栈里面
-    private boolean isExistMainActivity(Class<?> activity){
+    private boolean isExistMainActivity(Class<?> activity) {
         Intent intent = new Intent(this, activity);
         ComponentName cmpName = intent.resolveActivity(getPackageManager());
         boolean flag = false;

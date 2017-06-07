@@ -64,10 +64,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     protected void initview() {
         //改变加载显示的颜色
         SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
-
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
-
     }
 
     @Override
@@ -117,21 +115,39 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                 String decode = Utils.decode(s);
                 dialog.dismiss();
                 if (decode.contains("code\":\"111\"")) {
-                    Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+                    }
+                    if (SwipeRefreshLayout != null) {
+                        SwipeRefreshLayout.setRefreshing(false);
+                    }
+                    if (context != null) {
+                        Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                    }
                     page = page - 1;
                     return;
                 } else {
                     CuxiaoBean cuxiaoBean = new Gson().fromJson(decode, CuxiaoBean.class);
                     if (cuxiaoBean.getStu().equals("1")) {
                         if (page == 1) {
-                            promotionListAdapter = new PromotionListAdapter(context, cuxiaoBean.getRes());
-                            lvSwipeTarget.setAdapter(promotionListAdapter);
+                                promotionListAdapter = new PromotionListAdapter(context, cuxiaoBean.getRes());
+                            if (lvSwipeTarget != null)
+                                lvSwipeTarget.setAdapter(promotionListAdapter);
                         } else {
-                            promotionListAdapter.setDatas((ArrayList) cuxiaoBean.getRes());
+                            if (promotionListAdapter != null)
+                                promotionListAdapter.setDatas((ArrayList) cuxiaoBean.getRes());
                         }
-                        promotionListAdapter.notifyDataSetChanged();
+                        if (promotionListAdapter != null)
+                            promotionListAdapter.notifyDataSetChanged();
                     } else {
-                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (swipeToLoadLayout != null) {
+                            swipeToLoadLayout.setLoadingMore(false);
+                        }
+                        if (SwipeRefreshLayout != null) {
+                            SwipeRefreshLayout.setRefreshing(false);
+                        }
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
                     }
 
                 }
@@ -140,7 +156,14 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
-                EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
             }
         })
 
@@ -157,25 +180,39 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (swipeToLoadLayout != null) {
+                swipeToLoadLayout.setLoadingMore(false);
+            }
+            if (SwipeRefreshLayout != null) {
+                SwipeRefreshLayout.setRefreshing(false);
+            }
+            if (context != null)
+                EasyToast.showShort(context, getString(R.string.Notconnect));
         }
     }
 
     //上拉加载
     @Override
     public void onLoadMore() {
-        lvSwipeTarget.setEnabled(false);
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData();
-                swipeToLoadLayout.setLoadingMore(false);
-                lvSwipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setEnabled(true);
-            }
-        }, 2000);
+        if (lvSwipeTarget != null)
+            lvSwipeTarget.setEnabled(false);
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData();
+                    if (SwipeRefreshLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+                        SwipeRefreshLayout.setEnabled(true);
+                    }
+                    if (lvSwipeTarget != null) {
+                        lvSwipeTarget.setEnabled(true);
+                    }
+                }
+            }, 2000);
 
     }
 
@@ -183,14 +220,19 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
 
     @Override
     public void onRefresh() {
-        lvSwipeTarget.setEnabled(false);
+        if (lvSwipeTarget != null)
+            lvSwipeTarget.setEnabled(false);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 page = 1;
                 initData();
-                lvSwipeTarget.setEnabled(true);
-                SwipeRefreshLayout.setRefreshing(false);
+                if (lvSwipeTarget != null) {
+                    lvSwipeTarget.setEnabled(true);
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
             }
         }, 2000);
     }
@@ -208,7 +250,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(context, PeomotionDetailsActivity.class);
-        intent.putExtra("id",promotionListAdapter.getItem(position));
+        intent.putExtra("id", promotionListAdapter.getItem(position));
         startActivity(intent);
     }
 }

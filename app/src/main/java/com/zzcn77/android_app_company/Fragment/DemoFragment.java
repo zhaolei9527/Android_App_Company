@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -156,33 +155,60 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
+                        if (swipeToLoadLayout != null) {
+                            swipeToLoadLayout.setLoadingMore(false);
+
+                        }
+                        if (SwipeRefreshLayout != null) {
+                            SwipeRefreshLayout.setRefreshing(false);
+                        }
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                     } else {
                         if (decode.contains("code\":\"111\"")) {
-                            Toast.makeText(mActivity, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
+                            if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
+                                EasyToast.showShort(mActivity, getString(R.string.NOTMORE));
+                            }
                             page = page - 1;
-                            swipeToLoadLayout.setLoadingMore(false);
-                            swipeTarget.setEnabled(true);
-                            SwipeRefreshLayout.setEnabled(true);
+                            if (swipeToLoadLayout != null) {
+                                swipeToLoadLayout.setLoadingMore(false);
+                            }
+                            if (swipeTarget != null) {
+                                swipeTarget.setEnabled(true);
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                SwipeRefreshLayout.setEnabled(true);
+                            }
                             return;
                         }
                         YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
                         if (yanShiBean.getStu().equals("1")) {
-                            if (page == 1) {
-                                if (swipeTarget != null) {
-                                    SPUtil.putAndApply(mActivity, "demo", decode);
-                                    demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
-                                    swipeTarget.setAdapter(demosadapter);
-                                    swipeTarget.setEnabled(true);
-                                    SwipeRefreshLayout.setRefreshing(false);
-                                }
+                            if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
+                                if (page == 1) {
+                                    if (swipeTarget != null) {
+                                        SPUtil.putAndApply(mActivity, "demo", decode);
+                                        demosadapter = new Demosadapter(mActivity, (ArrayList) yanShiBean.getRes());
+                                        if (swipeTarget != null) {
+                                            swipeTarget.setAdapter(demosadapter);
+                                            swipeTarget.setEnabled(true);
+                                        }
+                                        if (SwipeRefreshLayout != null) {
+                                            SwipeRefreshLayout.setRefreshing(false);
+                                        }
+                                    }
                             } else {
                                 demosadapter.setDatas((ArrayList) yanShiBean.getRes());
-                                swipeToLoadLayout.setLoadingMore(false);
-                                swipeTarget.setEnabled(true);
-                                SwipeRefreshLayout.setEnabled(true);
-                            }
+                                if (swipeToLoadLayout != null) {
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                }
 
+                                if (swipeTarget != null) {
+                                    swipeTarget.setEnabled(true);
+                                }
+
+                                if (SwipeRefreshLayout != null) {
+                                    SwipeRefreshLayout.setEnabled(true);
+                                }
+                            }
 
                             if (demosadapter != null) {
                                 demosadapter.notifyDataSetChanged();
@@ -192,8 +218,17 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                     SwipeRefreshLayout.setRefreshing(false);
                                 }
                             }
+                            }
                         } else {
-                            EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
+                            if (swipeToLoadLayout != null) {
+                                swipeToLoadLayout.setLoadingMore(false);
+
+                            }
+                            if (SwipeRefreshLayout != null) {
+                                SwipeRefreshLayout.setRefreshing(false);
+                            }
+                            if (DemoFragment.this != null && DemoFragment.this.isAdded())
+                                EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -201,7 +236,15 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+
+                    }
+                    if (SwipeRefreshLayout != null) {
+                        SwipeRefreshLayout.setRefreshing(false);
+                    }
+                    if (DemoFragment.this != null && DemoFragment.this.isAdded())
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                 }
             })
 
@@ -219,10 +262,25 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(mActivity, getString(R.string.Notconnect));
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+
+                }
+                if (SwipeRefreshLayout != null) {
+                    SwipeRefreshLayout.setRefreshing(false);
+                }
+                if (DemoFragment.this != null && DemoFragment.this.isAdded())
+                    EasyToast.showShort(mActivity, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
+            if (swipeToLoadLayout != null) {
+                swipeToLoadLayout.setLoadingMore(false);
+
+            }
+            if (SwipeRefreshLayout != null) {
+                SwipeRefreshLayout.setRefreshing(false);
+            }
         }
 
 
@@ -231,30 +289,35 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     //上拉加载
     @Override
     public void onLoadMore() {
-        swipeTarget.setEnabled(false);
-        SwipeRefreshLayout.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = page + 1;
-                initData(null);
-            }
-        }, 1000);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = page + 1;
+                    initData(null);
+                }
+            }, 0);
     }
 
     //下拉刷新
 
     @Override
     public void onRefresh() {
-        swipeTarget.setEnabled(false);
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                page = 1;
-                initData(null);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    page = 1;
+                    initData(null);
 
-            }
-        }, 1000);
+                }
+            }, 0);
     }
 
 

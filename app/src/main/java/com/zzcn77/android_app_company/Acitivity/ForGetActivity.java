@@ -160,19 +160,27 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (context != null) {
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                    }
                 } else {
                     FindpwdBean findpwdBean = new Gson().fromJson(decode, FindpwdBean.class);
                     if (String.valueOf(findpwdBean.getStu()).equals("1")) {
                         if (findpwdBean.getMsg().contains("密码找回成功")) {
-                            Toast.makeText(context, R.string.PASSWORDFORGET, Toast.LENGTH_SHORT).show();
-                            finish();
+                            if (context != null) {
+                                Toast.makeText(context, R.string.PASSWORDFORGET, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
                         }
                     } else {
                         if (findpwdBean.getMsg().contains("该邮箱验证码已失效")) {
-                            Toast.makeText(context, R.string.Thecaptchahasfailed, Toast.LENGTH_SHORT).show();
+                            if (context != null) {
+                                Toast.makeText(context, R.string.Thecaptchahasfailed, Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(context, findpwdBean.getMsg(),Toast.LENGTH_SHORT).show();
+                            if (context != null) {
+                                Toast.makeText(context, findpwdBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -180,7 +188,9 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (context != null) {
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                }
             }
         })
 
@@ -200,7 +210,9 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (context!=null){
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+            }
         }
 
     }
@@ -224,18 +236,26 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (context!=null){
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                    }
                 } else {
                     EmailCodeBean emailCodeBean = new Gson().fromJson(decode, EmailCodeBean.class);
                     if (String.valueOf(emailCodeBean.getStu()).equals("1")) {
                         if (emailCodeBean.getMsg().contains("发送成功")) {
-                            Toast.makeText(context, R.string.sendsuccessfully, Toast.LENGTH_SHORT).show();
+                            if (context!=null){
+                                Toast.makeText(context, R.string.sendsuccessfully, Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
                         if (emailCodeBean.getMsg().toString().contains("该邮箱还没有注册")) {
-                            Toast.makeText(context, R.string.mailboxnotregistered, Toast.LENGTH_SHORT).show();
+                            if (context!=null){
+                                Toast.makeText(context, R.string.mailboxnotregistered, Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(context, emailCodeBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
+                            if (context!=null){
+                                Toast.makeText(context, emailCodeBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -243,7 +263,9 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (context!=null){
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                }
             }
         })
 
@@ -261,7 +283,9 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (context!=null){
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+            }
         }
 
 

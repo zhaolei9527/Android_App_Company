@@ -12,7 +12,6 @@
         android:layout_height="@dimen/y135"
         fresco:placeholderImage="@drawable/imgloading" />
 
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="@dimen/y135"
@@ -52,11 +51,11 @@
     <RelativeLayout
         android:layout_width="@dimen/y135"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x8"
         android:paddingBottom="@dimen/x5"
         android:paddingLeft="@dimen/x5">
 
         <TextView
+            android:layout_centerVertical="true"
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +64,7 @@
             android:textSize="@dimen/x13" />
 
         <TextView
+            android:layout_centerVertical="true"
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,6 +74,7 @@
             android:textSize="@dimen/x17" />
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/img_collect"
             android:layout_width="@dimen/y20"
             android:layout_height="@dimen/y20"

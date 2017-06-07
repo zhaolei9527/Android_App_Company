@@ -156,8 +156,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            EasyToast.showShort(context, getString(R.string.Networkexception));
-                            dialog.dismiss();
+                            if (context != null) {
+                                EasyToast.showShort(context, getString(R.string.Networkexception));
+                            }
+                            if (dialog != null)
+                                dialog.dismiss();
                         } else {
                             VersionBean versionBean = new Gson().fromJson(decode, VersionBean.class);
                             if (String.valueOf(versionBean.getStu()).equals("1")) {
@@ -165,20 +168,27 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                     int versionCode = getversionCode();
                                     int Android_bnum = Integer.parseInt(versionBean.getRes().getAndroid_bnum());
                                     if (versionCode < Android_bnum) {
-                                        dialog.dismiss();
-                                        UpDateDialog upDateDialog = new UpDateDialog();
-                                        upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(), versionBean.getRes().getAndroid());
+                                        if (dialog != null)
+                                            dialog.dismiss();
+                                        if (context!=null){
+                                            UpDateDialog upDateDialog = new UpDateDialog();
+                                            upDateDialog.UpDateDialog(context, getString(R.string.Importantupdate), versionBean.getRes().getAndroid_content(), versionBean.getRes().getAndroid());
+                                        }
                                     } else {
+                                        if (dialog!=null)
                                         dialog.dismiss();
+                                        if (context!=null)
                                         Toast.makeText(context, R.string.Isthelatestversion, Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                    if (dialog!=null)
                                     dialog.dismiss();
-
                                 }
                             } else {
+                                if (dialog!=null)
                                 dialog.dismiss();
+                                if (context!=null)
                                 EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                         }
@@ -187,9 +197,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
+                        if (context!=null)
                         EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (dialog!=null)
                         dialog.dismiss();
-
                     }
                 })
 
@@ -208,7 +219,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     EasyToast.showShort(context, getString(R.string.Notconnect));
                     dialog.dismiss();
-
                 }
 
                 break;

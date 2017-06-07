@@ -120,7 +120,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
                 super.onReceivedError(webView, webResourceRequest, webResourceError);
-                Toast.makeText(context, R.string.hasError, Toast.LENGTH_SHORT).show();
+                if (context != null) {
+                    Toast.makeText(context, R.string.hasError, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -134,8 +136,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
                     getCompanyDetails();
-
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (context != null) {
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                    }
                 } else {
                     CompanyDetailsBean companyDetailsBean = new Gson().fromJson(decode, CompanyDetailsBean.class);
                     if (companyDetailsBean.getStu().equals("1")) {
@@ -143,7 +146,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
                         getCompanyDetails();
                     } else {
                         getCompanyDetails();
-                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (context != null) {
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        }
                     }
                 }
             }
@@ -151,8 +156,9 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 getCompanyDetails();
-
-                EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (context != null) {
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                }
             }
         })
 
@@ -170,22 +176,26 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             requestQueue.add(stringRequest);
         } else {
             getCompanyDetails();
-            EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (context != null) {
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+            }
         }
 
     }
 
     private void getCompanyDetails() {
         final CompanyDetailsBean jianjie = new Gson().fromJson(SPUtil.get(context, "jianjie", "").toString(), CompanyDetailsBean.class);
-        forumContext.post(new Runnable() {
-            @Override
-            public void run() {
-                String decode = Utils.decode(jianjie.getRes().getJianjie().getContent());
-                Spanned spanned = Html.fromHtml(decode);
-                Utils.inSetWebView(spanned.toString(), forumContext, context);
-            }
-        });
-        RollPagerView.setAdapter(new LoopAdapter(RollPagerView,jianjie.getRes().getLunbo()));
+        if (forumContext != null)
+            forumContext.post(new Runnable() {
+                @Override
+                public void run() {
+                    String decode = Utils.decode(jianjie.getRes().getJianjie().getContent());
+                    Spanned spanned = Html.fromHtml(decode);
+                    Utils.inSetWebView(spanned.toString(), forumContext, context);
+                }
+            });
+        if (RollPagerView != null)
+            RollPagerView.setAdapter(new LoopAdapter(RollPagerView, jianjie.getRes().getLunbo()));
     }
 
     @Override

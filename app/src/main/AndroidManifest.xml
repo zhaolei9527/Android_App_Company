@@ -22,15 +22,15 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="592696b7f43e4836a8000053" />-->
-        <!--<meta-data-->
-            <!--android:name="UMENG_MESSAGE_SECRET"-->
-            <!--android:value="8fc8e5f3eaf68839d248c3ed0191e0ea" />-->
-        <!--<meta-data-->
-            <!--android:name="UMENG_CHANNEL"-->
-            <!--android:value="应用宝" />-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="592696b7f43e4836a8000053" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="8fc8e5f3eaf68839d248c3ed0191e0ea" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="应用宝" />
 
         <activity
             android:name=".Acitivity.MainActivity"

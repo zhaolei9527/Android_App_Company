@@ -95,7 +95,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 webView.measure(w, h);
                 if (dialog.isShowing()) {
                     dialog.dismiss();
-
                 }
             }
 
@@ -124,23 +123,29 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(context, getString(R.string.Networkexception));
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
                         final AdvertNyBean advertNyBean = new Gson().fromJson(decode, AdvertNyBean.class);
                         if (advertNyBean.getStu().equals("1")) {
-                            tvNewsTitle.setText(advertNyBean.getRes().getTitle());
-                            tvTimeYear.setText(DateUtil.getDay(Long.parseLong(advertNyBean.getRes().getAdd_time())));
-                            tvTimeHour.setText(DateUtil.getMillon(Long.parseLong(advertNyBean.getRes().getAdd_time())));
-                            forumContext.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String decode = Utils.decode(advertNyBean.getRes().getContent());
-                                    Spanned spanned = Html.fromHtml(decode);
-                                    Utils.inSetWebView(spanned.toString(), forumContext, context);
-                                }
-                            });
+                            if (tvNewsTitle != null)
+                                tvNewsTitle.setText(advertNyBean.getRes().getTitle());
+                            if (tvTimeYear != null)
+                                tvTimeYear.setText(DateUtil.getDay(Long.parseLong(advertNyBean.getRes().getAdd_time())));
+                            if (tvTimeHour != null)
+                                tvTimeHour.setText(DateUtil.getMillon(Long.parseLong(advertNyBean.getRes().getAdd_time())));
+                            if (forumContext != null)
+                                forumContext.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String decode = Utils.decode(advertNyBean.getRes().getContent());
+                                        Spanned spanned = Html.fromHtml(decode);
+                                        Utils.inSetWebView(spanned.toString(), forumContext, context);
+                                    }
+                                });
                         } else {
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                            if (context != null)
+                                EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                     }
                 }
@@ -148,7 +153,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
 
@@ -166,11 +172,13 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(context, getString(R.string.Notconnect));
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Notconnect));
             }
 
         } else {
-            Toast.makeText(context,getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+            if (context != null)
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -183,18 +191,18 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity){
+                if (existMainActivity) {
                     finish();
-                }else {
+                } else {
                     finish();
-                    startActivity(new Intent(context,MainActivity.class));
+                    startActivity(new Intent(context, MainActivity.class));
                 }
                 break;
         }
     }
 
     //判断某一个类是否存在任务栈里面
-    private boolean isExistMainActivity(Class<?> activity){
+    private boolean isExistMainActivity(Class<?> activity) {
         Intent intent = new Intent(this, activity);
         ComponentName cmpName = intent.resolveActivity(getPackageManager());
         boolean flag = false;
@@ -210,6 +218,5 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         }
         return flag;
     }
-
 
 }

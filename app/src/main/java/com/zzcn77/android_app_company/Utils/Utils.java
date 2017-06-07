@@ -211,10 +211,12 @@ public class Utils {
         }
         String sb = "<html><head>"+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "+"</head><body>" + htmlString +
                 "</body></html>";
-        forumContext.getSettings().setJavaScriptEnabled(true);// 支持js
-        forumContext.getSettings().setLoadWithOverviewMode(true);
-        forumContext.getSettings().setUseWideViewPort(true);
-        forumContext.loadDataWithBaseURL("about:blank", Utils.getNewContent(sb), "text/html", "utf-8", null);
+        if (forumContext!=null){
+            forumContext.getSettings().setJavaScriptEnabled(true);// 支持js
+            forumContext.getSettings().setLoadWithOverviewMode(true);
+            forumContext.getSettings().setUseWideViewPort(true);
+            forumContext.loadDataWithBaseURL("about:blank", Utils.getNewContent(sb), "text/html", "utf-8", null);
+        }
     }
 
     /**

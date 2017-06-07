@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -137,60 +136,88 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
-                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                    } else {
-                        if (decode.contains("code\":\"111\"")) {
-                            if (page == 1) {
-                                llEmpty.setVisibility(View.VISIBLE);
-                            } else {
-                                Toast.makeText(mActivity, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
-                                page = page - 1;
-                            }
+                        if (swipeToLoadLayout != null) {
                             swipeToLoadLayout.setLoadingMore(false);
-                            swipeTarget.setEnabled(true);
-                            return;
-                        } else {
-                            if (llEmpty != null) {
-                                llEmpty.setVisibility(View.GONE);
-                            }
-                            goodsBean = new Gson().fromJson(decode, GoodsBean.class);
-                            if (goodsBean.getStu().equals("1")) {
-                                if (page == 1) {
-                                    if (swipeTarget != null) {
-                                        swipeTarget.setEnabled(true);
-                                    }
-                                    SPUtil.putAndApply(mActivity, "product", decode);
-                                    productAdapter = new ProductAdapter(mActivity, (ArrayList) goodsBean.getRes().getGoodsmx());
-                                    gvProuctAdapter = new GVProuctAdapter(mActivity, (ArrayList) goodsBean.getRes().getCate());
-                                    if (gvSwipeTarget != null) {
-                                        gvSwipeTarget.setAdapter(gvProuctAdapter);
-                                    }
-                                    if (swipeTarget != null) {
-                                        swipeTarget.setAdapter(productAdapter);
-                                    }
-                                } else {
-                                    productAdapter.setDatas((ArrayList) goodsBean.getRes().getGoodsmx());
-                                    gvProuctAdapter.setDatas((ArrayList) goodsBean.getRes().getCate());
-                                    swipeToLoadLayout.setLoadingMore(false);
-                                    swipeTarget.setEnabled(true);
-                                }
-                                if (productAdapter != null) {
-                                    productAdapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
-                            }
-
 
                         }
+                        if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                            EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    } else {
+                        if (ProductFragment.this != null && ProductFragment.this.isAdded()) {
+                            if (decode.contains("code\":\"111\"")) {
+                                if (page == 1) {
+                                    if (llEmpty != null)
+                                        llEmpty.setVisibility(View.VISIBLE);
+                                } else {
+                                    if (ProductFragment.this != null && ProductFragment.this.isAdded()) {
+                                        EasyToast.showShort(mActivity, getString(R.string.NOTMORE));
+                                    }
+                                    page = page - 1;
+                                }
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadingMore(false);
 
+                                if (swipeTarget != null)
+                                    swipeTarget.setEnabled(true);
+                                return;
+                            } else {
+                                if (llEmpty != null) {
+                                    llEmpty.setVisibility(View.GONE);
+                                }
+                                goodsBean = new Gson().fromJson(decode, GoodsBean.class);
+                                if (goodsBean.getStu().equals("1")) {
+                                    if (page == 1) {
+                                        if (swipeTarget != null) {
+                                            swipeTarget.setEnabled(true);
+                                        }
+                                        if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                                            SPUtil.putAndApply(mActivity, "product", decode);
+                                        if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                                            productAdapter = new ProductAdapter(mActivity, (ArrayList) goodsBean.getRes().getGoodsmx());
+                                        if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                                            gvProuctAdapter = new GVProuctAdapter(mActivity, (ArrayList) goodsBean.getRes().getCate());
+                                        if (gvSwipeTarget != null) {
+                                            gvSwipeTarget.setAdapter(gvProuctAdapter);
+                                        }
+                                        if (swipeTarget != null) {
+                                            swipeTarget.setAdapter(productAdapter);
+                                        }
+                                    } else {
+                                        productAdapter.setDatas((ArrayList) goodsBean.getRes().getGoodsmx());
+                                        gvProuctAdapter.setDatas((ArrayList) goodsBean.getRes().getCate());
+                                        if (swipeToLoadLayout != null) {
+                                            swipeToLoadLayout.setLoadingMore(false);
+
+                                        }
+                                        if (swipeTarget != null) {
+                                            swipeTarget.setEnabled(true);
+                                        }
+                                    }
+                                    if (productAdapter != null) {
+                                        productAdapter.notifyDataSetChanged();
+                                    }
+                                } else {
+                                    if (swipeToLoadLayout != null) {
+                                        swipeToLoadLayout.setLoadingMore(false);
+
+                                    }
+                                    if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                                        EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
+                                }
+                            }
+                        }
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
-                    EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadingMore(false);
+
+                    }
+                    if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
                 }
             })
 
@@ -208,10 +235,20 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             if (connected) {
                 requestQueue.add(stringRequest);
             } else {
-                EasyToast.showShort(mActivity, getString(R.string.Notconnect));
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadingMore(false);
+
+                }
+                if (ProductFragment.this != null && ProductFragment.this.isAdded())
+                    EasyToast.showShort(mActivity, getString(R.string.Notconnect));
             }
         } catch (Exception e) {
             // 可忽略的异常
+            if (swipeToLoadLayout != null) {
+                swipeToLoadLayout.setLoadingMore(false);
+
+            }
+
         }
 
     }
@@ -227,8 +264,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 initData(null);
 
             }
-        }, 500);
-
+        }, 0);
     }
 
     @Override
