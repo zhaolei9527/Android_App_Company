@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/y11"
+    android:descendantFocusability="blocksDescendants"
     android:paddingLeft="@dimen/y9"
-    android:paddingRight="@dimen/y9"
-    android:paddingTop="@dimen/y11">
+    android:paddingRight="@dimen/y9">
 
 
     <RelativeLayout
@@ -74,7 +72,6 @@
 
 
         <Button
-            android:textColor="#666"
             android:id="@+id/btn_delete"
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y25"
@@ -82,7 +79,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/x10"
             android:background="@drawable/delete_bg"
-            android:text="@string/delete" />
+            android:text="@string/delete"
+            android:textColor="#666" />
 
     </RelativeLayout>
 

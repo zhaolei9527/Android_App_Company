@@ -70,6 +70,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     android.support.v4.widget.SwipeRefreshLayout SwipeRefreshLayout;
     @BindView(R.id.ll_empty)
     LinearLayout llEmpty;
+    @BindView(R.id.img_back)
+    ImageView imgBack;
     private int page = 1;
     private String keywords = "";
     private String cid = "";
@@ -85,6 +87,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private int po;
     private BroadcastReceiver broadcastReceiver;
     private BroadcastReceiver receiver;
+    private View foot;
 
     @Override
     protected int setthislayout() {
@@ -148,6 +151,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         registerReceiver(receiver, new IntentFilter("notifyData"));
 
         //改变加载显示的颜色
+        imgBack.setOnClickListener(this);
         imgSearch.setOnClickListener(this);
         imgPowerSearch.setOnClickListener(this);
         SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
@@ -165,19 +169,17 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
 
+        foot = View.inflate(context, R.layout.list_foot_layout, null);
+        //  swipeTarget.addFooterView(foot);
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener()
-
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 po = position;
-
                 String item = productSearchAdapter.getItem(position);
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("id", item);
                 startActivity(intent);
-
             }
         });
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener()
@@ -279,22 +281,33 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 public void run() {
                     page = page + 1;
                     initData();
+                    if (foot != null) {
+                        foot.setVisibility(View.GONE);
+                    }
                 }
-            }, 1000);
+            }, 0);
     }
 
     //下拉刷新
     @Override
     public void onRefresh() {
-        if (swipeToLoadLayout != null)
-            swipeToLoadLayout.postDelayed(new Runnable() {
+        if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.setLoadMoreEnabled(true);
+        }
+        if (foot != null) {
+            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+            tv_foot_more.setText(getString(R.string.uploading));
+            foot.setVisibility(View.VISIBLE);
+        }
+        if (SwipeRefreshLayout != null)
+            SwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     page = 1;
                     scrolledY = 1;
                     initData();
                 }
-            }, 1000);
+            }, 0);
     }
 
     @Override
@@ -311,6 +324,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                         SwipeRefreshLayout.setRefreshing(false);
                     if (context != null)
                         EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (foot != null) {
+                        foot.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     if (dialog.isShowing()) {
                         if (dialog != null) {
@@ -318,6 +334,13 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                         }
                     }
                     if (decode.contains("code\":\"111\"")) {
+
+                        if (foot != null) {
+                            foot.setVisibility(View.VISIBLE);
+                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                        }
+
                         if (page == 1) {
                             if (llEmpty != null)
                                 llEmpty.setVisibility(View.VISIBLE);
@@ -326,8 +349,11 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                                 Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             page = page - 1;
                         }
-                        if (swipeToLoadLayout != null)
+                        if (swipeToLoadLayout != null) {
                             swipeToLoadLayout.setLoadingMore(false);
+                            swipeToLoadLayout.setLoadMoreEnabled(false);
+                        }
+
                         if (SwipeRefreshLayout != null)
                             SwipeRefreshLayout.setEnabled(true);
                         return;
@@ -337,6 +363,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     }
                     Goods_ListsBean goods_listsBean = new Gson().fromJson(decode, Goods_ListsBean.class);
                     if (goods_listsBean.getStu().equals("1")) {
+                        if (foot != null) {
+                            foot.setVisibility(View.VISIBLE);
+                        }
                         if (page == 1) {
                             if (swipeTarget != null) {
                                 productSearchAdapter = new ProductSearchAdapter(context, (ArrayList) goods_listsBean.getRes().getGoods());
@@ -366,6 +395,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                             SwipeRefreshLayout.setRefreshing(false);
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (foot != null) {
+                            foot.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
@@ -379,6 +411,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     SwipeRefreshLayout.setRefreshing(false);
                 if (context != null)
                     EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (foot != null) {
+                    foot.setVisibility(View.VISIBLE);
+                }
             }
         })
 
@@ -421,6 +456,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 SwipeRefreshLayout.setRefreshing(false);
             if (context != null)
                 EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (foot != null) {
+                foot.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -465,6 +503,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     GoodsBean goodsBean = new Gson().fromJson(product, GoodsBean.class);
                     new PowersearchDialog.Builder(context, goodsBean).create().show();
                 }
+                break;
+            case R.id.img_back:
+                finish();
                 break;
         }
     }

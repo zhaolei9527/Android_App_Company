@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
 /**
  * Created by 赵磊 on 2017/5/17.
@@ -50,7 +50,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.swipe_target)
-    GridView swipeTarget;
+    GridViewWithHeaderAndFooter swipeTarget;
     @BindView(R.id.swipe_load_more_footer)
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
@@ -61,6 +61,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     private Intent intent;
     private int page = 1;
     private Intent intent1;
+    private View foot;
 
 
     @Override
@@ -85,6 +86,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 }
             }
         });
+        foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
+        swipeTarget.addFooterView(foot);
+
         swipeTarget.setOnItemClickListener(this);
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -163,6 +167,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                             SwipeRefreshLayout.setRefreshing(false);
                         }
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                        if (foot != null) {
+                            foot.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         if (decode.contains("code\":\"111\"")) {
                             if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
@@ -177,6 +184,15 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                             }
                             if (SwipeRefreshLayout != null) {
                                 SwipeRefreshLayout.setEnabled(true);
+                            }
+                            if (foot != null) {
+                                foot.setVisibility(View.VISIBLE);
+                                TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+
+                            }
+                            if (swipeToLoadLayout!=null){
+                                swipeToLoadLayout.setLoadMoreEnabled(false);
                             }
                             return;
                         }
@@ -195,29 +211,29 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                             SwipeRefreshLayout.setRefreshing(false);
                                         }
                                     }
-                            } else {
-                                demosadapter.setDatas((ArrayList) yanShiBean.getRes());
-                                if (swipeToLoadLayout != null) {
-                                    swipeToLoadLayout.setLoadingMore(false);
+                                } else {
+                                    demosadapter.setDatas((ArrayList) yanShiBean.getRes());
+                                    if (swipeToLoadLayout != null) {
+                                        swipeToLoadLayout.setLoadingMore(false);
+                                    }
+
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setEnabled(true);
+                                    }
+
+                                    if (SwipeRefreshLayout != null) {
+                                        SwipeRefreshLayout.setEnabled(true);
+                                    }
                                 }
 
-                                if (swipeTarget != null) {
-                                    swipeTarget.setEnabled(true);
+                                if (demosadapter != null) {
+                                    demosadapter.notifyDataSetChanged();
                                 }
-
                                 if (SwipeRefreshLayout != null) {
-                                    SwipeRefreshLayout.setEnabled(true);
+                                    if (SwipeRefreshLayout.isRefreshing()) {
+                                        SwipeRefreshLayout.setRefreshing(false);
+                                    }
                                 }
-                            }
-
-                            if (demosadapter != null) {
-                                demosadapter.notifyDataSetChanged();
-                            }
-                            if (SwipeRefreshLayout != null) {
-                                if (SwipeRefreshLayout.isRefreshing()) {
-                                    SwipeRefreshLayout.setRefreshing(false);
-                                }
-                            }
                             }
                         } else {
                             if (swipeToLoadLayout != null) {
@@ -229,6 +245,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                             }
                             if (DemoFragment.this != null && DemoFragment.this.isAdded())
                                 EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
+                            if (foot != null) {
+                                foot.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }
@@ -245,6 +264,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                     }
                     if (DemoFragment.this != null && DemoFragment.this.isAdded())
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    if (foot != null) {
+                        foot.setVisibility(View.VISIBLE);
+                    }
                 }
             })
 
@@ -271,6 +293,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 }
                 if (DemoFragment.this != null && DemoFragment.this.isAdded())
                     EasyToast.showShort(mActivity, getString(R.string.Notconnect));
+                if (foot != null) {
+                    foot.setVisibility(View.VISIBLE);
+                }
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -282,7 +307,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 SwipeRefreshLayout.setRefreshing(false);
             }
         }
-
 
     }
 
@@ -301,6 +325,9 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                     initData(null);
                 }
             }, 0);
+        if (foot != null) {
+            foot.setVisibility(View.GONE);
+        }
     }
 
     //下拉刷新
@@ -315,7 +342,14 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 public void run() {
                     page = 1;
                     initData(null);
-
+                    if (foot!=null){
+                        TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                        tv_foot_more.setText(getString(R.string.uploading));
+                        foot.setVisibility(View.VISIBLE);
+                    }
+                    if (swipeToLoadLayout != null) {
+                        swipeToLoadLayout.setLoadMoreEnabled(true);
+                    }
                 }
             }, 0);
     }

@@ -122,7 +122,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                                     @Override
                                     public void run() {
                                         if (tvDis != null)
-                                            tvDis.setText(cx_detailBean.getRes().getZhe() + getString(R.string.discount));
+                                            tvDis.setText(cx_detailBean.getRes().getZhe()+getString(R.string.discount));
                                         if (tvTitle != null)
                                             tvTitle.setText(cx_detailBean.getRes().getTitle());
                                         if (SimpleDraweeView != null)

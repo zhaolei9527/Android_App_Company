@@ -47,11 +47,11 @@
                 android:layout_toRightOf="@id/img_search"
                 android:background="@null"
                 android:hint="@string/Enterthesearch"
+                android:imeOptions="actionSearch"
                 android:maxLength="18"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textColorHint="#fff"
-                android:imeOptions="actionSearch" />
+                android:textColorHint="#fff" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -62,33 +62,42 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/x5">
 
-        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-            android:id="@+id/swipeToLoadLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <GridView
-                android:id="@+id/swipe_target"
+            <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+                android:id="@+id/swipeToLoadLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                android:horizontalSpacing="@dimen/x5"
-                android:numColumns="2"
-                android:paddingLeft="@dimen/x5"
-                android:paddingRight="@dimen/x5"
-                android:scrollbars="none"
-                android:verticalSpacing="@dimen/x5" />
+                android:layout_height="match_parent">
 
-            <com.zzcn77.android_app_company.View.LoadMoreFooterView
-                android:id="@id/swipe_load_more_footer"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="#00000000"
-                android:gravity="center">
+                <in.srain.cube.views.GridViewWithHeaderAndFooter
+                    android:id="@+id/swipe_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:horizontalSpacing="@dimen/x5"
+                    android:numColumns="2"
+                    android:paddingLeft="@dimen/x5"
+                    android:paddingRight="@dimen/x5"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/x5" />
 
-            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
 
-        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+                <com.zzcn77.android_app_company.View.LoadMoreFooterView
+                    android:id="@id/swipe_load_more_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="#00000000"
+                    android:gravity="center">
+
+                </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+            </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+        </LinearLayout>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>

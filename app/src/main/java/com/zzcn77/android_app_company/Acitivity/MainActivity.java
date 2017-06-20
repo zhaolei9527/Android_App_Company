@@ -223,7 +223,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(MainActivity.this, R.string.Clicktheexitprogramagain, Toast.LENGTH_SHORT).show();
                 firstTime = System.currentTimeMillis();
             } else {
-                finish();
                 System.exit(0);
             }
             return true;

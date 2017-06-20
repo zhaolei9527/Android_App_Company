@@ -7,6 +7,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -54,6 +55,7 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
     private int page = 1;
     private PromotionListAdapter promotionListAdapter;
     private Dialog dialog;
+    private View foot;
 
     @Override
     protected int setthislayout() {
@@ -66,6 +68,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         SwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.text_blue));
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
+        foot = View.inflate(context, R.layout.list_foot_layout, null);
+        lvSwipeTarget.addFooterView(foot);
     }
 
     @Override
@@ -124,13 +128,25 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                     if (context != null) {
                         Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                     }
+                    if (foot != null) {
+                        foot.setVisibility(View.VISIBLE);
+                        TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                        tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                        if (swipeToLoadLayout != null)
+                            swipeToLoadLayout.setLoadingMore(false);
+                        swipeToLoadLayout.setLoadMoreEnabled(false);
+                    }
+
+
                     page = page - 1;
                     return;
                 } else {
                     CuxiaoBean cuxiaoBean = new Gson().fromJson(decode, CuxiaoBean.class);
                     if (cuxiaoBean.getStu().equals("1")) {
+                        if (foot != null)
+                            foot.setVisibility(View.VISIBLE);
                         if (page == 1) {
-                                promotionListAdapter = new PromotionListAdapter(context, cuxiaoBean.getRes());
+                            promotionListAdapter = new PromotionListAdapter(context, cuxiaoBean.getRes());
                             if (lvSwipeTarget != null)
                                 lvSwipeTarget.setAdapter(promotionListAdapter);
                         } else {
@@ -148,6 +164,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                         }
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (foot != null)
+                            foot.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -164,6 +182,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                 }
                 if (context != null)
                     EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (foot != null)
+                    foot.setVisibility(View.VISIBLE);
             }
         })
 
@@ -188,6 +208,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
             }
             if (context != null)
                 EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (foot != null)
+                foot.setVisibility(View.VISIBLE);
         }
     }
 
@@ -211,8 +233,11 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                     if (lvSwipeTarget != null) {
                         lvSwipeTarget.setEnabled(true);
                     }
+                    if (foot != null)
+                        foot.setVisibility(View.GONE);
+
                 }
-            }, 2000);
+            }, 0);
 
     }
 
@@ -220,6 +245,13 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
 
     @Override
     public void onRefresh() {
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.setLoadMoreEnabled(true);
+        if (foot!=null){
+            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+            tv_foot_more.setText(getString(R.string.uploading));
+            foot.setVisibility(View.VISIBLE);
+        }
         if (lvSwipeTarget != null)
             lvSwipeTarget.setEnabled(false);
         mHandler.postDelayed(new Runnable() {

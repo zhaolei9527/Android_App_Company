@@ -47,6 +47,8 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     public static final int time = 60;
     private Thread thread;
     private String md5password;
+    private Runnable sendable;
+    boolean noterror = true;
 
     @Override
     protected int setthislayout() {
@@ -67,11 +69,11 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
-
-        thread = new Thread() {
+        // TODO Auto-generated method stub
+        sendable = new Runnable() {
             @Override
             public void run() {
-                super.run();
+                // TODO Auto-generated method stub
                 for (int i = time; i > 0; i--) {
                     try {
                         Thread.sleep(1000);
@@ -79,12 +81,14 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (btnGet != null) {
-                                    btnGet.setEnabled(false);
-                                    btnGet.setText(String.valueOf(finalI));
-                                    if (btnGet.getText().toString().equals("1")) {
-                                        btnGet.setEnabled(true);
-                                        btnGet.setText(getResources().getText(R.string.get));
+                                if (noterror) {
+                                    if (btnGet != null) {
+                                        btnGet.setEnabled(false);
+                                        btnGet.setText(String.valueOf(finalI));
+                                        if (btnGet.getText().toString().equals("1")) {
+                                            btnGet.setEnabled(true);
+                                            btnGet.setText(getResources().getText(R.string.get));
+                                        }
                                     }
                                 }
                             }
@@ -210,7 +214,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            if (context!=null){
+            if (context != null) {
                 EasyToast.showShort(context, getString(R.string.Notconnect));
             }
         }
@@ -228,7 +232,8 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
             return;
         }
-        thread.start();
+        noterror = true;
+        new Thread(sendable).start();
         //// TODO: 2017/5/18  发送验证码
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "emailcode", new Response.Listener<String>() {
@@ -236,24 +241,35 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
-                    if (context!=null){
+                    if (context != null) {
                         EasyToast.showShort(context, getString(R.string.Networkexception));
+                    }
+                    if (btnGet != null) {
+                        btnGet.setEnabled(true);
+                        btnGet.setText(getResources().getText(R.string.get));
+                        noterror = false;
+
                     }
                 } else {
                     EmailCodeBean emailCodeBean = new Gson().fromJson(decode, EmailCodeBean.class);
                     if (String.valueOf(emailCodeBean.getStu()).equals("1")) {
                         if (emailCodeBean.getMsg().contains("发送成功")) {
-                            if (context!=null){
+                            if (context != null) {
                                 Toast.makeText(context, R.string.sendsuccessfully, Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
+                        if (btnGet != null) {
+                            btnGet.setEnabled(true);
+                            btnGet.setText(getResources().getText(R.string.get));
+                            noterror = false;
+                        }
                         if (emailCodeBean.getMsg().toString().contains("该邮箱还没有注册")) {
-                            if (context!=null){
+                            if (context != null) {
                                 Toast.makeText(context, R.string.mailboxnotregistered, Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            if (context!=null){
+                            if (context != null) {
                                 Toast.makeText(context, emailCodeBean.getMsg().toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -263,8 +279,13 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                if (context!=null){
+                if (context != null) {
                     EasyToast.showShort(context, getString(R.string.Networkexception));
+                }
+                if (btnGet != null) {
+                    btnGet.setEnabled(true);
+                    btnGet.setText(getResources().getText(R.string.get));
+                    noterror = false;
                 }
             }
         })
@@ -283,9 +304,10 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         if (connected) {
             requestQueue.add(stringRequest);
         } else {
-            if (context!=null){
+            if (context != null) {
                 EasyToast.showShort(context, getString(R.string.Notconnect));
             }
+
         }
 
 

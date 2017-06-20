@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,13 +32,14 @@ import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
-import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.MyListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.zzcn77.android_app_company.R.id.ll_callphone;
 
@@ -70,8 +72,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     ImageView img2;
     @BindView(R.id.vp_news)
     ViewPager vpNews;
-    @BindView(R.id.tv_new_item)
-    TextView tvNewItem;
     @BindView(R.id.View3)
     android.view.View View3;
     @BindView(R.id.img_morePromtion)
@@ -94,8 +94,25 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     LinearLayout llCallphone;
     @BindView(R.id.sv)
     ScrollView sv;
+    @BindView(R.id.Xcircleindicator)
+    com.zzcn77.android_app_company.View.Xcircleindicator Xcircleindicator;
+    Unbinder unbinder;
     private Promotionadapter promotionadapter;
     private IndexBean index;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        android.view.View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     //最新动态列表
     class newsAdapter extends PagerAdapter {
@@ -152,14 +169,17 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
+
         @Override
         public void onPageSelected(int position) {
-            tvNewItem.setText(String.valueOf(position + 1) + "/" + vpNews.getAdapter().getCount());
+            Xcircleindicator.setCurrentPage(position);
         }
+
         @Override
         public void onPageScrollStateChanged(int state) {
         }
     };
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -178,10 +198,12 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 break;
         }
     }
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.f_home_layout;
     }
+
     @Override
     protected void initView() {
         super.initView();
@@ -190,12 +212,11 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
-                intent.putExtra("id",index.getRes().getLunbo().get(position).getId());
+                intent.putExtra("id", index.getRes().getLunbo().get(position).getId());
                 startActivity(intent);
             }
         });
         RollPagerView.setPlayDelay(3000);
-        Utils.displayImageFresco(R.drawable.tu, SimpleDraweeView);
         //假数据
         vpNews.addOnPageChangeListener(onPageChangeListener);
         llCallphone.setOnClickListener(this);
@@ -210,7 +231,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, PeomotionDetailsActivity.class);
-                intent.putExtra("id",promotionadapter.getItem(position));
+                intent.putExtra("id", promotionadapter.getItem(position));
                 startActivity(intent);
             }
         });
@@ -227,7 +248,13 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         tvMessage.setText(index.getRes().getJianjie().getKeywords());
         tvPhone.setText(index.getRes().getJianjie().getTel());
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
-        tvNewItem.setText(String.valueOf(1) + "/" + vpNews.getAdapter().getCount());
+        //设置总共的页数
+        Xcircleindicator.initData(index.getRes().getDongtai().size(), 0);
+        //设置当前的页面
+        Xcircleindicator.setCurrentPage(0);
+        Xcircleindicator.setFillColor(getResources().getColor(R.color.text_blue));
+        Xcircleindicator.setStrokeColor(getResources().getColor(R.color.text_check));
+        Xcircleindicator.setRadius(15);
         sv.scrollTo(0, 0);
     }
 

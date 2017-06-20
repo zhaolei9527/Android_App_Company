@@ -71,6 +71,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     private GVProuctAdapter gvProuctAdapter;
     private Intent intent;
     private GoodsBean goodsBean;
+    private View foot;
 
     @Override
     protected int setLayoutResouceId() {
@@ -83,7 +84,12 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         swipeToLoadLayout.setOnLoadMoreListener(this);
         View head = View.inflate(mActivity, R.layout.product_head_layout, null);
         gvSwipeTarget = (MyGridView) head.findViewById(R.id.gv_swipe_target);
+        foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
+        swipeTarget.addFooterView(foot);
+
+
         swipeTarget.addHeaderView(head);
+
         imgPowerSearch.setOnClickListener(this);
         String product = (String) SPUtil.get(mActivity, "product", "");
         if (!product.isEmpty()) {
@@ -142,6 +148,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                         }
                         if (ProductFragment.this != null && ProductFragment.this.isAdded())
                             EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                        if (foot!=null){
+                            foot.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         if (ProductFragment.this != null && ProductFragment.this.isAdded()) {
                             if (decode.contains("code\":\"111\"")) {
@@ -153,6 +162,14 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                         EasyToast.showShort(mActivity, getString(R.string.NOTMORE));
                                     }
                                     page = page - 1;
+                                    if (foot!=null){
+                                        foot.setVisibility(View.VISIBLE);
+                                        TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                        tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                        if (swipeToLoadLayout != null)
+                                            swipeToLoadLayout.setLoadingMore(false);
+                                        swipeToLoadLayout.setLoadMoreEnabled(false);
+                                    }
                                 }
                                 if (swipeToLoadLayout != null)
                                     swipeToLoadLayout.setLoadingMore(false);
@@ -161,11 +178,15 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                     swipeTarget.setEnabled(true);
                                 return;
                             } else {
+
                                 if (llEmpty != null) {
                                     llEmpty.setVisibility(View.GONE);
                                 }
                                 goodsBean = new Gson().fromJson(decode, GoodsBean.class);
                                 if (goodsBean.getStu().equals("1")) {
+                                    if (foot!=null){
+                                        foot.setVisibility(View.VISIBLE);
+                                    }
                                     if (page == 1) {
                                         if (swipeTarget != null) {
                                             swipeTarget.setEnabled(true);
@@ -203,6 +224,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                     }
                                     if (ProductFragment.this != null && ProductFragment.this.isAdded())
                                         EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
+                                    if (foot!=null){
+                                        foot.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
                         }
@@ -218,6 +242,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                     }
                     if (ProductFragment.this != null && ProductFragment.this.isAdded())
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    if (foot!=null){
+                        foot.setVisibility(View.VISIBLE);
+                    }
                 }
             })
 
@@ -241,6 +268,10 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 }
                 if (ProductFragment.this != null && ProductFragment.this.isAdded())
                     EasyToast.showShort(mActivity, getString(R.string.Notconnect));
+                if (foot!=null){
+                    foot.setVisibility(View.VISIBLE);
+                }
+
             }
         } catch (Exception e) {
             // 可忽略的异常
@@ -262,6 +293,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             public void run() {
                 page = page + 1;
                 initData(null);
+                if (foot!=null){
+                    foot.setVisibility(View.GONE);
+                }
 
             }
         }, 0);

@@ -176,7 +176,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                         if (collBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                    if (collectAdapter != null)
                                         collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
                                     if (swipeTarget != null)
                                         swipeTarget.setAdapter(collectAdapter);

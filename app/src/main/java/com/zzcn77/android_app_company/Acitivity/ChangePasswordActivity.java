@@ -120,7 +120,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
                         if (decode.isEmpty()) {
-                            if (context!=null){
+                            if (context != null) {
                                 EasyToast.showShort(context, getString(R.string.Networkexception));
                             }
                         } else {
@@ -131,12 +131,12 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                                 SPUtil.remove(context, "account");
                                 SPUtil.remove(context, "password");
                                 SPUtil.remove(context, "email");
-                                if (context!=null){
+                                if (context != null) {
                                     Toast.makeText(context, R.string.passwordchangeok, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(context, LoginActivity.class));
                                 }
                             } else {
-                                if (context!=null){
+                                if (context != null) {
                                     EasyToast.showShort(context, getString(R.string.Abnormalserver));
                                 }
                             }
@@ -146,8 +146,8 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         volleyError.printStackTrace();
-                        if (context!=null){
-                            EasyToast.showShort(context,getString(R.string.Networkexception));
+                        if (context != null) {
+                            EasyToast.showShort(context, getString(R.string.Networkexception));
                         }
                     }
                 })
@@ -168,7 +168,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                 if (connected) {
                     requestQueue.add(stringRequest);
                 } else {
-                    if (context!=null){
+                    if (context != null) {
                         EasyToast.showShort(context, getString(R.string.Notconnect));
                     }
                 }

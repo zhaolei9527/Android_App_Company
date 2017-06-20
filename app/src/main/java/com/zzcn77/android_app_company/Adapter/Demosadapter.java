@@ -30,7 +30,7 @@ public class Demosadapter extends BaseAdapter {
     }
 
     public void setDatas(ArrayList datas) {
-        this.datas = datas;
+        this.datas.addAll(datas);
     }
 
     private ArrayList<YanShiBean.ResBean> datas = new ArrayList();

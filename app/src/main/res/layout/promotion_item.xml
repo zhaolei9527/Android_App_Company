@@ -11,8 +11,7 @@
         android:layout_width="@dimen/x162"
         android:layout_height="@dimen/y92"
         android:layout_marginLeft="@dimen/x14"
-        android:layout_marginTop="@dimen/y23"
-        android:background="#1ed8ff">
+        android:layout_marginTop="@dimen/y23">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/SimpleDraweeView"
@@ -22,6 +21,7 @@
             android:layout_gravity="center"
             android:background="@android:color/white"
             fresco:placeholderImage="@drawable/imgloading" />
+
 
     </FrameLayout>
 
@@ -71,6 +71,7 @@
                 android:textColor="#ffa919"
                 android:textSize="@dimen/x25"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>

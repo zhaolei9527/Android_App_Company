@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -101,11 +100,6 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
 
-                if (!phone.matches("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")) {
-                    EasyToast.showShort(context, getResources().getString(R.string.phoneisnotregx));
-                    return;
-                }
-
                 if (email.trim().isEmpty()) {
                     Toast.makeText(context, etEmail.getHint().toString(), Toast.LENGTH_SHORT).show();
                     return;
@@ -189,6 +183,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                 }
 
                 break;
+
         }
     }
 }

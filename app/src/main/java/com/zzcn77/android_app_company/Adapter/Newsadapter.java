@@ -5,15 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zzcn77.android_app_company.Bean.NewsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.DateUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

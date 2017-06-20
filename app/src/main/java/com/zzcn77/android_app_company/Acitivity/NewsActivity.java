@@ -58,6 +58,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     private int page = 1;
     private Intent intent;
     private Dialog dialog;
+    private View foot;
 
     @Override
     protected int setthislayout() {
@@ -72,6 +73,8 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
         tvTitle.setText(R.string.recentnews);
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
+        foot = View.inflate(context, R.layout.list_foot_layout, null);
+        lvSwipeTarget.addFooterView(foot);
     }
 
     @Override
@@ -131,16 +134,28 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                     }
                     if (context != null)
                         EasyToast.showShort(context, getString(R.string.Networkexception));
+                    if (foot != null)
+                        foot.setVisibility(View.VISIBLE);
                 } else {
                     dialog.dismiss();
                     if (decode.contains("code\":\"111\"")) {
                         if (context != null)
                             Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                         page = page - 1;
+                        if (foot != null) {
+                            foot.setVisibility(View.VISIBLE);
+                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                            if (swipeToLoadLayout != null)
+                                swipeToLoadLayout.setLoadingMore(false);
+                            swipeToLoadLayout.setLoadMoreEnabled(false);
+                        }
                         return;
                     }
                     NewsBean newsBean = new Gson().fromJson(decode, NewsBean.class);
                     if (newsBean.getStu().equals("1")) {
+                        if (foot != null)
+                            foot.setVisibility(View.VISIBLE);
                         if (page == 1) {
                             newsadapter = new Newsadapter(context, (ArrayList) newsBean.getRes());
                             if (lvSwipeTarget != null)
@@ -151,9 +166,10 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                         }
                         if (newsadapter != null)
                             newsadapter.notifyDataSetChanged();
-                        if (SwipeRefreshLayout.isRefreshing()) {
-                            SwipeRefreshLayout.setRefreshing(false);
-                        }
+                        if (SwipeRefreshLayout != null)
+                            if (SwipeRefreshLayout.isRefreshing()) {
+                                SwipeRefreshLayout.setRefreshing(false);
+                            }
                     } else {
                         if (swipeToLoadLayout != null) {
                             swipeToLoadLayout.setLoadingMore(false);
@@ -164,6 +180,8 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                         }
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                        if (foot != null)
+                            foot.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -180,6 +198,8 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                 }
                 if (context != null)
                     EasyToast.showShort(context, getString(R.string.Networkexception));
+                if (foot != null)
+                    foot.setVisibility(View.VISIBLE);
             }
         })
 
@@ -206,6 +226,8 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
             }
             if (context != null)
                 EasyToast.showShort(context, getString(R.string.Notconnect));
+            if (foot != null)
+                foot.setVisibility(View.VISIBLE);
         }
 
 
@@ -231,7 +253,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                     if (lvSwipeTarget != null)
                         lvSwipeTarget.setEnabled(true);
                 }
-            }, 2000);
+            }, 0);
 
     }
 
@@ -239,6 +261,13 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
 
     @Override
     public void onRefresh() {
+        if (swipeToLoadLayout != null)
+            swipeToLoadLayout.setLoadMoreEnabled(true);
+        if (foot!=null){
+            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+            tv_foot_more.setText(getString(R.string.uploading));
+            foot.setVisibility(View.VISIBLE);
+        }
         if (lvSwipeTarget != null)
             lvSwipeTarget.setEnabled(false);
         page = 1;
@@ -250,8 +279,10 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                     lvSwipeTarget.setEnabled(true);
                 if (SwipeRefreshLayout != null)
                     SwipeRefreshLayout.setRefreshing(false);
+                if (foot != null)
+                    foot.setVisibility(View.GONE);
             }
-        }, 2000);
+        }, 0);
     }
 
     @Override
