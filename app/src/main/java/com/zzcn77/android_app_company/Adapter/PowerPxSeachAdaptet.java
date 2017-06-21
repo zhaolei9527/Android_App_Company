@@ -18,7 +18,8 @@ import butterknife.ButterKnife;
  * Created by 赵磊 on 2017/5/24.
  */
 
-public class PowerPxSeachAdaptet extends BaseAdapter {
+public class  PowerPxSeachAdaptet extends BaseAdapter {
+    //
     private Context context;
 
     public ArrayList getDatas() {

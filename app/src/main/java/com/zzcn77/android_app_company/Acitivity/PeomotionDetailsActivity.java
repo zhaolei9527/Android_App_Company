@@ -40,7 +40,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 public class PeomotionDetailsActivity extends BaseActivity implements View.OnClickListener {
-
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.forum_context)

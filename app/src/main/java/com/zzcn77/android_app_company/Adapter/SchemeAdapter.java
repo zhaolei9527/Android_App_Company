@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
  */
 
 public class SchemeAdapter extends BaseAdapter {
+    //
 
     private Context context;
     private ArrayList<FangAnBean.ResBean> datas = new ArrayList();

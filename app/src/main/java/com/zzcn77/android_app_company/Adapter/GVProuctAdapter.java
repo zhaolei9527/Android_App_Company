@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
  */
 
 public class GVProuctAdapter extends BaseAdapter {
+    //
 
 
     private Context context;

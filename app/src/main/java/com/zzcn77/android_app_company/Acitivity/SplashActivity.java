@@ -31,6 +31,7 @@ import java.util.Map;
  */
 
 public class SplashActivity extends BaseActivity {
+    //
     @Override
     protected int setthislayout() {
         return R.layout.flash_layout;

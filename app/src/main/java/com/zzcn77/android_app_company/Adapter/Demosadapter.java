@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
  */
 
 public class Demosadapter extends BaseAdapter {
+    //
 
 
     private Context context;

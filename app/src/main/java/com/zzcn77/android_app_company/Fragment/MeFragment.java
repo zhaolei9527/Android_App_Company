@@ -21,6 +21,7 @@ import butterknife.BindView;
  */
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
+    //
     @BindView(R.id.rl_collect)
     RelativeLayout rlCollect;
     @BindView(R.id.rl_consult)

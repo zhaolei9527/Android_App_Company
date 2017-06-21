@@ -42,6 +42,7 @@ import butterknife.ButterKnife;
  */
 
 public class ProductSearchAdapter extends BaseAdapter {
+    //
 
 
     private Context context;

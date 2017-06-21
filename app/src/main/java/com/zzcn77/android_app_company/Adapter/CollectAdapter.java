@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
  */
 
 public class CollectAdapter extends BaseAdapter {
+    //
 
     private Context context;
 

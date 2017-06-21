@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
  */
 
 public class ProductAdapter extends BaseAdapter {
+    //
 
     private Context context;
     private ArrayList<GoodsBean.ResBean.GoodsmxBean> datas = new ArrayList();

@@ -35,6 +35,7 @@ import butterknife.BindView;
  */
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.et_account)
     EditText etAccount;
     @BindView(R.id.et_password)

@@ -39,6 +39,7 @@ import butterknife.BindView;
  */
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.tv_version)

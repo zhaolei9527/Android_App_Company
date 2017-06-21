@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
  */
 
 public class Newsadapter extends BaseAdapter {
+    //
 
 
     private Context context;

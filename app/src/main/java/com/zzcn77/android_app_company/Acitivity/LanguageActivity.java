@@ -17,6 +17,7 @@ import butterknife.BindView;
  */
 
 public class LanguageActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.cb_cn)

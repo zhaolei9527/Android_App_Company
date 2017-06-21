@@ -46,7 +46,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.btn_save)
     Button btnSave;
     private Object password;
-
+//
     @Override
     protected int setthislayout() {
         return R.layout.change_password_layout;

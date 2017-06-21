@@ -44,6 +44,7 @@ import butterknife.Unbinder;
  * ━━━━━━代码无BUG━━━━━━
  */
 public abstract class BaseActivity extends Activity {
+    //
     protected WeakHandler mHandler;
     protected Context context;
     private Unbinder bind;

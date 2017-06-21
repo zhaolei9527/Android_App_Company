@@ -42,6 +42,7 @@ import butterknife.BindView;
  */
 
 public class SchemeAcitivty extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.SimpleDraweeView)

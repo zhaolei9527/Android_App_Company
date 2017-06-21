@@ -34,6 +34,7 @@ import static com.zzcn77.android_app_company.R.id.btn_save;
  */
 
 public class ConsultActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.et_title)

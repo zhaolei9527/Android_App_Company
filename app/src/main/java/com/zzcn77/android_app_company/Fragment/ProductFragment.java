@@ -48,6 +48,7 @@ import butterknife.BindView;
  */
 
 public class ProductFragment extends BaseFragment implements OnLoadMoreListener, View.OnClickListener, AdapterView.OnItemClickListener {
+    //
     @BindView(R.id.img_search)
     ImageView imgSearch;
     @BindView(R.id.et_search)

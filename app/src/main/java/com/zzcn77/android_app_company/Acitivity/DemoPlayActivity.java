@@ -37,7 +37,7 @@ import butterknife.BindView;
  */
 
 public class DemoPlayActivity extends BaseActivity {
-
+//
 
     @BindView(R.id.webview_play)
     WebView forumContext;

@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
  */
 
 public class PowerCateSeachAdaptet extends BaseAdapter {
+    //
     private Context context;
 
     public ArrayList getDatas() {

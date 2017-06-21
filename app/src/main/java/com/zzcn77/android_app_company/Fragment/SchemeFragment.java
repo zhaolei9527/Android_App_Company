@@ -38,6 +38,7 @@ import butterknife.BindView;
  */
 
 public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener {
+    //
     @BindView(R.id.swipe_target)
     ListView swipeTarget;
     @BindView(R.id.swipe_load_more_footer)

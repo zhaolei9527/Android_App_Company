@@ -18,6 +18,7 @@ import java.util.List;
  */
 //轮播图
 public class LoopAdapter extends LoopPagerAdapter {
+    //
 
     private ArrayList<IndexBean.ResBean.LunboBean> imgs = new ArrayList<>();
 

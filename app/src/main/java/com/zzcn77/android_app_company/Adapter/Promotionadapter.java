@@ -19,6 +19,7 @@ import java.util.List;
  */
 
 public class Promotionadapter extends BaseAdapter {
+    //
 
 
     private Context context;

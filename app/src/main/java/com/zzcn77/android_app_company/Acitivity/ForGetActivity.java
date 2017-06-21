@@ -32,6 +32,7 @@ import butterknife.BindView;
  */
 
 public class ForGetActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.et_email)
     EditText etEmail;
     @BindView(R.id.et_captcha)

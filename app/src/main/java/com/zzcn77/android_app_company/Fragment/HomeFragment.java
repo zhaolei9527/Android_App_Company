@@ -48,6 +48,7 @@ import static com.zzcn77.android_app_company.R.id.ll_callphone;
  */
 
 public class HomeFragment extends BaseFragment implements android.view.View.OnClickListener {
+    //
 
 
     @BindView(R.id.RollPagerView)

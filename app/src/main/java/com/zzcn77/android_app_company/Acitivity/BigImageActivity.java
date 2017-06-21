@@ -15,6 +15,7 @@ import butterknife.BindView;
 
 
 public class BigImageActivity extends BaseActivity {
+    //
     @BindView(R.id.PhotoDraweeView)
     me.relex.photodraweeview.PhotoDraweeView PhotoDraweeView;
     @Override

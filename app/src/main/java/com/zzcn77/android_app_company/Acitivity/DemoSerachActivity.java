@@ -41,6 +41,7 @@ import butterknife.BindView;
  */
 
 public class DemoSerachActivity extends BaseActivity implements AdapterView.OnItemClickListener, OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.ll_empty)

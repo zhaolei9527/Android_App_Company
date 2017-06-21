@@ -45,6 +45,7 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
  */
 
 public class DemoFragment extends BaseFragment implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, View.OnClickListener {
+    //
     @BindView(R.id.img_search)
     ImageView imgSearch;
     @BindView(R.id.et_search)

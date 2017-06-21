@@ -47,6 +47,7 @@ import static com.zzcn77.android_app_company.R.id.rll_deleteall;
  */
 
 public class MyCollectActivity extends BaseActivity implements View.OnClickListener, OnLoadMoreListener, AdapterView.OnItemClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.img_all)

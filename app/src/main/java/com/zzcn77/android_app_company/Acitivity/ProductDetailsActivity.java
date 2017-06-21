@@ -68,6 +68,7 @@ import static com.zzcn77.android_app_company.Service.DownloadPDF.DOWNLOAD_PATH;
  */
 
 public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.SimpleDraweeView)

@@ -17,6 +17,7 @@ import butterknife.BindView;
  */
 
 public class PdfActivity extends BaseActivity  {
+    //
     @BindView(R.id.pdfView)
     PDFView pdfView;
     @Override

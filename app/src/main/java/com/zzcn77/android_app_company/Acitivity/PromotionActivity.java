@@ -41,7 +41,7 @@ import butterknife.BindView;
  */
 
 public class PromotionActivity extends BaseActivity implements OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, AdapterView.OnItemClickListener {
-
+    //
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.SwipeRefreshLayout)

@@ -45,6 +45,7 @@ import butterknife.BindView;
  */
 
 public class CompanyDetailsActivity extends BaseActivity implements View.OnClickListener {
+    //
     @BindView(R.id.RollPagerView)
     com.jude.rollviewpager.RollPagerView RollPagerView;
     @BindView(R.id.forum_context)
