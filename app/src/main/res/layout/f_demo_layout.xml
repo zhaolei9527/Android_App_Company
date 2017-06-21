@@ -81,7 +81,6 @@
                     android:numColumns="2"
                     android:paddingLeft="@dimen/x5"
                     android:paddingRight="@dimen/x5"
-                    android:scrollbars="none"
                     android:verticalSpacing="@dimen/x5" />
 
 

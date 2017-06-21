@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="@dimen/y135"
+        android:layout_width="@dimen/y130"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x5"
         android:layout_marginTop="@dimen/x6"
@@ -25,7 +25,7 @@
 
 
     <LinearLayout
-        android:layout_width="@dimen/y135"
+        android:layout_width="@dimen/y130"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x5"
         android:layout_marginRight="@dimen/x5"
@@ -54,34 +54,59 @@
         android:paddingBottom="@dimen/x5"
         android:paddingLeft="@dimen/x5">
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:id="@+id/tv"
+        <RelativeLayout
+            android:id="@+id/rl_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥"
-            android:textColor="#FFA919"
-            android:textSize="@dimen/x13" />
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:id="@+id/tv_price"
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="#FFA919"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv"
+                android:text="0"
+                android:textColor="#FFA919"
+                android:textSize="@dimen/x17" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_showmoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv"
-            android:text="0"
-            android:textColor="#FFA919"
-            android:textSize="@dimen/x17" />
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_showmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/Lookprice"
+                android:textColor="#FFA919"
+                android:textSize="@dimen/x15" />
+
+        </RelativeLayout>
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/img_collect"
             android:layout_width="@dimen/y20"
             android:layout_height="@dimen/y20"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="right"
-            android:layout_marginRight="@dimen/x10"
             android:layout_marginBottom="@dimen/x5"
+            android:layout_marginRight="@dimen/x10"
             android:background="@mipmap/shoucang_off" />
 
     </RelativeLayout>

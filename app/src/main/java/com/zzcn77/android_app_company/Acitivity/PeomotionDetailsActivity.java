@@ -52,6 +52,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.tv_dis)
     TextView tvDis;
     private Dialog dialog;
+    private CX_DetailBean cx_detailBean;
 
     @Override
     protected int setthislayout() {
@@ -70,7 +71,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initListener() {
         imgBack.setOnClickListener(this);
-
+        SimpleDraweeView.setOnClickListener(this);
         forumContext.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -115,14 +116,14 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
-                        final CX_DetailBean cx_detailBean = new Gson().fromJson(decode, CX_DetailBean.class);
+                        cx_detailBean = new Gson().fromJson(decode, CX_DetailBean.class);
                         if (cx_detailBean.getStu().equals("1")) {
                             if (forumContext != null)
                                 forumContext.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         if (tvDis != null)
-                                            tvDis.setText(cx_detailBean.getRes().getZhe()+getString(R.string.discount));
+                                            tvDis.setText(cx_detailBean.getRes().getZhe() + getString(R.string.discount));
                                         if (tvTitle != null)
                                             tvTitle.setText(cx_detailBean.getRes().getTitle());
                                         if (SimpleDraweeView != null)
@@ -185,6 +186,11 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
                     finish();
                     startActivity(new Intent(context, MainActivity.class));
                 }
+                break;
+            case R.id.SimpleDraweeView:
+                Intent intent = new Intent(context, BigImageActivity.class);
+                intent.putExtra("imgurl", UrlUtils.BaseImg + cx_detailBean.getRes().getImgurl());
+                startActivity(intent);
                 break;
         }
     }

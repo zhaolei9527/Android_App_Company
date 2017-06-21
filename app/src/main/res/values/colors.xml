@@ -11,4 +11,6 @@
     <color name="purple_progress">#2f992a</color>
     <color name="progress_bg">#ffce7d</color>
     <color name="blue_normal">#000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

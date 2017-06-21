@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android_App_Company.iml" filepath="$PROJECT_DIR$/Android_App_Company.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GlideLoader/GlideLoader.iml" filepath="$PROJECT_DIR$/GlideLoader/GlideLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/PushSDK/PushSDK.iml" filepath="$PROJECT_DIR$/PushSDK/PushSDK.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Transferee/Transferee.iml" filepath="$PROJECT_DIR$/Transferee/Transferee.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UniversalLoader/UniversalLoader.iml" filepath="$PROJECT_DIR$/UniversalLoader/UniversalLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

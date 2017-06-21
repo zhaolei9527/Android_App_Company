@@ -3,11 +3,13 @@ package com.zzcn77.android_app_company.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,9 +91,40 @@ public class ProductSearchAdapter extends BaseAdapter {
 
         if (datas.get(position).getColl().equals("1")) {
             viewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_on));
-        } else if (datas.get(position).getColl().equals("-1")||datas.get(position).getColl().equals("2")) {
+        } else if (datas.get(position).getColl().equals("-1") || datas.get(position).getColl().equals("2")) {
             viewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_off));
         }
+
+        if (SPUtil.get(context, "id", "").equals("")) {
+            viewHolder.rlMoney.setVisibility(View.GONE);
+            viewHolder.rlShowmoney.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.rlMoney.setVisibility(View.VISIBLE);
+            viewHolder.rlShowmoney.setVisibility(View.GONE);
+        }
+        viewHolder.tvShowmoney.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        viewHolder.tvShowmoney.getPaint().setAntiAlias(true);//抗锯齿
+        viewHolder.rlShowmoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                        .setMessage(R.string.Youarenotcurrentlyloggedin)//设置显示的内容
+                        .setPositiveButton(R.string.loginnow, new DialogInterface.OnClickListener() {//添加确定按钮
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                                // TODO Auto-generated method stub
+                                dialog.dismiss();
+                                context.startActivity(new Intent(context, LoginActivity.class));
+                            }
+                        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {//响应事件
+                        dialog.dismiss();
+                    }
+                }).show();//在按键响应事件中显示此对话框
+            }
+        });
 
         viewHolder.tvTitle.setText(datas.get(position).getTitle());
         viewHolder.tvPrice.setText(datas.get(position).getPrice());
@@ -102,7 +135,7 @@ public class ProductSearchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(context, datas.get(position).getId(), Toast.LENGTH_SHORT).show();
-                if (datas.get(position).getColl().equals("2")||datas.get(position).getColl().equals("-1")) {
+                if (datas.get(position).getColl().equals("2") || datas.get(position).getColl().equals("-1")) {
                     finalViewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_on));
                 } else {
                     finalViewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_off));
@@ -180,11 +213,11 @@ public class ProductSearchAdapter extends BaseAdapter {
                     }
                 }
 
-
             }
         });
         return convertView;
     }
+
 
     static class ViewHolder {
         @BindView(R.id.SimpleDraweeView)
@@ -197,6 +230,12 @@ public class ProductSearchAdapter extends BaseAdapter {
         TextView tv;
         @BindView(R.id.tv_price)
         TextView tvPrice;
+        @BindView(R.id.rl_money)
+        RelativeLayout rlMoney;
+        @BindView(R.id.tv_showmoney)
+        TextView tvShowmoney;
+        @BindView(R.id.rl_showmoney)
+        RelativeLayout rlShowmoney;
         @BindView(R.id.img_collect)
         ImageView imgCollect;
 

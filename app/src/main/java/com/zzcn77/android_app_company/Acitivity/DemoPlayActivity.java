@@ -100,7 +100,6 @@ public class DemoPlayActivity extends BaseActivity {
             forumContext.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
         forumContext.addJavascriptInterface(new JsObject(), "onClick");
-        forumContext.addJavascriptInterface(new JsObject(), "onClick");
         com.tencent.smtt.sdk.WebSettings webSettings = forumContext.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setPluginState(com.tencent.smtt.sdk.WebSettings.PluginState.ON);

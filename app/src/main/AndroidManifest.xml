@@ -77,53 +77,35 @@
         <activity
             android:name=".Acitivity.NewsDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.SettingActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.LanguageActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.ChangePasswordActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.ConsultActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.SchemeAcitivty"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.MyCollectActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.ProductDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
             android:alwaysRetainTaskState="true"
@@ -132,48 +114,42 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Acitivity.PeomotionDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.DemoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme_Umeng_Push_Splash"></activity>
-
+            android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
             android:name=".Acitivity.DemoSerachActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Acitivity.PdfActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.ProductSearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            ></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <service android:name=".Service.AdvanceLoadX5Service">
+        <service android:name=".Service.AdvanceLoadX5Service"></service>
+        <service android:name=".Service.DownloadService"></service>
+        <service android:name=".Service.DownloadPDF"></service>
 
-        </service>
-        <service android:name=".Service.DownloadService">
-
-        </service>
-        <service android:name=".Service.DownloadPDF">
-
-        </service>
+        <activity
+            android:name=".Acitivity.BigImageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
 
     </application>
 

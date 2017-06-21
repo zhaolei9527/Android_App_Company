@@ -53,6 +53,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
     @BindView(R.id.sv)
     ScrollView sv;
     private Dialog dialog;
+    private FangAnDetailBean fangAnDetailBean;
 
     @Override
     protected int setthislayout() {
@@ -71,7 +72,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
     @Override
     protected void initListener() {
         imgBack.setOnClickListener(this);
-
+        SimpleDraweeView.setOnClickListener(this);
         forumContext.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -116,7 +117,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Networkexception));
                     } else {
-                        final FangAnDetailBean fangAnDetailBean = new Gson().fromJson(decode, FangAnDetailBean.class);
+                        fangAnDetailBean = new Gson().fromJson(decode, FangAnDetailBean.class);
                         if (fangAnDetailBean.getStu().equals("1")) {
                             if (tvTitle != null)
                                 tvTitle.setText(fangAnDetailBean.getRes().getTitle());
@@ -176,6 +177,11 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.img_back:
                 finish();
+                break;
+            case R.id.SimpleDraweeView:
+                Intent intent = new Intent(context, BigImageActivity.class);
+                intent.putExtra("imgurl",UrlUtils.BaseImg + fangAnDetailBean.getRes().getImgurl());
+                startActivity(intent);
                 break;
         }
     }

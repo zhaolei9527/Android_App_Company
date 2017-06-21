@@ -123,5 +123,6 @@
     <string name="Thecaptchahasfailed">验证码错误</string>
     <string name="Enterthesearch">请输入搜索内容</string>
     <string name="Areyouexit">确定退出吗？</string>
+    <string name="Lookprice">查看价格</string>
 
 </resources>

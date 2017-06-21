@@ -59,6 +59,31 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     ScrollView sv;
     private Dialog dialog;
 
+//    public class JavascriptInterface {
+//        @android.webkit.JavascriptInterface
+//        public void startPhotoActivity(String imageUrl) {
+//            Intent intent = new Intent(NewsDetailsActivity.this, BigImageActivity.class);
+//            intent.putExtra("imgurl", imageUrl);
+//            startActivity(intent);
+//        }
+//    }
+//
+//    private String readJS() {
+//        try {
+//            InputStream inStream = getAssets().open("js.txt");
+//            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+//            byte[] bytes = new byte[1024];
+//            int len = 0;
+//            while ((len = inStream.read(bytes)) > 0) {
+//                outStream.write(bytes, 0, len);
+//            }
+//            return outStream.toString();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
     @Override
     protected int setthislayout() {
         return R.layout.news_details_layout;
@@ -71,12 +96,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         if (null != ix5) {
             ix5.setScrollBarFadingEnabled(false);
         }
+        forumContext.getSettings().setJavaScriptEnabled(true);
+        //    forumContext.addJavascriptInterface(new JavascriptInterface(), "mainActivity");
     }
+
 
     @Override
     protected void initListener() {
         imgBack.setOnClickListener(this);
-
         forumContext.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -87,6 +114,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
+                // forumContext.loadUrl("javascript:(" + readJS() + ")()");
+
                 int w = View.MeasureSpec.makeMeasureSpec(0,
                         View.MeasureSpec.UNSPECIFIED);
                 int h = View.MeasureSpec.makeMeasureSpec(0,

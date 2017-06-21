@@ -77,7 +77,6 @@
             android:layout_height="match_parent">
 
             <ListView
-                android:scrollbars="none"
                 android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

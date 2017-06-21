@@ -30,6 +30,7 @@
 -keepattributes Signature
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity
+-keep public class * extends android.app.BaseActivity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver

@@ -5,13 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,6 +46,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
+
+import static com.zzcn77.android_app_company.R.id.tv_foot_more;
 
 /**
  * Created by 赵磊 on 2017/5/31.
@@ -61,7 +65,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.img_power_search)
     ImageView imgPowerSearch;
     @BindView(R.id.swipe_target)
-    GridView swipeTarget;
+    GridViewWithHeaderAndFooter swipeTarget;
     @BindView(R.id.swipe_load_more_footer)
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
@@ -72,6 +76,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     LinearLayout llEmpty;
     @BindView(R.id.img_back)
     ImageView imgBack;
+    @BindView(tv_foot_more)
+    TextView tvFootMore;
     private int page = 1;
     private String keywords = "";
     private String cid = "";
@@ -87,7 +93,6 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private int po;
     private BroadcastReceiver broadcastReceiver;
     private BroadcastReceiver receiver;
-    private View foot;
 
     @Override
     protected int setthislayout() {
@@ -169,10 +174,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
 
-        foot = View.inflate(context, R.layout.list_foot_layout, null);
-        //  swipeTarget.addFooterView(foot);
-        swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 po = position;
@@ -258,6 +260,13 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     end_price = intent.getStringExtra("end_price");
                     scrolledY = -2;
                 }
+                if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadMoreEnabled(true);
+                }
+                if (tvFootMore != null) {
+                    tvFootMore.setText(getString(R.string.uploading));
+                    tvFootMore.setVisibility(View.VISIBLE);
+                }
                 if (dialog != null)
                     dialog.show();
                 if (swipeTarget != null)
@@ -275,14 +284,16 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     public void onLoadMore() {
         if (SwipeRefreshLayout != null)
             SwipeRefreshLayout.setEnabled(false);
+        if (swipeTarget != null)
+            swipeTarget.setEnabled(false);
         if (swipeToLoadLayout != null)
             swipeToLoadLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     page = page + 1;
                     initData();
-                    if (foot != null) {
-                        foot.setVisibility(View.GONE);
+                    if (tvFootMore != null) {
+                        tvFootMore.setVisibility(View.INVISIBLE);
                     }
                 }
             }, 0);
@@ -294,10 +305,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         if (swipeToLoadLayout != null) {
             swipeToLoadLayout.setLoadMoreEnabled(true);
         }
-        if (foot != null) {
-            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-            tv_foot_more.setText(getString(R.string.uploading));
-            foot.setVisibility(View.VISIBLE);
+        if (tvFootMore != null) {
+            tvFootMore.setText(getString(R.string.uploading));
+            tvFootMore.setVisibility(View.VISIBLE);
         }
         if (SwipeRefreshLayout != null)
             SwipeRefreshLayout.postDelayed(new Runnable() {
@@ -317,6 +327,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
+                if (swipeTarget != null)
+                    swipeTarget.setEnabled(true);
                 if (decode.isEmpty()) {
                     if (swipeToLoadLayout != null)
                         swipeToLoadLayout.setLoadingMore(false);
@@ -324,8 +336,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                         SwipeRefreshLayout.setRefreshing(false);
                     if (context != null)
                         EasyToast.showShort(context, getString(R.string.Networkexception));
-                    if (foot != null) {
-                        foot.setVisibility(View.VISIBLE);
+                    if (tvFootMore != null) {
+                        tvFootMore.setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (dialog.isShowing()) {
@@ -335,10 +347,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     }
                     if (decode.contains("code\":\"111\"")) {
 
-                        if (foot != null) {
-                            foot.setVisibility(View.VISIBLE);
-                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                        if (tvFootMore != null) {
+                            tvFootMore.setVisibility(View.VISIBLE);
+                            tvFootMore.setText(getResources().getString(R.string.NOTMORE));
                         }
 
                         if (page == 1) {
@@ -363,8 +374,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     }
                     Goods_ListsBean goods_listsBean = new Gson().fromJson(decode, Goods_ListsBean.class);
                     if (goods_listsBean.getStu().equals("1")) {
-                        if (foot != null) {
-                            foot.setVisibility(View.VISIBLE);
+                        if (tvFootMore != null) {
+                            tvFootMore.setVisibility(View.VISIBLE);
                         }
                         if (page == 1) {
                             if (swipeTarget != null) {
@@ -395,8 +406,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                             SwipeRefreshLayout.setRefreshing(false);
                         if (context != null)
                             EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                        if (foot != null) {
-                            foot.setVisibility(View.VISIBLE);
+                        if (tvFootMore != null) {
+                            tvFootMore.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -411,8 +422,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     SwipeRefreshLayout.setRefreshing(false);
                 if (context != null)
                     EasyToast.showShort(context, getString(R.string.Networkexception));
-                if (foot != null) {
-                    foot.setVisibility(View.VISIBLE);
+                if (tvFootMore != null) {
+                    tvFootMore.setVisibility(View.VISIBLE);
                 }
             }
         })
@@ -456,8 +467,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 SwipeRefreshLayout.setRefreshing(false);
             if (context != null)
                 EasyToast.showShort(context, getString(R.string.Notconnect));
-            if (foot != null) {
-                foot.setVisibility(View.VISIBLE);
+            if (tvFootMore != null) {
+                tvFootMore.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -510,4 +521,10 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

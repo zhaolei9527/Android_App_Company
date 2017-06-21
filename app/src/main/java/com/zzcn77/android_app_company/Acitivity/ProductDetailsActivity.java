@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
@@ -59,7 +60,6 @@ import java.util.Map;
 import butterknife.BindView;
 
 import static com.taobao.accs.ACCSManager.mContext;
-import static com.zzcn77.android_app_company.R.id.rl_call_phone;
 import static com.zzcn77.android_app_company.R.id.rl_download;
 import static com.zzcn77.android_app_company.Service.DownloadPDF.DOWNLOAD_PATH;
 
@@ -88,15 +88,26 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     CheckBox cbCollect;
     @BindView(R.id.ll_collect)
     LinearLayout llCollect;
-    @BindView(rl_call_phone)
-    RelativeLayout rlCallPhone;
     @BindView(R.id.rl_download)
     RelativeLayout rlDownload;
     @BindView(R.id.tv_download)
     TextView tvDownload;
+    @BindView(R.id.ll_money)
+    LinearLayout llMoney;
+    @BindView(R.id.tv_showmoney)
+    TextView tvShowmoney;
+    @BindView(R.id.ll_showmoney)
+    LinearLayout llShowmoney;
+    @BindView(R.id.img)
+    ImageView img;
+    @BindView(R.id.tv)
+    TextView tv;
+    @BindView(R.id.rl_call_phone)
+    RelativeLayout rlCallPhone;
+    @BindView(R.id.img2)
+    ImageView img2;
 
     private int isDownload = 0;
-
     private Dialog dialog;
     private String stu;
     private Goods_NYBean goods_nyBean;
@@ -118,11 +129,23 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             ix5.setScrollBarFadingEnabled(false);
         }
 
+        if (SPUtil.get(context, "id", "").equals("")) {
+            llMoney.setVisibility(View.GONE);
+            llShowmoney.setVisibility(View.VISIBLE);
+            tvShowmoney.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+            tvShowmoney.getPaint().setAntiAlias(true);//抗锯齿
+        } else {
+            llShowmoney.setVisibility(View.GONE);
+            llMoney.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
     @Override
     protected void initListener() {
+        llShowmoney.setOnClickListener(this);
+        SimpleDraweeView.setOnClickListener(this);
         imgBack.setOnClickListener(this);
         rlCallPhone.setOnClickListener(this);
         llCollect.setOnClickListener(this);
@@ -306,6 +329,30 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.ll_showmoney:
+                new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                        .setMessage(R.string.Youarenotcurrentlyloggedin)//设置显示的内容
+                        .setPositiveButton(R.string.loginnow, new DialogInterface.OnClickListener() {//添加确定按钮
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                                // TODO Auto-generated method stub
+                                dialog.dismiss();
+                                startActivity(new Intent(context, LoginActivity.class));
+                            }
+                        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {//响应事件
+                        dialog.dismiss();
+                    }
+                }).show();//在按键响应事件中显示此对话框
+                break;
+            case R.id.SimpleDraweeView:
+                if (goods_nyBean != null) {
+                    Intent intent1 = new Intent(context, BigImageActivity.class);
+                    intent1.putExtra("imgurl", UrlUtils.BaseImg + goods_nyBean.getRes().getImg_lb());
+                    startActivity(intent1);
+                }
+                break;
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
                 if (existMainActivity) {
@@ -451,4 +498,5 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         super.onDestroy();
         unregisterReceiver(receiver);
     }
+
 }

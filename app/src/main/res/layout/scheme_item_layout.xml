@@ -11,13 +11,14 @@
         android:layout_height="@dimen/y120"
         android:layout_margin="@dimen/x5"
         fresco:placeholderImage="@drawable/imgloading" />
+
     <TextView
-        android:layout_marginTop="@dimen/x3"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x5"
         android:layout_marginLeft="@dimen/x5"
+        android:layout_marginTop="@dimen/x3"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="#333"

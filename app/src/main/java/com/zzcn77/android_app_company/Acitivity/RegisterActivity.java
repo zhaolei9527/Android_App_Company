@@ -103,10 +103,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        if (!phone.matches("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")) {
-            EasyToast.showShort(context, getResources().getString(R.string.phoneisnotregx));
-            return;
-        }
 
         emali = etEmail.getText().toString().trim();
         if (emali.isEmpty()) {

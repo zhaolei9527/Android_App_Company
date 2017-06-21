@@ -92,6 +92,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -114,6 +115,26 @@
                         android:textSize="@dimen/x25"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_showmoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginRight="@dimen/x10">
+
+                    <TextView
+                        android:id="@+id/tv_showmoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Lookprice"
+                        android:textColor="#ffa919"
+                        android:textSize="@dimen/x15"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -179,6 +200,7 @@
             android:layout_height="@dimen/y39"
             android:layout_marginLeft="1px"
             android:background="#ffce7d">
+
             <ImageView
                 android:id="@+id/img2"
                 android:layout_width="@dimen/x20"

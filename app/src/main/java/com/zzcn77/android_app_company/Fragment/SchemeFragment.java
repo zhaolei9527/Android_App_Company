@@ -7,7 +7,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -223,7 +222,6 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                     volleyError.printStackTrace();
                     if (swipeToLoadLayout != null) {
                         swipeToLoadLayout.setLoadingMore(false);
-                        ;
                     }
                     if (SwipeRefreshLayout != null) {
                         SwipeRefreshLayout.setRefreshing(false);
