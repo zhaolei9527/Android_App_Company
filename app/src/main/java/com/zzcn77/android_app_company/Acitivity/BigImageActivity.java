@@ -20,9 +20,7 @@ public class BigImageActivity extends BaseActivity {
     @Override
     protected void ready() {
         super.ready();
-       /*set it to be no title*/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-       /*set it to be full screen*/
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
