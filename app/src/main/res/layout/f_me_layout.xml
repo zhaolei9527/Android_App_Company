@@ -20,14 +20,15 @@
 
     </LinearLayout>
 
-
     <LinearLayout
+        android:id="@+id/ll_headbg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y162"
         android:background="@mipmap/mybg"
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/img_head"
             android:layout_width="@dimen/x80"
             android:layout_height="@dimen/x80"
             android:layout_gravity="center_horizontal"

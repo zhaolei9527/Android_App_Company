@@ -1,8 +1,10 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.graphics.drawable.Animatable;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
@@ -12,12 +14,15 @@ import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
 
 import butterknife.BindView;
+import me.relex.photodraweeview.OnPhotoTapListener;
 
 
 public class BigImageActivity extends BaseActivity {
-    //
     @BindView(R.id.PhotoDraweeView)
     me.relex.photodraweeview.PhotoDraweeView PhotoDraweeView;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
+
     @Override
     protected void ready() {
         super.ready();
@@ -26,6 +31,7 @@ public class BigImageActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
+
     @Override
     protected int setthislayout() {
         return R.layout.activity_big_image;
@@ -52,7 +58,21 @@ public class BigImageActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
+        PhotoDraweeView.setOnPhotoTapListener(new OnPhotoTapListener() {
 
+            @Override
+            public void onPhotoTap(View arg0, float arg1, float arg2) {
+                finish();
+            }
+        });
+
+
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

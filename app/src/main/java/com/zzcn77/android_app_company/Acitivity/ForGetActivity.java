@@ -45,7 +45,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     Button btnOk;
     @BindView(R.id.btn_get)
     Button btnGet;
-    public static final int time = 60;
+    public static int time = 60;
     private Thread thread;
     private String md5password;
     private Runnable sendable;
@@ -91,6 +91,8 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                                             btnGet.setText(getResources().getText(R.string.get));
                                         }
                                     }
+                                } else {
+                                    time = 0;
                                 }
                             }
                         });
@@ -223,7 +225,6 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void getcaptcha() {
-
         if (etEmail.getText().toString().trim().isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.emailisEmpty));
             return;
@@ -233,8 +234,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
             return;
         }
-        noterror = true;
-        new Thread(sendable).start();
+
         //// TODO: 2017/5/18  发送验证码
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "emailcode", new Response.Listener<String>() {
@@ -249,7 +249,6 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                         btnGet.setEnabled(true);
                         btnGet.setText(getResources().getText(R.string.get));
                         noterror = false;
-
                     }
                 } else {
                     EmailCodeBean emailCodeBean = new Gson().fromJson(decode, EmailCodeBean.class);
@@ -304,13 +303,12 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         boolean connected = Utils.isConnected(context);
         if (connected) {
             requestQueue.add(stringRequest);
+            noterror = true;
+            new Thread(sendable).start();
         } else {
             if (context != null) {
                 EasyToast.showShort(context, getString(R.string.Notconnect));
             }
-
         }
-
-
     }
 }

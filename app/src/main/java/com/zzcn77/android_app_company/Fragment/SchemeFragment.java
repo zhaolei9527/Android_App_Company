@@ -73,11 +73,8 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         });
         foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
         swipeTarget.addFooterView(foot);
-
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             private Intent intent;
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, SchemeAcitivty.class);
