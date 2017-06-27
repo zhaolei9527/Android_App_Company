@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
+
+import static com.zzcn77.android_app_company.R.id.tv_foot_more;
 
 /**
  * Created by 赵磊 on 2017/5/26.
@@ -42,18 +45,20 @@ import butterknife.BindView;
 
 public class DemoSerachActivity extends BaseActivity implements AdapterView.OnItemClickListener, OnLoadMoreListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     //
-    @BindView(R.id.img_back)
-    ImageView imgBack;
     @BindView(R.id.ll_empty)
     LinearLayout llEmpty;
     @BindView(R.id.swipe_target)
-    GridView swipeTarget;
+    GridViewWithHeaderAndFooter swipeTarget;
     @BindView(R.id.swipe_load_more_footer)
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
     @BindView(R.id.SwipeRefreshLayout)
     android.support.v4.widget.SwipeRefreshLayout SwipeRefreshLayout;
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+    @BindView(tv_foot_more)
+    TextView tvFootMore;
     private int page = 1;
     Demosadapter demosadapter;
     private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
@@ -116,7 +121,6 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                         if (decode.isEmpty()) {
                             if (swipeToLoadLayout != null) {
                                 swipeToLoadLayout.setLoadingMore(false);
-
                             }
                             if (SwipeRefreshLayout != null) {
                                 SwipeRefreshLayout.setRefreshing(false);
@@ -137,6 +141,9 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                 if (demosadapter == null) {
                                     dialog.dismiss();
                                     llEmpty.setVisibility(View.VISIBLE);
+                                    if (tvFootMore != null) {
+                                        tvFootMore.setVisibility(View.GONE);
+                                    }
                                     if (swipeToLoadLayout != null) {
                                         swipeToLoadLayout.setLoadMoreEnabled(false);
                                     }
@@ -147,6 +154,14 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                 }
                                 if (context != null) {
                                     Toast.makeText(context, R.string.NOTMORE, Toast.LENGTH_SHORT).show();
+                                }
+                                if (tvFootMore != null) {
+                                    tvFootMore.setVisibility(View.VISIBLE);
+                                    tvFootMore.setText(getString(R.string.NOTMORE));
+                                    if (swipeToLoadLayout != null) {
+                                        swipeToLoadLayout.setLoadingMore(false);
+                                        swipeToLoadLayout.setLoadMoreEnabled(false);
+                                    }
                                 }
                                 return;
                             }
@@ -161,6 +176,22 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                             }
                             YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
                             if (yanShiBean.getStu().equals("1")) {
+                                if (yanShiBean.getRes().size() < 10) {
+                                    if (tvFootMore != null) {
+                                        tvFootMore.setVisibility(View.VISIBLE);
+                                        tvFootMore.setText(getResources().getString(R.string.NOTMORE));
+                                        if (swipeToLoadLayout != null)
+                                            swipeToLoadLayout.setLoadingMore(false);
+                                        swipeToLoadLayout.setLoadMoreEnabled(false);
+                                    }
+                                } else {
+                                    if (swipeToLoadLayout != null)
+                                        swipeToLoadLayout.setLoadMoreEnabled(true);
+                                    if (tvFootMore != null) {
+                                        tvFootMore.setText(getString(R.string.uploading));
+                                        tvFootMore.setVisibility(View.VISIBLE);
+                                    }
+                                }
                                 if (page == 1) {
                                     if (swipeTarget != null) {
                                         demosadapter = new Demosadapter(context, (ArrayList) yanShiBean.getRes());
@@ -207,6 +238,9 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                                 if (context != null) {
                                     EasyToast.showShort(context, getString(R.string.Abnormalserver));
                                 }
+                                if (tvFootMore != null) {
+                                    tvFootMore.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
                     }
@@ -223,6 +257,9 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                         }
                         if (context != null) {
                             EasyToast.showShort(context, getString(R.string.Networkexception));
+                        }
+                        if (tvFootMore != null) {
+                            tvFootMore.setVisibility(View.VISIBLE);
                         }
                     }
                 })
@@ -251,11 +288,18 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                     }
                     if (context != null) {
                         EasyToast.showShort(context, getString(R.string.Notconnect));
+                        if (tvFootMore != null) {
+                            tvFootMore.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             } catch (Exception e) {
+                if (tvFootMore != null) {
+                    tvFootMore.setVisibility(View.VISIBLE);
+                }
                 // 可忽略的异常
                 if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadMoreEnabled(true);
                     swipeToLoadLayout.setLoadingMore(false);
 
                 }
@@ -269,10 +313,13 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                 llEmpty.setVisibility(View.VISIBLE);
             }
             if (context != null) {
-                Toast.makeText(context, "出错了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.hasError), Toast.LENGTH_SHORT).show();
+                if (tvFootMore != null) {
+                    tvFootMore.setVisibility(View.VISIBLE);
+                }
                 if (swipeToLoadLayout != null) {
+                    swipeToLoadLayout.setLoadMoreEnabled(true);
                     swipeToLoadLayout.setLoadingMore(false);
-
                 }
                 if (SwipeRefreshLayout != null) {
                     SwipeRefreshLayout.setRefreshing(false);
@@ -285,6 +332,9 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
     //上拉加载
     @Override
     public void onLoadMore() {
+        if (tvFootMore != null) {
+            tvFootMore.setVisibility(View.GONE);
+        }
         if (swipeTarget != null) {
             swipeTarget.setEnabled(false);
         }
@@ -311,6 +361,15 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
         }
 
         if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.setLoadMoreEnabled(true);
+        }
+
+        if (tvFootMore != null) {
+            tvFootMore.setText(getString(R.string.uploading));
+            tvFootMore.setVisibility(View.VISIBLE);
+        }
+
+        if (swipeToLoadLayout != null) {
             swipeToLoadLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -320,7 +379,6 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
             }, 0);
         }
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -337,4 +395,5 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                 break;
         }
     }
+
 }

@@ -32,7 +32,8 @@
         android:id="@+id/rl_auto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y35"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,7 +80,6 @@
             android:textColor="#333"
             android:textSize="@dimen/x12" />
 
-
         <CheckBox
             android:id="@+id/cb_cn"
             android:layout_width="@dimen/y15"
@@ -89,7 +89,7 @@
             android:layout_marginRight="@dimen/x10"
             android:background="@drawable/checkboxbg"
             android:button="@null"
-            android:checked="false"
+            android:checked="true"
             android:clickable="false" />
     </RelativeLayout>
 

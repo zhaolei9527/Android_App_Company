@@ -120,6 +120,10 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
                     } else {
                         fangAnDetailBean = new Gson().fromJson(decode, FangAnDetailBean.class);
                         if (fangAnDetailBean.getStu().equals("1")) {
+
+
+
+
                             if (tvTitle != null)
                                 tvTitle.setText(fangAnDetailBean.getRes().getTitle());
                             if (SimpleDraweeView != null)

@@ -31,10 +31,10 @@
     </RelativeLayout>
 
     <ScrollView
-        android:scrollbars="none"
         android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,22 +70,16 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/tv_title"
+                    android:layout_marginLeft="@dimen/x5"
                     android:layout_marginRight="@dimen/x5"
                     android:layout_marginTop="@dimen/y5">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/now"
-                        android:textColor="#666"
-                        android:textSize="@dimen/x13" />
 
                     <TextView
                         android:id="@+id/tv_dis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffa919"
-                        android:textSize="@dimen/x25"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/x18" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -94,8 +88,7 @@
                 android:id="@+id/forum_context"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/y10"
-                 />
+                android:layout_marginTop="@dimen/y10" />
 
         </LinearLayout>
     </ScrollView>

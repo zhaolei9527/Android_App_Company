@@ -30,6 +30,7 @@ import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
+import com.zzcn77.android_app_company.Utils.Other;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.View.MyListView;
@@ -115,7 +116,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         unbinder.unbind();
     }
 
-    //最新动态列表
+    //最新动态列表asdasd
     class newsAdapter extends PagerAdapter {
 
         ArrayList<IndexBean.ResBean.DongtaiBean> datas = new ArrayList<>();
@@ -205,6 +206,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         return R.layout.f_home_layout;
     }
 
+
     @Override
     protected void initView() {
         super.initView();
@@ -212,9 +214,21 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         RollPagerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
-                intent.putExtra("id", index.getRes().getLunbo().get(position).getId());
-                startActivity(intent);
+                if (Other.NEWSDETAILSACTIVITY.equals(index.getRes().getLunbo().get(position).getType())) {
+                    Intent intent = new Intent(mActivity, NewsDetailsActivity.class);
+                    intent.putExtra("id", index.getRes().getLunbo().get(position).getBid());
+                    startActivity(intent);
+                } else if (Other.PEOMOTIONDETAILSACTIVITY.equals(index.getRes().getLunbo().get(position).getType())) {
+                    Intent intent = new Intent(mActivity, PeomotionDetailsActivity.class);
+                    intent.putExtra("id", index.getRes().getLunbo().get(position).getBid());
+                    startActivity(intent);
+                } else if (Other.PRODUCTDETAILSACTIVITY.equals(index.getRes().getLunbo().get(position).getType()) || Other.PRODUCTSTARDETAILSACTIVITY.equals(index.getRes().getLunbo().get(position).getType())) {
+                    Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
+                    intent.putExtra("id", index.getRes().getLunbo().get(position).getBid());
+                    startActivity(intent);
+                } else {
+
+                }
             }
         });
         RollPagerView.setPlayDelay(3000);

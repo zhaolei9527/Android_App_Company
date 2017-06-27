@@ -100,7 +100,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         //    forumContext.addJavascriptInterface(new JavascriptInterface(), "mainActivity");
     }
 
-
     @Override
     protected void initListener() {
         imgBack.setOnClickListener(this);

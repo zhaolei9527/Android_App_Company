@@ -31,7 +31,7 @@ public class LoopAdapter extends LoopPagerAdapter {
     public View getView(ViewGroup container, int position) {
         ImageView view = new ImageView(container.getContext());
         VolleyLoadPicture vlp = new VolleyLoadPicture(container.getContext(), view);
-        vlp.getmImageLoader().get(UrlUtils.BaseImg + imgs.get(position).getImg_lb(), vlp.getOne_listener());
+        vlp.getmImageLoader().get(UrlUtils.BaseImg + imgs.get(position).getImg(), vlp.getOne_listener());
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return view;

@@ -45,7 +45,6 @@ public class LanguageActivity extends BaseActivity implements View.OnClickListen
             cbAuto.setChecked(true);
             cbCn.setChecked(false);
             cbEn.setChecked(false);
-
         }
         if (language.equals("cn")) {
             cbAuto.setChecked(false);

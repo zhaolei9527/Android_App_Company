@@ -29,24 +29,25 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/SwipeRefreshLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/x5">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <include layout="@layout/layout_empty"></include>
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SwipeRefreshLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <include layout="@layout/layout_empty"></include>
 
             <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
                 android:id="@+id/swipeToLoadLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <GridView
+                <in.srain.cube.views.GridViewWithHeaderAndFooter
                     android:id="@+id/swipe_target"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -55,7 +56,7 @@
                     android:numColumns="2"
                     android:paddingLeft="@dimen/x5"
                     android:paddingRight="@dimen/x5"
-                    android:scrollbars="none"
+                    android:transcriptMode="alwaysScroll"
                     android:verticalSpacing="@dimen/x5" />
 
                 <com.zzcn77.android_app_company.View.LoadMoreFooterView
@@ -66,14 +67,18 @@
                     android:gravity="center">
 
                 </com.zzcn77.android_app_company.View.LoadMoreFooterView>
-
             </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 
-
-        </FrameLayout>
-
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/tv_foot_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/uploading"
+        android:textColor="#666"
+        android:textSize="@dimen/x12" />
 
 
 </LinearLayout>

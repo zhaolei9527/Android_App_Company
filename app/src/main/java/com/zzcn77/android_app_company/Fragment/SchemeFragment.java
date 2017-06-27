@@ -7,6 +7,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -72,9 +73,10 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
             }
         });
         foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
-        swipeTarget.addFooterView(foot);
+        swipeTarget.addFooterView(foot, null, false);
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private Intent intent;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, SchemeAcitivty.class);
@@ -134,7 +136,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                         }
                         if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
                             EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                        if (foot!=null)
+                        if (foot != null)
                             foot.setVisibility(View.GONE);
 
                     } else {
@@ -152,7 +154,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                             if (swipeTarget != null) {
                                 swipeTarget.setEnabled(true);
                             }
-                            if (foot!=null){
+                            if (foot != null) {
                                 foot.setVisibility(View.VISIBLE);
                                 TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                 tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
@@ -164,7 +166,28 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                         }
                         fangAnBean = new Gson().fromJson(decode, FangAnBean.class);
                         if (fangAnBean.getStu().equals("1")) {
-                            if (foot!=null)
+                            if (fangAnBean.getRes().size() < 10) {
+                                if (foot != null) {
+                                    foot.setVisibility(View.VISIBLE);
+                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                    if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
+                                        tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                    if (swipeToLoadLayout != null){
+                                        swipeToLoadLayout.setLoadingMore(false);
+                                        swipeToLoadLayout.setLoadMoreEnabled(false);
+                                    }
+                                }
+                            } else {
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadMoreEnabled(true);
+                                if (foot != null) {
+                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                    tv_foot_more.setText(getString(R.string.uploading));
+                                    foot.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if (foot != null)
                                 foot.setVisibility(View.VISIBLE);
 
                             if (page == 1) {
@@ -208,7 +231,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
 
                             if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
                                 EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                            if (foot!=null)
+                            if (foot != null)
                                 foot.setVisibility(View.VISIBLE);
 
                         }
@@ -226,7 +249,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                     }
                     if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                    if (foot!=null)
+                    if (foot != null)
                         foot.setVisibility(View.VISIBLE);
 
                 }
@@ -254,13 +277,13 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                 }
                 if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
                     EasyToast.showShort(mActivity, getString(R.string.Notconnect));
-                if (foot!=null)
+                if (foot != null)
                     foot.setVisibility(View.VISIBLE);
 
             }
         } catch (Exception e) {
             // 可忽略的异常
-            if (foot!=null)
+            if (foot != null)
                 foot.setVisibility(View.VISIBLE);
 
         }
@@ -283,7 +306,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                     initData(null);
                 }
             }, 0);
-        if (foot!=null)
+        if (foot != null)
             foot.setVisibility(View.GONE);
 
     }
@@ -294,7 +317,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
     public void onRefresh() {
         if (swipeToLoadLayout != null)
             swipeToLoadLayout.setLoadMoreEnabled(true);
-        if (foot!=null){
+        if (foot != null) {
             TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
             tv_foot_more.setText(getString(R.string.uploading));
             foot.setVisibility(View.VISIBLE);

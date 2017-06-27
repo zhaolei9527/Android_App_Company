@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Acitivity.DemoPlayActivity;
 import com.zzcn77.android_app_company.Acitivity.DemoSerachActivity;
 import com.zzcn77.android_app_company.Adapter.Demosadapter;
-import com.zzcn77.android_app_company.Bean.FangAnBean;
 import com.zzcn77.android_app_company.Bean.YanShiBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
@@ -88,7 +87,8 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
             }
         });
         foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
-        swipeTarget.addFooterView(foot);
+        swipeTarget.addFooterView(foot, null, false);
+
 
         swipeTarget.setOnItemClickListener(this);
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -146,8 +146,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         startActivity(intent1);
     }
 
-    private FangAnBean fangAnBean;
-
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
@@ -192,13 +190,34 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                 tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
 
                             }
-                            if (swipeToLoadLayout!=null){
+                            if (swipeToLoadLayout != null) {
                                 swipeToLoadLayout.setLoadMoreEnabled(false);
                             }
                             return;
                         }
                         YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
                         if (yanShiBean.getStu().equals("1")) {
+                            if (yanShiBean.getRes().size() < 10) {
+                                if (foot != null) {
+                                    foot.setVisibility(View.VISIBLE);
+                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                    tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                    if (swipeToLoadLayout != null)
+                                        swipeToLoadLayout.setLoadingMore(false);
+                                    swipeToLoadLayout.setLoadMoreEnabled(false);
+                                }
+                            } else {
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadMoreEnabled(true);
+                                if (foot != null) {
+                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                    if (DemoFragment.this != null && DemoFragment.this.isAdded())
+                                        tv_foot_more.setText(getString(R.string.uploading));
+                                    foot.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+
                             if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
                                 if (page == 1) {
                                     if (swipeTarget != null) {
@@ -343,7 +362,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 public void run() {
                     page = 1;
                     initData(null);
-                    if (foot!=null){
+                    if (foot != null) {
                         TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                         tv_foot_more.setText(getString(R.string.uploading));
                         foot.setVisibility(View.VISIBLE);

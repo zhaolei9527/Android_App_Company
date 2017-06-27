@@ -5,14 +5,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.R;
-
 import butterknife.BindView;
 import me.relex.photodraweeview.OnPhotoTapListener;
 
@@ -24,6 +22,7 @@ public class BigImageActivity extends BaseActivity {
     RelativeLayout rl;
 
     @Override
+
     protected void ready() {
         super.ready();
         requestWindowFeature(Window.FEATURE_NO_TITLE);

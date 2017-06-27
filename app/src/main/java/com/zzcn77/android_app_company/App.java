@@ -16,7 +16,6 @@ import cn.refactor.multistatelayout.MultiStateConfiguration;
 import cn.refactor.multistatelayout.MultiStateLayout;
 
 
-
 /**
  * Created by 赵磊 on 2017/5/12.
  */
@@ -59,6 +58,7 @@ public class App extends Application {
         //预加载x5内核
         Intent intent = new Intent(this, AdvanceLoadX5Service.class);
         startService(intent);
+
     }
     private void preinitX5WebCore() {
         if (!QbSdk.isTbsCoreInited()) {

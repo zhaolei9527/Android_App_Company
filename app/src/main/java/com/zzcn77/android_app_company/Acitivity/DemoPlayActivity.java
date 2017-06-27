@@ -49,7 +49,6 @@ public class DemoPlayActivity extends BaseActivity {
     @Override
     protected void ready() {
         super.ready();
-
     }
 
     @Override
@@ -58,7 +57,6 @@ public class DemoPlayActivity extends BaseActivity {
     }
 
     private class JsObject {
-
         @JavascriptInterface
         public void fullscreen() {
             //监听到用户点击全屏按钮
@@ -89,6 +87,7 @@ public class DemoPlayActivity extends BaseActivity {
             mVideoContainer.setVisibility(View.GONE);
             super.onHideCustomView();
         }
+
     }
 
     @Override
@@ -132,6 +131,7 @@ public class DemoPlayActivity extends BaseActivity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                 } catch (Exception e) {
+
                 }
                 return true;
             }

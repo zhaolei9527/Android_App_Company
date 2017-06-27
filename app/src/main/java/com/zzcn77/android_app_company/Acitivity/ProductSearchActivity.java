@@ -344,19 +344,21 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                         }
                     }
                     if (decode.contains("code\":\"111\"")) {
-
-                        if (tvFootMore != null) {
-                            tvFootMore.setVisibility(View.VISIBLE);
-                            tvFootMore.setText(getResources().getString(R.string.NOTMORE));
-                        }
-
                         if (page == 1) {
                             if (llEmpty != null)
                                 llEmpty.setVisibility(View.VISIBLE);
+                            if (tvFootMore != null) {
+                                tvFootMore.setVisibility(View.GONE);
+                                tvFootMore.setText(getResources().getString(R.string.NOTMORE));
+                            }
                         } else {
                             if (context != null)
                                 Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
                             page = page - 1;
+                            if (tvFootMore != null) {
+                                tvFootMore.setVisibility(View.VISIBLE);
+                                tvFootMore.setText(getResources().getString(R.string.NOTMORE));
+                            }
                         }
                         if (swipeToLoadLayout != null) {
                             swipeToLoadLayout.setLoadingMore(false);
@@ -372,6 +374,23 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                     }
                     Goods_ListsBean goods_listsBean = new Gson().fromJson(decode, Goods_ListsBean.class);
                     if (goods_listsBean.getStu().equals("1")) {
+                        if (goods_listsBean.getRes().getGoods().size() < 10) {
+                            if (tvFootMore != null) {
+                                tvFootMore.setVisibility(View.VISIBLE);
+                                tvFootMore.setText(getResources().getString(R.string.NOTMORE));
+                                if (swipeToLoadLayout != null)
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                            }
+                        } else {
+                            if (swipeToLoadLayout != null)
+                                swipeToLoadLayout.setLoadMoreEnabled(true);
+                            if (tvFootMore != null) {
+                                tvFootMore.setText(getString(R.string.uploading));
+                                tvFootMore.setVisibility(View.VISIBLE);
+                            }
+                        }
+
                         if (tvFootMore != null) {
                             tvFootMore.setVisibility(View.VISIBLE);
                         }

@@ -69,7 +69,8 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
         foot = View.inflate(context, R.layout.list_foot_layout, null);
-        lvSwipeTarget.addFooterView(foot);
+        lvSwipeTarget.addFooterView(foot,null,false);
+
     }
 
     @Override
@@ -143,6 +144,25 @@ public class PromotionActivity extends BaseActivity implements OnLoadMoreListene
                 } else {
                     CuxiaoBean cuxiaoBean = new Gson().fromJson(decode, CuxiaoBean.class);
                     if (cuxiaoBean.getStu().equals("1")) {
+                        if (cuxiaoBean.getRes().size()<10){
+                            if (foot != null) {
+                                foot.setVisibility(View.VISIBLE);
+                                TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                if (swipeToLoadLayout != null){
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                    swipeToLoadLayout.setLoadMoreEnabled(false);
+                                }
+                            }
+                        }else {
+                            if (swipeToLoadLayout != null)
+                                swipeToLoadLayout.setLoadMoreEnabled(true);
+                            if (foot!=null){
+                                TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                tv_foot_more.setText(getString(R.string.uploading));
+                                foot.setVisibility(View.VISIBLE);
+                            }
+                        }
                         if (foot != null)
                             foot.setVisibility(View.VISIBLE);
                         if (page == 1) {

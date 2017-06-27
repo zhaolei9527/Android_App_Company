@@ -86,8 +86,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         View head = View.inflate(mActivity, R.layout.product_head_layout, null);
         gvSwipeTarget = (MyGridView) head.findViewById(R.id.gv_swipe_target);
         foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
-        swipeTarget.addFooterView(foot);
-
+        swipeTarget.addFooterView(foot, null, false);
 
         swipeTarget.addHeaderView(head);
 
@@ -149,7 +148,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                         }
                         if (ProductFragment.this != null && ProductFragment.this.isAdded())
                             EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                        if (foot!=null){
+                        if (foot != null) {
                             foot.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -163,7 +162,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                         EasyToast.showShort(mActivity, getString(R.string.NOTMORE));
                                     }
                                     page = page - 1;
-                                    if (foot!=null){
+                                    if (foot != null) {
                                         foot.setVisibility(View.VISIBLE);
                                         TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                         tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
@@ -185,7 +184,25 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                 }
                                 goodsBean = new Gson().fromJson(decode, GoodsBean.class);
                                 if (goodsBean.getStu().equals("1")) {
-                                    if (foot!=null){
+                                    if (goodsBean.getRes().getGoodsmx().size() < 3) {
+                                        if (foot != null) {
+                                            foot.setVisibility(View.VISIBLE);
+                                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                            if (swipeToLoadLayout != null)
+                                                swipeToLoadLayout.setLoadingMore(false);
+                                            swipeToLoadLayout.setLoadMoreEnabled(false);
+                                        }
+                                    } else {
+                                        if (swipeToLoadLayout != null)
+                                            swipeToLoadLayout.setLoadMoreEnabled(true);
+                                        if (foot != null) {
+                                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                            tv_foot_more.setText(getString(R.string.uploading));
+                                            foot.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                    if (foot != null) {
                                         foot.setVisibility(View.VISIBLE);
                                     }
                                     if (page == 1) {
@@ -201,6 +218,8 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                         if (gvSwipeTarget != null) {
                                             gvSwipeTarget.setAdapter(gvProuctAdapter);
                                         }
+
+
                                         if (swipeTarget != null) {
                                             swipeTarget.setAdapter(productAdapter);
                                         }
@@ -225,7 +244,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                                     }
                                     if (ProductFragment.this != null && ProductFragment.this.isAdded())
                                         EasyToast.showShort(mActivity, getString(R.string.Abnormalserver));
-                                    if (foot!=null){
+                                    if (foot != null) {
                                         foot.setVisibility(View.VISIBLE);
                                     }
                                 }
@@ -243,7 +262,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                     }
                     if (ProductFragment.this != null && ProductFragment.this.isAdded())
                         EasyToast.showShort(mActivity, getString(R.string.Networkexception));
-                    if (foot!=null){
+                    if (foot != null) {
                         foot.setVisibility(View.VISIBLE);
                     }
                 }
@@ -269,7 +288,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                 }
                 if (ProductFragment.this != null && ProductFragment.this.isAdded())
                     EasyToast.showShort(mActivity, getString(R.string.Notconnect));
-                if (foot!=null){
+                if (foot != null) {
                     foot.setVisibility(View.VISIBLE);
                 }
 
@@ -294,7 +313,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
             public void run() {
                 page = page + 1;
                 initData(null);
-                if (foot!=null){
+                if (foot != null) {
                     foot.setVisibility(View.GONE);
                 }
 

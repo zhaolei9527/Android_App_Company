@@ -54,7 +54,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private String password;
     private String passwordAgain;
     private String passwordmd5;
-
     @Override
     protected int setthislayout() {
         return R.layout.register_layout;

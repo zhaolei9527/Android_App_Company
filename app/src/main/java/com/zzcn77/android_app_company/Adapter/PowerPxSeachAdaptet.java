@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by 赵磊 on 2017/5/24.
  */
 
-public class  PowerPxSeachAdaptet extends BaseAdapter {
+public class PowerPxSeachAdaptet extends BaseAdapter {
     //
     private Context context;
 
@@ -36,13 +36,14 @@ public class  PowerPxSeachAdaptet extends BaseAdapter {
         this.context = context;
         this.datas = datas;
     }
+
     @Override
     public int getCount() {
         return datas.size();
     }
 
     @Override
-    public  ArrayList<GoodsBean.ResBean.PxBean> getItem(int position) {
+    public ArrayList<GoodsBean.ResBean.PxBean> getItem(int position) {
         return datas;
     }
 
@@ -61,7 +62,7 @@ public class  PowerPxSeachAdaptet extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvTitle.setText(datas.get(position).getW_px()+"*"+datas.get(position).getH_px());
+        viewHolder.tvTitle.setText(datas.get(position).getPx());
 
         if (datas.get(position).getIscheck()) {
             viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.noraml));

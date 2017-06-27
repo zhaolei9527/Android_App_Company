@@ -123,6 +123,6 @@
     <string name="Thereisnorelevantcontent">No relevant content</string>
     <string name="Enterthesearch">Search content</string>
     <string name="Areyouexit">Sure to exit?</string>
-    <string name="Lookprice">LookPrice</string>
+    <string name="Lookprice">CheckPrice</string>
 
 </resources>
