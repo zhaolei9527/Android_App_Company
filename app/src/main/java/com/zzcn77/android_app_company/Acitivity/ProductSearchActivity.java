@@ -91,6 +91,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     private int po;
     private BroadcastReceiver broadcastReceiver;
     private BroadcastReceiver receiver;
+    private Intent intent;
+    private Intent intent1;
 
     @Override
     protected int setthislayout() {
@@ -503,6 +505,19 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            intent = new Intent(context, MainActivity.class);
+            intent.putExtra("thispage",1);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_search:
@@ -533,6 +548,9 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.img_back:
+                intent1 = new Intent(context, MainActivity.class);
+                intent1.putExtra("thispage",1);
+                startActivity(intent1);
                 finish();
                 break;
         }

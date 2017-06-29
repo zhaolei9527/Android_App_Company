@@ -73,6 +73,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     private Intent intent;
     private GoodsBean goodsBean;
     private View foot;
+    private View head;
 
     @Override
     protected int setLayoutResouceId() {
@@ -83,7 +84,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
     protected void initView() {
         super.initView();
         swipeToLoadLayout.setOnLoadMoreListener(this);
-        View head = View.inflate(mActivity, R.layout.product_head_layout, null);
+        head = View.inflate(mActivity, R.layout.product_head_layout, null);
         gvSwipeTarget = (MyGridView) head.findViewById(R.id.gv_swipe_target);
         foot = View.inflate(mActivity, R.layout.list_foot_layout, null);
         swipeTarget.addFooterView(foot, null, false);
@@ -130,8 +131,8 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         Intent intent1 = new Intent(mActivity, ProductSearchActivity.class);
         intent1.putExtra("keywords", content);
         startActivity(intent1);
+        mActivity.finish();
     }
-
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);

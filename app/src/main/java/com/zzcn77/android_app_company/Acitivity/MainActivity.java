@@ -184,6 +184,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int thispage = getIntent().getIntExtra("thispage", 0);
             if (thispage == 4) {
                 this.thispage = Other.ME;
+            } else if (thispage == 1) {
+                this.thispage = Other.PRODUCT;
             }
         }
         changecheck(thispage);

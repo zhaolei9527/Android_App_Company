@@ -63,15 +63,12 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initListener() {
-
         imgBack.setOnClickListener(this);
         btnSave.setOnClickListener(this);
-
     }
 
     @Override
     protected void initData() {
-
     }
 
     @Override
@@ -123,11 +120,9 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
                             dialog.dismiss();
                             if (context != null)
                                 EasyToast.showShort(context, getString(R.string.Networkexception));
-
                         } else {
                             ConsultBean consultBean = new Gson().fromJson(decode, ConsultBean.class);
                             if (String.valueOf(consultBean.getStu()).equals("1")) {
-                                // TODO: 2017/5/19 注册
                                 dialog.dismiss();
                                 if (context != null) {
                                     EasyToast.showShort(context, getString(R.string.submitsuccessfully));
