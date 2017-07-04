@@ -22,7 +22,6 @@ public class BigImageActivity extends BaseActivity {
     RelativeLayout rl;
 
     @Override
-
     protected void ready() {
         super.ready();
         requestWindowFeature(Window.FEATURE_NO_TITLE);

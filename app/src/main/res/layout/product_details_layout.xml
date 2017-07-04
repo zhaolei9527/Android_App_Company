@@ -101,11 +101,12 @@
                     android:layout_marginTop="@dimen/y10">
 
                     <TextView
+                        android:id="@+id/rmb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥"
                         android:textColor="#ffa919"
-                        android:textSize="@dimen/x13" />
+                        android:textSize="@dimen/x25"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_price"

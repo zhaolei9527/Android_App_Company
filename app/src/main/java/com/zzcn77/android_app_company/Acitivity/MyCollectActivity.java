@@ -276,9 +276,9 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
             case R.id.rl_checkall:
                 cball = !cball;
                 if (cball) {
-                    imgall.setBackground(getResources().getDrawable(R.drawable.check_true));
+                    imgall.setBackgroundDrawable(getResources().getDrawable(R.drawable.check_true));
                 } else {
-                    imgall.setBackground(getResources().getDrawable(R.drawable.check_false));
+                    imgall.setBackgroundDrawable(getResources().getDrawable(R.drawable.check_false));
                 }
                 break;
             case R.id.rl_deleteall:

@@ -112,20 +112,15 @@ public class Utils {
         }
         return null;
     }
-
     /**
      * 判断网络是否连接
-     *
      * @param context
      * @return
      */
     public static boolean isConnected(Context context) {
-
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-
         if (null != connectivity) {
-
             NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (null != info && info.isConnected()) {
                 if (info.getState() == NetworkInfo.State.CONNECTED) {
@@ -135,7 +130,6 @@ public class Utils {
         }
         return false;
     }
-
     /**
      * 判断是否是wifi连接
      */

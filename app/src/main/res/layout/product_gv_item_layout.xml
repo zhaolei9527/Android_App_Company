@@ -64,9 +64,9 @@
                 android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥"
+                android:layout_centerVertical="true"
                 android:textColor="#FFA919"
-                android:textSize="@dimen/x13" />
+                android:textSize="@dimen/x17" />
 
             <TextView
                 android:id="@+id/tv_price"

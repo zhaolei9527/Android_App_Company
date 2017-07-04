@@ -61,6 +61,16 @@ public class Goods_ListsBean {
             private String id;
             private String coll;
 
+            public String getRmb() {
+                return rmb;
+            }
+
+            public void setRmb(String rmb) {
+                this.rmb = rmb;
+            }
+
+            private String rmb;
+
             public String getTitle() {
                 return title;
             }

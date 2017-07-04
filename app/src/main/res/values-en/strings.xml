@@ -89,7 +89,7 @@
     <string name="openfile">Open file</string>
     <string name="downloading">Loading</string>
     <string name="message">Reminder</string>
-    <string name="Youarenotcurrentlyloggedin">Not logged in</string>
+    <string name="Youarenotcurrentlyloggedin">Click to login</string>
     <string name="loginnow">Log in now</string>
     <string name="cancel">Cancel</string>
     <string name="Collectionofsuccess">Collect succeed</string>

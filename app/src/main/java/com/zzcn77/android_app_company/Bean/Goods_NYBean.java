@@ -53,6 +53,17 @@ public class Goods_NYBean {
         private String content;
         private String coll;
 
+        public String getRmb() {
+            return rmb;
+        }
+
+        public void setRmb(String rmb) {
+            this.rmb = rmb;
+        }
+
+        private String rmb;
+
+
         public String getTitle() {
             return title;
         }

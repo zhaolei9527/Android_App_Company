@@ -60,7 +60,7 @@ public class CollectAdapter extends BaseAdapter {
         this.context = context;
         this.datas = datas;
         this.rll = rll;
-        this.llEmpty=llEmpty;
+        this.llEmpty = llEmpty;
     }
 
     @Override
@@ -88,6 +88,7 @@ public class CollectAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.tvrmb.setText(datas.get(position).getRmb());
         viewHolder.imgConllect.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
         viewHolder.tvModel.setText(context.getString(R.string.model) + datas.get(position).getX_num());
         viewHolder.tvPrice.setText(datas.get(position).getPrice());
@@ -121,8 +122,7 @@ public class CollectAdapter extends BaseAdapter {
                         volleyError.printStackTrace();
                         EasyToast.showShort(context, context.getString(R.string.Networkexception));
                     }
-                })
-                {
+                }) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<String, String>();
@@ -143,6 +143,7 @@ public class CollectAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
     static class ViewHolder {
         @BindView(R.id.img_conllect)
         SimpleDraweeView imgConllect;
@@ -152,6 +153,8 @@ public class CollectAdapter extends BaseAdapter {
         TextView tvModel;
         @BindView(R.id.tv_price)
         TextView tvPrice;
+        @BindView(R.id.rmb)
+        TextView tvrmb;
         @BindView(R.id.btn_delete)
         Button btnDelete;
 

@@ -68,10 +68,10 @@ public class PowerCateSeachAdaptet extends BaseAdapter {
 
         if (datas.get(position).getIscheck()) {
             viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.noraml));
-            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbgioff));
+            viewHolder.tvTitle.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.price_searchbgioff));
         } else {
             viewHolder.tvTitle.setTextColor(context.getResources().getColor(R.color.text_check));
-            viewHolder.tvTitle.setBackground(context.getResources().getDrawable(R.drawable.price_searchbg));
+            viewHolder.tvTitle.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.price_searchbg));
         }
 
 

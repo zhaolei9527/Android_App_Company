@@ -102,45 +102,36 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             EasyToast.showShort(context, getResources().getString(R.string.phone));
             return;
         }
-
-
         emali = etEmail.getText().toString().trim();
         if (emali.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.email));
             return;
         }
-
         if (!emali.matches("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")) {
             EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
             return;
         }
-
         password = etPassword.getText().toString().trim();
         if (password.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.password));
             return;
         }
-
         if (password.length() < 6) {
             EasyToast.showShort(context, getString(R.string.passwordistolow));
             return;
         }
-
         passwordAgain = etPasswordAgain.getText().toString().trim();
         if (passwordAgain.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.passwordagain));
             return;
         }
-
         if (!password.equals(passwordAgain)) {
             EasyToast.showShort(context, getResources().getString(R.string.passwordisinconformity));
             return;
         }
         final Dialog dialog = Utils.showLoadingDialog(context);
-
         passwordmd5 = MD5Utils.md5(passwordAgain);
         passwordmd5 = MD5Utils.md5(passwordmd5);
-
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "regist", new Response.Listener<String>() {
             @Override
@@ -156,14 +147,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         dialog.dismiss();
                     RegistBean registBean = new Gson().fromJson(decode, RegistBean.class);
                     if (registBean.getStu().equals("1")) {
-                        // TODO: 2017/5/19 注册
                         if (registBean.getMsg().contains("注册成功")) {
                             if (context != null) {
                                 EasyToast.showShort(context, getResources().getString(R.string.goodregister));
                                 finish();
                             }
                         } else {
-
                         }
                     } else {
                         if (registBean.getMsg().contains("该用户名已注册")) {
@@ -171,15 +160,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 Toast.makeText(context, R.string.Theusernamealreadyexists, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该邮箱已注册")) {
                             if (context != null)
-
                                 Toast.makeText(context, R.string.Themailboxhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else if (registBean.getMsg().contains("该手机号已注册")) {
                             if (context != null)
-
                                 Toast.makeText(context, R.string.Thephonenumberhasbeenregistered, Toast.LENGTH_LONG).show();
                         } else {
                             if (context != null)
-
                                 EasyToast.showShort(context, getString(R.string.Abnormalserver));
                         }
                         if (dialog != null)
@@ -195,7 +181,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     EasyToast.showShort(context, getString(R.string.Networkexception));
                 if (dialog != null)
                     dialog.dismiss();
-
             }
         }) {
             @Override
@@ -206,12 +191,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 map.put("tel", phone);
                 map.put("email", emali);
                 map.put("password", passwordmd5);
-
-
                 return map;
             }
         };
-
         boolean connected = Utils.isConnected(context);
         if (connected) {
             requestQueue.add(stringRequest);
@@ -221,7 +203,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             if (context != null)
                 EasyToast.showShort(context, getString(R.string.Notconnect));
         }
-
-
     }
 }

@@ -63,12 +63,10 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     private Intent intent1;
     private View foot;
 
-
     @Override
     protected int setLayoutResouceId() {
         return R.layout.f_demo_layout;
     }
-
 
     @Override
     protected void initView() {
@@ -122,10 +120,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 }
                 return false;
             }
-
-
         });
-
         String demo = (String) SPUtil.get(mActivity, "demo", "");
         if (!demo.isEmpty()) {
             YanShiBean yanShiBean = new Gson().fromJson(demo, YanShiBean.class);
@@ -188,7 +183,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                 foot.setVisibility(View.VISIBLE);
                                 TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                 tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
-
                             }
                             if (swipeToLoadLayout != null) {
                                 swipeToLoadLayout.setLoadMoreEnabled(false);
@@ -216,8 +210,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                     foot.setVisibility(View.VISIBLE);
                                 }
                             }
-
-
                             if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
                                 if (page == 1) {
                                     if (swipeTarget != null) {

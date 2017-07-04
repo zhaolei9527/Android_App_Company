@@ -48,6 +48,17 @@ public class CollBean {
         private String price;
         private String x_num;
 
+        public String getRmb() {
+            return rmb;
+        }
+
+        public void setRmb(String rmb) {
+            this.rmb = rmb;
+        }
+
+        private String rmb;
+
+
         public String getGid() {
             return gid;
         }

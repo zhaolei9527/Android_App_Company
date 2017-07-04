@@ -34,7 +34,7 @@
         android:layout_height="@dimen/y32"
         android:paddingLeft="@dimen/x15"
         android:paddingRight="@dimen/x10"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
 
@@ -43,16 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true">
-
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:text="@string/delete"
-                android:textSize="@dimen/y15" />
 
             <ImageView
                 android:layout_width="@dimen/y15"
@@ -63,6 +53,15 @@
                 android:layout_marginRight="@dimen/x10"
                 android:layout_toLeftOf="@id/tv"
                 android:background="@mipmap/collect_r1_c4" />
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="@string/delete"
+                android:textSize="@dimen/y15" />
 
         </LinearLayout>
 

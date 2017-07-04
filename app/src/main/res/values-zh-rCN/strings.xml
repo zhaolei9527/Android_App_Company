@@ -33,7 +33,7 @@
     <string name="phone">请输入手机号</string>
     <string name="ishaveaccount">已有帐号？立即登录>></string>
     <string name="goodregister">注册成功</string>
-    <string name="loading">拼命加载中...</string>
+    <string name="loading">加载中...</string>
     <string name="readloading">释放开始加载</string>
     <string name="uploading">上拉加载更多</string>
     <string name="loadingisok">加载完成</string>
@@ -89,7 +89,7 @@
     <string name="openfile">打开文件</string>
     <string name="downloading">正在下载</string>
     <string name="message">提示</string>
-    <string name="Youarenotcurrentlyloggedin">您当前未登录！</string>
+    <string name="Youarenotcurrentlyloggedin">点击登录</string>
     <string name="loginnow">立刻登录</string>
     <string name="cancel">取消</string>
     <string name="Collectionofsuccess">收藏成功</string>

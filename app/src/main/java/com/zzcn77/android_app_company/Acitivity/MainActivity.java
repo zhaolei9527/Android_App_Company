@@ -272,11 +272,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void changecheck(String thispage) {
         if (thispage.equals(Other.HOME)) {
-            imgHome.setBackground(getResources().getDrawable(R.mipmap.i_index2));
-            imgDemo.setBackground(getResources().getDrawable(R.mipmap.i_yanshi1));
-            imgMe.setBackground(getResources().getDrawable(R.mipmap.i_wode1));
-            imgProduct.setBackground(getResources().getDrawable(R.mipmap.i_chanpin1));
-            imgScheme.setBackground(getResources().getDrawable(R.mipmap.i_fangan1));
+            imgHome.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_index2));
+            imgDemo.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_yanshi1));
+            imgMe.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_wode1));
+            imgProduct.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_chanpin1));
+            imgScheme.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_fangan1));
 
             for (int i = 0; i < views.length; i++) {
                 if (views[i] != tvHome) {
@@ -293,11 +293,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             transaction.commit();
 
         } else if (thispage.equals(Other.ME)) {
-            imgHome.setBackground(getResources().getDrawable(R.mipmap.i_index1));
-            imgDemo.setBackground(getResources().getDrawable(R.mipmap.i_yanshi1));
-            imgMe.setBackground(getResources().getDrawable(R.mipmap.i_wode2));
-            imgProduct.setBackground(getResources().getDrawable(R.mipmap.i_chanpin1));
-            imgScheme.setBackground(getResources().getDrawable(R.mipmap.i_fangan1));
+            imgHome.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_index1));
+            imgDemo.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_yanshi1));
+            imgMe.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_wode2));
+            imgProduct.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_chanpin1));
+            imgScheme.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_fangan1));
             for (int i = 0; i < views.length; i++) {
                 if (views[i] != tvMe) {
                     views[i].setTextColor(getResources().getColor(R.color.text_gray));
@@ -312,11 +312,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             transaction.commit();
 
         } else if (thispage.equals(Other.DEMO)) {
-            imgHome.setBackground(getResources().getDrawable(R.mipmap.i_index1));
-            imgDemo.setBackground(getResources().getDrawable(R.mipmap.i_yanshi2));
-            imgMe.setBackground(getResources().getDrawable(R.mipmap.i_wode1));
-            imgProduct.setBackground(getResources().getDrawable(R.mipmap.i_chanpin1));
-            imgScheme.setBackground(getResources().getDrawable(R.mipmap.i_fangan1));
+            imgHome.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_index1));
+            imgDemo.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_yanshi2));
+            imgMe.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_wode1));
+            imgProduct.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_chanpin1));
+            imgScheme.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_fangan1));
             for (int i = 0; i < views.length; i++) {
                 if (views[i] != tvDemo) {
                     views[i].setTextColor(getResources().getColor(R.color.text_gray));
@@ -330,11 +330,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             transaction.replace(R.id.fl_main, demoFragment);
             transaction.commit();
         } else if (thispage.equals(Other.PRODUCT)) {
-            imgHome.setBackground(getResources().getDrawable(R.mipmap.i_index1));
-            imgDemo.setBackground(getResources().getDrawable(R.mipmap.i_yanshi1));
-            imgMe.setBackground(getResources().getDrawable(R.mipmap.i_wode1));
-            imgProduct.setBackground(getResources().getDrawable(R.mipmap.i_chanpin2));
-            imgScheme.setBackground(getResources().getDrawable(R.mipmap.i_fangan1));
+            imgHome.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_index1));
+            imgDemo.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_yanshi1));
+            imgMe.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_wode1));
+            imgProduct.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_chanpin2));
+            imgScheme.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_fangan1));
             for (int i = 0; i < views.length; i++) {
                 if (views[i] != tvProduct) {
                     views[i].setTextColor(getResources().getColor(R.color.text_gray));
@@ -348,11 +348,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             transaction.replace(R.id.fl_main, productFragment);
             transaction.commit();
         } else if (thispage.equals(Other.SCHEME)) {
-            imgHome.setBackground(getResources().getDrawable(R.mipmap.i_index1));
-            imgDemo.setBackground(getResources().getDrawable(R.mipmap.i_yanshi1));
-            imgMe.setBackground(getResources().getDrawable(R.mipmap.i_wode1));
-            imgProduct.setBackground(getResources().getDrawable(R.mipmap.i_chanpin1));
-            imgScheme.setBackground(getResources().getDrawable(R.mipmap.i_fangan2));
+            imgHome.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_index1));
+            imgDemo.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_yanshi1));
+            imgMe.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_wode1));
+            imgProduct.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_chanpin1));
+            imgScheme.setBackgroundDrawable(getResources().getDrawable(R.mipmap.i_fangan2));
             for (int i = 0; i < views.length; i++) {
                 if (views[i] != tvScheme) {
                     views[i].setTextColor(getResources().getColor(R.color.text_gray));

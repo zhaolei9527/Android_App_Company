@@ -89,11 +89,10 @@ public class ProductSearchAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         if (datas.get(position).getColl().equals("1")) {
-            viewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_on));
+            viewHolder.imgCollect.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.shoucang_on));
         } else if (datas.get(position).getColl().equals("-1") || datas.get(position).getColl().equals("2")) {
-            viewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_off));
+            viewHolder.imgCollect.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.shoucang_off));
         }
 
         if (SPUtil.get(context, "id", "").equals("")) {
@@ -127,6 +126,7 @@ public class ProductSearchAdapter extends BaseAdapter {
             }
         });
 
+        viewHolder.tv.setText(datas.get(position).getRmb());
         viewHolder.tvTitle.setText(datas.get(position).getTitle());
         viewHolder.tvPrice.setText(datas.get(position).getPrice());
         viewHolder.tvModel.setText(datas.get(position).getX_num());
@@ -137,9 +137,9 @@ public class ProductSearchAdapter extends BaseAdapter {
             public void onClick(View v) {
                 // Toast.makeText(context, datas.get(position).getId(), Toast.LENGTH_SHORT).show();
                 if (datas.get(position).getColl().equals("2") || datas.get(position).getColl().equals("-1")) {
-                    finalViewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_on));
+                    finalViewHolder.imgCollect.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.shoucang_on));
                 } else {
-                    finalViewHolder.imgCollect.setBackground(context.getResources().getDrawable(R.mipmap.shoucang_off));
+                    finalViewHolder.imgCollect.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.shoucang_off));
                 }
                 if (String.valueOf(SPUtil.get(context, "id", "")).isEmpty()) {
                     // TODO Auto-generated method stub

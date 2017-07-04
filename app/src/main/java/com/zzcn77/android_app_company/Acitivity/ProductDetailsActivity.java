@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
@@ -58,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.taobao.accs.ACCSManager.mContext;
 import static com.zzcn77.android_app_company.R.id.rl_download;
@@ -68,9 +70,6 @@ import static com.zzcn77.android_app_company.Service.DownloadPDF.DOWNLOAD_PATH;
  */
 
 public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
-    //
-    @BindView(R.id.img_back)
-    ImageView imgBack;
     @BindView(R.id.SimpleDraweeView)
     com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView;
     @BindView(R.id.tv_title)
@@ -107,6 +106,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     RelativeLayout rlCallPhone;
     @BindView(R.id.img2)
     ImageView img2;
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+    @BindView(R.id.rmb)
+    TextView rmb;
 
     private int isDownload = 0;
     private Dialog dialog;
@@ -244,6 +247,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                                 forumContext.post(new Runnable() {
                                     @Override
                                     public void run() {
+                                        rmb.setText(goods_nyBean.getRes().getRmb());
                                         tvTitle.setText(goods_nyBean.getRes().getTitle());
                                         tvModel.setText(goods_nyBean.getRes().getX_num());
                                         tvPhone.setText(goods_nyBean.getRes().getTel());
@@ -500,4 +504,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         unregisterReceiver(receiver);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

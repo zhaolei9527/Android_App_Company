@@ -12,7 +12,6 @@ import com.zzcn77.android_app_company.R;
 /**
  * Created by 赵磊 on 2017/6/20.
  */
-
 public class Xcircleindicator  extends View {
     private int radius = 4;
     private final Paint mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -22,7 +21,6 @@ public class Xcircleindicator  extends View {
     private int pageTotalCount = 1;
     private int currentPage = 0;
     private int circleInterval = radius;
-
 
     public Xcircleindicator(Context context) {
         super(context);

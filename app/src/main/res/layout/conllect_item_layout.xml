@@ -54,11 +54,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/rmb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥"
+                android:singleLine="true"
                 android:textColor="#FFA919"
-                android:textSize="@dimen/x15" />
+                android:textSize="@dimen/x20" />
 
             <TextView
                 android:id="@+id/tv_price"

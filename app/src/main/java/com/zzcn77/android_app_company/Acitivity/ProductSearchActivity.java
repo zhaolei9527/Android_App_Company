@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,14 +38,11 @@ import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
 import com.zzcn77.android_app_company.View.PowersearchDialog;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
-
 import static com.zzcn77.android_app_company.R.id.tv_foot_more;
 
 /**
@@ -146,7 +142,6 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                             productSearchAdapter = new ProductSearchAdapter(context, datas);
                             swipeTarget.setAdapter(productSearchAdapter);
                         }
-
                     }
                     if (swipeTarget != null)
                         swipeTarget.setSelection(scrolledY);
@@ -536,7 +531,6 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 start_price = "";
                 end_price = "";
                 scrolledY = 0;
-
                 initData();
                 break;
             case R.id.img_power_search:

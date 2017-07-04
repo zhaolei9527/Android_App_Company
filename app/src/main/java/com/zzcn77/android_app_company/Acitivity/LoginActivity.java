@@ -86,7 +86,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 EasyToast.showShort(context, getResources().getString(R.string.AccountorPasswordisEmpty));
             }
         } else {
-            // TODO: 2017/5/18
+            if (password.length() < 6) {
+                EasyToast.showShort(context, getResources().getString(R.string.passwordistolow));
+                return;
+            }
             //登录校验密码，
             passwordmd5 = MD5Utils.md5(password);
             passwordmd5 = MD5Utils.md5(passwordmd5);
