@@ -1,6 +1,7 @@
 package com.zzcn77.android_app_company.Fragment;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -9,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jude.rollviewpager.OnItemClickListener;
@@ -33,6 +35,7 @@ import com.zzcn77.android_app_company.Utils.DensityUtils;
 import com.zzcn77.android_app_company.Utils.Other;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.View.MyDialog;
 import com.zzcn77.android_app_company.View.MyListView;
 
 import java.util.ArrayList;
@@ -42,24 +45,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.zzcn77.android_app_company.R.id.ll_callphone;
-
 /**
  * Created by 赵磊 on 2017/5/17.
  */
 
 public class HomeFragment extends BaseFragment implements android.view.View.OnClickListener {
-    //
-
 
     @BindView(R.id.RollPagerView)
     com.jude.rollviewpager.RollPagerView RollPagerView;
-    @BindView(R.id.View)
-    android.view.View View;
-    @BindView(R.id.img_Company_Details)
-    ImageView imgCompanyDetails;
-    @BindView(R.id.tv_Company_Details)
-    TextView tvCompanyDetails;
     @BindView(R.id.SimpleDraweeView)
     com.facebook.drawee.view.SimpleDraweeView SimpleDraweeView;
     @BindView(R.id.tv_title)
@@ -82,25 +75,38 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     MyListView lvPromotion;
     @BindView(R.id.tv_morePromtion)
     TextView tvMorePromtion;
-    @BindView(R.id.rl_title_Company_Details)
-    RelativeLayout rlTitleCompanyDetails;
     @BindView(R.id.tv_more)
     TextView tvMore;
     @BindView(R.id.rl_title_news_more)
     RelativeLayout rlTitleNewsMore;
     @BindView(R.id.rl_title_promotion_more)
     RelativeLayout rlTitlePromotionMore;
-    @BindView(R.id.tv_phone)
-    TextView tvPhone;
-    @BindView(R.id.ll_callphone)
-    LinearLayout llCallphone;
+    @BindView(R.id.img_Company_CallPhone)
+    ImageView img_Company_CallPhone;
     @BindView(R.id.sv)
     ScrollView sv;
     @BindView(R.id.Xcircleindicator)
     com.zzcn77.android_app_company.View.Xcircleindicator Xcircleindicator;
     Unbinder unbinder;
+    @BindView(R.id.img_home_logo)
+    ImageView imgHomeLogo;
+    @BindView(R.id.btn_changeCompany)
+    Button btnChangeCompany;
+    @BindView(R.id.img_shoucang)
+    ImageView imgShoucang;
+    @BindView(R.id.img_share)
+    ImageView imgShare;
+    @BindView(R.id.View)
+    android.view.View View;
+    @BindView(R.id.img_Company_IM)
+    ImageView imgCompanyIM;
+    @BindView(R.id.rl_title_Company_Details)
+    RelativeLayout rlTitleCompanyDetails;
+    @BindView(R.id.tv_pingfen)
+    TextView tvPingfen;
     private Promotionadapter promotionadapter;
     private IndexBean index;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -183,29 +189,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     };
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_Company_Details:
-            case R.id.rl_title_Company_Details:
-                startActivity(new Intent(mActivity, CompanyDetailsActivity.class));
-                break;
-            case R.id.rl_title_promotion_more:
-                startActivity(new Intent(mActivity, PromotionActivity.class));
-                break;
-            case R.id.rl_title_news_more:
-                startActivity(new Intent(mActivity, NewsActivity.class));
-                break;
-            case ll_callphone:
-                CallPhoneUtils.CallPhone(mActivity, tvPhone.getText().toString());
-                break;
-        }
-    }
-
-    @Override
     protected int setLayoutResouceId() {
         return R.layout.f_home_layout;
     }
-
 
     @Override
     protected void initView() {
@@ -234,11 +220,15 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         RollPagerView.setPlayDelay(3000);
         //假数据
         vpNews.addOnPageChangeListener(onPageChangeListener);
-        llCallphone.setOnClickListener(this);
+        img_Company_CallPhone.setOnClickListener(this);
         rlCompanyDetails.setOnClickListener(this);
-        rlTitleCompanyDetails.setOnClickListener(this);
         rlTitleNewsMore.setOnClickListener(this);
         rlTitlePromotionMore.setOnClickListener(this);
+        btnChangeCompany.setOnClickListener(this);
+        imgShoucang.setOnClickListener(this);
+        imgShare.setOnClickListener(this);
+        imgCompanyIM.setOnClickListener(this);
+
         lvPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             private Intent intent;
@@ -261,7 +251,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         tvTitle.setText(index.getRes().getJianjie().getTitle());
         SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getPic());
         tvMessage.setText(index.getRes().getJianjie().getKeywords());
-        tvPhone.setText(index.getRes().getJianjie().getTel());
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
         //设置总共的页数
         Xcircleindicator.initData(index.getRes().getDongtai().size(), 0);
@@ -278,4 +267,41 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         super.initData(arguments);
         getindex();
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_Company_Details:
+                startActivity(new Intent(mActivity, CompanyDetailsActivity.class));
+                break;
+            case R.id.rl_title_promotion_more:
+                startActivity(new Intent(mActivity, PromotionActivity.class));
+                break;
+            case R.id.rl_title_news_more:
+                startActivity(new Intent(mActivity, NewsActivity.class));
+                break;
+            case R.id.img_Company_CallPhone:
+                CallPhoneUtils.CallPhone(mActivity, index.getRes().getJianjie().getTel());
+                break;
+            case R.id.btn_changeCompany:
+                Toast.makeText(mActivity, "切换商家", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.img_share:
+                showShareDialog();
+                break;
+            case R.id.img_shoucang:
+                Toast.makeText(mActivity, "收藏", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.img_Company_IM:
+                Toast.makeText(mActivity, "客服", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+    }
+
+    public void showShareDialog() {
+        dialog = new MyDialog(mActivity);
+        dialog.show();//显示对话框
+    }
+
 }

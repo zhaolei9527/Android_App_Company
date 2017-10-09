@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,13 +32,10 @@ import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
-
 import static com.zzcn77.android_app_company.R.id.rll_deleteall;
 
 /**
@@ -94,24 +90,18 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         rlCheckall.setOnClickListener(this);
         rlDeleteall.setOnClickListener(this);
         imgBack.setOnClickListener(this);
-        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener()
-
-        {
+        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener(){
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 scrolledY = view.getFirstVisiblePosition();
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
                 if (swipeTarget != null && swipeTarget.getChildCount() > 0) {
-                    // check if the first item of the list is visible
                     boolean firstItemVisible = swipeTarget.getFirstVisiblePosition() == 0;
-                    // check if the top of the first item is visible
                     boolean topOfFirstItemVisible = swipeTarget.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
             }
@@ -124,13 +114,11 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         dialog.show();
     }
 
-
     @Override
     protected void initData() {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "coll", new Response.Listener<String>() {
-
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -199,7 +187,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                     }
                                 });
                             }
-
                             if (collectAdapter != null) {
                                 collectAdapter.notifyDataSetChanged();
                             }
@@ -221,7 +208,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                         EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
             })
-
             {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -232,7 +218,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                     return map;
                 }
             };
-
             boolean connected = Utils.isConnected(context);
             if (connected) {
                 requestQueue.add(stringRequest);
@@ -250,7 +235,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-        // TODO: 2017/6/5
         page = 1;
         initData();
     }
@@ -290,7 +274,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                     // TODO Auto-generated method stub
                                     dialog.dismiss();
-
                                     RequestQueue requestQueue = Volley.newRequestQueue(context);
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "muti_coll", new Response.Listener<String>() {
                                         @Override
@@ -319,7 +302,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                                 EasyToast.showShort(context, getString(R.string.Networkexception));
                                         }
                                     })
-
                                     {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
@@ -343,8 +325,6 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                             dialog.dismiss();
                         }
                     }).show();//在按键响应事件中显示此对话框
-
-
                 }
                 break;
             case R.id.img_back:

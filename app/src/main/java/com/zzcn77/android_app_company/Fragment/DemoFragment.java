@@ -191,23 +191,28 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                         }
                         YanShiBean yanShiBean = new Gson().fromJson(decode, YanShiBean.class);
                         if (yanShiBean.getStu().equals("1")) {
-                            if (yanShiBean.getRes().size() < 10) {
-                                if (foot != null) {
-                                    foot.setVisibility(View.VISIBLE);
-                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-                                    tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                            if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
+                                if (yanShiBean.getRes().size() < 10) {
+                                    if (foot != null) {
+                                        foot.setVisibility(View.VISIBLE);
+                                        TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                        if (tv_foot_more!=null){
+                                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                        }
+                                        if (swipeToLoadLayout != null){
+                                            swipeToLoadLayout.setLoadingMore(false);
+                                            swipeToLoadLayout.setLoadMoreEnabled(false);
+                                        }
+                                    }
+                                } else {
                                     if (swipeToLoadLayout != null)
-                                        swipeToLoadLayout.setLoadingMore(false);
-                                    swipeToLoadLayout.setLoadMoreEnabled(false);
-                                }
-                            } else {
-                                if (swipeToLoadLayout != null)
-                                    swipeToLoadLayout.setLoadMoreEnabled(true);
-                                if (foot != null) {
-                                    TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-                                    if (DemoFragment.this != null && DemoFragment.this.isAdded())
-                                        tv_foot_more.setText(getString(R.string.uploading));
-                                    foot.setVisibility(View.VISIBLE);
+                                        swipeToLoadLayout.setLoadMoreEnabled(true);
+                                    if (foot != null) {
+                                        TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                        if (DemoFragment.this != null && DemoFragment.this.isAdded())
+                                            tv_foot_more.setText(getString(R.string.uploading));
+                                        foot.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
                             if (DemoFragment.this != null && DemoFragment.this.isAdded()) {

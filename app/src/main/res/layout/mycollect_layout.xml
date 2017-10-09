@@ -37,7 +37,6 @@
         android:visibility="visible">
 
         <LinearLayout
-
             android:id="@+id/rl_deleteall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,6 +52,7 @@
                 android:layout_marginRight="@dimen/x10"
                 android:layout_toLeftOf="@id/tv"
                 android:background="@mipmap/collect_r1_c4" />
+
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="wrap_content"

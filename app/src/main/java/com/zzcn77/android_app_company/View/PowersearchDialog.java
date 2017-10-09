@@ -203,11 +203,11 @@ public class PowersearchDialog extends Dialog {
                     }
 
                     if (etLowprice.getText().toString().isEmpty()) {
-                        start_price = "0.01";
+                        start_price = "-1";
                     } else {
                         start_price = etLowprice.getText().toString().trim();
                         if (start_price.equals("0")){
-                            start_price = "0.01";
+                            start_price = "-1";
                         }
                     }
 

@@ -24,6 +24,8 @@ import com.zzcn77.android_app_company.Utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 
@@ -32,7 +34,6 @@ import butterknife.BindView;
  */
 
 public class ForGetActivity extends BaseActivity implements View.OnClickListener {
-    //
     @BindView(R.id.et_email)
     EditText etEmail;
     @BindView(R.id.et_captcha)
@@ -45,11 +46,12 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     Button btnOk;
     @BindView(R.id.btn_get)
     Button btnGet;
+    Timer timer;
+    private TimerTask task;
     public static int time = 60;
     private Thread thread;
     private String md5password;
     private Runnable sendable;
-    boolean noterror = true;
 
     @Override
     protected int setthislayout() {
@@ -70,41 +72,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
-        // TODO Auto-generated method stub
-        sendable = new Runnable() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                for (int i = time; i > 0; i--) {
-                    try {
-                        Thread.sleep(1000);
-                        final int finalI = i;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (noterror) {
-                                    if (btnGet != null) {
-                                        btnGet.setEnabled(false);
-                                        btnGet.setText(String.valueOf(finalI));
-                                        if (btnGet.getText().toString().equals("1")) {
-                                            btnGet.setEnabled(true);
-                                            btnGet.setText(getResources().getText(R.string.get));
-                                        }
-                                    }
-                                } else {
-                                    time = 0;
-                                }
-                            }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        btnGet.setEnabled(true);
-                        EasyToast.showShort(context, getResources().getString(R.string.iserror));
-                    }
 
-                }
-            }
-        };
     }
 
 
@@ -225,6 +193,7 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void getcaptcha() {
+
         if (etEmail.getText().toString().trim().isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.emailisEmpty));
             return;
@@ -234,7 +203,26 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
             EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
             return;
         }
-
+        time = 60;
+        timer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {      // UI thread
+                    @Override
+                    public void run() {
+                        time--;
+                        btnGet.setText("" + time);
+                        if (time < 0) {
+                            timer.cancel();
+                            btnGet.setText(getString(R.string.get));
+                            btnGet.setEnabled(true);
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(task, 1000, 1000);
         //// TODO: 2017/5/18  发送验证码
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl2 + "emailcode", new Response.Listener<String>() {
@@ -243,12 +231,12 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                 String decode = Utils.decode(s);
                 if (decode.isEmpty()) {
                     if (context != null) {
+                        timer.cancel();
                         EasyToast.showShort(context, getString(R.string.Networkexception));
                     }
                     if (btnGet != null) {
                         btnGet.setEnabled(true);
                         btnGet.setText(getResources().getText(R.string.get));
-                        noterror = false;
                     }
                 } else {
                     EmailCodeBean emailCodeBean = new Gson().fromJson(decode, EmailCodeBean.class);
@@ -259,10 +247,11 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
                             }
                         }
                     } else {
+                        if (timer != null)
+                            timer.cancel();
                         if (btnGet != null) {
                             btnGet.setEnabled(true);
                             btnGet.setText(getResources().getText(R.string.get));
-                            noterror = false;
                         }
                         if (emailCodeBean.getMsg().toString().contains("该邮箱还没有注册")) {
                             if (context != null) {
@@ -279,13 +268,14 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
                 if (context != null) {
                     EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
                 if (btnGet != null) {
+                    timer.cancel();
                     btnGet.setEnabled(true);
                     btnGet.setText(getResources().getText(R.string.get));
-                    noterror = false;
                 }
             }
         })
@@ -303,12 +293,16 @@ public class ForGetActivity extends BaseActivity implements View.OnClickListener
         boolean connected = Utils.isConnected(context);
         if (connected) {
             requestQueue.add(stringRequest);
-            noterror = true;
-            new Thread(sendable).start();
         } else {
             if (context != null) {
                 EasyToast.showShort(context, getString(R.string.Notconnect));
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        timer.cancel();
     }
 }

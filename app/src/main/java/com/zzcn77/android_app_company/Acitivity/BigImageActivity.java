@@ -14,7 +14,6 @@ import com.zzcn77.android_app_company.R;
 import butterknife.BindView;
 import me.relex.photodraweeview.OnPhotoTapListener;
 
-
 public class BigImageActivity extends BaseActivity {
     @BindView(R.id.PhotoDraweeView)
     me.relex.photodraweeview.PhotoDraweeView PhotoDraweeView;
@@ -63,7 +62,6 @@ public class BigImageActivity extends BaseActivity {
                 finish();
             }
         });
-
 
         rl.setOnClickListener(new View.OnClickListener() {
             @Override

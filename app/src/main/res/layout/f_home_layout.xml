@@ -6,18 +6,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y38"
-        android:background="@color/text_blue"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/x10">
+        android:background="@color/text_blue">
 
         <ImageView
+            android:id="@+id/img_home_logo"
             android:layout_width="@dimen/x100"
             android:layout_height="@dimen/y30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
             android:src="@mipmap/i_logo" />
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_changeCompany"
+            android:layout_width="@dimen/x74"
+            android:layout_height="@dimen/y24"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:background="@drawable/rukou_login"
+            android:text="@string/changeCompany"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/img_shoucang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_toLeftOf="@id/btn_changeCompany"
+            android:src="@mipmap/sc" />
+
+        <ImageView
+            android:id="@+id/img_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_toLeftOf="@id/img_shoucang"
+            android:src="@mipmap/share" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/sv"
@@ -67,27 +98,24 @@
                     android:textSize="@dimen/y15" />
 
                 <ImageView
-                    android:id="@+id/img_Company_Details"
-                    android:layout_width="@dimen/x13"
-                    android:layout_height="@dimen/x13"
+                    android:id="@+id/img_Company_IM"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x14"
-                    android:background="@mipmap/i_you" />
+                    android:background="@mipmap/im" />
 
-                <TextView
-                    android:id="@+id/tv_Company_Details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/img_Company_CallPhone"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/x5"
-                    android:layout_toLeftOf="@id/img_Company_Details"
-                    android:text="@string/details"
-                    android:textColor="#999" />
-
+                    android:layout_marginRight="@dimen/x14"
+                    android:layout_toLeftOf="@id/img_Company_IM"
+                    android:background="@mipmap/dh" />
 
             </RelativeLayout>
-
 
             <View
                 android:layout_width="match_parent"
@@ -100,12 +128,12 @@
                 android:layout_height="@dimen/y126"
                 android:background="@android:color/white"
                 android:paddingLeft="@dimen/x14"
-                android:paddingRight="@dimen/x14">
+                android:paddingRight="@dimen/x5">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/SimpleDraweeView"
-                    android:layout_width="@dimen/x131"
-                    android:layout_height="@dimen/y83"
+                    android:layout_width="@dimen/x105"
+                    android:layout_height="@dimen/y67"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     fresco:placeholderImage="@drawable/imgloading" />
@@ -114,49 +142,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/x14"
+                    android:layout_marginLeft="@dimen/x10"
                     android:layout_toRightOf="@id/SimpleDraweeView"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/x15" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="@dimen/x125"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="七七监控中心"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/x15" />
+
+                        <TextView
+                            android:gravity="end"
+                            android:id="@+id/tv_pingfen"
+                            android:layout_width="@dimen/x55"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="688分"
+                            android:textColor="#FF5500"
+                            android:textSize="@dimen/x15" />
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/tv_message"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/y55"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/y5"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="七七监控中心有限公司是一家专业从事安防监控产品的研发、生产、销售和服务为一体的高科技企业…"
                         android:textColor="#666"
                         android:textSize="@dimen/x12" />
 
-
-                    <LinearLayout
-                        android:id="@+id/ll_callphone"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/y6"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/y15"
-                            android:layout_height="@dimen/y15"
-                            android:background="@mipmap/i_dianhua" />
-
-                        <TextView
-                            android:id="@+id/tv_phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/x5"
-                            android:gravity="center"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/x13" />
-
-                    </LinearLayout>
+                        android:layout_marginTop="@dimen/x5"
+                        android:text="公司代号：QQ12345" />
 
                 </LinearLayout>
 
@@ -313,6 +347,5 @@
 
 
     </ScrollView>
-
 
 </LinearLayout>

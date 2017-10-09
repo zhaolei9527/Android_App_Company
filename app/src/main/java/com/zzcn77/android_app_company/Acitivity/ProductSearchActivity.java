@@ -241,6 +241,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (!IntentUtil.isBundleEmpty(intent)) {
+                    etSearch.setText("");
                     page = 1;
                     keywords = "";
                     cid = "";

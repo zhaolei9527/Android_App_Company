@@ -68,7 +68,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btnBtnSkip.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
         tvForgetPassword.setOnClickListener(this);
-
     }
 
     @Override
@@ -131,15 +130,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     Toast.makeText(context, getString(R.string.akick), Toast.LENGTH_LONG).show();
                             } else if (loginBean.getMsg().contains("密码有误")) {
                                 if (context != null)
-
                                     Toast.makeText(context, getString(R.string.usernameorpassworderror), Toast.LENGTH_LONG).show();
                             } else if (loginBean.getMsg().contains("用户名不存在")) {
                                 if (context != null)
-
                                     Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
                             } else {
                                 if (context != null)
-
                                     EasyToast.showShort(context, getString(R.string.Abnormalserver));
                             }
                             if (dialog != null)
@@ -152,11 +148,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
                     if (context != null)
-
                         EasyToast.showShort(context, getString(R.string.Networkexception));
                     if (dialog != null)
                         dialog.dismiss();
-
                 }
             }) {
                 @Override
@@ -168,7 +162,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return map;
                 }
             };
-
             boolean connected = Utils.isConnected(context);
             if (connected) {
                 requestQueue.add(stringRequest);
@@ -178,7 +171,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (context != null)
                     EasyToast.showShort(context, getString(R.string.Notconnect));
             }
-
         }
     }
 
@@ -189,7 +181,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.btn_login:
                 getetcontent();
@@ -202,14 +193,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 gotoMain();
                 break;
             case R.id.tv_forgetPassword:
-
                 startActivity(new Intent(context, ForGetActivity.class));
                 break;
             case R.id.tv_register:
-
                 startActivity(new Intent(context, RegisterActivity.class));
                 break;
-
         }
     }
 
