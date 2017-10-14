@@ -133,19 +133,19 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
         startActivity(intent1);
         mActivity.finish();
     }
+
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "goods", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
                         if (swipeToLoadLayout != null) {
                             swipeToLoadLayout.setLoadingMore(false);
-
                         }
                         if (ProductFragment.this != null && ProductFragment.this.isAdded())
                             EasyToast.showShort(mActivity, getString(R.string.Networkexception));
@@ -156,6 +156,9 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                         if (ProductFragment.this != null && ProductFragment.this.isAdded()) {
                             if (decode.contains("code\":\"111\"")) {
                                 if (page == 1) {
+                                    if (swipeTarget != null) {
+                                        swipeTarget.setVisibility(View.INVISIBLE);
+                                    }
                                     if (llEmpty != null)
                                         llEmpty.setVisibility(View.VISIBLE);
                                 } else {
@@ -275,6 +278,7 @@ public class ProductFragment extends BaseFragment implements OnLoadMoreListener,
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
                     map.put("p", String.valueOf(page));
+                    map.put("sh_id", String.valueOf(SPUtil.get(mActivity, "shid", "")));
                     return map;
                 }
             };

@@ -26,6 +26,7 @@ import com.zzcn77.android_app_company.Bean.YanShiBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.IntentUtil;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -114,7 +115,7 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
             title = getIntent().getStringExtra("title");
             try {
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "yanshi", new Response.Listener<String>() {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "yanshi", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
                         String decode = Utils.decode(s);
@@ -263,18 +264,17 @@ public class DemoSerachActivity extends BaseActivity implements AdapterView.OnIt
                         }
                     }
                 })
-
                 {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("key", UrlUtils.key);
                         map.put("p", String.valueOf(page));
+                        map.put("sid", String.valueOf(SPUtil.get(context, "shid", "")));
                         map.put("title", title);
                         return map;
                     }
                 };
-
                 boolean connected = Utils.isConnected(context);
                 if (connected) {
                     requestQueue.add(stringRequest);

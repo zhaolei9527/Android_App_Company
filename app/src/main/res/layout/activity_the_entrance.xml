@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/rukoubg"
+    android:clipChildren="false"
     tools:context="com.zzcn77.android_app_company.Acitivity.BigImageActivity">
 
     <RelativeLayout
@@ -25,7 +26,7 @@
             android:textSize="@dimen/x15" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/img_my"
             android:layout_width="@dimen/x22"
             android:layout_height="@dimen/x22"
             android:layout_alignParentRight="true"
@@ -49,13 +50,13 @@
         android:layout_width="@dimen/x192"
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img_rukou_icon"
-        android:layout_marginLeft="@dimen/x23"
+        android:layout_marginLeft="@dimen/x35"
         android:layout_marginTop="@dimen/y23"
         android:background="@drawable/rounded_edittext"
-        android:paddingLeft="@dimen/x20">
+        android:paddingLeft="@dimen/x15">
 
         <ImageView
-            android:id="@+id/img_yonghu"
+            android:id="@+id/img"
             android:layout_width="@dimen/x21"
             android:layout_height="@dimen/y20"
             android:layout_centerVertical="true"
@@ -67,7 +68,7 @@
             android:layout_height="@dimen/y33"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:layout_toRightOf="@id/img_yonghu"
+            android:layout_toRightOf="@id/img"
             android:background="@null"
             android:hint="@string/daihao"
             android:singleLine="true"
@@ -79,7 +80,7 @@
 
     <Button
         android:id="@+id/btn_go"
-        android:layout_width="@dimen/x74"
+        android:layout_width="@dimen/x70"
         android:layout_height="@dimen/y31"
         android:layout_below="@id/img_rukou_icon"
         android:layout_marginLeft="@dimen/x10"
@@ -90,20 +91,17 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/x15" />
 
-
     <RelativeLayout
-
         android:id="@+id/rl_guanjianci"
         android:layout_width="@dimen/x192"
         android:layout_height="@dimen/y33"
-        android:layout_below="@id/btn_go"
-        android:layout_marginLeft="@dimen/x23"
-        android:layout_marginTop="@dimen/y23"
+        android:layout_alignLeft="@+id/rl_daihao"
+        android:layout_alignTop="@+id/btn_search"
         android:background="@drawable/rounded_edittext"
-        android:paddingLeft="@dimen/x20">
+        android:paddingLeft="@dimen/x15">
 
         <ImageView
-            android:id="@id/img_yonghu"
+            android:id="@id/img"
             android:layout_width="@dimen/x21"
             android:layout_height="@dimen/y20"
             android:layout_centerVertical="true"
@@ -115,7 +113,7 @@
             android:layout_height="@dimen/y33"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:layout_toRightOf="@id/img_yonghu"
+            android:layout_toRightOf="@id/img"
             android:background="@null"
             android:hint="@string/guanjianci"
             android:singleLine="true"
@@ -127,9 +125,9 @@
 
     <Button
         android:id="@+id/btn_search"
-        android:layout_width="@dimen/x74"
+        android:layout_width="@dimen/x70"
         android:layout_height="@dimen/y31"
-        android:layout_below="@id/btn_go"
+        android:layout_below="@id/rl_daihao"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginTop="@dimen/y23"
         android:layout_toRightOf="@id/rl_guanjianci"
@@ -142,9 +140,10 @@
         android:id="@+id/img_zhantingdaohang_bg"
         android:layout_width="@dimen/x268"
         android:layout_height="@dimen/y60"
-        android:layout_below="@id/btn_search"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/x20"
+        android:layout_alignLeft="@+id/rl_news"
+        android:layout_alignStart="@+id/rl_news"
+        android:layout_below="@+id/rl_guanjianci"
+        android:layout_marginTop="24dp"
         android:background="@mipmap/zhantingdaohang_bg"
         android:text="@string/zhantingdaohangrukou"
         android:textColor="#0768FC"
@@ -180,35 +179,36 @@
             android:layout_toRightOf="@id/tv_news"
             android:background="#666"></View>
 
-        <TextView
+        <com.zzcn77.android_app_company.View.VerticalTextview
             android:id="@+id/tv_content"
             android:layout_width="@dimen/x175"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x5"
             android:layout_toRightOf="@id/v_line"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="无线网络摄像头拔网线无线网络摄像头拔网线之后无络之后无络."
             android:textColor="#1A1A1A"
             android:textSize="@dimen/x13" />
 
-        <TextView
-            android:id="@+id/tv_more"
+        <LinearLayout
+            android:id="@+id/ll_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_content"
-            android:text="@string/more" />
+            android:layout_toRightOf="@id/tv_content">
 
-        <ImageView
-            android:layout_width="@dimen/x13"
-            android:layout_height="@dimen/x13"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_toRightOf="@id/tv_more"
-            android:background="@mipmap/i_you" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more" />
 
+            <ImageView
+                android:layout_width="@dimen/x13"
+                android:layout_height="@dimen/x13"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@mipmap/i_you" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -217,21 +217,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_news"
         android:layout_marginLeft="@dimen/x10"
-        android:layout_marginTop="@dimen/y20">
+        android:layout_marginTop="@dimen/y20"
+        android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/ll_addBusinessmen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <include layout="@layout/rukou_item_company_layout"></include>
-
-            <include layout="@layout/rukou_item_company_layout"></include>
-
-            <include layout="@layout/rukou_item_company_layout"></include>
-
-
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
     </HorizontalScrollView>
 
 </RelativeLayout>

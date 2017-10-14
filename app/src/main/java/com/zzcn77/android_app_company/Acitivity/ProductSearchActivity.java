@@ -319,7 +319,7 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initData() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods_lists", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "goods_lists", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
@@ -449,6 +449,8 @@ public class ProductSearchActivity extends BaseActivity implements View.OnClickL
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
                 map.put("p", String.valueOf(page));
+                map.put("sh_id", String.valueOf(SPUtil.get(context, "shid", "")));
+
                 if (keywords != null && !keywords.isEmpty()) {
                     map.put("keywords", keywords);
                 }

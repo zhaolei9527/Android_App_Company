@@ -1,5 +1,6 @@
 package com.zzcn77.android_app_company.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class CollectAdapter extends BaseAdapter {
     //
 
     private Context context;
+    private Dialog dialog;
 
     public ArrayList getDatas() {
         return datas;
@@ -96,10 +98,14 @@ public class CollectAdapter extends BaseAdapter {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                dialog = Utils.showLoadingDialog(context);
+                dialog.show();
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "docoll", new Response.Listener<String>() {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "docoll", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
+                        dialog.dismiss();
                         String decode = Utils.decode(s);
                         DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                         if (docollBean.getStu().equals("1")) {
@@ -119,6 +125,7 @@ public class CollectAdapter extends BaseAdapter {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        dialog.dismiss();
                         volleyError.printStackTrace();
                         EasyToast.showShort(context, context.getString(R.string.Networkexception));
                     }

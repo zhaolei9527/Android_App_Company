@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y35"
+        android:background="@color/text_blue"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/y20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x13"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_merchants_collect"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rll_deleteall"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y32"
+        android:paddingLeft="@dimen/x15"
+        android:paddingRight="@dimen/x10"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/rl_deleteall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="@dimen/y15"
+                android:layout_height="@dimen/y15"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x10"
+                android:background="@mipmap/collect_r1_c4" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="@string/delete"
+                android:textSize="@dimen/y15" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_checkall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/img_all"
+                android:layout_width="@dimen/y15"
+                android:layout_height="@dimen/y15"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@drawable/check_false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/img_all"
+                android:text="@string/checkall"
+                android:textSize="@dimen/y15" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:layoutAnimation="@anim/anim_listview_item" />
+
+            <com.zzcn77.android_app_company.View.LoadMoreFooterView
+                android:id="@id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#00000000"
+                android:gravity="center">
+
+            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+        <include layout="@layout/layout_empty"></include>
+
+    </RelativeLayout>
+
+</LinearLayout>

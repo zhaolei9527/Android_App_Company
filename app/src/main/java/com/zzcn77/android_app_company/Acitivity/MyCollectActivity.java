@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,10 +33,13 @@ import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.BindView;
+
 import static com.zzcn77.android_app_company.R.id.rll_deleteall;
 
 /**
@@ -67,6 +71,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     private Dialog dialog;
     private boolean cball = false;
     private int scrolledY = 0;
+    private Dialog dialog1;
 
     @Override
     protected int setthislayout() {
@@ -90,11 +95,12 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
         rlCheckall.setOnClickListener(this);
         rlDeleteall.setOnClickListener(this);
         imgBack.setOnClickListener(this);
-        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener(){
+        swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 scrolledY = view.getFirstVisiblePosition();
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
@@ -118,7 +124,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
     protected void initData() {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "coll", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "coll", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -165,7 +171,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                         if (collBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                        collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
+                                    collectAdapter = new CollectAdapter(context, (ArrayList) collBean.getRes(), rllDeleteall, llEmpty);
                                     if (swipeTarget != null)
                                         swipeTarget.setAdapter(collectAdapter);
                                     if (swipeTarget != null)
@@ -207,8 +213,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                     if (context != null)
                         EasyToast.showShort(context, getString(R.string.Networkexception));
                 }
-            })
-            {
+            }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> map = new HashMap<String, String>();
@@ -274,10 +279,13 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                 public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                     // TODO Auto-generated method stub
                                     dialog.dismiss();
+                                    dialog1 = Utils.showLoadingDialog(context);
+                                    dialog1.show();
                                     RequestQueue requestQueue = Volley.newRequestQueue(context);
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "muti_coll", new Response.Listener<String>() {
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "muti_coll", new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String s) {
+                                            dialog1.dismiss();
                                             String decode = Utils.decode(s);
                                             DocollBean docollBean = new Gson().fromJson(decode, DocollBean.class);
                                             if (docollBean.getStu().equals("1")) {
@@ -297,12 +305,12 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
+                                            dialog1.dismiss();
                                             volleyError.printStackTrace();
                                             if (context != null)
                                                 EasyToast.showShort(context, getString(R.string.Networkexception));
                                         }
-                                    })
-                                    {
+                                    }) {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> map = new HashMap<String, String>();
@@ -332,6 +340,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String item = collectAdapter.getItem(position);

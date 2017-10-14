@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y118"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/y9"
+    android:paddingRight="@dimen/y9">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y98">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_conllect"
+            android:layout_width="@dimen/y75"
+            android:layout_height="@dimen/y75"
+            android:layout_centerVertical="true"
+            fresco:placeholderImage="@drawable/imgloading" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginTop="@dimen/y11"
+            android:layout_toRightOf="@id/img_conllect"
+            android:singleLine="true"
+            android:text="宇联APP科技有限公司"
+            android:textColor="#333"
+            android:textSize="@dimen/x14" />
+
+        <LinearLayout
+            android:id="@+id/ll_pingfen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_toRightOf="@id/img_conllect"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pingfen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x12"
+                android:singleLine="true"
+                android:text="@string/merchantsscore"
+                android:textColor="#333"
+                android:textSize="@dimen/x14" />
+
+            <TextView
+                android:id="@+id/tv_fenshu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginLeft="@dimen/x12"
+                android:layout_toRightOf="@id/tv_pingfen"
+                android:singleLine="true"
+                android:text="668分"
+                android:textColor="#FF5500"
+                android:textSize="@dimen/x25" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/View"
+            android:layout_width="@dimen/x149"
+            android:layout_height="1px"
+            android:layout_below="@id/ll_pingfen"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/img_conllect"
+            android:background="#dbdbdb"></View>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/View"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/img_conllect"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_hao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/hao" />
+
+                <Button
+                    android:id="@+id/tv_hao"
+                    android:layout_width="@dimen/x35"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="#00000000"
+                    android:text="好评"
+                    android:textColor="@color/text_check"
+                    android:textSize="@dimen/x11" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_zhong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/zhong" />
+
+                <Button
+                    android:id="@+id/tv_zhong"
+                    android:layout_width="@dimen/x35"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="#00000000"
+                    android:text="中评"
+                    android:textColor="@color/text_check"
+                    android:textSize="@dimen/x11" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_cha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/cha" />
+
+                <Button
+                    android:id="@+id/tv_cha"
+                    android:layout_width="@dimen/x35"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="#00000000"
+                    android:text="差评"
+                    android:textColor="@color/text_check"
+                    android:textSize="@dimen/x11" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="@dimen/x49"
+                android:layout_height="@dimen/y20"
+                android:background="@drawable/delete_bg"
+                android:text="@string/delete"
+                android:textColor="#666" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_marginTop="@dimen/x15"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/img_up"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x15"
+                android:background="@mipmap/shang" />
+
+            <Button
+                android:id="@+id/img_down"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@mipmap/xia" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="无线网络摄像头拔网线之后无法连接，无线网络摄像头无线网络摄像头" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginTop="@dimen/x8"
+        android:background="@color/bg"></View>
+
+</LinearLayout>
+
+

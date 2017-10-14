@@ -69,7 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/layout_empty"></include>
 
         <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
             android:id="@+id/swipeToLoadLayout"
@@ -93,6 +92,7 @@
 
         </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
+        <include layout="@layout/layout_empty"></include>
 
     </FrameLayout>
 

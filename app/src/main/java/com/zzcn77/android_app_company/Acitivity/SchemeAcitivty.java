@@ -110,7 +110,7 @@ public class SchemeAcitivty extends BaseActivity implements View.OnClickListener
         final Intent intent = getIntent();
         if (!IntentUtil.isBundleEmpty(intent)) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "f_detail", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "f_detail", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);

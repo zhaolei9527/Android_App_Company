@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SQ366</string>
+    <string name="app_name">ULinking</string>
     <string name="home">Home</string>
     <string name="product">Product</string>
     <string name="scheme">Solution</string>
@@ -124,5 +124,25 @@
     <string name="Enterthesearch">Search content</string>
     <string name="Areyouexit">Sure to exit?</string>
     <string name="Lookprice">CheckPrice</string>
-
+    <string name="daihao">请输入公司代号</string>
+    <string name="go">进入</string>
+    <string name="search">搜索</string>
+    <string name="guanjianci">请输入关键词</string>
+    <string name="zhantingdaohangrukou">展厅导航入口</string>
+    <string name="News">新闻</string>
+    <string name="changeCompany">切换商家</string>
+    <string name="shareTo">分享到</string>
+    <string name="wechat">微信</string>
+    <string name="wechatfriend">朋友圈</string>
+    <string name="exhibition">输入展位号或企业名称</string>
+    <string name="industry">行业</string>
+    <string name="Businessmen">商家推荐</string>
+    <string name="score">评分</string>
+    <string name="Codename">代号</string>
+    <string name="Businessmensearch">商家搜索</string>
+    <string name="searchcode">请输入关键词</string>
+    <string name="exhibitionhall">展厅首页</string>
+    <string name="exhibitionDetails">展位详情</string>
+    <string name="my_merchants_collect">商家收藏</string>
+    <string name="merchantsscore">商家评分</string>
 </resources>

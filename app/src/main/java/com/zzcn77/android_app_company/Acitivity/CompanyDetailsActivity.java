@@ -131,7 +131,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "jianjie", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "jianjie", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
@@ -168,6 +168,7 @@ public class CompanyDetailsActivity extends BaseActivity implements View.OnClick
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
+                map.put("sh_id", String.valueOf(SPUtil.get(context, "shid", "")));
                 return map;
             }
         };

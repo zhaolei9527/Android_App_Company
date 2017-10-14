@@ -6,11 +6,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.zzcn77.android_app_company.Bean.CuxiaoBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,6 @@ import java.util.List;
 
 public class PromotionListAdapter extends BaseAdapter {
     //
-
 
     private Context context;
 

@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.zzcn77.android_app_company.R;
 
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.tencent.qq.QQ;
+
 /**
  * Created by 赵磊 on 2017/10/9.
  */
@@ -65,7 +68,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.ll_qq:
-                Toast.makeText(mContext, "QQ分享", Toast.LENGTH_SHORT).show();
+                showShareqq();
                 dismiss();
                 break;
             case R.id.ll_wechat:
@@ -90,4 +93,15 @@ public class MyDialog extends Dialog implements View.OnClickListener {
                 break;
         }
     }
+
+    private void showShareqq() {
+        OnekeyShare oks = new OnekeyShare();
+        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        oks.setTitleUrl("http://www.baidu.com");
+        oks.setText("text");
+        oks.setTitle("标题");
+        oks.setPlatform(QQ.NAME);
+        oks.show(getContext());
+    }
+
 }

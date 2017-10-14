@@ -25,6 +25,7 @@ import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Bean.NewsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -74,7 +75,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
         foot = View.inflate(context, R.layout.list_foot_layout, null);
-        lvSwipeTarget.addFooterView(foot,null,false);
+        lvSwipeTarget.addFooterView(foot, null, false);
 
     }
 
@@ -121,7 +122,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     @Override
     protected void initData() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "advert", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "advert", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
@@ -155,20 +156,20 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
                     }
                     NewsBean newsBean = new Gson().fromJson(decode, NewsBean.class);
                     if (newsBean.getStu().equals("1")) {
-                        if (newsBean.getRes().size()<10){
+                        if (newsBean.getRes().size() < 10) {
                             if (foot != null) {
                                 foot.setVisibility(View.VISIBLE);
                                 TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                 tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
-                                if (swipeToLoadLayout != null){
+                                if (swipeToLoadLayout != null) {
                                     swipeToLoadLayout.setLoadingMore(false);
                                     swipeToLoadLayout.setLoadMoreEnabled(false);
                                 }
                             }
-                        }else {
+                        } else {
                             if (swipeToLoadLayout != null)
                                 swipeToLoadLayout.setLoadMoreEnabled(true);
-                            if (foot!=null){
+                            if (foot != null) {
                                 TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                 tv_foot_more.setText(getString(R.string.uploading));
                                 foot.setVisibility(View.VISIBLE);
@@ -229,6 +230,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
+                map.put("sh_id", String.valueOf(SPUtil.get(context, "shid", "")));
                 map.put("p", String.valueOf(page));
                 return map;
             }
@@ -284,7 +286,7 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
     public void onRefresh() {
         if (swipeToLoadLayout != null)
             swipeToLoadLayout.setLoadMoreEnabled(true);
-        if (foot!=null){
+        if (foot != null) {
             TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
             tv_foot_more.setText(getString(R.string.uploading));
             foot.setVisibility(View.VISIBLE);

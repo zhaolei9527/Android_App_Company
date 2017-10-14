@@ -11,13 +11,12 @@
         android:layout_height="@dimen/y38"
         android:background="@color/text_blue">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_home_logo"
             android:layout_width="@dimen/x100"
             android:layout_height="@dimen/y30"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:src="@mipmap/i_logo" />
+            android:layout_marginLeft="@dimen/x10" />
 
         <Button
             android:id="@+id/btn_changeCompany"
@@ -139,22 +138,23 @@
                     fresco:placeholderImage="@drawable/imgloading" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/x10"
                     android:layout_toRightOf="@id/SimpleDraweeView"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/tv_title"
-                            android:layout_width="@dimen/x125"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_weight="1"
                             android:ellipsize="end"
                             android:singleLine="true"
                             android:text="七七监控中心"
@@ -162,7 +162,6 @@
                             android:textSize="@dimen/x15" />
 
                         <TextView
-                            android:gravity="end"
                             android:id="@+id/tv_pingfen"
                             android:layout_width="@dimen/x55"
                             android:layout_height="wrap_content"
@@ -171,13 +170,13 @@
                             android:singleLine="true"
                             android:text="688分"
                             android:textColor="#FF5500"
-                            android:textSize="@dimen/x15" />
+                            android:textSize="@dimen/x20" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_message"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/y5"
                         android:ellipsize="end"
@@ -187,6 +186,7 @@
                         android:textSize="@dimen/x12" />
 
                     <TextView
+                        android:id="@+id/tv_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x5"

@@ -205,7 +205,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         if (!IntentUtil.isBundleEmpty(intent)) {
             id = intent.getStringExtra("id");
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "goods_ny", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "goods_ny", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -428,7 +428,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     }).show();//在按键响应事件中显示此对话框
                 } else {
                     RequestQueue requestQueue = Volley.newRequestQueue(context);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "docoll", new Response.Listener<String>() {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "docoll", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
                             String decode = Utils.decode(s);

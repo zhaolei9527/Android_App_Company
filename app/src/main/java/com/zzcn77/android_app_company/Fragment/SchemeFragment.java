@@ -123,7 +123,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
         super.initData(arguments);
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "fang", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "fang", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -172,7 +172,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                                     TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
                                     if (SchemeFragment.this != null && SchemeFragment.this.isAdded())
                                         tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
-                                    if (swipeToLoadLayout != null){
+                                    if (swipeToLoadLayout != null) {
                                         swipeToLoadLayout.setLoadingMore(false);
                                         swipeToLoadLayout.setLoadMoreEnabled(false);
                                     }
@@ -261,6 +261,7 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
                     map.put("p", String.valueOf(page));
+                    map.put("sid", String.valueOf(SPUtil.get(mActivity, "shid", "")));
                     return map;
                 }
             };

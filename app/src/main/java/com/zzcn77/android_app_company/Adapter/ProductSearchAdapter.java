@@ -160,7 +160,7 @@ public class ProductSearchAdapter extends BaseAdapter {
                     }).show();//在按键响应事件中显示此对话框
                 } else {
                     RequestQueue requestQueue = Volley.newRequestQueue(context);
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "docoll", new Response.Listener<String>() {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "docoll", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
                             String decode = Utils.decode(s);

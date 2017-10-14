@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/x146"
-    android:layout_height="@dimen/y91"
-    android:layout_marginRight="@dimen/x10">
+    android:layout_height="@dimen/y91">
 
     <LinearLayout
         android:layout_width="@dimen/x146"
         android:layout_height="@dimen/y91"
+        android:layout_marginRight="@dimen/x10"
         android:background="@mipmap/rukoumingpian"
         android:orientation="vertical">
 
@@ -59,7 +59,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/tv_rukou_company_pingfen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x5"
@@ -80,6 +79,7 @@
                 android:background="#DCE8ED"></View>
 
             <TextView
+                android:id="@+id/tv_rukou_company_pingfen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

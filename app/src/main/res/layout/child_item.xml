@@ -4,13 +4,14 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/rl_check"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y35">
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="@dimen/y20"
-            android:layout_height="@dimen/y20"
+            android:layout_width="@dimen/y18"
+            android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
             android:background="@mipmap/r3_c2" />

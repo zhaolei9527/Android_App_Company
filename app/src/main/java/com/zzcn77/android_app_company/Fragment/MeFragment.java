@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -14,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zzcn77.android_app_company.Acitivity.ChangePasswordActivity;
-import com.zzcn77.android_app_company.Acitivity.ConsultActivity;
+import com.zzcn77.android_app_company.Acitivity.ChatListActivity;
 import com.zzcn77.android_app_company.Acitivity.LoginActivity;
+import com.zzcn77.android_app_company.Acitivity.MerchantsCollectionActivity;
+import com.zzcn77.android_app_company.Acitivity.MyCollectActivity;
 import com.zzcn77.android_app_company.Acitivity.SettingActivity;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.SPUtil;
@@ -32,7 +36,6 @@ import butterknife.BindView;
  */
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
-    //
     @BindView(R.id.rl_change_password)
     RelativeLayout rlChangePassword;
     @BindView(R.id.rl_setting)
@@ -58,8 +61,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private String account;
     private Map<String, List<String>> dataset = new HashMap<>();
     private String[] parentList = new String[]{"我的收藏"};
+    private int[] childreniconList = new int[]{R.mipmap.shoucang_cp, R.mipmap.shoucang_sj3};
     private List<String> childrenList1 = new ArrayList<>();
     private MyExpandableListViewAdapter adapter;
+
+    private boolean isopen = false;
 
     @Override
     protected int setLayoutResouceId() {
@@ -89,12 +95,37 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         expandablelistview.setGroupIndicator(null);
         adapter = new MyExpandableListViewAdapter();
         expandablelistview.setAdapter(adapter);
+        expandablelistview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                final ImageView img = (ImageView) parent.findViewById(R.id.img);
+                if (!isopen) {
+                    //创建旋转动画
+                    Animation anim = new RotateAnimation(0f, 90f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    anim.setDuration(300);
+                    anim.setRepeatCount(0);//动画的重复次数
+                    anim.setFillAfter(true);//设置为true，动画转化结束后被应用
+                    img.startAnimation(anim);//开始动画
+                } else {
+                    //创建旋转动画
+                    Animation anim = new RotateAnimation(90f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    anim.setDuration(300);
+                    anim.setRepeatCount(0);//动画的重复次数
+                    anim.setFillAfter(true);//设置为true，动画转化结束后被应用
+                    img.startAnimation(anim);//开始动画
+                }
+                isopen = !isopen;
+                return false;
+            }
+        });
+
     }
 
     @Override
     public void onResume() {
-        super.onResume();
         initView();
+        isopen = false;
+        super.onResume();
     }
 
     @Override
@@ -114,7 +145,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mActivity, LoginActivity.class));
                 } else {
-                    startActivity(new Intent(mActivity, ConsultActivity.class));
+                    startActivity(new Intent(mActivity, ChatListActivity.class).putExtra("userId","123"));
                 }
                 break;
             case R.id.rl_setting:
@@ -125,6 +156,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
 
     class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
 
@@ -185,7 +217,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
         //  获得子项显示的view
         @Override
-        public View getChildView(int parentPos, int childPos, boolean b, View view, ViewGroup viewGroup) {
+        public View getChildView(int parentPos, final int childPos, boolean b, View view, ViewGroup viewGroup) {
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) mActivity
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -194,11 +226,23 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             view.setTag(R.layout.parent_item, parentPos);
             view.setTag(R.layout.child_item, childPos);
             TextView text = (TextView) view.findViewById(R.id.child_title);
+            ImageView img = (ImageView) view.findViewById(R.id.img);
+            RelativeLayout rl_check = (RelativeLayout) view.findViewById(R.id.rl_check);
             text.setText(dataset.get(parentList[parentPos]).get(childPos));
-            text.setOnClickListener(new View.OnClickListener() {
+            img.setBackground(getResources().getDrawable(childreniconList[childPos]));
+            rl_check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mActivity, "点到了内置的textview", Toast.LENGTH_SHORT).show();
+                    if (account.trim().isEmpty()) {
+                        Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(mActivity, LoginActivity.class));
+                    } else {
+                        if (childPos == 0) {
+                            startActivity(new Intent(mActivity, MerchantsCollectionActivity.class));
+                        } else {
+                            startActivity(new Intent(mActivity, MyCollectActivity.class));
+                        }
+                    }
                 }
             });
             return view;

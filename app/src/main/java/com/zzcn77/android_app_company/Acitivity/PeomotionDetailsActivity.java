@@ -108,7 +108,7 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
         final Intent intent = getIntent();
         if (!IntentUtil.isBundleEmpty(intent)) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "cx_detail", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "cx_detail", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -180,11 +180,12 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity) {
+                boolean TheEntranceActivity = isExistMainActivity(TheEntranceActivity.class);
+                if (existMainActivity || TheEntranceActivity) {
                     finish();
                 } else {
                     finish();
-                    startActivity(new Intent(context, MainActivity.class));
+                    startActivity(new Intent(context, TheEntranceActivity.class));
                 }
                 break;
             case R.id.SimpleDraweeView:
@@ -211,5 +212,11 @@ public class PeomotionDetailsActivity extends BaseActivity implements View.OnCli
             }
         }
         return flag;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

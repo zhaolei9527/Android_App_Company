@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8e8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y35"
+        android:background="@color/text_blue"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/y20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x13"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/exhibitionhall"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y38"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/y28"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/x12"
+            android:layout_marginRight="@dimen/x12"
+            android:layout_weight="1"
+            android:background="@drawable/zhanweiseacehedittextbg">
+
+            <ImageView
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x5"
+                android:src="@mipmap/sousuo" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="@dimen/x210"
+                android:layout_height="@dimen/y33"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x23"
+                android:background="@null"
+                android:hint="@string/searchcode"
+                android:imeOptions="actionSearch"
+                android:maxLength="18"
+                android:singleLine="true"
+                android:textColor="#666"
+                android:textColorHint="#666" />
+
+            <ImageView
+                android:id="@+id/img_clear"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_toRightOf="@id/et_search"
+                android:src="@mipmap/clear" />
+
+            <View
+                android:id="@+id/View"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_toRightOf="@id/img_clear"
+                android:background="#d2d2d2"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x6"
+                android:text="@string/search"
+                android:textSize="@dimen/x13" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x15"
+        android:text="在中文里，展览会名称有博览会、展览会、展览、展销会、博览展销会、看样订货会、展览交流会、交易会、贸易洽谈会、展示会、展评会、样品陈列、庙会、集市、墟、场等等。另外，还有一些展览会使用非专业名词。" />
+
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="@dimen/x68"
+            android:layout_height="@dimen/y19"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x15"
+            android:background="@drawable/tujian"
+            android:text="@string/Businessmen" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null" />
+
+            <com.zzcn77.android_app_company.View.LoadMoreFooterView
+                android:id="@id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#00000000"
+                android:gravity="center">
+
+            </com.zzcn77.android_app_company.View.LoadMoreFooterView>
+
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

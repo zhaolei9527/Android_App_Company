@@ -146,9 +146,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         super.initData(arguments);
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl3 + "yanshi", new Response.Listener<String>() {
-
-
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "yanshi", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -293,6 +291,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
                     map.put("p", String.valueOf(page));
+                    map.put("sid", String.valueOf(SPUtil.get(mActivity,"shid","")));
                     return map;
                 }
             };

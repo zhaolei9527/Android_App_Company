@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.jude.rollviewpager.OnItemClickListener;
+import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.zzcn77.android_app_company.Acitivity.ChatActivity;
 import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
+import com.zzcn77.android_app_company.Acitivity.LoginActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsActivity;
 import com.zzcn77.android_app_company.Acitivity.NewsDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PeomotionDetailsActivity;
@@ -28,22 +34,31 @@ import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
 import com.zzcn77.android_app_company.Adapter.LoopAdapter;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
+import com.zzcn77.android_app_company.App;
 import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.CallPhoneUtils;
 import com.zzcn77.android_app_company.Utils.DensityUtils;
+import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.Other;
 import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.MyDialog;
 import com.zzcn77.android_app_company.View.MyListView;
+import com.zzcn77.android_app_company.View.Xcircleindicator;
+import com.zzcn77.android_app_company.Volley.VolleyInterface;
+import com.zzcn77.android_app_company.Volley.VolleyRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static anet.channel.util.Utils.context;
 
 /**
  * Created by 赵磊 on 2017/5/17.
@@ -89,7 +104,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     com.zzcn77.android_app_company.View.Xcircleindicator Xcircleindicator;
     Unbinder unbinder;
     @BindView(R.id.img_home_logo)
-    ImageView imgHomeLogo;
+    com.facebook.drawee.view.SimpleDraweeView imgHomeLogo;
     @BindView(R.id.btn_changeCompany)
     Button btnChangeCompany;
     @BindView(R.id.img_shoucang)
@@ -104,22 +119,22 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     RelativeLayout rlTitleCompanyDetails;
     @BindView(R.id.tv_pingfen)
     TextView tvPingfen;
+    @BindView(R.id.tv_id)
+    TextView tv_id;
     private Promotionadapter promotionadapter;
     private IndexBean index;
     private Dialog dialog;
+    private int is_coll;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        android.view.View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onDestroy() {
+        App.queues.cancelAll("do_shcoll");
+        super.onDestroy();
     }
 
     //最新动态列表asdasd
@@ -230,9 +245,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         imgCompanyIM.setOnClickListener(this);
 
         lvPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             private Intent intent;
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, PeomotionDetailsActivity.class);
@@ -249,7 +262,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         lvPromotion.setAdapter(promotionadapter);
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView, index.getRes().getLunbo()));
         tvTitle.setText(index.getRes().getJianjie().getTitle());
-        SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getPic());
+        SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getImgurl());
+        tv_id.setText("公司代号："+String.valueOf(index.getRes().getJianjie().getId()));
+        tvPingfen.setText(String.valueOf(index.getRes().getJianjie().getPoint()) + "分");
         tvMessage.setText(index.getRes().getJianjie().getKeywords());
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
         //设置总共的页数
@@ -266,6 +281,13 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     protected void initData(Bundle arguments) {
         super.initData(arguments);
         getindex();
+        is_coll = index.getRes().getIs_coll();
+        if (is_coll == 1) {
+            imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc2));
+        } else {
+            imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc));
+        }
+        imgHomeLogo.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getLogo());
     }
 
     @Override
@@ -285,16 +307,75 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 break;
             case R.id.btn_changeCompany:
                 Toast.makeText(mActivity, "切换商家", Toast.LENGTH_SHORT).show();
+                mActivity.finish();
                 break;
             case R.id.img_share:
                 showShareDialog();
                 break;
             case R.id.img_shoucang:
-                Toast.makeText(mActivity, "收藏", Toast.LENGTH_SHORT).show();
+                shoucangSJ();
                 break;
             case R.id.img_Company_IM:
                 Toast.makeText(mActivity, "客服", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mActivity, ChatActivity.class).putExtra("userId", "123"));
                 break;
+        }
+    }
+
+    private void shoucangSJ() {
+        dialog = Utils.showLoadingDialog(mActivity);
+        this.dialog.show();
+        String id = (String) SPUtil.get(mActivity, "id", "");
+        if (id.trim().isEmpty()) {
+            Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(mActivity, LoginActivity.class));
+        } else {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("key", UrlUtils.key);
+            params.put("sh_id", String.valueOf(index.getRes().getJianjie().getId()));
+            params.put("uid", id);
+            if (is_coll == 1) {
+                params.put("stu", "2");
+            } else {
+                params.put("stu", "1");
+            }
+            VolleyRequest.RequestPost(context, UrlUtils.BaseUrl21 + "do_shcoll", "do_shcoll", params, new VolleyInterface(context) {
+                @Override
+                public void onMySuccess(String result) {
+                    dialog.dismiss();
+                    String decode = Utils.decode(result);
+                    Log.d("TheEntranceActivity", decode);
+                    if (decode.isEmpty()) {
+                        EasyToast.showShort(mActivity, getString(R.string.Networkexception));
+                    } else {
+                        if (decode.contains("121")) {
+                            HomeFragment.this.dialog.dismiss();
+                            Toast.makeText(mActivity, "收藏或取消失败", Toast.LENGTH_SHORT).show();
+                        } else if (decode.contains("120")) {
+                            Toast.makeText(mActivity, "商户已收藏", Toast.LENGTH_SHORT).show();
+                        } else if (decode.contains("123")) {
+                            Toast.makeText(mActivity, "会员信息不存在", Toast.LENGTH_SHORT).show();
+                        } else if (decode.contains("124")) {
+                            Toast.makeText(mActivity, "商户信息不存在", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (is_coll == 1) {
+                                Toast.makeText(mActivity, "取消收藏", Toast.LENGTH_SHORT).show();
+                                imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc));
+                            } else {
+                                Toast.makeText(mActivity, "已收藏", Toast.LENGTH_SHORT).show();
+                                imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc2));
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onMyError(VolleyError error) {
+                    error.printStackTrace();
+                    dialog.dismiss();
+                }
+            });
+
 
         }
     }

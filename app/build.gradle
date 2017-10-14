@@ -13,15 +13,40 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //use legacy for android 6.0
+    useLibrary 'org.apache.http.legacy'
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith('dex')
+    }.each { dx ->
+        if (dx.additionalParameters == null) {
+            dx.additionalParameters = []
+        }
+        dx.additionalParameters += '--multi-dex' // enable multidex
 
+        // optional
+        // dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString() // enable the main-dex-list
+    }
+}
 //Warning:Exception while processing task java.io.FileNotFoundException: D:\Sakura\Android\Android_App_Company\app\build\intermediates\proguard-rules\release\aapt_rules.txt (系统找不到指定的路径。)
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -48,4 +73,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.android.support:multidex:1.0.0'
+    compile files('libs/hyphenatechat_3.3.4.jar')
 }

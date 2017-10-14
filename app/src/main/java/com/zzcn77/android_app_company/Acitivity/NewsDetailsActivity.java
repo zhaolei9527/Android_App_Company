@@ -146,7 +146,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         final Intent intent = getIntent();
         if (!IntentUtil.isBundleEmpty(intent)) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl + "advert_ny", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "advert_ny", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
@@ -219,7 +219,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.img_back:
                 boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity) {
+                boolean existTheEntranceActivity = isExistMainActivity(TheEntranceActivity.class);
+                if (existMainActivity || existTheEntranceActivity) {
                     finish();
                 } else {
                     finish();
