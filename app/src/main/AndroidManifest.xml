@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zzcn77.android_app_company">
+
     <!-- 添加必要的权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -38,7 +39,7 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="1180171010178166#sq366" />
-        <!-- 声明SDK所需的service SDK核心功能-->
+        <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
@@ -50,6 +51,7 @@
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
@@ -190,20 +192,17 @@
         <activity
             android:name=".Acitivity.TheEntranceActivity"
             android:launchMode="singleTask" />
-
         <activity android:name=".Acitivity.ZhanweiSearchActivity" />
         <activity android:name=".Acitivity.BusinessmenRecommendActivity" />
         <activity android:name=".Acitivity.TheExhibitionHallActivity" />
         <activity android:name=".Acitivity.ExhibitionDetailsActivity" />
-        <activity android:name=".Acitivity.MerchantsCollectionActivity"></activity>
-
-        <activity android:name=".Acitivity.BusinessmenSearchActivity"></activity>
-
+        <activity android:name=".Acitivity.MerchantsCollectionActivity" />
+        <activity android:name=".Acitivity.BusinessmenSearchActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data
             android:name="Mob-AppKey"
@@ -236,20 +235,20 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Acitivity.ChatListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize"></activity>
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:name="easeui.ui.EaseShowBigImageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Acitivity.MyActivity"></activity>
     </application>
 
 </manifest>

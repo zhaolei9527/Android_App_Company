@@ -145,7 +145,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     Toast.makeText(mActivity, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mActivity, LoginActivity.class));
                 } else {
-                    startActivity(new Intent(mActivity, ChatListActivity.class).putExtra("userId","123"));
+                    startActivity(new Intent(mActivity, ChatListActivity.class));
                 }
                 break;
             case R.id.rl_setting:

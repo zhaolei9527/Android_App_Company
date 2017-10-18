@@ -5,11 +5,13 @@ package com.zzcn77.android_app_company.Bean;
  */
 
 public class LoginBean {
+
     /**
      * stu : 1
      * msg : 登陆成功！
-     * res : {"id":"3","username":"花已向晚","tel":"15137319907","email":"15137319907@163.com","password":"310924109ee666218ecfc1635094f13d","add_time":"1495520888","status":"1","rand":"46389","is_show":"1","sex":"1","headimg":null,"last_login_time":"1495622825"}
+     * res : {"id":"10000","username":"yulian","tel":"15111111112","email":"152@163.com","password":"9db06bcff9248837f86d1a6bcf41c9e7","add_time":"1508218418","status":"1","is_show":"1","sex":"1","headimg":null,"last_login_time":"1508316276","type":"2","sh_id":"10000"}
      */
+
     private String stu;
     private String msg;
     private ResBean res;
@@ -40,18 +42,19 @@ public class LoginBean {
 
     public static class ResBean {
         /**
-         * id : 3
-         * username : 花已向晚
-         * tel : 15137319907
-         * email : 15137319907@163.com
-         * password : 310924109ee666218ecfc1635094f13d
-         * add_time : 1495520888
+         * id : 10000
+         * username : yulian
+         * tel : 15111111112
+         * email : 152@163.com
+         * password : 9db06bcff9248837f86d1a6bcf41c9e7
+         * add_time : 1508218418
          * status : 1
-         * rand : 46389
          * is_show : 1
          * sex : 1
          * headimg : null
-         * last_login_time : 1495622825
+         * last_login_time : 1508316276
+         * type : 2
+         * sh_id : 10000
          */
 
         private String id;
@@ -61,11 +64,12 @@ public class LoginBean {
         private String password;
         private String add_time;
         private String status;
-        private String rand;
         private String is_show;
         private String sex;
         private Object headimg;
         private String last_login_time;
+        private String type;
+        private String sh_id;
 
         public String getId() {
             return id;
@@ -123,14 +127,6 @@ public class LoginBean {
             this.status = status;
         }
 
-        public String getRand() {
-            return rand;
-        }
-
-        public void setRand(String rand) {
-            this.rand = rand;
-        }
-
         public String getIs_show() {
             return is_show;
         }
@@ -161,6 +157,22 @@ public class LoginBean {
 
         public void setLast_login_time(String last_login_time) {
             this.last_login_time = last_login_time;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getSh_id() {
+            return sh_id;
+        }
+
+        public void setSh_id(String sh_id) {
+            this.sh_id = sh_id;
         }
     }
 }

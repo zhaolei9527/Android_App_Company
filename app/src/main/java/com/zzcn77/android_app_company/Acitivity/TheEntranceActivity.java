@@ -88,6 +88,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initview() {
 
+
     }
 
     @Override
@@ -97,7 +98,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         llMore.setOnClickListener(this);
         btnGo.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
-
+        imgZhantingdaohangBg.setOnClickListener(this);
         //tvContent.setText(26, 5, Color.RED);//设置属性
         tvContent.setTextStillTime(3000);//设置停留时长间隔
         tvContent.setAnimTime(300);//设置进入和退出的时间间隔
@@ -120,7 +121,6 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         tvContent.stopAutoScroll();
         App.queues.cancelAll("come_on");
         App.queues.cancelAll("ser_sh");
-
         super.onPause();
     }
 
@@ -131,6 +131,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         dialog.show();
         HashMap<String, String> params = new HashMap<>();
         params.put("key", UrlUtils.key);
+        params.put("type", "1");
         if (!id.isEmpty()) {
             params.put("uid", id);
         }
@@ -142,6 +143,12 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                 if (decode.isEmpty()) {
                     EasyToast.showShort(context, getString(R.string.Networkexception));
                 } else {
+                    if (decode.contains("会员信息不存在")) {
+                        Toast.makeText(context, getString(R.string.Usernamedoesnotexist), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(context, LoginActivity.class));
+                        finish();
+                        return;
+                    }
                     comeOn = new Gson().fromJson(decode, ComeOn.class);
                     if (comeOn.getRes().getShanghu() != null) {
 
@@ -188,17 +195,29 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+    private String account;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_zhantingdaohang_bg:
+                startActivity(new Intent(context, TheExhibitionHallActivity.class));
+                break;
             case R.id.img_back_login:
                 startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.img_my:
-                Toast.makeText(context, "个人中心页", Toast.LENGTH_SHORT).show();
+                account = (String) SPUtil.get(context, "account", "");
+                if (account.trim().isEmpty()) {
+                    Toast.makeText(context, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(context, MyActivity.class));
+                }
                 break;
             case R.id.ll_more:
-                Toast.makeText(context, "新闻列表页", Toast.LENGTH_SHORT).show();
+                SPUtil.remove(context, "shid");
+                startActivity(new Intent(context, NewsActivity.class));
                 break;
             case R.id.btn_search:
                 if (etGuanjianci.getText().toString().isEmpty()) {
@@ -224,7 +243,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                         if (decode.isEmpty()) {
                             EasyToast.showShort(context, getString(R.string.Networkexception));
                         } else {
-                            if (decode.contains("111")) {
+                            if (decode.contains("122")) {
                                 dialog.dismiss();
                                 Toast.makeText(TheEntranceActivity.this, "商户不存在", Toast.LENGTH_SHORT).show();
                             } else {
@@ -245,7 +264,12 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getindex(final String shid) {
-        SPUtil.putAndApply(context,"shid",shid);
+        SPUtil.remove(context, "index");
+        SPUtil.remove(context, "demo");
+        SPUtil.remove(context, "product");
+        SPUtil.remove(context, "scheme");
+
+        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
             @Override

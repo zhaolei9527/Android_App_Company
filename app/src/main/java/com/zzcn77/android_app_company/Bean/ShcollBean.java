@@ -8,9 +8,10 @@ import java.util.List;
 
 public class ShcollBean {
 
+
     /**
      * stu : 1
-     * res : [{"sh_id":"10000","pj_stu":"1","img":"/Public/uploads/admin/2017-10-14/59e15fea6c020.jpg","company":"testcompany","point":"4","description":"测试数据"},{"sh_id":"10001","pj_stu":"2","img":"/Public/uploads/admin/2017-10-14/59e172cc15950.jpg","company":"妈妈咪呀","point":"1","description":"公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介"}]
+     * res : [{"id":"6","sh_id":"10000","pj_stu":"1","img":"/Public/uploads/admin/2017-10-12/59df2588c6d40.jpg","company":"testcompany","point":"4","description":"测试数据"},{"id":"3","sh_id":"10001","pj_stu":"3","img":"/Public/uploads/admin/2017-10-12/59df0f425e560.jpg","company":"妈妈咪呀","point":"0","description":"公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介"}]
      */
 
     private String stu;
@@ -34,20 +35,30 @@ public class ShcollBean {
 
     public static class ResBean {
         /**
+         * id : 6
          * sh_id : 10000
          * pj_stu : 1
-         * img : /Public/uploads/admin/2017-10-14/59e15fea6c020.jpg
+         * img : /Public/uploads/admin/2017-10-12/59df2588c6d40.jpg
          * company : testcompany
          * point : 4
          * description : 测试数据
          */
 
+        private String id;
         private String sh_id;
         private String pj_stu;
         private String img;
         private String company;
         private String point;
         private String description;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getSh_id() {
             return sh_id;

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.zzcn77.android_app_company.Bean.ShopsBean;
+import com.zzcn77.android_app_company.Bean.BoothBean;
 import com.zzcn77.android_app_company.R;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by 赵磊 on 2017/5/19.
  */
 
-public class BusinessmenRecommendadapter extends BaseAdapter {
+public class BoothAdapter extends BaseAdapter {
     //
 
     private Context context;
@@ -31,9 +31,9 @@ public class BusinessmenRecommendadapter extends BaseAdapter {
         this.datas.addAll(datas);
     }
 
-    private ArrayList<ShopsBean.ResBean> datas = new ArrayList();
+    private ArrayList<BoothBean.ResBean> datas = new ArrayList();
 
-    public BusinessmenRecommendadapter(Context context, ArrayList datas) {
+    public BoothAdapter(Context context, ArrayList datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -44,7 +44,7 @@ public class BusinessmenRecommendadapter extends BaseAdapter {
     }
 
     @Override
-    public ShopsBean.ResBean getItem(int position) {
+    public BoothBean.ResBean getItem(int position) {
         return datas.get(position);
     }
 
@@ -58,17 +58,17 @@ public class BusinessmenRecommendadapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_businessmen_recommend_layout, null);
+            convertView = View.inflate(context, R.layout.item_zhanwei_search_layout, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvCompanyDaihao.setText(datas.get(position).getCodes());
-        viewHolder.tvCompanyHangye.setText(datas.get(position).getTitle());
-        viewHolder.tvCompanyPingfen.setText(datas.get(position).getPoint());
-        viewHolder.tvName.setText(datas.get(position).getName());
-        viewHolder.tvZhanwei.setText(datas.get(position).getBtitle());
+
+        viewHolder.tvCompanyHangye.setText(datas.get(position).getHangye());
+        viewHolder.tvName.setText(datas.get(position).getTitle());
+        viewHolder.tvZhanwei.setText(datas.get(position).getNumber());
+
         return convertView;
     }
 
@@ -79,10 +79,6 @@ public class BusinessmenRecommendadapter extends BaseAdapter {
         TextView tvZhanwei;
         @BindView(R.id.tv_company_hangye)
         TextView tvCompanyHangye;
-        @BindView(R.id.tv_company_pingfen)
-        TextView tvCompanyPingfen;
-        @BindView(R.id.tv_company_daihao)
-        TextView tvCompanyDaihao;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

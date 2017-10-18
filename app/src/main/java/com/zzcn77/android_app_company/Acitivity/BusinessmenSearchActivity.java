@@ -1,6 +1,8 @@
 package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -22,9 +24,11 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Adapter.BusinessmenSearchAdapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
-import com.zzcn77.android_app_company.Bean.ShopBean;
+import com.zzcn77.android_app_company.Bean.IndexBean;
+import com.zzcn77.android_app_company.Bean.ShopsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -57,6 +61,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
     private BusinessmenSearchAdapter businessmenSearchAdapter;
     private int page = 1;
     private Dialog dialog;
+    private ShopsBean shopBean;
 
     @Override
     protected int setthislayout() {
@@ -69,6 +74,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
         dialog.show();
         foot = View.inflate(context, R.layout.list_foot_layout, null);
         swipeTarget.addFooterView(foot, null, false);
+        etSearch.setText(getIntent().getStringExtra("guanjianci"));
     }
 
     @Override
@@ -111,6 +117,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                 if (dialog != null)
                     dialog.dismiss();
                 String decode = Utils.decode(s);
+                Log.d("BusinessmenSearchActivi", decode);
                 if (decode.isEmpty()) {
                     if (swipeToLoadLayout != null) {
                         swipeToLoadLayout.setLoadingMore(false);
@@ -124,7 +131,11 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                     if (decode.contains("code\":\"111\"")) {
                         if (context != null)
                             Toast.makeText(context, getString(R.string.NOTMORE), Toast.LENGTH_SHORT).show();
-                        page = page - 1;
+                        if (page != 1) {
+                            page = page - 1;
+                        } else {
+                            page = 1;
+                        }
                         if (foot != null) {
                             foot.setVisibility(View.VISIBLE);
                             TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
@@ -135,7 +146,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                         }
                         return;
                     }
-                    ShopBean shopBean = new Gson().fromJson(decode, ShopBean.class);
+                    shopBean = new Gson().fromJson(decode, ShopsBean.class);
                     if (shopBean.getStu().equals("1")) {
                         if (shopBean.getRes().size() < 10) {
                             if (foot != null) {
@@ -205,6 +216,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
                 map.put("p", String.valueOf(page));
+                map.put("keyword", etSearch.getText().toString());
                 return map;
             }
         };
@@ -234,7 +246,12 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                 etSearch.setText("");
                 break;
             case R.id.tv_search:
-                Toast.makeText(context, "search", Toast.LENGTH_SHORT).show();
+                if (etSearch.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "search", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                dialog.show();
+                initData();
                 break;
             case R.id.img_back:
                 finish();
@@ -244,9 +261,72 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(context, "position:" + position, Toast.LENGTH_SHORT).show();
+        dialog.show();
+        getindex(shopBean.getRes().get(position).getId());
     }
 
+    private void getindex(final String shid) {
+        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.isEmpty()) {
+                    dialog.dismiss();
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                } else {
+                    IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
+                    if (indexBean.getStu().equals("1")) {
+                        if (context != null) {
+                            dialog.dismiss();
+                            SPUtil.putAndApply(context, "index", s);
+                            startActivity(new Intent(context, MainActivity.class));
+                            finish();
+                        }
+                    } else {
+                        dialog.dismiss();
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                volleyError.printStackTrace();
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                map.put("sh_id", shid);
+                String id = (String) SPUtil.get(context, "id", "");
+                if (!id.isEmpty()) {
+                    map.put("uid", id);
+                }
+                return map;
+            }
+        };
+
+        if (Utils.isConnected(context)) {
+            requestQueue.add(stringRequest);
+        } else {
+            if (context != null) {
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+                startActivity(new Intent(context, LoginActivity.class));
+                finish();
+            }
+        }
+
+    }
 
     //上拉加载
     @Override

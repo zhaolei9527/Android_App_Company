@@ -199,12 +199,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="@string/more" />
 
             <ImageView
                 android:layout_width="@dimen/x13"
                 android:layout_height="@dimen/x13"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/x5"
                 android:background="@mipmap/i_you" />
 

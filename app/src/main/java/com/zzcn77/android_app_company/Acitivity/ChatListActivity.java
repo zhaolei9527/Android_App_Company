@@ -1,33 +1,74 @@
 package com.zzcn77.android_app_company.Acitivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.hyphenate.chat.EMConversation;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.zzcn77.android_app_company.Fragment.ConversationListFragment;
 import com.zzcn77.android_app_company.R;
 
-import easeui.EaseConstant;
-import easeui.ui.EaseConversationListFragment;
+import java.util.List;
 
 public class ChatListActivity extends FragmentActivity {
     String toChatUsername;
-    private EaseConversationListFragment conversationListFragment;
+    private ConversationListFragment ConversationListFragment;
+    private EMMessageListener msgListener;
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.em_activity_chat);
         //get user id or group id
-        toChatUsername = getIntent().getExtras().getString("userId");
-        conversationListFragment = new EaseConversationListFragment();
-        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+        ConversationListFragment = new ConversationListFragment();
+//        ConversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+//            @Override
+//            public void onListItemClicked(EMConversation conversation) {
+//                startActivity(new Intent(ChatListActivity.this, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, conversation.getLastMessage().getFrom()));
+//            }
+//        });
+        getSupportFragmentManager().beginTransaction().add(R.id.container, ConversationListFragment).commit();
+
+        msgListener = new EMMessageListener() {
+
             @Override
-            public void onListItemClicked(EMConversation conversation) {
-                startActivity(new Intent(ChatListActivity.this, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, toChatUsername));
+            public void onMessageReceived(List<EMMessage> messages) {
+                //收到消息
+                ConversationListFragment.refresh();
             }
-        });
-        getSupportFragmentManager().beginTransaction().add(R.id.container, conversationListFragment).commit();
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> messages) {
+                ConversationListFragment.refresh();
+                //收到透传消息
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> messages) {
+                //收到已读回执
+                ConversationListFragment.refresh();
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> message) {
+                //收到已送达回执
+                ConversationListFragment.refresh();
+            }
+
+            @Override
+            public void onMessageRecalled(List<EMMessage> messages) {
+                //消息被撤回
+                ConversationListFragment.refresh();
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage message, Object change) {
+                //消息状态变动
+                ConversationListFragment.refresh();
+            }
+        };
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
     @Override
@@ -35,4 +76,11 @@ public class ChatListActivity extends FragmentActivity {
         finish();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //记得在不需要的时候移除listener，如在activity的onDestroy()时
+        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+    }
 }

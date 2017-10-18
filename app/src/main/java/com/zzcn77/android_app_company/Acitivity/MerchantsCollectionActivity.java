@@ -22,6 +22,9 @@ import com.android.volley.toolbox.Volley;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
+import com.umeng.message.PushAgent;
+import com.umeng.message.common.inter.ITagManager;
+import com.umeng.message.tag.TagManager;
 import com.zzcn77.android_app_company.Adapter.MerchantsCollectionAdapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Bean.DocollBean;
@@ -39,6 +42,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 
+import static com.zzcn77.android_app_company.R.id.rll_deleteall;
+
 public class MerchantsCollectionActivity extends BaseActivity implements android.view.View.OnClickListener, OnLoadMoreListener {
 
     @BindView(R.id.img_back)
@@ -51,7 +56,7 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
     ImageView imgAll;
     @BindView(R.id.rl_checkall)
     RelativeLayout rlCheckall;
-    @BindView(R.id.rll_deleteall)
+    @BindView(rll_deleteall)
     RelativeLayout rllDeleteall;
     @BindView(R.id.ll_empty)
     LinearLayout llEmpty;
@@ -162,7 +167,7 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
                         if (ShcollBean.getStu().equals("1")) {
                             if (page == 1) {
                                 if (swipeTarget != null) {
-                                    merchantsCollectionAdapter = new MerchantsCollectionAdapter(context, (ArrayList) ShcollBean.getRes(), rllDeleteall, llEmpty,swipeTarget);
+                                    merchantsCollectionAdapter = new MerchantsCollectionAdapter(MerchantsCollectionActivity.this, (ArrayList) ShcollBean.getRes(), rllDeleteall, llEmpty, swipeTarget);
                                     if (swipeTarget != null)
                                         swipeTarget.setAdapter(merchantsCollectionAdapter);
                                     if (swipeTarget != null)
@@ -229,7 +234,7 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.rl_checkall:
                 cball = !cball;
@@ -260,10 +265,37 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
                                             if (docollBean.getStu().equals("1")) {
                                                 if (context != null)
                                                     Toast.makeText(context, R.string.cancelcollection, Toast.LENGTH_SHORT).show();
-                                                if (llEmpty != null)
+
+                                                if (merchantsCollectionAdapter != null) {
+                                                    merchantsCollectionAdapter.getDatas().clear();
+                                                    merchantsCollectionAdapter.notifyDataSetChanged();
+                                                }
+
+                                                if (llEmpty!=null){
                                                     llEmpty.setVisibility(View.VISIBLE);
-                                                if (rllDeleteall != null)
+                                                }
+
+                                                if (rllDeleteall!=null){
                                                     rllDeleteall.setVisibility(View.GONE);
+                                                }
+
+                                                if (swipeTarget != null) {
+                                                    swipeTarget.setVisibility(View.GONE);
+                                                    swipeToLoadLayout.setEnabled(false);
+                                                }
+
+                                                new Thread() {
+                                                    @Override
+                                                    public void run() {
+                                                        super.run();
+                                                        PushAgent.getInstance(context).getTagManager().reset(new TagManager.TCallBack() {
+                                                            @Override
+                                                            public void onMessage(boolean isSuccess, ITagManager.Result result) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }.start();
                                             } else {
                                                 if (context != null)
                                                     EasyToast.showShort(context, getString(R.string.Abnormalserver));

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8e8e8"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -29,41 +28,39 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_search_zhanwei"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y38"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rl1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/y28"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/x12"
             android:layout_marginRight="@dimen/x12"
-            android:layout_weight="1"
-            android:background="@drawable/zhanweiseacehedittextbg">
+            android:background="@drawable/zhanweiseacehedittextbg"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:layout_width="@dimen/x15"
                 android:layout_height="@dimen/x15"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x5"
                 android:src="@mipmap/sousuo" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_search"
-                android:layout_width="@dimen/x210"
+                android:layout_width="@dimen/x190"
                 android:layout_height="@dimen/y33"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x23"
-                android:background="@null"
-                android:hint="@string/searchcode"
-                android:imeOptions="actionSearch"
-                android:maxLength="18"
-                android:singleLine="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:gravity="start|center_vertical"
+                android:text="@string/searchcode"
                 android:textColor="#666"
-                android:textColorHint="#666" />
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/img_clear"
@@ -85,21 +82,25 @@
                 android:background="#d2d2d2"></View>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_search"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/x6"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/search"
                 android:textSize="@dimen/x13" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
 
     <TextView
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x15"
@@ -107,11 +108,13 @@
         android:text="在中文里，展览会名称有博览会、展览会、展览、展销会、博览展销会、看样订货会、展览交流会、交易会、贸易洽谈会、展示会、展评会、样品陈列、庙会、集市、墟、场等等。另外，还有一些展览会使用非专业名词。" />
 
     <RelativeLayout
-        android:layout_marginBottom="@dimen/x10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_marginTop="@dimen/x10">
 
         <Button
+            android:id="@+id/btn_sjtuijian"
             android:layout_width="@dimen/x68"
             android:layout_height="@dimen/y19"
             android:layout_alignParentRight="true"

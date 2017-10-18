@@ -24,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -39,6 +38,7 @@ import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.IntentUtil;
 import com.zzcn77.android_app_company.Utils.Other;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.UpDateDialog;
@@ -99,6 +99,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onDestroy() {
+
+
         EMClient.getInstance().logout(true, new EMCallBack() {
             @Override
             public void onSuccess() {
@@ -115,6 +117,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // TODO Auto-generated method stub
             }
         });
+
+
+
         super.onDestroy();
     }
 
@@ -135,43 +140,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         llMe.setOnClickListener(this);
         llProduct.setOnClickListener(this);
         llScheme.setOnClickListener(this);
+
         new Thread() {
             @Override
             public void run() {
                 super.run();
-                //注册失败会抛出HyphenateException
-                try {
-                    EMClient.getInstance().createAccount("cmd_001", "cmd_001");//同步方法
-                } catch (HyphenateException e) {
-                    e.printStackTrace();
+                if (!String.valueOf(SPUtil.get(context, "id", "")).isEmpty()) {
+                    EMClient.getInstance().login(String.valueOf(SPUtil.get(context, "id", "")), String.valueOf(SPUtil.get(context, "id", "")), new EMCallBack() {//回调
+                        @Override
+                        public void onSuccess() {
+                            EMClient.getInstance().groupManager().loadAllGroups();
+                            EMClient.getInstance().chatManager().loadAllConversations();
+                            Log.d("main", "登录聊天服务器成功！");
+                        }
+
+                        @Override
+                        public void onProgress(int progress, String status) {
+                        }
+
+                        @Override
+                        public void onError(int code, String message) {
+                            Log.d("main", "登录聊天服务器失败！");
+                        }
+
+                    });
                 }
             }
         }.start();
-        EMClient.getInstance().login("cmd_001", "cmd_001", new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.d("main", "登录聊天服务器成功！");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, "登录聊天服务器成功", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
 
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d("main", "登录聊天服务器失败！");
-            }
-
-        });
 
     }
 
@@ -342,6 +338,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     views[i].setTextColor(getResources().getColor(R.color.text_blue));
                 }
             }
+
             FragmentManager fm = getFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             MeFragment meFragment = new MeFragment();

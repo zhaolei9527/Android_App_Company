@@ -1,6 +1,7 @@
 package com.zzcn77.android_app_company.Adapter;
 
-import android.content.Context;
+import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,14 +10,25 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.umeng.message.PushAgent;
+import com.umeng.message.common.inter.ITagManager;
+import com.umeng.message.tag.TagManager;
+import com.zzcn77.android_app_company.Bean.SXBean;
 import com.zzcn77.android_app_company.Bean.ShcollBean;
 import com.zzcn77.android_app_company.R;
+import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
+import com.zzcn77.android_app_company.Utils.Utils;
+import com.zzcn77.android_app_company.Volley.VolleyInterface;
+import com.zzcn77.android_app_company.Volley.VolleyRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +39,7 @@ import butterknife.ButterKnife;
 
 public class MerchantsCollectionAdapter extends BaseAdapter {
     //
-    private Context context;
+    private Activity context;
 
     public ArrayList getDatas() {
         return datas;
@@ -43,7 +55,7 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
     private LinearLayout llEmpty;
     private ListView listView;
 
-    public MerchantsCollectionAdapter(Context context, ArrayList datas, RelativeLayout rll, LinearLayout llEmpty, ListView listView) {
+    public MerchantsCollectionAdapter(Activity context, ArrayList datas, RelativeLayout rll, LinearLayout llEmpty, ListView listView) {
         this.context = context;
         this.datas = datas;
         this.rll = rll;
@@ -90,54 +102,96 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
             viewHolder.imgDown.setVisibility(View.VISIBLE);
         }
 
-        viewHolder.imgUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "up" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewHolder.imgDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "down" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        final ViewHolder finalViewHolder = viewHolder;
         viewHolder.tvHao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Hao" + position, Toast.LENGTH_SHORT).show();
+                shpingjia("1", position);
+                finalViewHolder.tvHao.setTextColor(context.getResources().getColor(R.color.holo_red_light));
+                finalViewHolder.tvZhong.setTextColor(context.getResources().getColor(R.color.text_check));
+                finalViewHolder.tvCha.setTextColor(context.getResources().getColor(R.color.text_check));
             }
         });
 
+        final ViewHolder finalViewHolder1 = viewHolder;
         viewHolder.tvZhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Zhong" + position, Toast.LENGTH_SHORT).show();
+                shpingjia("2", position);
+                finalViewHolder1.tvHao.setTextColor(context.getResources().getColor(R.color.text_check));
+                finalViewHolder1.tvZhong.setTextColor(context.getResources().getColor(R.color.holo_red_light));
+                finalViewHolder1.tvCha.setTextColor(context.getResources().getColor(R.color.text_check));
             }
         });
 
+        final ViewHolder finalViewHolder2 = viewHolder;
         viewHolder.tvCha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Cha" + position, Toast.LENGTH_SHORT).show();
+                shpingjia("3", position);
+                finalViewHolder2.tvHao.setTextColor(context.getResources().getColor(R.color.text_check));
+                finalViewHolder2.tvZhong.setTextColor(context.getResources().getColor(R.color.text_check));
+                finalViewHolder2.tvCha.setTextColor(context.getResources().getColor(R.color.holo_red_light));
             }
         });
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Delete" + position, Toast.LENGTH_SHORT).show();
-                datas.remove(position);
-                MerchantsCollectionAdapter.this.notifyDataSetChanged();
-                if (datas.size() == 0) {
-                    if (rll != null) {
-                        rll.setVisibility(View.GONE);
-                        llEmpty.setVisibility(View.VISIBLE);
-                        listView.setVisibility(View.INVISIBLE);
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("key", UrlUtils.key);
+                params.put("stu", "2");
+                params.put("sh_id", datas.get(position).getSh_id());
+                params.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+                VolleyRequest.RequestPost(context, UrlUtils.BaseUrl21 + "do_shcoll", "do_shcoll", params, new VolleyInterface(context) {
+                    @Override
+                    public void onMySuccess(String result) {
+                        String decode = Utils.decode(result);
+                        Log.d("TheEntranceActivity", decode);
+                        if (decode.isEmpty()) {
+                            EasyToast.showShort(context, context.getString(R.string.Networkexception));
+                        } else {
+                            SXBean sxBean = new Gson().fromJson(decode, SXBean.class);
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    super.run();
+                                    PushAgent.getInstance(context).getTagManager().delete(new TagManager.TCallBack() {
+                                        @Override
+                                        public void onMessage(final boolean isSuccess, final ITagManager.Result result) {
+                                            context.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    datas.remove(position);
+                                                    MerchantsCollectionAdapter.this.notifyDataSetChanged();
+                                                    if (datas.size() == 0) {
+                                                        if (rll != null) {
+                                                            rll.setVisibility(View.GONE);
+                                                            llEmpty.setVisibility(View.VISIBLE);
+                                                            listView.setVisibility(View.INVISIBLE);
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }, String.valueOf(datas.get(position).getSh_id()));
+                                }
+                            }.start();
+
+                        }
+
+
                     }
-                }
+
+                    @Override
+                    public void onMyError(VolleyError error) {
+                        error.printStackTrace();
+                        EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+                    }
+                });
+
+
             }
         });
 
@@ -164,9 +218,81 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
             viewHolder.tvZhong.setTextColor(context.getResources().getColor(R.color.text_check));
         }
 
+        viewHolder.imgDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changSx("x", position);
+                ShcollBean.ResBean resBean = datas.get(position);
+                datas.add(position + 2, resBean);
+                datas.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.imgUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changSx("s", position);
+                ShcollBean.ResBean resBean = datas.get(position);
+                datas.add(position - 1, resBean);
+                datas.remove(position + 1);
+                notifyDataSetChanged();
+            }
+        });
+
         return convertView;
     }
 
+    private void shpingjia(String pingjia, int position) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("key", UrlUtils.key);
+        params.put("stu", pingjia);
+        params.put("sh_id", datas.get(position).getSh_id());
+        params.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+        VolleyRequest.RequestPost(context, UrlUtils.BaseUrl21 + "sh_pj", "sh_pj", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                String decode = Utils.decode(result);
+                Log.d("TheEntranceActivity", decode);
+                if (decode.isEmpty()) {
+                    EasyToast.showShort(context, context.getString(R.string.Networkexception));
+                } else {
+                    SXBean sxBean = new Gson().fromJson(decode, SXBean.class);
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+            }
+        });
+    }
+
+    private void changSx(String s, int position) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("key", UrlUtils.key);
+        params.put("qh", s);
+        params.put("id", datas.get(position).getId());
+        params.put("uid", String.valueOf(SPUtil.get(context, "id", "")));
+        VolleyRequest.RequestPost(context, UrlUtils.BaseUrl22 + "sx", "sx", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                String decode = Utils.decode(result);
+                Log.d("TheEntranceActivity", decode);
+                if (decode.isEmpty()) {
+                    EasyToast.showShort(context, context.getString(R.string.Networkexception));
+                } else {
+                    SXBean sxBean = new Gson().fromJson(decode, SXBean.class);
+                }
+            }
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+            }
+        });
+    }
     static class ViewHolder {
         @BindView(R.id.img_conllect)
         SimpleDraweeView imgConllect;

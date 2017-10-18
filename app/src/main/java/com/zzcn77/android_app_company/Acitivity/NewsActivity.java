@@ -230,7 +230,9 @@ public class NewsActivity extends BaseActivity implements OnLoadMoreListener, an
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
-                map.put("sh_id", String.valueOf(SPUtil.get(context, "shid", "")));
+                if (!String.valueOf(SPUtil.get(context, "shid", "")).isEmpty()) {
+                    map.put("sh_id", String.valueOf(SPUtil.get(context, "shid", "")));
+                }
                 map.put("p", String.valueOf(page));
                 return map;
             }

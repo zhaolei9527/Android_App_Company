@@ -3,7 +3,6 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8e8e8"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -49,6 +48,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="宇联APP科技有限公司"
@@ -56,6 +56,7 @@
                 android:textSize="@dimen/x13" />
 
             <TextView
+                android:id="@+id/tv_zhanwei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x15"
@@ -64,6 +65,7 @@
                 android:textSize="@dimen/x13" />
 
             <TextView
+                android:id="@+id/tv_zhanting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x15"
@@ -72,6 +74,7 @@
                 android:textSize="@dimen/x13" />
 
             <Button
+                android:id="@+id/btn_gotomain"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/y19"
                 android:layout_marginTop="@dimen/x15"
@@ -90,11 +93,12 @@
         android:background="#ebebeb"></View>
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/SDW_exhibition"
         android:layout_width="@dimen/x299"
         android:layout_height="@dimen/y168"
+        android:layout_gravity="center_horizontal"
         android:background="@android:color/white"
+        fresco:actualImageScaleType="fitCenter"
         fresco:placeholderImage="@drawable/imgloading" />
 
 </LinearLayout>

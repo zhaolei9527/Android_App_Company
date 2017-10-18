@@ -60,7 +60,6 @@ public class Demosadapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.demo_item_layout, null);

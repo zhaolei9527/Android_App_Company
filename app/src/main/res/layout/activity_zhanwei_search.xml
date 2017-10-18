@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8e8e8"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,7 +10,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rl1"
             android:layout_width="0dp"
             android:layout_height="@dimen/y28"
@@ -19,7 +18,8 @@
             android:layout_marginLeft="@dimen/x12"
             android:layout_marginRight="@dimen/x12"
             android:layout_weight="1"
-            android:background="@drawable/zhanweiseacehedittextbg">
+            android:background="@drawable/zhanweiseacehedittextbg"
+            android:gravity="center_vertical">
 
             <EditText
                 android:id="@+id/et_search"
@@ -55,16 +55,18 @@
                 android:background="#d2d2d2"></View>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x13"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="取消"
                 android:textSize="@dimen/x13" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

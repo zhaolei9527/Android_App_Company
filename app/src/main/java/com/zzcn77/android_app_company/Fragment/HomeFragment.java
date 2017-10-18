@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,11 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.jude.rollviewpager.OnItemClickListener;
-import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.umeng.message.PushAgent;
+import com.umeng.message.common.inter.ITagManager;
+import com.umeng.message.tag.TagManager;
 import com.zzcn77.android_app_company.Acitivity.ChatActivity;
 import com.zzcn77.android_app_company.Acitivity.CompanyDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.LoginActivity;
@@ -46,7 +46,6 @@ import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.MyDialog;
 import com.zzcn77.android_app_company.View.MyListView;
-import com.zzcn77.android_app_company.View.Xcircleindicator;
 import com.zzcn77.android_app_company.Volley.VolleyInterface;
 import com.zzcn77.android_app_company.Volley.VolleyRequest;
 
@@ -55,7 +54,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static anet.channel.util.Utils.context;
@@ -129,6 +127,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override
@@ -246,6 +245,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
 
         lvPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private Intent intent;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(mActivity, PeomotionDetailsActivity.class);
@@ -263,7 +263,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView, index.getRes().getLunbo()));
         tvTitle.setText(index.getRes().getJianjie().getTitle());
         SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getImgurl());
-        tv_id.setText("公司代号："+String.valueOf(index.getRes().getJianjie().getId()));
+        tv_id.setText("公司代号：" + String.valueOf(index.getRes().getJianjie().getId()));
         tvPingfen.setText(String.valueOf(index.getRes().getJianjie().getPoint()) + "分");
         tvMessage.setText(index.getRes().getJianjie().getKeywords());
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
@@ -316,13 +316,17 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 shoucangSJ();
                 break;
             case R.id.img_Company_IM:
-                Toast.makeText(mActivity, "客服", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(mActivity, ChatActivity.class).putExtra("userId", "123"));
+                if (String.valueOf(SPUtil.get(mActivity, "account", "")).isEmpty()) {
+                    startActivity(new Intent(mActivity, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(mActivity, ChatActivity.class).putExtra("userId", String.valueOf(index.getRes().getJianjie().getId())));
+                }
                 break;
         }
     }
 
     private void shoucangSJ() {
+        is_coll = index.getRes().getIs_coll();
         dialog = Utils.showLoadingDialog(mActivity);
         this.dialog.show();
         String id = (String) SPUtil.get(mActivity, "id", "");
@@ -353,6 +357,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                             Toast.makeText(mActivity, "收藏或取消失败", Toast.LENGTH_SHORT).show();
                         } else if (decode.contains("120")) {
                             Toast.makeText(mActivity, "商户已收藏", Toast.LENGTH_SHORT).show();
+                            index.getRes().setIs_coll(1);
                         } else if (decode.contains("123")) {
                             Toast.makeText(mActivity, "会员信息不存在", Toast.LENGTH_SHORT).show();
                         } else if (decode.contains("124")) {
@@ -361,9 +366,42 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                             if (is_coll == 1) {
                                 Toast.makeText(mActivity, "取消收藏", Toast.LENGTH_SHORT).show();
                                 imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc));
+                                index.getRes().setIs_coll(0);
+                                SPUtil.putAndApply(mActivity, "index", new Gson().toJson(index));
+
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        PushAgent.getInstance(mActivity).getTagManager().delete(new TagManager.TCallBack() {
+                                            @Override
+                                            public void onMessage(final boolean isSuccess, final ITagManager.Result result) {
+
+                                            }
+                                        }, String.valueOf(index.getRes().getJianjie().getId()));
+
+                                    }
+                                }.start();
+
                             } else {
                                 Toast.makeText(mActivity, "已收藏", Toast.LENGTH_SHORT).show();
                                 imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc2));
+                                index.getRes().setIs_coll(1);
+                                SPUtil.putAndApply(mActivity, "index", new Gson().toJson(index));
+
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        PushAgent.getInstance(mActivity).getTagManager().add(new TagManager.TCallBack() {
+                                            @Override
+                                            public void onMessage(final boolean isSuccess, final ITagManager.Result result) {
+
+                                            }
+                                        }, String.valueOf(index.getRes().getJianjie().getId()));
+                                    }
+                                }.start();
+
                             }
                         }
                     }
@@ -375,7 +413,6 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                     dialog.dismiss();
                 }
             });
-
 
         }
     }

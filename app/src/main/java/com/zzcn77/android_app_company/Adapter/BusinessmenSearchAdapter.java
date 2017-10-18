@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import com.zzcn77.android_app_company.Bean.NewsBean;
+import com.zzcn77.android_app_company.Bean.ShopsBean;
 import com.zzcn77.android_app_company.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,7 +31,7 @@ public class BusinessmenSearchAdapter extends BaseAdapter {
         this.datas.addAll(datas);
     }
 
-    private ArrayList<NewsBean.ResBean> datas = new ArrayList();
+    private ArrayList<ShopsBean.ResBean> datas = new ArrayList();
 
     public BusinessmenSearchAdapter(Context context, ArrayList datas) {
         this.context = context;
@@ -42,7 +44,7 @@ public class BusinessmenSearchAdapter extends BaseAdapter {
     }
 
     @Override
-    public NewsBean.ResBean getItem(int position) {
+    public ShopsBean.ResBean getItem(int position) {
         return datas.get(position);
     }
 
@@ -62,10 +64,23 @@ public class BusinessmenSearchAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.tvCompanyHangye.setText(datas.get(position).getTitle());
+        viewHolder.tvCompanyDaihao.setText(datas.get(position).getCodes());
+        viewHolder.tvCompanyTitle.setText(datas.get(position).getName());
+        viewHolder.tvCompanyPingfen.setText(datas.get(position).getPoint());
         return convertView;
     }
 
     static class ViewHolder {
+        @BindView(R.id.tv_company_title)
+        TextView tvCompanyTitle;
+        @BindView(R.id.tv_company_hangye)
+        TextView tvCompanyHangye;
+        @BindView(R.id.tv_company_pingfen)
+        TextView tvCompanyPingfen;
+        @BindView(R.id.tv_company_daihao)
+        TextView tvCompanyDaihao;
+
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

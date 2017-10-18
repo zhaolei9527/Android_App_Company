@@ -2,6 +2,7 @@ package com.zzcn77.android_app_company.Acitivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,6 +99,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
+                    Log.d("LoginActivity", decode);
                     if (decode.isEmpty()) {
                         if (dialog != null) {
                             dialog.dismiss();
@@ -119,6 +121,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                     SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
                                     SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
+                                    if (loginBean.getRes().getType().equals("2")) {
+                                        startActivity(new Intent(context, ChatListActivity.class));
+                                        finish();
+                                        return;
+                                    }
                                     gotoMain();
                                 }
                             } else {
