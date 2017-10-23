@@ -39,8 +39,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="QQ"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
@@ -62,8 +64,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="@string/wechat"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
@@ -87,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="@string/wechatfriend"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
@@ -108,8 +113,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="facebook"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
@@ -131,8 +138,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="twitter"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
@@ -154,8 +163,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
+                    android:gravity="center"
                     android:text="whatsapp"
                     android:textColor="#333"
                     android:textSize="@dimen/x11" />
