@@ -289,7 +289,7 @@ public class ZhanweiSearchActivity extends BaseActivity implements TextView.OnEd
                     ZhanweiSearchActivity.this.getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
             if (etSearch.getText().toString().isEmpty()) {
-                Toast.makeText(context, "请输入搜索内容", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.Enter_Keywords), Toast.LENGTH_SHORT).show();
                 return true;
             }
             getdata();

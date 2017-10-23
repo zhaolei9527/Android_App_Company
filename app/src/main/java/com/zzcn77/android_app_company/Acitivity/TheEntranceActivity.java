@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.App;
 import com.zzcn77.android_app_company.Base.BaseActivity;
@@ -43,7 +45,6 @@ import butterknife.BindView;
 
 public class TheEntranceActivity extends BaseActivity implements View.OnClickListener {
 
-
     @BindView(R.id.img_back_login)
     Button imgBackLogin;
     @BindView(R.id.img_my)
@@ -57,7 +58,9 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.btn_search)
     Button btnSearch;
     @BindView(R.id.img_zhantingdaohang_bg)
-    Button imgZhantingdaohangBg;
+    FrameLayout imgZhantingdaohangBg;
+    @BindView(R.id.SimpleDraweeView)
+    SimpleDraweeView simpleDraweeView;
     @BindView(R.id.tv_content)
     VerticalTextview tvContent;
     @BindView(R.id.ll_more)
@@ -87,7 +90,6 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initview() {
-
 
     }
 
@@ -129,6 +131,13 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         String id = (String) SPUtil.get(context, "id", "");
         dialog = Utils.showLoadingDialog(context);
         dialog.show();
+
+        if (!id.isEmpty()) {
+            imgBackLogin.setVisibility(View.GONE);
+        } else {
+            imgBackLogin.setVisibility(View.VISIBLE);
+        }
+
         HashMap<String, String> params = new HashMap<>();
         params.put("key", UrlUtils.key);
         params.put("type", "1");
@@ -150,6 +159,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                         return;
                     }
                     comeOn = new Gson().fromJson(decode, ComeOn.class);
+                    simpleDraweeView.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getBeijingtu());
                     if (comeOn.getRes().getShanghu() != null) {
 
                         for (int i = 0; i < comeOn.getRes().getShanghu().size(); i++) {
@@ -211,8 +221,10 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                 if (account.trim().isEmpty()) {
                     Toast.makeText(context, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, LoginActivity.class));
+                    finish();
                 } else {
                     startActivity(new Intent(context, MyActivity.class));
+                    finish();
                 }
                 break;
             case R.id.ll_more:
@@ -221,14 +233,14 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.btn_search:
                 if (etGuanjianci.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "请输入关键词", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.Enter_Keywords), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 startActivity(new Intent(context, BusinessmenSearchActivity.class).putExtra("guanjianci", etGuanjianci.getText().toString()));
                 break;
             case R.id.btn_go:
                 if (etDaihao.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "请输入公司代号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.Please_enter_a_company_code), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 dialog.show();
@@ -245,7 +257,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                         } else {
                             if (decode.contains("122")) {
                                 dialog.dismiss();
-                                Toast.makeText(TheEntranceActivity.this, "商户不存在", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TheEntranceActivity.this, getString(R.string.Merchant_does_not_exist), Toast.LENGTH_SHORT).show();
                             } else {
                                 serShBean = new Gson().fromJson(decode, SerShBean.class);
                                 getindex(serShBean.getRes());
@@ -286,6 +298,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                             dialog.dismiss();
                             SPUtil.putAndApply(context, "index", s);
                             startActivity(new Intent(context, MainActivity.class));
+                            finish();
                         }
                     } else {
                         dialog.dismiss();

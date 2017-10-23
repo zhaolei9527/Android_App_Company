@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewPagerContainer"
     android:layout_width="match_parent"
@@ -21,7 +22,10 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x23"
             android:background="@drawable/rukou_login"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@string/login"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/x15" />
 
@@ -87,7 +91,10 @@
         android:layout_marginTop="@dimen/y23"
         android:layout_toRightOf="@id/rl_daihao"
         android:background="@drawable/rukou_login"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="@string/go"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/x15" />
 
@@ -132,23 +139,46 @@
         android:layout_marginTop="@dimen/y23"
         android:layout_toRightOf="@id/rl_guanjianci"
         android:background="@drawable/rukou_login"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="@string/search"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/x15" />
 
-    <Button
+
+    <FrameLayout
         android:id="@+id/img_zhantingdaohang_bg"
-        android:layout_width="@dimen/x268"
-        android:layout_height="@dimen/y60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/rl_news"
         android:layout_alignStart="@+id/rl_news"
         android:layout_below="@+id/rl_guanjianci"
-        android:layout_marginTop="24dp"
-        android:background="@mipmap/zhantingdaohang_bg"
-        android:text="@string/zhantingdaohangrukou"
-        android:textColor="#0768FC"
-        android:textSize="@dimen/x20"
-        android:textStyle="bold" />
+        android:layout_marginTop="24dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/SimpleDraweeView"
+            android:layout_width="@dimen/x268"
+            android:layout_height="@dimen/y60"
+            android:textAllCaps="false"
+            android:textColor="#0768FC"
+            android:textSize="@dimen/x20"
+            android:textStyle="bold"
+            fresco:placeholderImage="@mipmap/zhantingdaohang_bg" />
+
+        <TextView
+            android:layout_width="@dimen/x268"
+            android:layout_height="@dimen/y60"
+            android:gravity="center"
+            android:text="@string/zhantingdaohangrukou"
+            android:textAllCaps="false"
+            android:textColor="#0768FC"
+            android:textSize="@dimen/x20"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+
 
     <RelativeLayout
         android:id="@+id/rl_news"

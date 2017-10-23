@@ -197,7 +197,7 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
 
         viewHolder.tvTitle.setText(datas.get(position).getCompany());
         viewHolder.imgConllect.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
-        viewHolder.tvFenshu.setText(datas.get(position).getPoint() + "分");
+        viewHolder.tvFenshu.setText(datas.get(position).getPoint());
         viewHolder.tvContent.setText(datas.get(position).getDescription());
 
         if (datas.get(position).getPj_stu().equals("0")) {
@@ -239,7 +239,6 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
-
         return convertView;
     }
 

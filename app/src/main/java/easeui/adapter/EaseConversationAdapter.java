@@ -92,7 +92,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
             holder.message = (TextView) convertView.findViewById(R.id.message);
-            holder.time = (TextView) convertView.findViewById(R.id.time);
+            holder.time = (TextView) convertView.findViewById(R.id.tv_time);
             holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
             holder.msgState = convertView.findViewById(R.id.msg_state);
             holder.list_itease_layout = (RelativeLayout) convertView.findViewById(R.id.list_itease_layout);

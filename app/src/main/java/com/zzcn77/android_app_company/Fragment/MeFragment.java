@@ -60,8 +60,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     RelativeLayout rlConsult;
     private String account;
     private Map<String, List<String>> dataset = new HashMap<>();
-    private String[] parentList = new String[]{"我的收藏"};
-    private int[] childreniconList = new int[]{R.mipmap.shoucang_cp, R.mipmap.shoucang_sj3};
+    private String[] parentList;
+    private int[] childreniconList = new int[]{R.mipmap.shoucang_sj3, R.mipmap.shoucang_cp};
     private List<String> childrenList1 = new ArrayList<>();
     private MyExpandableListViewAdapter adapter;
 
@@ -69,8 +69,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected int setLayoutResouceId() {
-        childrenList1.add("商家收藏");
-        childrenList1.add("产品收藏");
+        parentList = new String[]{getResources().getString(R.string.mycollect)};
+        childrenList1.add(getResources().getString(R.string.my_merchants_collect));
+        childrenList1.add(getResources().getString(R.string.The_product_collection));
         dataset.put(parentList[0], childrenList1);
         return R.layout.f_me_layout;
     }
@@ -123,9 +124,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
-        initView();
-        isopen = false;
         super.onResume();
+        account = (String) SPUtil.get(mActivity, "account", "");
+        if (account.trim().isEmpty()) {
+            mActivity.finish();
+        }
     }
 
     @Override

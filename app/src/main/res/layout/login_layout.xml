@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     android:background="@mipmap/loginbg">
 
+
     <ImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/x80"
-        android:layout_height="@dimen/y80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:background="@mipmap/d_logo" />
+        android:src="@mipmap/logo_denglu" />
 
 
     <RelativeLayout
@@ -20,7 +21,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y28"
+        android:layout_marginTop="@dimen/y40"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -32,10 +33,10 @@
             android:background="@mipmap/d_yonghu" />
 
         <EditText
-            android:layout_centerVertical="true"
             android:id="@+id/et_account"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y33"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x16"
             android:layout_toRightOf="@id/img_yonghu"
             android:background="@null"
@@ -89,7 +90,8 @@
         android:layout_marginTop="@dimen/y13"
         android:text="@string/forget"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/y11" />
+        android:textSize="@dimen/y11"
+        android:visibility="gone" />
 
 
     <Button

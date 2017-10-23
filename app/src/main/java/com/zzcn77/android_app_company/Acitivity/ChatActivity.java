@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.hyphenate.util.EasyUtils;
 import com.zzcn77.android_app_company.R;
 
 import easeui.EaseConstant;
@@ -53,10 +52,6 @@ public class ChatActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         chatFragment.onBackPressed();
-        if (EasyUtils.isSingleActivity(this)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
     }
 
     public String getToChatUsername() {

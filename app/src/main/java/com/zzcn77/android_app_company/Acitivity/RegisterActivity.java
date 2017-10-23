@@ -49,8 +49,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tv_register)
     TextView tvRegister;
     private String account;
-    private String phone;
-    private String emali;
+//    private String phone;
+//    private String emali;
     private String password;
     private String passwordAgain;
     private String passwordmd5;
@@ -97,20 +97,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             EasyToast.showShort(context, getResources().getString(R.string.account));
             return;
         }
-        phone = etPhone.getText().toString().trim();
-        if (phone.isEmpty()) {
-            EasyToast.showShort(context, getResources().getString(R.string.phone));
-            return;
-        }
-        emali = etEmail.getText().toString().trim();
-        if (emali.isEmpty()) {
-            EasyToast.showShort(context, getResources().getString(R.string.email));
-            return;
-        }
-        if (!emali.matches("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")) {
-            EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
-            return;
-        }
+//        phone = etPhone.getText().toString().trim();
+//        if (phone.isEmpty()) {
+//            EasyToast.showShort(context, getResources().getString(R.string.phone));
+//            return;
+//        }
+//        emali = etEmail.getText().toString().trim();
+//        if (emali.isEmpty()) {
+//            EasyToast.showShort(context, getResources().getString(R.string.email));
+//            return;
+//        }
+//        if (!emali.matches("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")) {
+//            EasyToast.showShort(context, getResources().getString(R.string.emailisnotregx));
+//            return;
+//        }
         password = etPassword.getText().toString().trim();
         if (password.isEmpty()) {
             EasyToast.showShort(context, getResources().getString(R.string.password));
@@ -188,8 +188,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("key", UrlUtils.key);
                 map.put("username", account);
-                map.put("tel", phone);
-                map.put("email", emali);
+                map.put("tel", "");
+                map.put("email", "");
                 map.put("password", passwordmd5);
                 return map;
             }

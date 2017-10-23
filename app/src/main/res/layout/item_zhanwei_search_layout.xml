@@ -21,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="郑州七七网络科技有限公司"
                 android:textColor="#0768FC"
                 android:textSize="@dimen/x13" />
 
@@ -32,7 +31,6 @@
                 android:layout_marginLeft="@dimen/x13"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="B厅5号"
                 android:textColor="#0768FC"
                 android:textSize="@dimen/x13" />
 
@@ -68,7 +66,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="科技互联网"
                 android:textColor="#333333"
                 android:textSize="@dimen/x13" />
 

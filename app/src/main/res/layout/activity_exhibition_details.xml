@@ -28,6 +28,11 @@
             android:textSize="24sp" />
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y3"
+        android:background="#ebebeb"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +56,6 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="宇联APP科技有限公司"
                 android:textColor="#1a1a1a"
                 android:textSize="@dimen/x13" />
 
@@ -60,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x15"
-                android:text="B厅5号"
                 android:textColor="#1a1a1a"
                 android:textSize="@dimen/x13" />
 
@@ -69,7 +72,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x15"
-                android:text="郑州国际会展中心"
                 android:textColor="#1a1a1a"
                 android:textSize="@dimen/x13" />
 
@@ -79,18 +81,17 @@
                 android:layout_height="@dimen/y19"
                 android:layout_marginTop="@dimen/x15"
                 android:background="@drawable/tujian"
-                android:padding="@dimen/x2"
-                android:text="进入商家首页"
+                android:ellipsize="end"
+                android:paddingLeft="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:singleLine="true"
+                android:text="@string/Enter_the_merchants_homepage"
+                android:textAllCaps="false"
                 android:textColor="#1a1a1a"
                 android:textSize="@dimen/x11" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y3"
-        android:background="#ebebeb"></View>
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/SDW_exhibition"

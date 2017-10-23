@@ -58,8 +58,8 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout rlSetting;
     private String account;
     private Map<String, List<String>> dataset = new HashMap<>();
-    private String[] parentList = new String[]{"我的收藏"};
-    private int[] childreniconList = new int[]{R.mipmap.shoucang_cp, R.mipmap.shoucang_sj3};
+    private String[] parentList;
+    private int[] childreniconList = new int[]{R.mipmap.shoucang_sj3, R.mipmap.shoucang_cp};
     private List<String> childrenList1 = new ArrayList<>();
     private MyExpandableListViewAdapter adapter;
 
@@ -79,7 +79,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                     Toast.makeText(context, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, LoginActivity.class));
                 } else {
-                    startActivity(new Intent(context, ChatListActivity.class).putExtra("userId","123"));
+                    startActivity(new Intent(context, ChatListActivity.class).putExtra("userId", "123"));
                 }
                 break;
             case R.id.rl_setting:
@@ -167,7 +167,6 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     if (account.trim().isEmpty()) {
-                        Toast.makeText(context, getString(R.string.Youarenotcurrentlyloggedin), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(context, LoginActivity.class));
                     } else {
                         if (childPos == 0) {
@@ -187,7 +186,9 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
             return false;
         }
     }
+
     private boolean isopen = false;
+
     @Override
     protected int setthislayout() {
         return R.layout.f_me_layout;
@@ -195,8 +196,9 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initview() {
-        childrenList1.add("商家收藏");
-        childrenList1.add("产品收藏");
+        parentList = new String[]{getResources().getString(R.string.mycollect)};
+        childrenList1.add(getResources().getString(R.string.my_merchants_collect));
+        childrenList1.add(getResources().getString(R.string.The_product_collection));
         dataset.put(parentList[0], childrenList1);
         account = (String) SPUtil.get(context, "account", "");
         String email = (String) SPUtil.get(context, "email", "");
@@ -208,8 +210,14 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
             tvAccount.setText(account);
             llHeadbg.setEnabled(false);
         }
-
         tvEmail.setText(email);
+    }
+
+    @Override
+    protected void initListener() {
+        rlChangePassword.setOnClickListener(this);
+        rlConsult.setOnClickListener(this);
+        rlSetting.setOnClickListener(this);
         expandablelistview.setGroupIndicator(null);
         adapter = new MyExpandableListViewAdapter();
         expandablelistview.setAdapter(adapter);
@@ -237,14 +245,6 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-
-    }
-
-    @Override
-    protected void initListener() {
-        rlChangePassword.setOnClickListener(this);
-        rlConsult.setOnClickListener(this);
-        rlSetting.setOnClickListener(this);
     }
 
     @Override
@@ -275,6 +275,21 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         }.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(context, TheEntranceActivity.class));
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        account = (String) SPUtil.get(context, "account", "");
+        if (account.trim().isEmpty()) {
+            finish();
+        }
     }
 
     @Override

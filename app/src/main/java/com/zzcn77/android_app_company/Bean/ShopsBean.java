@@ -11,7 +11,7 @@ public class ShopsBean {
 
     /**
      * stu : 1
-     * res : [{"id":"10000","company":"testcompany","point":"6","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"B厅1号","code":"CY","name":"testcompany"},{"id":"10000","company":"testcompany","point":"6","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"劳斯莱斯","code":"CY","name":"testcompany"},{"id":"10000","company":"testcompany","point":"6","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"B厅2号","code":"CY","name":"testcompany"}]
+     * res : [{"id":"10006","company":"rgv","point":"6","cid":"6","codes":"DZ11235","title":"科技互联网","btitle":"奔驰","bid":"26","code":"DZ","name":"rgv"},{"id":"10006","company":"rgv","point":"6","cid":"6","codes":"DZ11235","title":"科技互联网","btitle":"宝马","bid":"27","code":"DZ","name":"rgv"},{"id":"10001","company":"妈妈咪呀","point":"6","cid":"6","codes":"DZ11233","title":"科技互联网","btitle":"A厅6号","bid":"24","code":"DZ","name":"妈妈咪呀"},{"id":"10000","company":"testcompany","point":"9","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"B厅2号","bid":"36","code":"CY","name":"testcompany"},{"id":"10000","company":"testcompany","point":"9","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"劳斯莱斯","bid":"25","code":"CY","name":"testcompany"},{"id":"10000","company":"testcompany","point":"9","cid":"3","codes":"CY10000","title":"科技互联网","btitle":"B厅1号","bid":"35","code":"CY","name":"testcompany"}]
      */
 
     private String stu;
@@ -35,15 +35,16 @@ public class ShopsBean {
 
     public static class ResBean {
         /**
-         * id : 10000
-         * company : testcompany
+         * id : 10006
+         * company : rgv
          * point : 6
-         * cid : 3
-         * codes : CY10000
+         * cid : 6
+         * codes : DZ11235
          * title : 科技互联网
-         * btitle : B厅1号
-         * code : CY
-         * name : testcompany
+         * btitle : 奔驰
+         * bid : 26
+         * code : DZ
+         * name : rgv
          */
 
         private String id;
@@ -53,6 +54,7 @@ public class ShopsBean {
         private String codes;
         private String title;
         private String btitle;
+        private String bid;
         private String code;
         private String name;
 
@@ -110,6 +112,14 @@ public class ShopsBean {
 
         public void setBtitle(String btitle) {
             this.btitle = btitle;
+        }
+
+        public String getBid() {
+            return bid;
+        }
+
+        public void setBid(String bid) {
+            this.bid = bid;
         }
 
         public String getCode() {

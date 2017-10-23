@@ -52,6 +52,9 @@ public class BigImageActivity extends BaseActivity {
         final double y = getIntent().getDoubleExtra("y", 0);
 
         Postprocessor redMeshPostprocessor = new BasePostprocessor() {
+
+            private Bitmap bitmap;
+
             @Override
             public String getName() {
                 return "redMeshPostprocessor";
@@ -60,7 +63,10 @@ public class BigImageActivity extends BaseActivity {
             @Override
             public void process(Bitmap bitmap) {
                 Canvas canvas = new Canvas(bitmap);// 设置canvas画布背景为白色
-                canvas.drawBitmap(BitmapUtil.drawable2Bitmap(getResources().getDrawable(R.mipmap.shoucang_sj3)), (int) (bitmap.getWidth() * x), (int) (bitmap.getHeight() * y), null);
+                this.bitmap = BitmapUtil.drawable2Bitmap(getResources().getDrawable(R.drawable.zuobiao));
+                int height = this.bitmap.getHeight();
+                int width = this.bitmap.getWidth();
+                canvas.drawBitmap(this.bitmap, (int) (x * bitmap.getWidth())- (width / 2), (int) (y * bitmap.getHeight()) - height, null);
             }
         };
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(imgurl))

@@ -25,7 +25,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x10"
+            android:textAllCaps="false"
             android:background="@drawable/rukou_login"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@string/changeCompany"
             android:textColor="@android:color/white" />
 
@@ -157,7 +160,6 @@
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="七七监控中心"
                             android:textColor="@color/text_gray"
                             android:textSize="@dimen/x15" />
 
@@ -168,7 +170,6 @@
                             android:layout_alignParentRight="true"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="688分"
                             android:textColor="#FF5500"
                             android:textSize="@dimen/x20" />
 
@@ -181,7 +182,6 @@
                         android:layout_marginTop="@dimen/y5"
                         android:ellipsize="end"
                         android:maxLines="3"
-                        android:text="七七监控中心有限公司是一家专业从事安防监控产品的研发、生产、销售和服务为一体的高科技企业…"
                         android:textColor="#666"
                         android:textSize="@dimen/x12" />
 
@@ -189,8 +189,7 @@
                         android:id="@+id/tv_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x5"
-                        android:text="公司代号：QQ12345" />
+                        android:layout_marginTop="@dimen/x5" />
 
                 </LinearLayout>
 

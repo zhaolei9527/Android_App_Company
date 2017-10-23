@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10"
-            android:text="国际会展中心  B厅5号"
             android:textColor="#333"
             android:textSize="@dimen/x15" />
 

@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     android:background="@mipmap/loginbg">
 
+
     <ImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/x80"
-        android:layout_height="@dimen/y80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y26"
-        android:background="@mipmap/d_logo" />
-
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/logo_denglu" />
 
     <RelativeLayout
         android:id="@+id/rl"
@@ -20,7 +20,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y25"
+        android:layout_marginTop="@dimen/y40"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -46,6 +46,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rl2"
         android:layout_width="@dimen/x264"
         android:layout_height="@dimen/y33"
@@ -78,6 +79,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rl3"
         android:layout_width="@dimen/x264"
         android:layout_height="@dimen/y33"

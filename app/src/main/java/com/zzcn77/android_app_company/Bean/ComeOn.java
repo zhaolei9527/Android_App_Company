@@ -10,7 +10,7 @@ public class ComeOn {
 
     /**
      * stu : 1
-     * res : {"news":[{"id":"38","title":"ACaaS: How it\u2019s influenced by IoT","add_time":"1504835917","keywords":"ACaaS: How it\u2019s influenced by IoT","imgurl":"/Public/uploads/news/2017-09-08/59b1fa02c1829.jpg"},{"id":"36","title":"5 questions to ask before selecting face recognition solution","add_time":"1503569901","keywords":"5 questions to ask before selecting face recognition solution","imgurl":"/Public/uploads/news/2017-08-24/599ea872efe58.jpg"},{"id":"37","title":"Detecting traffic accidents with machine learning","add_time":"1504170638","keywords":"Detecting traffic accidents with machine learning","imgurl":"/Public/uploads/news/2017-08-31/59a7d41ab8067.jpg"},{"id":"35","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people","add_time":"1502507960","keywords":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people","imgurl":"/Public/uploads/news/2017-08-12/598e74280d570.jpg"},{"id":"33","title":"Face recognition is for known threats. This technology detects the unknown!","add_time":"1498559509","keywords":"Face recognition is for known threats. This technology detects the unknown!","imgurl":"/Public/uploads/news/2017-07-27/5979955c41559.jpg"},{"id":"2","title":"ALPR: a new philosophy of best practices","add_time":"1494057064","keywords":"ALPR: a new philosophy of best practices","imgurl":"/Public/uploads/news/2017-07-27/597997401a272.jpg"},{"id":"34","title":"IFSEC International","add_time":"1501141974","keywords":"Thank you to everyone that attended IFSEC International 2017","imgurl":"/Public/uploads/news/2017-07-27/59799c6f2a26c.jpg"},{"id":"39","title":"测试动态","add_time":"1507772459","keywords":"测试动态","imgurl":"/Public/uploads/news/2017-10-12/59dec84aabe00.jpg"}],"shanghu":[{"id":"10001","name":"郑州七七网络科技有限公司","addtime":"1507703627","code":"11233","point":"0","hid":"2","lid":"2","daihao":"BX11233","hangye":"科技互联网"},{"id":"10000","name":"宇联APP科技有限公司","addtime":"1507617698","code":"10000","point":"0","hid":"2","lid":"2","daihao":"BX10000","hangye":"科技互联网"}]}
+     * res : {"news":[{"id":"38","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"36","title":"5 questions to ask before selecting face recognition solution"},{"id":"37","title":"Detecting traffic accidents with machine learning"},{"id":"35","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"33","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"2","title":"ALPR: a new philosophy of best practices"},{"id":"34","title":"IFSEC International"},{"id":"40","title":"标题"},{"id":"39","title":"测试动态"}],"shanghu":[{"id":"10011","name":"深圳蓝天公司A","daihao":"DZ9001","hangye":"科技互联网","point":"2","code":"9001"}],"beijingtu":"/Public/uploads/images/logo/59ed51a7c2b0f.png"}
      */
 
     private String stu;
@@ -33,8 +33,23 @@ public class ComeOn {
     }
 
     public static class ResBean {
+        /**
+         * news : [{"id":"38","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"36","title":"5 questions to ask before selecting face recognition solution"},{"id":"37","title":"Detecting traffic accidents with machine learning"},{"id":"35","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"33","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"2","title":"ALPR: a new philosophy of best practices"},{"id":"34","title":"IFSEC International"},{"id":"40","title":"标题"},{"id":"39","title":"测试动态"}]
+         * shanghu : [{"id":"10011","name":"深圳蓝天公司A","daihao":"DZ9001","hangye":"科技互联网","point":"2","code":"9001"}]
+         * beijingtu : /Public/uploads/images/logo/59ed51a7c2b0f.png
+         */
+
+        private String beijingtu;
         private List<NewsBean> news;
         private List<ShanghuBean> shanghu;
+
+        public String getBeijingtu() {
+            return beijingtu;
+        }
+
+        public void setBeijingtu(String beijingtu) {
+            this.beijingtu = beijingtu;
+        }
 
         public List<NewsBean> getNews() {
             return news;
@@ -56,16 +71,10 @@ public class ComeOn {
             /**
              * id : 38
              * title : ACaaS: How it’s influenced by IoT
-             * add_time : 1504835917
-             * keywords : ACaaS: How it’s influenced by IoT
-             * imgurl : /Public/uploads/news/2017-09-08/59b1fa02c1829.jpg
              */
 
             private String id;
             private String title;
-            private String add_time;
-            private String keywords;
-            private String imgurl;
 
             public String getId() {
                 return id;
@@ -82,69 +91,24 @@ public class ComeOn {
             public void setTitle(String title) {
                 this.title = title;
             }
-
-            public String getAdd_time() {
-                return add_time;
-            }
-
-            public void setAdd_time(String add_time) {
-                this.add_time = add_time;
-            }
-
-            public String getKeywords() {
-                return keywords;
-            }
-
-            public void setKeywords(String keywords) {
-                this.keywords = keywords;
-            }
-
-            public String getImgurl() {
-                return imgurl;
-            }
-
-            public void setImgurl(String imgurl) {
-                this.imgurl = imgurl;
-            }
         }
 
         public static class ShanghuBean {
-            @Override
-            public String toString() {
-                return "ShanghuBean{" +
-                        "id='" + id + '\'' +
-                        ", name='" + name + '\'' +
-                        ", addtime='" + addtime + '\'' +
-                        ", code='" + code + '\'' +
-                        ", point='" + point + '\'' +
-                        ", hid='" + hid + '\'' +
-                        ", lid='" + lid + '\'' +
-                        ", daihao='" + daihao + '\'' +
-                        ", hangye='" + hangye + '\'' +
-                        '}';
-            }
-
             /**
-             * id : 10001
-             * name : 郑州七七网络科技有限公司
-             * addtime : 1507703627
-             * code : 11233
-             * point : 0
-             * hid : 2
-             * lid : 2
-             * daihao : BX11233
+             * id : 10011
+             * name : 深圳蓝天公司A
+             * daihao : DZ9001
              * hangye : 科技互联网
+             * point : 2
+             * code : 9001
              */
 
             private String id;
             private String name;
-            private String addtime;
-            private String code;
-            private String point;
-            private String hid;
-            private String lid;
             private String daihao;
             private String hangye;
+            private String point;
+            private String code;
 
             public String getId() {
                 return id;
@@ -162,46 +126,6 @@ public class ComeOn {
                 this.name = name;
             }
 
-            public String getAddtime() {
-                return addtime;
-            }
-
-            public void setAddtime(String addtime) {
-                this.addtime = addtime;
-            }
-
-            public String getCode() {
-                return code;
-            }
-
-            public void setCode(String code) {
-                this.code = code;
-            }
-
-            public String getPoint() {
-                return point;
-            }
-
-            public void setPoint(String point) {
-                this.point = point;
-            }
-
-            public String getHid() {
-                return hid;
-            }
-
-            public void setHid(String hid) {
-                this.hid = hid;
-            }
-
-            public String getLid() {
-                return lid;
-            }
-
-            public void setLid(String lid) {
-                this.lid = lid;
-            }
-
             public String getDaihao() {
                 return daihao;
             }
@@ -216,6 +140,22 @@ public class ComeOn {
 
             public void setHangye(String hangye) {
                 this.hangye = hangye;
+            }
+
+            public String getPoint() {
+                return point;
+            }
+
+            public void setPoint(String point) {
+                this.point = point;
+            }
+
+            public String getCode() {
+                return code;
+            }
+
+            public void setCode(String code) {
+                this.code = code;
             }
         }
     }

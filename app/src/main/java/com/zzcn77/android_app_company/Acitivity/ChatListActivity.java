@@ -22,6 +22,7 @@ public class ChatListActivity extends FragmentActivity {
         setContentView(R.layout.em_activity_chat);
         //get user id or group id
         ConversationListFragment = new ConversationListFragment();
+
 //        ConversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
 //            @Override
 //            public void onListItemClicked(EMConversation conversation) {
@@ -76,11 +77,16 @@ public class ChatListActivity extends FragmentActivity {
         finish();
     }
 
-
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //记得在不需要的时候移除listener，如在activity的onDestroy()时
-        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+            }
+        }.start();
+        super.onDestroy();
     }
 }

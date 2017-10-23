@@ -112,8 +112,8 @@
     <string name="Isthelatestversion">已是最新版本</string>
     <string name="deleteall">确认删除全部吗？</string>
     <string name="Pricerangeerror">价格区间错误</string>
-    <string name="Thecaptchahasfailed">验证码错误</string>
     <string name="Thereisnorelevantcontent">暂无相关内容</string>
+    <string name="Thecaptchahasfailed">验证码错误</string>
     <string name="Enterthesearch">请输入搜索内容</string>
     <string name="Areyouexit">确定退出吗？</string>
     <string name="Lookprice">查看价格</string>
@@ -136,5 +136,25 @@
     <string name="exhibitionhall">展厅首页</string>
     <string name="exhibitionDetails">展位详情</string>
     <string name="my_merchants_collect">商家收藏</string>
+    <string name="The_product_collection">产品收藏</string>
     <string name="merchantsscore">商家评分</string>
+    <string name="share">ULinking</string>
+    <string name="Enter_Keywords">请输入关键词</string>
+    <string name="Please_enter_a_company_code">请输入公司代号</string>
+    <string name="Merchant_does_not_exist">商户不存在</string>
+    <string name="Collection_or_cancel_this_failure">收藏或取消失败</string>
+    <string name="Merchants_have_to_collect">商户已收藏</string>
+    <string name="The_member_information_does_not_exist">会员信息不存在</string>
+    <string name="Merchants_information_does_not_exist">商户信息不存在</string>
+    <string name="Enter_the_merchants_homepage">进入商家首页</string>
+    <string name="High_praise">好评</string>
+    <string name="medium">中评</string>
+    <string name="negative_comment">差评</string>
+    <string name="The_company_code">公司代号</string>
+    <string name="The_company_fen">分</string>
+    <string name="login">登录</string>
+    <string name="cancel">取消</string>
+    <string name="password">请输入密码</string>
+    <string name="search">搜索</string>
+
 </resources>

@@ -359,13 +359,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.img_back:
-                boolean existMainActivity = isExistMainActivity(MainActivity.class);
-                if (existMainActivity) {
                     finish();
-                } else {
-                    finish();
-                    startActivity(new Intent(context, MainActivity.class));
-                }
                 break;
             case R.id.rl_call_phone:
                 CallPhoneUtils.CallPhone(ProductDetailsActivity.this, tvPhone.getText().toString());

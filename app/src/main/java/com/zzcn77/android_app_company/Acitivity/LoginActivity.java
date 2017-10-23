@@ -17,6 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Bean.LoginBean;
 import com.zzcn77.android_app_company.R;
@@ -52,6 +54,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String accountor;
     private String password;
     private Dialog dialog;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected int setthislayout() {
@@ -121,6 +128,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                     SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
                                     SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
+                                    if (!loginBean.getRes().getId().isEmpty()) {
+                                        new Thread() {
+                                            @Override
+                                            public void run() {
+                                                super.run();
+                                                //注册失败会抛出HyphenateException
+                                                try {
+                                                    if (!String.valueOf(SPUtil.get(context, "id", "")).isEmpty()) {
+                                                        EMClient.getInstance().createAccount(String.valueOf(SPUtil.get(context, "id", "")), String.valueOf(SPUtil.get(context, "id", "")));//同步方法
+                                                    }
+                                                } catch (HyphenateException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+                                        }.start();
+                                    }
                                     if (loginBean.getRes().getType().equals("2")) {
                                         startActivity(new Intent(context, ChatListActivity.class));
                                         finish();

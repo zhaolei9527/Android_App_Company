@@ -29,11 +29,11 @@
 
         <ImageView
             android:id="@+id/img_head"
-            android:layout_width="@dimen/x80"
-            android:layout_height="@dimen/x80"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y21"
-            android:background="@mipmap/r3_c8" />
+            android:src="@mipmap/logo_denglu" />
 
         <TextView
             android:id="@+id/tv_account"

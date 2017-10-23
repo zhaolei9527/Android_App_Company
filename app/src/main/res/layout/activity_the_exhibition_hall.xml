@@ -98,33 +98,6 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x15"
-        android:layout_marginRight="@dimen/x15"
-        android:text="在中文里，展览会名称有博览会、展览会、展览、展销会、博览展销会、看样订货会、展览交流会、交易会、贸易洽谈会、展示会、展评会、样品陈列、庙会、集市、墟、场等等。另外，还有一些展览会使用非专业名词。" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x10"
-        android:layout_marginTop="@dimen/x10">
-
-        <Button
-            android:id="@+id/btn_sjtuijian"
-            android:layout_width="@dimen/x68"
-            android:layout_height="@dimen/y19"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x15"
-            android:background="@drawable/tujian"
-            android:text="@string/Businessmen" />
-
-    </RelativeLayout>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

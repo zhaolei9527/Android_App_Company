@@ -25,12 +25,15 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Adapter.ExhibitionAdapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
+import com.zzcn77.android_app_company.Bean.DescBean;
 import com.zzcn77.android_app_company.Bean.ExhibitionBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
+import com.zzcn77.android_app_company.Volley.VolleyInterface;
+import com.zzcn77.android_app_company.Volley.VolleyRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,10 +49,6 @@ public class TheExhibitionHallActivity extends BaseActivity implements android.v
     android.view.View View;
     @BindView(R.id.rl1)
     LinearLayout rl1;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
-    @BindView(R.id.btn_sjtuijian)
-    Button btnSjtuijian;
     @BindView(R.id.swipe_target)
     ListView swipeTarget;
     @BindView(R.id.swipe_load_more_footer)
@@ -65,7 +64,9 @@ public class TheExhibitionHallActivity extends BaseActivity implements android.v
     private int page = 1;
     private Dialog dialog;
     private ExhibitionBean exhibitionBean;
-
+    private LinearLayout head;
+    TextView tvContent;
+    Button btnSjtuijian;
     @Override
     protected int setthislayout() {
         return R.layout.activity_the_exhibition_hall;
@@ -77,6 +78,11 @@ public class TheExhibitionHallActivity extends BaseActivity implements android.v
         dialog.show();
         foot = View.inflate(context, R.layout.list_foot_layout, null);
         swipeTarget.addFooterView(foot, null, false);
+        head = (LinearLayout) View.inflate(context, R.layout.exhibition_homepage_head_layout, null);
+        tvContent = (TextView) head.findViewById(R.id.tv_content);
+        btnSjtuijian = (Button) head.findViewById(R.id.btn_sjtuijian);
+        btnSjtuijian.setOnClickListener(this);
+        swipeTarget.addHeaderView(head);
     }
 
     @Override
@@ -84,7 +90,6 @@ public class TheExhibitionHallActivity extends BaseActivity implements android.v
         imgBack.setOnClickListener(this);
         llSearchZhanwei.setOnClickListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-        btnSjtuijian.setOnClickListener(this);
         swipeTarget.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -107,10 +112,34 @@ public class TheExhibitionHallActivity extends BaseActivity implements android.v
         });
         swipeTarget.setOnItemClickListener(this);
 
+        HashMap<String, String> params = new HashMap<>();
+        params.put("key", UrlUtils.key);
+        VolleyRequest.RequestPost(context, UrlUtils.BaseUrl22 + "desc", "desc", params, new VolleyInterface(context) {
+            @Override
+            public void onMySuccess(String result) {
+                String decode = Utils.decode(result);
+                Log.d("TheEntranceActivity", decode);
+                if (decode.isEmpty()) {
+                    EasyToast.showShort(context, getString(R.string.Networkexception));
+                } else {
+                    DescBean descBean = new Gson().fromJson(decode, DescBean.class);
+                    tvContent.setText(descBean.getRes().getContent().toString());
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError error) {
+                error.printStackTrace();
+                dialog.dismiss();
+            }
+        });
+
+
     }
 
     @Override
     protected void initData() {
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "exhibition", new Response.Listener<String>() {
             @Override

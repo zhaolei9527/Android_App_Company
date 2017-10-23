@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -176,6 +177,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                                         swipeTarget.setAdapter(collectAdapter);
                                     if (swipeTarget != null)
                                         swipeTarget.setEnabled(true);
+
                                 }
                             } else {
                                 if (collectAdapter != null)

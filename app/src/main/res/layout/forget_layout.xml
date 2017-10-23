@@ -6,12 +6,12 @@
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/x80"
-        android:layout_height="@dimen/y80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:background="@mipmap/d_logo" />
+        android:src="@mipmap/logo_denglu" />
 
 
     <RelativeLayout
@@ -20,7 +20,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y28"
+        android:layout_marginTop="@dimen/y40"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -32,7 +32,6 @@
             android:background="@mipmap/z_mail" />
 
         <EditText
-            android:inputType="textEmailAddress"
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y33"
@@ -41,6 +40,7 @@
             android:layout_toRightOf="@id/img_email"
             android:background="@null"
             android:hint="@string/email"
+            android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textColorHint="#50f0f0f0" />

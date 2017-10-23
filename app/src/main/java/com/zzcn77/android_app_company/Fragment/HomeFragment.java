@@ -32,6 +32,7 @@ import com.zzcn77.android_app_company.Acitivity.NewsDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PeomotionDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.ProductDetailsActivity;
 import com.zzcn77.android_app_company.Acitivity.PromotionActivity;
+import com.zzcn77.android_app_company.Acitivity.TheEntranceActivity;
 import com.zzcn77.android_app_company.Adapter.LoopAdapter;
 import com.zzcn77.android_app_company.Adapter.Promotionadapter;
 import com.zzcn77.android_app_company.App;
@@ -263,8 +264,8 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
         RollPagerView.setAdapter(new LoopAdapter(RollPagerView, index.getRes().getLunbo()));
         tvTitle.setText(index.getRes().getJianjie().getTitle());
         SimpleDraweeView.setImageURI(UrlUtils.BaseImg + index.getRes().getJianjie().getImgurl());
-        tv_id.setText("公司代号：" + String.valueOf(index.getRes().getJianjie().getId()));
-        tvPingfen.setText(String.valueOf(index.getRes().getJianjie().getPoint()) + "分");
+        tv_id.setText(getString(R.string.The_company_code) + ":" + String.valueOf(index.getRes().getJianjie().getId()));
+        tvPingfen.setText(String.valueOf(index.getRes().getJianjie().getPoint()));
         tvMessage.setText(index.getRes().getJianjie().getKeywords());
         vpNews.setAdapter(new newsAdapter(index.getRes().getDongtai()));
         //设置总共的页数
@@ -306,7 +307,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                 CallPhoneUtils.CallPhone(mActivity, index.getRes().getJianjie().getTel());
                 break;
             case R.id.btn_changeCompany:
-                Toast.makeText(mActivity, "切换商家", Toast.LENGTH_SHORT).show();
+                mActivity.startActivity(new Intent(mActivity, TheEntranceActivity.class));
                 mActivity.finish();
                 break;
             case R.id.img_share:
@@ -354,17 +355,17 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                     } else {
                         if (decode.contains("121")) {
                             HomeFragment.this.dialog.dismiss();
-                            Toast.makeText(mActivity, "收藏或取消失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, getString(R.string.Collection_or_cancel_this_failure), Toast.LENGTH_SHORT).show();
                         } else if (decode.contains("120")) {
-                            Toast.makeText(mActivity, "商户已收藏", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, getString(R.string.Merchants_have_to_collect), Toast.LENGTH_SHORT).show();
                             index.getRes().setIs_coll(1);
                         } else if (decode.contains("123")) {
-                            Toast.makeText(mActivity, "会员信息不存在", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, getString(R.string.The_member_information_does_not_exist), Toast.LENGTH_SHORT).show();
                         } else if (decode.contains("124")) {
-                            Toast.makeText(mActivity, "商户信息不存在", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, getString(R.string.Merchants_information_does_not_exist), Toast.LENGTH_SHORT).show();
                         } else {
                             if (is_coll == 1) {
-                                Toast.makeText(mActivity, "取消收藏", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mActivity, getString(R.string.cancelcollection), Toast.LENGTH_SHORT).show();
                                 imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc));
                                 index.getRes().setIs_coll(0);
                                 SPUtil.putAndApply(mActivity, "index", new Gson().toJson(index));
@@ -384,7 +385,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
                                 }.start();
 
                             } else {
-                                Toast.makeText(mActivity, "已收藏", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mActivity, getString(R.string.Merchants_have_to_collect), Toast.LENGTH_SHORT).show();
                                 imgShoucang.setBackground(getResources().getDrawable(R.mipmap.sc2));
                                 index.getRes().setIs_coll(1);
                                 SPUtil.putAndApply(mActivity, "index", new Gson().toJson(index));
@@ -418,7 +419,7 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
     }
 
     public void showShareDialog() {
-        dialog = new MyDialog(mActivity);
+        dialog = new MyDialog(mActivity, String.valueOf(index.getRes().getJianjie().getId()), String.valueOf(index.getRes().getJianjie().getTitle()), index.getRes().getJianjie().getImgurl());
         dialog.show();//显示对话框
     }
 

@@ -34,7 +34,23 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="21d00bf1f5f48" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="422dd82ae6579cb7acb499ec9d004030" />
+        <!-- 填写您从友盟开发者后台中得到的Appkey和AppSecret -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59ed3e3e734be4048f0007fd" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="8056f99931657c1b53380750c1dcda12" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="googlePlay" />
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
@@ -61,15 +77,7 @@
             </intent-filter>
         </receiver>
 
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="591563ac734be4094a00089d" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="ec6249e370e5fb66f6a55238ffc93e24" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="应用宝" />
+
 
         <activity
             android:name=".Acitivity.MainActivity"
@@ -191,25 +199,38 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Acitivity.TheEntranceActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".Acitivity.ZhanweiSearchActivity" />
-        <activity android:name=".Acitivity.BusinessmenRecommendActivity" />
-        <activity android:name=".Acitivity.TheExhibitionHallActivity" />
-        <activity android:name=".Acitivity.ExhibitionDetailsActivity" />
-        <activity android:name=".Acitivity.MerchantsCollectionActivity" />
-        <activity android:name=".Acitivity.BusinessmenSearchActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.ZhanweiSearchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.BusinessmenRecommendActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.TheExhibitionHallActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.ExhibitionDetailsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.MerchantsCollectionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Acitivity.BusinessmenSearchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data
-            android:name="Mob-AppKey"
-            android:value="1cd53793b510b" />
-        <meta-data
-            android:name="Mob-AppSecret"
-            android:value="a8405c954e9f7f136292c5ba5d39e7aa" />
+
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"

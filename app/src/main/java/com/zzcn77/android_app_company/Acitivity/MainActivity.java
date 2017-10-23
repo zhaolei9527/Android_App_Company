@@ -119,7 +119,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
 
 
-
         super.onDestroy();
     }
 
@@ -225,6 +224,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     VersionBean versionBean = new Gson().fromJson(decode, VersionBean.class);
                     if (String.valueOf(versionBean.getStu()).equals("1")) {
                         try {
+                            SPUtil.putAndApply(context, "VersionBean", decode);
                             int versionCode = getversionCode();
                             int Android_bnum = Integer.parseInt(versionBean.getRes().getAndroid_bnum());
                             if (versionCode < Android_bnum) {
@@ -318,7 +318,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     views[i].setTextColor(getResources().getColor(R.color.text_blue));
                 }
             }
-
             FragmentManager fm = getFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             HomeFragment homeFragment = new HomeFragment();
@@ -417,7 +416,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Timer tExit = null;
         if (!isExit) {
             isExit = true;
-            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.Clicktheexitprogramagain), Toast.LENGTH_SHORT).show();
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.imagepipeline.request.BasePostprocessor;
@@ -22,15 +28,18 @@ import com.google.gson.Gson;
 import com.zzcn77.android_app_company.App;
 import com.zzcn77.android_app_company.Base.BaseActivity;
 import com.zzcn77.android_app_company.Bean.B_DetailBean;
+import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.BitmapUtil;
 import com.zzcn77.android_app_company.Utils.EasyToast;
+import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.Volley.VolleyInterface;
 import com.zzcn77.android_app_company.Volley.VolleyRequest;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -68,6 +77,7 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
     protected void initListener() {
         imgBack.setOnClickListener(this);
         SDWExhibition.setOnClickListener(this);
+        btnGotomain.setOnClickListener(this);
     }
 
     @Override
@@ -100,6 +110,8 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
                     tvZhanting.setText(b_detailBean.getRes().getName());
                     tvZhanwei.setText(b_detailBean.getRes().getNumber());
                     Postprocessor redMeshPostprocessor = new BasePostprocessor() {
+                        private Bitmap bitmap;
+
                         @Override
                         public String getName() {
                             return "redMeshPostprocessor";
@@ -108,7 +120,10 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
                         @Override
                         public void process(Bitmap bitmap) {
                             Canvas canvas = new Canvas(bitmap);// 设置canvas画布背景为白色
-                            canvas.drawBitmap(BitmapUtil.drawable2Bitmap(getResources().getDrawable(R.mipmap.shoucang_sj3)), (int) (x * bitmap.getWidth()), (int) (y * bitmap.getHeight()), null);
+                            this.bitmap = BitmapUtil.drawable2Bitmap(getResources().getDrawable(R.drawable.zuobiao));
+                            int height = this.bitmap.getHeight();
+                            int width = this.bitmap.getWidth();
+                            canvas.drawBitmap(this.bitmap, (int) (x * bitmap.getWidth())- (width / 2), (int) (y * bitmap.getHeight()) - height, null);
                         }
                     };
                     ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(UrlUtils.BaseImg + b_detailBean.getRes().getImgurl()))
@@ -147,6 +162,78 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
                         .putExtra("y", y)
                         .putExtra("imgurl", UrlUtils.BaseImg + b_detailBean.getRes().getImgurl()));
                 break;
+            case R.id.btn_gotomain:
+                dialog.show();
+                getindex(b_detailBean.getRes().getQ_num());
+                break;
         }
     }
+
+    private void getindex(final String shid) {
+        SPUtil.remove(context, "index");
+        SPUtil.remove(context, "demo");
+        SPUtil.remove(context, "product");
+        SPUtil.remove(context, "scheme");
+
+        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.isEmpty()) {
+                    dialog.dismiss();
+                    if (context != null)
+                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                } else {
+                    IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
+                    if (indexBean.getStu().equals("1")) {
+                        if (context != null) {
+                            dialog.dismiss();
+                            SPUtil.putAndApply(context, "index", s);
+                            startActivity(new Intent(context, MainActivity.class));
+                        }
+                    } else {
+                        dialog.dismiss();
+                        if (context != null)
+                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                volleyError.printStackTrace();
+                if (context != null)
+                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                map.put("sh_id", shid);
+                String id = (String) SPUtil.get(context, "id", "");
+                if (!id.isEmpty()) {
+                    map.put("uid", id);
+                }
+                return map;
+            }
+        };
+
+        if (Utils.isConnected(context)) {
+            requestQueue.add(stringRequest);
+        } else {
+            if (context != null) {
+                EasyToast.showShort(context, getString(R.string.Notconnect));
+                startActivity(new Intent(context, LoginActivity.class));
+                finish();
+            }
+        }
+
+    }
+
 }

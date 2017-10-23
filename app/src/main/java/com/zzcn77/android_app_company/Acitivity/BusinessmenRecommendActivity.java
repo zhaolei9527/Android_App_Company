@@ -25,11 +25,9 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.zzcn77.android_app_company.Adapter.BusinessmenRecommendadapter;
 import com.zzcn77.android_app_company.Base.BaseActivity;
-import com.zzcn77.android_app_company.Bean.IndexBean;
 import com.zzcn77.android_app_company.Bean.ShopsBean;
 import com.zzcn77.android_app_company.R;
 import com.zzcn77.android_app_company.Utils.EasyToast;
-import com.zzcn77.android_app_company.Utils.SPUtil;
 import com.zzcn77.android_app_company.Utils.UrlUtils;
 import com.zzcn77.android_app_company.Utils.Utils;
 import com.zzcn77.android_app_company.View.LoadMoreFooterView;
@@ -260,71 +258,72 @@ public class BusinessmenRecommendActivity extends BaseActivity implements androi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        dialog.show();
-        getindex(shopsBean.getRes().get(position).getId());
+        //dialog.show();
+        // getindex(shopsBean.getRes().get(position).getId());
+        startActivity(new Intent(context, ExhibitionDetailsActivity.class).putExtra("id", shopsBean.getRes().get(position).getBid()));
     }
 
-    private void getindex(final String shid) {
-        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                String decode = Utils.decode(s);
-                if (decode.isEmpty()) {
-                    dialog.dismiss();
-                    if (context != null)
-                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                } else {
-                    IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
-                    if (indexBean.getStu().equals("1")) {
-                        if (context != null) {
-                            dialog.dismiss();
-                            SPUtil.putAndApply(context, "index", s);
-                            startActivity(new Intent(context, MainActivity.class));
-                        }
-                    } else {
-                        dialog.dismiss();
-                        if (context != null)
-                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
-                volleyError.printStackTrace();
-                if (context != null)
-                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
-            }
-        })
-
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("key", UrlUtils.key);
-                map.put("sh_id", shid);
-                String id = (String) SPUtil.get(context, "id", "");
-                if (!id.isEmpty()) {
-                    map.put("uid", id);
-                }
-                return map;
-            }
-        };
-
-        if (Utils.isConnected(context)) {
-            requestQueue.add(stringRequest);
-        } else {
-            if (context != null) {
-                EasyToast.showShort(context, getString(R.string.Notconnect));
-                startActivity(new Intent(context, LoginActivity.class));
-                finish();
-            }
-        }
-
-    }
+//    private void getindex(final String shid) {
+//        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
+//        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String s) {
+//                String decode = Utils.decode(s);
+//                if (decode.isEmpty()) {
+//                    dialog.dismiss();
+//                    if (context != null)
+//                        EasyToast.showShort(context, getString(R.string.Abnormalserver));
+//                } else {
+//                    IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
+//                    if (indexBean.getStu().equals("1")) {
+//                        if (context != null) {
+//                            dialog.dismiss();
+//                            SPUtil.putAndApply(context, "index", s);
+//                            startActivity(new Intent(context, MainActivity.class));
+//                        }
+//                    } else {
+//                        dialog.dismiss();
+//                        if (context != null)
+//                            EasyToast.showShort(context, getString(R.string.Abnormalserver));
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                dialog.dismiss();
+//                volleyError.printStackTrace();
+//                if (context != null)
+//                    EasyToast.showShort(context, getString(R.string.Abnormalserver));
+//            }
+//        })
+//
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put("key", UrlUtils.key);
+//                map.put("sh_id", shid);
+//                String id = (String) SPUtil.get(context, "id", "");
+//                if (!id.isEmpty()) {
+//                    map.put("uid", id);
+//                }
+//                return map;
+//            }
+//        };
+//
+//        if (Utils.isConnected(context)) {
+//            requestQueue.add(stringRequest);
+//        } else {
+//            if (context != null) {
+//                EasyToast.showShort(context, getString(R.string.Notconnect));
+//                startActivity(new Intent(context, LoginActivity.class));
+//                finish();
+//            }
+//        }
+//
+//    }
 
 
     //上拉加载

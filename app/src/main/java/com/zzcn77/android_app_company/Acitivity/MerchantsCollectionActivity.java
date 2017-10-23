@@ -172,6 +172,18 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
                                         swipeTarget.setAdapter(merchantsCollectionAdapter);
                                     if (swipeTarget != null)
                                         swipeTarget.setEnabled(true);
+                                    if (ShcollBean.getRes().size() < 10) {
+                                        if (foot != null) {
+                                            foot.setVisibility(View.GONE);
+                                            TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
+                                            tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                            if (swipeToLoadLayout != null) {
+                                                swipeToLoadLayout.setLoadingMore(false);
+                                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                            }
+                                        }
+                                    }
+
                                 }
                             } else {
                                 if (merchantsCollectionAdapter != null)
@@ -271,11 +283,11 @@ public class MerchantsCollectionActivity extends BaseActivity implements android
                                                     merchantsCollectionAdapter.notifyDataSetChanged();
                                                 }
 
-                                                if (llEmpty!=null){
+                                                if (llEmpty != null) {
                                                     llEmpty.setVisibility(View.VISIBLE);
                                                 }
 
-                                                if (rllDeleteall!=null){
+                                                if (rllDeleteall != null) {
                                                     rllDeleteall.setVisibility(View.GONE);
                                                 }
 

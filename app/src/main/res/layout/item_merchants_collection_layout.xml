@@ -27,7 +27,6 @@
             android:layout_marginTop="@dimen/y11"
             android:layout_toRightOf="@id/img_conllect"
             android:singleLine="true"
-            android:text="宇联APP科技有限公司"
             android:textColor="#333"
             android:textSize="@dimen/x14" />
 
@@ -59,7 +58,6 @@
                 android:layout_marginLeft="@dimen/x12"
                 android:layout_toRightOf="@id/tv_pingfen"
                 android:singleLine="true"
-                android:text="668分"
                 android:textColor="#FF5500"
                 android:textSize="@dimen/x25" />
 
@@ -97,12 +95,15 @@
                     android:src="@mipmap/hao" />
 
                 <Button
+                    android:textAllCaps="false"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:id="@+id/tv_hao"
                     android:layout_width="@dimen/x35"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5"
                     android:background="#00000000"
-                    android:text="好评"
+                    android:text="@string/High_praise"
                     android:textColor="@color/text_check"
                     android:textSize="@dimen/x11" />
 
@@ -120,12 +121,15 @@
                     android:src="@mipmap/zhong" />
 
                 <Button
+                    android:textAllCaps="false"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:id="@+id/tv_zhong"
                     android:layout_width="@dimen/x35"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5"
                     android:background="#00000000"
-                    android:text="中评"
+                    android:text="@string/medium"
                     android:textColor="@color/text_check"
                     android:textSize="@dimen/x11" />
 
@@ -143,18 +147,24 @@
                     android:src="@mipmap/cha" />
 
                 <Button
+                    android:textAllCaps="false"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:id="@+id/tv_cha"
                     android:layout_width="@dimen/x35"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5"
                     android:background="#00000000"
-                    android:text="差评"
+                    android:text="@string/negative_comment"
                     android:textColor="@color/text_check"
                     android:textSize="@dimen/x11" />
 
             </LinearLayout>
 
             <Button
+                android:textAllCaps="false"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:id="@+id/btn_delete"
                 android:layout_width="@dimen/x49"
                 android:layout_height="@dimen/y20"
@@ -195,8 +205,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:singleLine="true"
-        android:text="无线网络摄像头拔网线之后无法连接，无线网络摄像头无线网络摄像头" />
+        android:singleLine="true" />
 
     <View
         android:layout_width="match_parent"
