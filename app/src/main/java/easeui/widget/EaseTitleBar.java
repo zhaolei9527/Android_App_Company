@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 
 /**

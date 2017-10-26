@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,7 +20,7 @@ import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.util.DateUtils;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.Date;

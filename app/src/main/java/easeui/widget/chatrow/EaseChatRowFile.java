@@ -15,7 +15,7 @@ import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.FileUtils;
 import com.hyphenate.util.TextFormater;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.io.File;
 

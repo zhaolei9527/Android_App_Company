@@ -29,7 +29,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.util.EMLog;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.io.File;
 

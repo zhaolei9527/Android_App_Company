@@ -38,7 +38,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.io.File;
 import java.util.List;

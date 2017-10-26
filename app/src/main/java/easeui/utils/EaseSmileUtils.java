@@ -91,7 +91,7 @@ public class EaseSmileUtils {
 	}
 
 	/**
-	 * add text and icon to the map
+	 * add text and ic_launcher to the map
 	 * @param emojiText-- text of emoji
 	 * @param icon -- resource id or local path
 	 */

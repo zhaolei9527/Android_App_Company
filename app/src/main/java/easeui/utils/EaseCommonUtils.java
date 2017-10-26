@@ -26,7 +26,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.HanziToPinyin;
 import com.hyphenate.util.HanziToPinyin.Token;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package easeui.model;
 
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.domain.EaseEmojicon;
 import easeui.domain.EaseEmojicon.Type;

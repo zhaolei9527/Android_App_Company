@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#d2000000"
-    tools:context="com.zzcn77.android_app_company.Acitivity.BigImageActivity">
+    tools:context="com.yulian.platform.Acitivity.BigImageActivity">
 
     <me.relex.photodraweeview.PhotoDraweeView
         android:id="@+id/PhotoDraweeView"
@@ -13,10 +13,9 @@
         android:layout_height="match_parent"
         app:failureImage="@drawable/imgloading"
         app:failureImageScaleType="centerInside"
-        app:placeholderImage="@drawable/imgloading"
         app:placeholderImageScaleType="fitCenter"
         app:progressBarAutoRotateInterval="1000"
-        app:progressBarImage="@drawable/imgloading"
+        app:progressBarImage="@drawable/dialog_loading_icon"
         app:progressBarImageScaleType="centerInside" />
 
 </RelativeLayout>

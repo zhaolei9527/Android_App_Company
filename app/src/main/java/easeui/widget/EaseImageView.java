@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 
 /**

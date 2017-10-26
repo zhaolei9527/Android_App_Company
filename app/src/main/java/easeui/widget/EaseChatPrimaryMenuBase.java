@@ -44,13 +44,13 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout{
     }
     
     /**
-     * emoji icon input event
+     * emoji ic_launcher input event
      * @param emojiContent
      */
     public abstract void onEmojiconInputEvent(CharSequence emojiContent);
 
     /**
-     * emoji icon delete event
+     * emoji ic_launcher delete event
      */
     public abstract void onEmojiconDeleteEvent();
     
@@ -103,7 +103,7 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout{
         void onToggleExtendClicked();
         
         /**
-         * toggle on/off emoji icon
+         * toggle on/off emoji ic_launcher
          */
         void onToggleEmojiconClicked();
         

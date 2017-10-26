@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 
 public class EaseSwitchButton extends FrameLayout{

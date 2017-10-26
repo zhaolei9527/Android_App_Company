@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.hyphenate.util.DensityUtil;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -36,7 +36,7 @@ import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

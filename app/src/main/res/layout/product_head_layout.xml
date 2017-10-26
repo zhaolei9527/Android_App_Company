@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.zzcn77.android_app_company.View.MyGridView
+        <com.yulian.platform.View.MyGridView
             android:id="@+id/gv_swipe_target"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,8 +6,8 @@ public class EaseEmojicon {
     
     /**
      * constructor
-     * @param icon- resource id of the icon
-     * @param emojiText- text of emoji icon
+     * @param icon- resource id of the ic_launcher
+     * @param emojiText- text of emoji ic_launcher
      */
     public EaseEmojicon(int icon, String emojiText){
         this.icon = icon;
@@ -17,8 +17,8 @@ public class EaseEmojicon {
     
     /**
      * constructor
-     * @param icon - resource id of the icon
-     * @param emojiText - text of emoji icon
+     * @param icon - resource id of the ic_launcher
+     * @param emojiText - text of emoji ic_launcher
      * @param type - normal or big
      */
     public EaseEmojicon(int icon, String emojiText, Type type){
@@ -34,22 +34,22 @@ public class EaseEmojicon {
     private String identityCode;
     
     /**
-     * static icon resource id
+     * static ic_launcher resource id
      */
     private int icon;
     
     /**
-     * dynamic icon resource id
+     * dynamic ic_launcher resource id
      */
     private int bigIcon;
     
     /**
-     * text of emoji, could be null for big icon
+     * text of emoji, could be null for big ic_launcher
      */
     private String emojiText;
     
     /**
-     * name of emoji icon
+     * name of emoji ic_launcher
      */
     private String name;
     
@@ -59,18 +59,18 @@ public class EaseEmojicon {
     private Type type;
     
     /**
-     * path of icon
+     * path of ic_launcher
      */
     private String iconPath;
     
     /**
-     * path of big icon
+     * path of big ic_launcher
      */
     private String bigIconPath;
     
     
     /**
-     * get the resource id of the icon
+     * get the resource id of the ic_launcher
      * @return
      */
     public int getIcon() {
@@ -79,7 +79,7 @@ public class EaseEmojicon {
 
 
     /**
-     * set the resource id of the icon
+     * set the resource id of the ic_launcher
      * @param icon
      */
     public void setIcon(int icon) {
@@ -88,7 +88,7 @@ public class EaseEmojicon {
 
 
     /**
-     * get the resource id of the big icon
+     * get the resource id of the big ic_launcher
      * @return
      */
     public int getBigIcon() {
@@ -97,7 +97,7 @@ public class EaseEmojicon {
 
 
     /**
-     * set the resource id of the big icon
+     * set the resource id of the big ic_launcher
      * @return
      */
     public void setBigIcon(int dynamicIcon) {
@@ -106,7 +106,7 @@ public class EaseEmojicon {
 
 
     /**
-     * get text of emoji icon
+     * get text of emoji ic_launcher
      * @return
      */
     public String getEmojiText() {
@@ -115,7 +115,7 @@ public class EaseEmojicon {
 
 
     /**
-     * set text of emoji icon
+     * set text of emoji ic_launcher
      * @param emojiText
      */
     public void setEmojiText(String emojiText) {
@@ -123,7 +123,7 @@ public class EaseEmojicon {
     }
 
     /**
-     * get name of emoji icon
+     * get name of emoji ic_launcher
      * @return
      */
     public String getName() {
@@ -131,7 +131,7 @@ public class EaseEmojicon {
     }
     
     /**
-     * set name of emoji icon
+     * set name of emoji ic_launcher
      * @param name
      */
     public void setName(String name) {
@@ -157,7 +157,7 @@ public class EaseEmojicon {
 
 
     /**
-     * get icon path
+     * get ic_launcher path
      * @return
      */
     public String getIconPath() {
@@ -166,7 +166,7 @@ public class EaseEmojicon {
 
 
     /**
-     * set icon path
+     * set ic_launcher path
      * @param iconPath
      */
     public void setIconPath(String iconPath) {
@@ -175,7 +175,7 @@ public class EaseEmojicon {
 
 
     /**
-     * get path of big icon
+     * get path of big ic_launcher
      * @return
      */
     public String getBigIconPath() {
@@ -184,7 +184,7 @@ public class EaseEmojicon {
 
 
     /**
-     * set path of big icon
+     * set path of big ic_launcher
      * @param bigIconPath
      */
     public void setBigIconPath(String bigIconPath) {
@@ -219,11 +219,11 @@ public class EaseEmojicon {
 
     public enum Type{
         /**
-         * normal icon, can be input one or more in edit view
+         * normal ic_launcher, can be input one or more in edit view
          */
         NORMAL,
         /**
-         * big icon, send out directly when your press it
+         * big ic_launcher, send out directly when your press it
          */
         BIG_EXPRESSION
     }

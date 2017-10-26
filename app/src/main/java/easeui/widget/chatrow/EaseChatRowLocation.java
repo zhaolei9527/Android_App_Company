@@ -11,7 +11,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.LatLng;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 public class EaseChatRowLocation extends EaseChatRow {
 

@@ -41,7 +41,7 @@
                     android:textColor="#333"
                     android:textSize="@dimen/x13" />
 
-                <com.zzcn77.android_app_company.View.MyGridView
+                <com.yulian.platform.View.MyGridView
                     android:id="@+id/gv_model"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -69,7 +69,7 @@
                     android:textColor="#333"
                     android:textSize="@dimen/x13" />
 
-                <com.zzcn77.android_app_company.View.MyGridView
+                <com.yulian.platform.View.MyGridView
                     android:id="@+id/gv_brand"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -159,7 +159,7 @@
                     android:textColor="#333"
                     android:textSize="@dimen/x13" />
 
-                <com.zzcn77.android_app_company.View.MyGridView
+                <com.yulian.platform.View.MyGridView
                     android:id="@+id/gv_resulotion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

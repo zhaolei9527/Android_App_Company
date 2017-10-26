@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.EMError;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.model.EaseVoiceRecorder;
 import easeui.utils.EaseCommonUtils;

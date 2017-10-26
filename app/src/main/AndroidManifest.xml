@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zzcn77.android_app_company">
+    package="com.yulian.platform">
 
     <!-- 添加必要的权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,11 +27,11 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".App"
+        android:name="com.yulian.platform.App"
         android:allowBackup="true"
-        android:icon="@mipmap/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
@@ -80,12 +80,12 @@
 
 
         <activity
-            android:name=".Acitivity.MainActivity"
+            android:name="com.yulian.platform.Acitivity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Acitivity.SplashActivity"
+            android:name="com.yulian.platform.Acitivity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
             <intent-filter>
@@ -95,62 +95,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Acitivity.LoginActivity"
+            android:name="com.yulian.platform.Acitivity.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
-            android:name=".Acitivity.ForGetActivity"
+            android:name="com.yulian.platform.Acitivity.ForGetActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
-            android:name=".Acitivity.CompanyDetailsActivity"
+            android:name="com.yulian.platform.Acitivity.CompanyDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.RegisterActivity"
+            android:name="com.yulian.platform.Acitivity.RegisterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
-            android:name=".Acitivity.PromotionActivity"
+            android:name="com.yulian.platform.Acitivity.PromotionActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.NewsActivity"
+            android:name="com.yulian.platform.Acitivity.NewsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.NewsDetailsActivity"
+            android:name="com.yulian.platform.Acitivity.NewsDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.SettingActivity"
+            android:name="com.yulian.platform.Acitivity.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.LanguageActivity"
+            android:name="com.yulian.platform.Acitivity.LanguageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ChangePasswordActivity"
+            android:name="com.yulian.platform.Acitivity.ChangePasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ConsultActivity"
+            android:name="com.yulian.platform.Acitivity.ConsultActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.SchemeAcitivty"
+            android:name="com.yulian.platform.Acitivity.SchemeAcitivty"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.MyCollectActivity"
+            android:name="com.yulian.platform.Acitivity.MyCollectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ProductDetailsActivity"
+            android:name="com.yulian.platform.Acitivity.ProductDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -166,63 +166,63 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Acitivity.PeomotionDetailsActivity"
+            android:name="com.yulian.platform.Acitivity.PeomotionDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.DemoPlayActivity"
+            android:name="com.yulian.platform.Acitivity.DemoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:theme="@style/Theme_Umeng_Push_Splash" />
         <activity
-            android:name=".Acitivity.DemoSerachActivity"
+            android:name="com.yulian.platform.Acitivity.DemoSerachActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.PdfActivity"
+            android:name="com.yulian.platform.Acitivity.PdfActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ProductSearchActivity"
+            android:name="com.yulian.platform.Acitivity.ProductSearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <service android:name=".Service.AdvanceLoadX5Service" />
-        <service android:name=".Service.DownloadService" />
-        <service android:name=".Service.DownloadPDF" />
+        <service android:name="com.yulian.platform.Service.AdvanceLoadX5Service" />
+        <service android:name="com.yulian.platform.Service.DownloadService" />
+        <service android:name="com.yulian.platform.Service.DownloadPDF" />
 
         <activity
-            android:name=".Acitivity.BigImageActivity"
+            android:name="com.yulian.platform.Acitivity.BigImageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.TheEntranceActivity"
+            android:name="com.yulian.platform.Acitivity.TheEntranceActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ZhanweiSearchActivity"
+            android:name="com.yulian.platform.Acitivity.ZhanweiSearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.BusinessmenRecommendActivity"
+            android:name="com.yulian.platform.Acitivity.BusinessmenRecommendActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.TheExhibitionHallActivity"
+            android:name="com.yulian.platform.Acitivity.TheExhibitionHallActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.ExhibitionDetailsActivity"
+            android:name="com.yulian.platform.Acitivity.ExhibitionDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.MerchantsCollectionActivity"
+            android:name="com.yulian.platform.Acitivity.MerchantsCollectionActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Acitivity.BusinessmenSearchActivity"
+            android:name="com.yulian.platform.Acitivity.BusinessmenSearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -246,22 +246,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.yulian.platform.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".Acitivity.ChatActivity"
+            android:name="com.yulian.platform.Acitivity.ChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Acitivity.ChatListActivity"
+            android:name="com.yulian.platform.Acitivity.ChatListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="easeui.ui.EaseShowBigImageActivity"
@@ -269,7 +268,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".Acitivity.MyActivity"></activity>
+        <activity android:name="com.yulian.platform.Acitivity.MyActivity"></activity>
     </application>
 
 </manifest>

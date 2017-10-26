@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.util.EMLog;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 /**
  * primary menu
@@ -159,7 +159,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
     }
     
     /**
-     * set recorder view when speak icon is touched
+     * set recorder view when speak ic_launcher is touched
      * @param voiceRecorderView
      */
     public void setPressToSpeakRecorderView(EaseVoiceRecorderView voiceRecorderView){
@@ -167,7 +167,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
     }
 
     /**
-     * append emoji icon to editText
+     * append emoji ic_launcher to editText
      * @param emojiContent
      */
     public void onEmojiconInputEvent(CharSequence emojiContent){
@@ -232,7 +232,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
     
     
     /**
-     * show voice icon when speak bar is touched
+     * show voice ic_launcher when speak bar is touched
      * 
      */
     protected void setModeVoice() {

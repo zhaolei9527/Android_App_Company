@@ -256,7 +256,7 @@ public class EaseNotifier {
                     summaryBody = customSummaryBody;
                 }
                 
-                // small icon
+                // small ic_launcher
                 int smallIcon = notificationInfoProvider.getSmallIcon(message);
                 if (smallIcon != 0){
                     mBuilder.setSmallIcon(smallIcon);
@@ -389,10 +389,10 @@ public class EaseNotifier {
         String getTitle(EMMessage message);
 
         /**
-         * set the small icon
+         * set the small ic_launcher
          * 
          * @param message
-         * @return 0- will use the default icon
+         * @return 0- will use the default ic_launcher
          */
         int getSmallIcon(EMMessage message);
 
@@ -400,7 +400,7 @@ public class EaseNotifier {
          * set the intent when notification is pressed
          * 
          * @param message
-         * @return null- will use the default icon
+         * @return null- will use the default ic_launcher
          */
         Intent getLaunchIntent(EMMessage message);
     }

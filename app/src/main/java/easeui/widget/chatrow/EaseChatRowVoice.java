@@ -11,7 +11,7 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.util.EMLog;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 public class EaseChatRowVoice extends EaseChatRowFile {
 
@@ -61,7 +61,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
         
         if (message.direct() == EMMessage.Direct.RECEIVE) {
             if (message.isListened()) {
-                // hide the unread icon
+                // hide the unread ic_launcher
                 readStatusView.setVisibility(View.INVISIBLE);
             } else {
                 readStatusView.setVisibility(View.VISIBLE);

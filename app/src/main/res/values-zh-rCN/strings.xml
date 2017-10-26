@@ -126,7 +126,7 @@
     <string name="shareTo">分享到</string>
     <string name="wechat">微信</string>
     <string name="wechatfriend">朋友圈</string>
-    <string name="exhibition">输入展位号或企业名称</string>
+    <string name="exhibition">展位号、公司名称、产品</string>
     <string name="industry">行业</string>
     <string name="Businessmen">商家推荐</string>
     <string name="score">评分</string>
@@ -156,5 +156,6 @@
     <string name="cancel">取消</string>
     <string name="password">请输入密码</string>
     <string name="search">搜索</string>
-
+    <string name="Businessisnotonline">商家未上线</string>
+    <string name="appdownload">来自U-linking：</string>
 </resources>

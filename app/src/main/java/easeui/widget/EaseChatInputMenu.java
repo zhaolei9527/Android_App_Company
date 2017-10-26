@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import easeui.widget.EaseChatExtendMenu.EaseChatExtendMenuItemClickListener;
 import easeui.widget.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;
 import easeui.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -344,7 +344,7 @@ public class EaseChatInputMenu extends LinearLayout {
         void onSendMessage(String content);
         
         /**
-         * when big icon pressed
+         * when big ic_launcher pressed
          * @param emojicon
          */
         void onBigExpressionClicked(EaseEmojicon emojicon);

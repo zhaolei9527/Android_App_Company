@@ -16,7 +16,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.hyphenate.util.EMLog;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.util.ArrayList;
 import java.util.List;

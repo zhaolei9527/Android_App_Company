@@ -4,6 +4,7 @@
     android:layout_height="@dimen/y91">
 
     <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="@dimen/x146"
         android:layout_height="@dimen/y91"
         android:layout_marginRight="@dimen/x10"
@@ -17,7 +18,7 @@
             android:ellipsize="end"
             android:padding="@dimen/x10"
             android:singleLine="true"
-            android:textColor="#0768FC"
+            android:textColor="#fff"
             android:textSize="@dimen/x11" />
 
         <View
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/industry"
-                android:textColor="#000" />
+                android:textColor="#fff" />
 
             <View
                 android:layout_width="1px"
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="#333333"
+                android:textColor="#fff"
                 android:textSize="@dimen/x10" />
 
         </LinearLayout>
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/score"
-                android:textColor="#000" />
+                android:textColor="#fff" />
 
             <View
                 android:layout_width="1px"
@@ -82,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="#333333"
+                android:textColor="#fff"
                 android:textSize="@dimen/x10" />
 
         </LinearLayout>
@@ -98,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Codename"
-                android:textColor="#000" />
+                android:textColor="#fff" />
 
             <View
                 android:layout_width="1px"
@@ -113,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="#333333"
+                android:textColor="#fff"
                 android:textSize="@dimen/x10" />
 
         </LinearLayout>

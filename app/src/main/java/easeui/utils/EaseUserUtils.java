@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.EaseUI;
 import easeui.EaseUI.EaseUserProfileProvider;

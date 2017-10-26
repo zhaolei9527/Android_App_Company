@@ -17,7 +17,7 @@ import com.hyphenate.util.DateUtils;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.ImageUtils;
 import com.hyphenate.util.TextFormater;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.io.File;
 

@@ -129,11 +129,11 @@
     <string name="guanjianci">keywords</string>
     <string name="zhantingdaohangrukou">exhibition hall entrance</string>
     <string name="News">news</string>
-    <string name="changeCompany">change merchants</string>
+    <string name="changeCompany">merchants</string>
     <string name="shareTo">share to</string>
     <string name="wechat">wechat</string>
     <string name="wechatfriend">wechat friend</string>
-    <string name="exhibition">booth No. or comapant name</string>
+    <string name="exhibition">The booth number, company name, product</string>
     <string name="industry">industry</string>
     <string name="Businessmen">merchant recomment</string>
     <string name="score">score</string>
@@ -160,5 +160,8 @@
     <string name="The_company_code">Company Code</string>
     <string name="The_company_fen">score</string>
     <string name="search">search</string>
+    <string name="Businessisnotonline">Business is not online</string>
+    <string name="appdownload">From U-linking：</string>
+
 
 </resources>

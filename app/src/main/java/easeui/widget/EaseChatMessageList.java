@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.adapter.EaseMessageAdapter;
 import easeui.model.styles.EaseMessageListItemStyle;

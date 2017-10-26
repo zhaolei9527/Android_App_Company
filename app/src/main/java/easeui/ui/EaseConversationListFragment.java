@@ -1,5 +1,6 @@
 package easeui.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,14 +27,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.zzcn77.android_app_company.Acitivity.LoginActivity;
-import com.zzcn77.android_app_company.R;
-import com.zzcn77.android_app_company.Utils.SPUtil;
+import com.yulian.platform.Acitivity.LoginActivity;
+import com.yulian.platform.R;
+import com.yulian.platform.Utils.SPUtil;
+import com.yulian.platform.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,8 +46,6 @@ import java.util.Map;
 
 import easeui.widget.EaseConversationList;
 import easeui.widget.EaseTitleBar;
-
-import static anet.channel.util.Utils.context;
 
 /**
  * conversation list fragment
@@ -94,6 +96,7 @@ public class EaseConversationListFragment extends EaseBaseFragment {
         ImageView left_image = (ImageView) title_bar.findViewById(R.id.left_image);
 
         String usertype = (String) SPUtil.get(getActivity(), "usertype", "");
+        Log.d("EaseConversationListFra", usertype);
         if (usertype.isEmpty()) {
             tv_exit.setVisibility(View.GONE);
             left_image.setVisibility(View.VISIBLE);
@@ -108,21 +111,97 @@ public class EaseConversationListFragment extends EaseBaseFragment {
             title_bar.setLeftLayoutClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!SPUtil.get(context, "id", "").toString().isEmpty()) {
+
+                    if (!SPUtil.get(getActivity(), "id", "").toString().isEmpty()) {
                         // TODO Auto-generated method stub
-                        new AlertDialog.Builder(context).setTitle(R.string.message)//设置对话框标题
+                        new AlertDialog.Builder(getActivity()).setTitle(R.string.message)//设置对话框标题
                                 .setMessage(R.string.Areyouexit)//设置显示的内容
                                 .setPositiveButton(R.string.exit, new DialogInterface.OnClickListener() {//添加确定按钮
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-                                        // TODO Auto-generated method stub
+                                    public void onClick(final DialogInterface dialog, int which) {
+                                        //确定按钮的响应事件
                                         dialog.dismiss();
-                                        SPUtil.remove(context, "id");
-                                        SPUtil.remove(context, "account");
-                                        SPUtil.remove(context, "password");
-                                        SPUtil.remove(context, "email");
-                                        startActivity(new Intent(context, LoginActivity.class));
-                                        getActivity().finish();
+                                        final Dialog dialog1 = Utils.showLoadingDialog(getActivity());
+                                        dialog1.show();
+                                        // TODO Auto-generated method stub
+                                        EMClient.getInstance().logout(true, new EMCallBack() {
+                                            @Override
+                                            public void onSuccess() {
+                                                // TODO Auto-generated method stub
+                                                dialog1.dismiss();
+                                                SPUtil.remove(getActivity(), "id");
+                                                SPUtil.remove(getActivity(), "account");
+                                                SPUtil.remove(getActivity(), "password");
+                                                SPUtil.remove(getActivity(), "email");
+                                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                                getActivity().finish();
+                                            }
+
+                                            @Override
+                                            public void onProgress(int progress, String status) {
+                                                // TODO Auto-generated method stub
+
+                                            }
+
+                                            @Override
+                                            public void onError(int code, String message) {
+                                                // TODO Auto-generated method stub
+                                                dialog1.dismiss();
+                                            }
+                                        });
+
+                                    }
+                                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {//响应事件
+                                dialog.dismiss();
+                            }
+                        }).show();//在按键响应事件中显示此对话框
+                    }
+                }
+            });
+            tv_exit.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (!SPUtil.get(getActivity(), "id", "").toString().isEmpty()) {
+                        // TODO Auto-generated method stub
+                        new AlertDialog.Builder(getActivity()).setTitle(R.string.message)//设置对话框标题
+                                .setMessage(R.string.Areyouexit)//设置显示的内容
+                                .setPositiveButton(R.string.exit, new DialogInterface.OnClickListener() {//添加确定按钮
+                                    @Override
+                                    public void onClick(final DialogInterface dialog, int which) {
+                                        //确定按钮的响应事件
+                                        dialog.dismiss();
+                                        final Dialog dialog1 = Utils.showLoadingDialog(getActivity());
+                                        dialog1.show();
+                                        // TODO Auto-generated method stub
+                                        EMClient.getInstance().logout(true, new EMCallBack() {
+                                            @Override
+                                            public void onSuccess() {
+                                                // TODO Auto-generated method stub
+                                                dialog1.dismiss();
+                                                SPUtil.remove(getActivity(), "id");
+                                                SPUtil.remove(getActivity(), "account");
+                                                SPUtil.remove(getActivity(), "password");
+                                                SPUtil.remove(getActivity(), "email");
+                                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                                getActivity().finish();
+                                            }
+
+                                            @Override
+                                            public void onProgress(int progress, String status) {
+                                                // TODO Auto-generated method stub
+
+                                            }
+
+                                            @Override
+                                            public void onError(int code, String message) {
+                                                // TODO Auto-generated method stub
+                                                dialog1.dismiss();
+                                            }
+                                        });
+
                                     }
                                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {//添加返回按钮
                             @Override
@@ -134,8 +213,6 @@ public class EaseConversationListFragment extends EaseBaseFragment {
                 }
             });
         }
-
-
     }
 
     @Override

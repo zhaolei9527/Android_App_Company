@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.widget.EaseTitleBar;
 

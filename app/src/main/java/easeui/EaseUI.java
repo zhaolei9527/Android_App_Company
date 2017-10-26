@@ -279,7 +279,7 @@ public final class EaseUI {
         EaseEmojicon getEmojiconInfo(String emojiconIdentityCode);
         
         /**
-         * get Emojicon map, key is the text of emoji, value is the resource id or local path of emoji icon(can't be URL on internet)
+         * get Emojicon map, key is the text of emoji, value is the resource id or local path of emoji ic_launcher(can't be URL on internet)
          * @return
          */
         Map<String, Object> getTextEmojiconMapping();

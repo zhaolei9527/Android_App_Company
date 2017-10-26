@@ -16,7 +16,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.util.EMLog;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import java.io.File;
 

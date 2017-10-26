@@ -12,7 +12,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 import easeui.utils.EaseSmileUtils;
 

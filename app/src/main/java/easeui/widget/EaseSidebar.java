@@ -29,7 +29,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.hyphenate.util.DensityUtil;
-import com.zzcn77.android_app_company.R;
+import com.yulian.platform.R;
 
 public class EaseSidebar extends View{
 	private Paint paint;
