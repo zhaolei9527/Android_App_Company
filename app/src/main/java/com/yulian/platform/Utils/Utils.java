@@ -201,7 +201,7 @@ public class Utils {
 
     public static void inSetWebView(String htmlString, com.tencent.smtt.sdk.WebView forumContext,Context context) {
         if (htmlString.contains("img src=\"/")) {
-            htmlString = htmlString.replace("img src=\"/", "img src=\"http://47.88.175.142:8080/");
+            htmlString = htmlString.replace("img src=\"/", "img src=\"http://yulian.u-linking.com/");
         }
         String sb = "<html><head>"+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "+"</head><body>" + htmlString +
                 "</body></html>";

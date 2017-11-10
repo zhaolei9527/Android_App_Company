@@ -2,13 +2,13 @@ package com.yulian.platform.Adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.yulian.platform.Bean.IndexBean;
+import com.yulian.platform.R;
 import com.yulian.platform.Utils.UrlUtils;
-import com.yulian.platform.Utils.VolleyLoadPicture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +29,10 @@ public class LoopAdapter extends LoopPagerAdapter {
 
     @Override
     public View getView(ViewGroup container, int position) {
-        ImageView view = new ImageView(container.getContext());
-        VolleyLoadPicture vlp = new VolleyLoadPicture(container.getContext(), view);
-        vlp.getmImageLoader().get(UrlUtils.BaseImg + imgs.get(position).getImg(), vlp.getOne_listener());
-        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        return view;
+        View inflate = View.inflate(container.getContext(), R.layout.layout_img, null);
+        SimpleDraweeView SimpleDraweeView = (com.facebook.drawee.view.SimpleDraweeView) inflate.findViewById(R.id.SimpleDraweeView);
+        SimpleDraweeView.setImageURI(UrlUtils.BaseImg + imgs.get(position).getImg());
+        return inflate;
     }
 
     @Override

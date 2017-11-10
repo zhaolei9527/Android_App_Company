@@ -33,7 +33,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/y21"
+                android:layout_width="@dimen/x21"
                 android:layout_height="@dimen/y21"
                 android:src="@mipmap/chanpin_r7_c5" />
 

@@ -44,7 +44,7 @@
             android:layout_centerVertical="true">
 
             <ImageView
-                android:layout_width="@dimen/y15"
+                android:layout_width="@dimen/x15"
                 android:layout_height="@dimen/y15"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
@@ -61,7 +61,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:text="@string/delete"
-                android:textSize="@dimen/y15" />
+                android:textSize="@dimen/x15" />
 
         </LinearLayout>
 
@@ -73,7 +73,7 @@
 
             <ImageView
                 android:id="@+id/img_all"
-                android:layout_width="@dimen/y15"
+                android:layout_width="@dimen/x15"
                 android:layout_height="@dimen/y15"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/x5"
@@ -85,7 +85,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/img_all"
                 android:text="@string/checkall"
-                android:textSize="@dimen/y15" />
+                android:textSize="@dimen/x15" />
 
         </RelativeLayout>
     </RelativeLayout>

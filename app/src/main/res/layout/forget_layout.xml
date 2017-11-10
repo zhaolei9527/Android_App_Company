@@ -20,7 +20,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y40"
+        android:layout_marginTop="@dimen/x40"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -52,7 +52,7 @@
         android:layout_height="@dimen/y34"
         android:layout_below="@id/rl"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y12"
+        android:layout_marginTop="@dimen/x12"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -102,7 +102,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/ll_2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y12"
+        android:layout_marginTop="@dimen/x12"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -134,7 +134,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/rl3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y12"
+        android:layout_marginTop="@dimen/x12"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -166,7 +166,7 @@
         android:layout_height="@dimen/y30"
         android:layout_below="@id/rl4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y40"
+        android:layout_marginTop="@dimen/x40"
         android:background="@drawable/btn_login"
         android:text="@string/ok"
         android:textColor="#fff" />

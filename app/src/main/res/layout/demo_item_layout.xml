@@ -24,7 +24,7 @@
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
+                android:layout_height="@dimen/y30"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#333"

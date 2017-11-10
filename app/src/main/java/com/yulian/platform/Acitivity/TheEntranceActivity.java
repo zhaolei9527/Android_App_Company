@@ -69,6 +69,8 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
     LinearLayout llAddBusinessmen;
     @BindView(R.id.ll_addBusinessmen1)
     LinearLayout ll_addBusinessmen1;
+    @BindView(R.id.bg)
+    SimpleDraweeView bg;
     private ArrayList<String> titleList = new ArrayList<String>();
     private ComeOn comeOn;
     private Dialog dialog;
@@ -92,6 +94,11 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initview() {
+        String entrancebg = (String) SPUtil.get(context, "entrancebg", "");
+        bg.setImageURI(UrlUtils.BaseImg + entrancebg);
+
+        String zhantingbg = (String) SPUtil.get(context, "zhantingbg", "");
+        simpleDraweeView.setImageURI(UrlUtils.BaseImg + zhantingbg);
 
     }
 
@@ -105,7 +112,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         imgZhantingdaohangBg.setOnClickListener(this);
         //tvContent.setText(26, 5, Color.RED);//设置属性
         tvContent.setTextStillTime(3000);//设置停留时长间隔
-        tvContent.setAnimTime(300);//设置进入和退出的时间间隔
+        tvContent.setAnimTime(150);//设置进入和退出的时间间隔
         tvContent.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -117,6 +124,10 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onResume() {
         tvContent.startAutoScroll();
+        String usertype = (String) SPUtil.get(context, "usertype", "");
+        if ("2".equals(usertype)) {
+            finish();
+        }
         super.onResume();
     }
 
@@ -161,9 +172,15 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                         return;
                     }
                     comeOn = new Gson().fromJson(decode, ComeOn.class);
-                    simpleDraweeView.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getBeijingtu());
-                    if (comeOn.getRes().getShanghu() != null) {
 
+                    bg.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getBg_img());
+                    SPUtil.putAndApply(context, "entrancebg", comeOn.getRes().getBg_img());
+
+                    simpleDraweeView.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getBeijingtu());
+                    SPUtil.putAndApply(context, "zhantingbg", comeOn.getRes().getBeijingtu());
+
+
+                    if (comeOn.getRes().getShanghu() != null) {
                         if (comeOn.getRes().getShanghu().size() == 1) {
                             View inflate = View.inflate(context, R.layout.rukou_item_company_layout, null);
                             LinearLayout ll_content = (LinearLayout) inflate.findViewById(R.id.ll_content);
@@ -171,6 +188,8 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                             TextView tv_rukou_company_daihao = (TextView) inflate.findViewById(R.id.tv_rukou_company_daihao);
                             TextView tv_rukou_company_hangye = (TextView) inflate.findViewById(R.id.tv_rukou_company_hangye);
                             TextView tv_rukou_company_pingfen = (TextView) inflate.findViewById(R.id.tv_rukou_company_pingfen);
+                            SimpleDraweeView SimpleDraweeView = (SimpleDraweeView) inflate.findViewById(R.id.SimpleDraweeView);
+                            SimpleDraweeView.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getCard_img());
                             tv_rukou_company_title.setText(comeOn.getRes().getShanghu().get(0).getName());
                             tv_rukou_company_daihao.setText(comeOn.getRes().getShanghu().get(0).getDaihao());
                             tv_rukou_company_hangye.setText(comeOn.getRes().getShanghu().get(0).getHangye());
@@ -188,6 +207,9 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
                             for (int i = 0; i < comeOn.getRes().getShanghu().size(); i++) {
                                 View inflate = View.inflate(context, R.layout.rukou_item_company_layout, null);
                                 LinearLayout ll_content = (LinearLayout) inflate.findViewById(R.id.ll_content);
+                                SimpleDraweeView SimpleDraweeView = (SimpleDraweeView) inflate.findViewById(R.id.SimpleDraweeView);
+                                SimpleDraweeView.setImageURI(UrlUtils.BaseImg + comeOn.getRes().getCard_img());
+
                                 TextView tv_rukou_company_title = (TextView) inflate.findViewById(R.id.tv_rukou_company_title);
                                 TextView tv_rukou_company_daihao = (TextView) inflate.findViewById(R.id.tv_rukou_company_daihao);
                                 TextView tv_rukou_company_hangye = (TextView) inflate.findViewById(R.id.tv_rukou_company_hangye);
@@ -367,6 +389,7 @@ public class TheEntranceActivity extends BaseActivity implements View.OnClickLis
         }
 
     }
+
 
 
 }

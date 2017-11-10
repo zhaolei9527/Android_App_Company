@@ -54,6 +54,8 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout rlChangePassword;
     @BindView(R.id.img4)
     ImageView img4;
+    @BindView(R.id.img_back)
+    ImageView img_back;
     @BindView(R.id.rl_setting)
     RelativeLayout rlSetting;
     private String account;
@@ -87,6 +89,10 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.ll_headbg:
                 startActivity(new Intent(context, LoginActivity.class));
+                break;
+            case R.id.img_back:
+                startActivity(new Intent(context, TheEntranceActivity.class));
+                finish();
                 break;
         }
     }
@@ -215,6 +221,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initListener() {
+        img_back.setOnClickListener(this);
         rlChangePassword.setOnClickListener(this);
         rlConsult.setOnClickListener(this);
         rlSetting.setOnClickListener(this);
@@ -279,8 +286,8 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(context, TheEntranceActivity.class));
         super.onBackPressed();
+        startActivity(new Intent(context, TheEntranceActivity.class));
     }
 
     @Override

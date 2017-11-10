@@ -76,6 +76,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
         foot = View.inflate(context, R.layout.list_foot_layout, null);
         swipeTarget.addFooterView(foot, null, false);
         etSearch.setText(getIntent().getStringExtra("guanjianci"));
+        lastetSearchcontent=getIntent().getStringExtra("guanjianci");
     }
 
     @Override
@@ -268,7 +269,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
                 initData();
                 break;
             case R.id.img_back:
-                startActivity(new Intent(context,TheEntranceActivity.class));
+                startActivity(new Intent(context, TheEntranceActivity.class));
                 break;
         }
     }
@@ -276,7 +277,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         dialog.show();
-        getindex(shopBean.getRes().get(position).getId());
+        getindex(businessmenSearchAdapter.getDatas().get(position).getId());
     }
 
     private void getindex(final String shid) {
@@ -345,7 +346,7 @@ public class BusinessmenSearchActivity extends BaseActivity implements android.v
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(context,TheEntranceActivity.class));
+        startActivity(new Intent(context, TheEntranceActivity.class));
     }
 
     //上拉加载

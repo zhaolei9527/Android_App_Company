@@ -5,8 +5,8 @@
     android:layout_height="@dimen/y118"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/y9"
-    android:paddingRight="@dimen/y9">
+    android:paddingLeft="@dimen/x9"
+    android:paddingRight="@dimen/x9">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,17 +14,17 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_conllect"
-            android:layout_width="@dimen/y75"
+            android:layout_width="@dimen/x75"
             android:layout_height="@dimen/y75"
             android:layout_centerVertical="true"
             fresco:placeholderImage="@drawable/imgloading" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x160"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x12"
-            android:layout_marginTop="@dimen/y11"
+            android:layout_marginTop="@dimen/x11"
             android:layout_toRightOf="@id/img_conllect"
             android:singleLine="true"
             android:textColor="#333"
@@ -185,13 +185,13 @@
             <Button
                 android:id="@+id/img_up"
                 android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
+                android:layout_height="@dimen/y15"
                 android:background="@mipmap/shang" />
 
             <Button
                 android:id="@+id/img_down"
                 android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
+                android:layout_height="@dimen/y15"
                 android:layout_marginTop="@dimen/x5"
                 android:background="@mipmap/xia" />
 
@@ -209,7 +209,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
+        android:layout_height="@dimen/y1"
         android:layout_marginTop="@dimen/x8"
         android:background="@color/bg"></View>
 

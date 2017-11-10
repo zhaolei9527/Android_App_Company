@@ -29,9 +29,9 @@ public class VerticalTextview extends TextSwitcher implements ViewSwitcher.ViewF
     private static final int FLAG_START_AUTO_SCROLL = 0;
     private static final int FLAG_STOP_AUTO_SCROLL = 1;
 
-    private float mTextSize = 16 ;
+    private float mTextSize = 13 ;
     private int mPadding = 5;
-    private int textColor = Color.BLACK;
+    private int textColor = Color.WHITE;
 
     /**
      * @param textSize 字号
@@ -124,11 +124,10 @@ public class VerticalTextview extends TextSwitcher implements ViewSwitcher.ViewF
     public View makeView() {
         TextView t = new TextView(mContext);
         t.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        t.setMaxLines(1);
+        t.setMaxLines(2);
         t.setPadding(mPadding, mPadding, mPadding, mPadding);
         t.setTextColor(textColor);
         t.setTextSize(mTextSize);
-
         t.setClickable(true);
         t.setOnClickListener(new OnClickListener() {
             @Override

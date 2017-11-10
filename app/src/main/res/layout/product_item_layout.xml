@@ -13,16 +13,16 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/y60"
+            android:layout_width="@dimen/x60"
             android:layout_height="@dimen/y60"
             android:layout_gravity="center_vertical"
             fresco:roundWithOverlayColor="@android:color/white"
-            fresco:roundedCornerRadius="@dimen/y12"
+            fresco:roundedCornerRadius="@dimen/x12"
             fresco:roundingBorderColor="@android:color/white"
             fresco:roundingBorderWidth="1dp" />
 
         <TextView
-            android:paddingBottom="@dimen/y15"
+            android:paddingBottom="@dimen/x15"
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

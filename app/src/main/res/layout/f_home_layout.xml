@@ -20,7 +20,8 @@
 
         <Button
             android:id="@+id/btn_changeCompany"
-            android:layout_width="@dimen/x74"
+            android:padding="@dimen/x5"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/y24"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -97,12 +98,12 @@
                     android:layout_toRightOf="@id/View"
                     android:text="@string/company"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/y15" />
+                    android:textSize="@dimen/x15" />
 
                 <ImageView
                     android:id="@+id/img_Company_IM"
                     android:layout_width="@dimen/x20"
-                    android:layout_height="@dimen/x20"
+                    android:layout_height="@dimen/y20"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x14"
@@ -111,7 +112,7 @@
                 <ImageView
                     android:id="@+id/img_Company_CallPhone"
                     android:layout_width="@dimen/x20"
-                    android:layout_height="@dimen/x20"
+                    android:layout_height="@dimen/y20"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x14"
                     android:layout_toLeftOf="@id/img_Company_IM"
@@ -179,7 +180,7 @@
                         android:id="@+id/tv_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/y5"
+                        android:layout_marginTop="@dimen/x5"
                         android:ellipsize="end"
                         android:maxLines="3"
                         android:textColor="#666"
@@ -222,12 +223,12 @@
                     android:layout_toRightOf="@id/View2"
                     android:text="@string/news"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/y15" />
+                    android:textSize="@dimen/x15" />
 
                 <ImageView
                     android:id="@+id/img2"
                     android:layout_width="@dimen/x13"
-                    android:layout_height="@dimen/x13"
+                    android:layout_height="@dimen/y13"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x14"
@@ -303,12 +304,12 @@
                     android:layout_toRightOf="@id/View3"
                     android:text="@string/Promotion"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/y15" />
+                    android:textSize="@dimen/x15" />
 
                 <ImageView
                     android:id="@+id/img_morePromtion"
                     android:layout_width="@dimen/x13"
-                    android:layout_height="@dimen/x13"
+                    android:layout_height="@dimen/y13"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x14"

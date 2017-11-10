@@ -16,6 +16,7 @@ import com.yulian.platform.R;
 import com.yulian.platform.Utils.SPUtil;
 import com.yulian.platform.Utils.UrlUtils;
 
+import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.twitter.Twitter;
@@ -104,6 +105,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.ll_facebook:
+                showSharefacebook();
                 dismiss();
                 break;
             case R.id.ll_twitter:
@@ -117,132 +119,86 @@ public class MyDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    private void showSharewhatsapp() {
+    private void showSharefacebook() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
         oks.disableSSOWhenAuthorize();
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(name);
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // text是分享文本，所有平台都需要这个字段
-        text = name + "\n" + getContext().getString(R.string.The_company_code) + ":" + code + "\n" + getContext().getResources().getString(R.string.appdownload) + UrlUtils.BaseImg + versionBean.getRes().getAndroid();
+        text = name + getContext().getString(R.string.The_company_code) + ":" + code + getContext().getResources().getString(R.string.appdownload) + "http://yulian.u-linking.com/fenxiang/index";
         Log.d("MyDialog", text);
         oks.setText(text);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(UrlUtils.BaseImg + img);//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setImageUrl(UrlUtils.BaseImg + img);
         oks.setComment(getContext().getString(R.string.The_company_code) + ":" + code);
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
+        oks.setPlatform(Facebook.NAME);
+        oks.show(getContext());
+    }
+
+    private void showSharewhatsapp() {
+        OnekeyShare oks = new OnekeyShare();
+        oks.disableSSOWhenAuthorize();
+        text = name + getContext().getString(R.string.The_company_code) + ":" + code + getContext().getResources().getString(R.string.appdownload) + "http://yulian.u-linking.com/fenxiang/index";
+        Log.d("MyDialog", text);
+        oks.setText(text);
         oks.setPlatform(WhatsApp.NAME);
-// 启动分享GUI
         oks.show(getContext());
     }
 
     private void showSharetwitter() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
         oks.disableSSOWhenAuthorize();
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(name);
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // text是分享文本，所有平台都需要这个字段
-        text = name + "\n" + getContext().getString(R.string.The_company_code) + ":" + code + "\n" + getContext().getResources().getString(R.string.appdownload) + UrlUtils.BaseImg + versionBean.getRes().getAndroid();
+        text = name + getContext().getString(R.string.The_company_code) + ":" + code + getContext().getResources().getString(R.string.appdownload) + "http://yulian.u-linking.com/fenxiang/index";
         Log.d("MyDialog", text);
         oks.setText(text);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(UrlUtils.BaseImg + img);//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setImageUrl(UrlUtils.BaseImg + img);
         oks.setComment(getContext().getString(R.string.The_company_code) + ":" + code);
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
         oks.setPlatform(Twitter.NAME);
-// 启动分享GUI
         oks.show(getContext());
     }
 
     private void showShareqq() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
         oks.disableSSOWhenAuthorize();
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(name);
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // text是分享文本，所有平台都需要这个字段
+        oks.setTitleUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setText(getContext().getString(R.string.The_company_code) + ":" + code);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(UrlUtils.BaseImg + img);//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setImageUrl(UrlUtils.BaseImg + img);
+        oks.setUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setComment(getContext().getString(R.string.The_company_code) + ":" + code);
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
+        oks.setSiteUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setPlatform(QQ.NAME);
-// 启动分享GUI
         oks.show(getContext());
     }
 
     private void showShareWechat() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
         oks.disableSSOWhenAuthorize();
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(name);
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText(getContext().getString(R.string.The_company_code) + ":" + code);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(UrlUtils.BaseImg + img);//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setTitleUrl("http://yulian.u-linking.com/fenxiang/index");
+        text = name + "\n" + getContext().getString(R.string.The_company_code) + ":" + code;
+        Log.d("MyDialog", text);
+        oks.setText(text);
+        oks.setImageUrl(UrlUtils.BaseImg + img);
+        // TODO: 2017/11/8 此处填写下载连接
+        oks.setUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setComment(getContext().getString(R.string.The_company_code) + ":" + code);
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
+        oks.setSiteUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setPlatform(Wechat.NAME);
-// 启动分享GUI
         oks.show(getContext());
     }
 
     private void showShareWechatfriend() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
         oks.disableSSOWhenAuthorize();
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(name);
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText(getContext().getString(R.string.The_company_code) + ":" + code);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(UrlUtils.BaseImg + img);//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setTitleUrl("http://yulian.u-linking.com/fenxiang/index");
+        text = name + "\n" + getContext().getString(R.string.The_company_code) + ":" + code;
+        Log.d("MyDialog", text);
+        oks.setText(text);
+        oks.setImageUrl(UrlUtils.BaseImg + img);
+        oks.setUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setComment(getContext().getString(R.string.The_company_code) + ":" + code);
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(UrlUtils.BaseImg + versionBean.getRes().getAndroid());
+        oks.setSiteUrl("http://yulian.u-linking.com/fenxiang/index");
         oks.setPlatform(WechatMoments.NAME);
-// 启动分享GUI
         oks.show(getContext());
     }
 

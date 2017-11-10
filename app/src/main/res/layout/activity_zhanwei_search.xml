@@ -38,7 +38,7 @@
             <ImageView
                 android:id="@+id/img_clear"
                 android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
+                android:layout_height="@dimen/y15"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_toRightOf="@id/et_search"

@@ -39,7 +39,7 @@
             android:layout_width="@dimen/x300"
             android:layout_height="@dimen/y33"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/y12"
+            android:layout_marginTop="@dimen/x12"
             android:background="@drawable/changepassword_edittext">
 
             <EditText
@@ -60,8 +60,8 @@
             android:layout_width="@dimen/x300"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/y10"
-            android:layout_marginTop="@dimen/y12"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x12"
             android:background="@drawable/changepassword_edittext">
 
             <EditText
@@ -80,7 +80,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x7"
+        android:layout_height="@dimen/y7"
         android:background="#E7E7E7"></View>
 
 

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.yulian.platform.Base.BaseActivity;
 import com.yulian.platform.Bean.LoginBean;
 import com.yulian.platform.R;
@@ -98,6 +99,8 @@ public class SplashActivity extends BaseActivity {
                                 if (loginBean.getMsg().contains("登陆成功")) {
                                     Toast.makeText(context, R.string.welcomeback, Toast.LENGTH_SHORT).show();
                                     SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
+                                    //此方法传入一个字符串String类型的参数，返回成功或失败的一个Boolean类型的返回值
+                                    EMClient.getInstance().updateCurrentUserNick(loginBean.getRes().getUsername());
                                     SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                     SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
                                     SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
@@ -124,10 +127,24 @@ public class SplashActivity extends BaseActivity {
 
                                             @Override
                                             public void onError(int code, final String message) {
+                                                new Thread() {
+                                                    @Override
+                                                    public void run() {
+                                                        super.run();
+                                                        //注册失败会抛出HyphenateException
+                                                        try {
+                                                            if (!String.valueOf(SPUtil.get(context, "id", "")).isEmpty()) {
+                                                                EMClient.getInstance().createAccount(String.valueOf(SPUtil.get(context, "id", "")), String.valueOf(SPUtil.get(context, "id", "")));//同步方法
+                                                            }
+                                                        } catch (HyphenateException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+                                                }.start();
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                                         gotoMain();
                                                     }
                                                 });

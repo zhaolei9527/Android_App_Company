@@ -54,6 +54,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     ImageView img3;
     @BindView(R.id.img4)
     ImageView img4;
+    @BindView(R.id.img_back)
+    ImageView img_back;
     @BindView(R.id.expandablelistview)
     ExpandableListView expandablelistview;
     @BindView(R.id.rl_consult)
@@ -79,6 +81,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
         super.initView();
+        img_back.setVisibility(View.GONE);
         rlChangePassword.setOnClickListener(this);
         rlConsult.setOnClickListener(this);
         rlSetting.setOnClickListener(this);

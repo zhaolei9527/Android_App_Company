@@ -32,10 +32,11 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-
     <TextView
+        android:gravity="center"
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:layout_width="@dimen/x200"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="#ffffff"

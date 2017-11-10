@@ -126,6 +126,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 if (context != null) {
                                     EasyToast.showShort(context, getString(R.string.loginsuccessfully));
                                     SPUtil.putAndApply(context, "account", loginBean.getRes().getUsername());
+                                    //此方法传入一个字符串String类型的参数，返回成功或失败的一个Boolean类型的返回值
+                                    EMClient.getInstance().updateCurrentUserNick(loginBean.getRes().getUsername());
+
                                     SPUtil.putAndApply(context, "password", loginBean.getRes().getPassword());
                                     SPUtil.putAndApply(context, "id", loginBean.getRes().getId());
                                     SPUtil.putAndApply(context, "email", loginBean.getRes().getEmail());
@@ -166,7 +169,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                                         gotoMain();
                                                     }
                                                 });
@@ -175,8 +177,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                                         });
                                     }
-
-
                                     if (loginBean.getRes().getType().equals("2")) {
                                         startActivity(new Intent(context, ChatListActivity.class));
                                         finish();

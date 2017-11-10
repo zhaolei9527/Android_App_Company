@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="@dimen/y90"
+    android:paddingTop="@dimen/x90"
     android:visibility="gone">
 
     <ImageView
         android:layout_width="@dimen/x150"
-        android:layout_height="@dimen/x150"
+        android:layout_height="@dimen/y150"
         android:background="@drawable/ic_empty_dark" />
 
     <TextView

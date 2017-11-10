@@ -10,7 +10,7 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/y72"
+            android:layout_width="@dimen/x72"
             android:layout_height="@dimen/y72"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/x10" />
@@ -35,7 +35,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/y4"
+                android:layout_marginTop="@dimen/x4"
                 android:orientation="horizontal">
 
                 <TextView
@@ -67,7 +67,7 @@
                 android:id="@+id/tv_Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/y4"
+                android:layout_marginTop="@dimen/x4"
                 android:ellipsize="end"
                 android:maxLength="60"
                 android:maxLines="3"
@@ -91,7 +91,7 @@
 
                 <ImageView
                     android:layout_width="@dimen/x13"
-                    android:layout_height="@dimen/x13"
+                    android:layout_height="@dimen/y13"
                     android:layout_marginLeft="@dimen/x5"
                     android:background="@mipmap/i_you" />
             </LinearLayout>

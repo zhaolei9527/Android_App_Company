@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/y135"
+    android:layout_width="@dimen/x135"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="@dimen/y130"
+        android:layout_width="@dimen/x130"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x5"
         android:layout_marginTop="@dimen/x6"
@@ -25,7 +25,7 @@
 
 
     <LinearLayout
-        android:layout_width="@dimen/y130"
+        android:layout_width="@dimen/x130"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x5"
         android:layout_marginRight="@dimen/x5"
@@ -49,7 +49,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="@dimen/y135"
+        android:layout_width="@dimen/x135"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/x5"
         android:paddingLeft="@dimen/x5">
@@ -100,7 +100,7 @@
 
         <ImageView
             android:id="@+id/img_collect"
-            android:layout_width="@dimen/y20"
+            android:layout_width="@dimen/x20"
             android:layout_height="@dimen/y20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

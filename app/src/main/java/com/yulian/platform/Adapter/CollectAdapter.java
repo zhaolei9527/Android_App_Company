@@ -95,6 +95,7 @@ public class CollectAdapter extends BaseAdapter {
         viewHolder.tvModel.setText(context.getString(R.string.model) + datas.get(position).getX_num());
         viewHolder.tvPrice.setText(datas.get(position).getPrice());
         viewHolder.tvTitle.setText(datas.get(position).getTitle());
+        viewHolder.tv_Company.setText(datas.get(position).getSname());
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +165,8 @@ public class CollectAdapter extends BaseAdapter {
         TextView tvrmb;
         @BindView(R.id.btn_delete)
         Button btnDelete;
+        @BindView(R.id.tv_Company)
+        TextView tv_Company;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -62,6 +62,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
     private int page = 1;
     private Intent intent1;
     private View foot;
+    private RequestQueue requestQueue;
 
     @Override
     protected int setLayoutResouceId() {
@@ -141,14 +142,24 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
         startActivity(intent1);
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
     @Override
     protected void initData(Bundle arguments) {
         super.initData(arguments);
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+            requestQueue = Volley.newRequestQueue(mActivity);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl22 + "yanshi", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
+
+                    if (DemoFragment.this != null && DemoFragment.this.isAdded()) {
                     String decode = Utils.decode(s);
                     if (decode.isEmpty()) {
                         if (swipeToLoadLayout != null) {
@@ -194,10 +205,10 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                                     if (foot != null) {
                                         foot.setVisibility(View.VISIBLE);
                                         TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-                                        if (tv_foot_more!=null){
+                                        if (tv_foot_more != null) {
                                             tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
                                         }
-                                        if (swipeToLoadLayout != null){
+                                        if (swipeToLoadLayout != null) {
                                             swipeToLoadLayout.setLoadingMore(false);
                                             swipeToLoadLayout.setLoadMoreEnabled(false);
                                         }
@@ -265,7 +276,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                             }
                         }
                     }
-                }
+                }         }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
@@ -291,7 +302,7 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("key", UrlUtils.key);
                     map.put("p", String.valueOf(page));
-                    map.put("sid", String.valueOf(SPUtil.get(mActivity,"shid","")));
+                    map.put("sid", String.valueOf(SPUtil.get(mActivity, "shid", "")));
                     return map;
                 }
             };
@@ -323,7 +334,6 @@ public class DemoFragment extends BaseFragment implements OnLoadMoreListener, an
                 SwipeRefreshLayout.setRefreshing(false);
             }
         }
-
     }
 
     //上拉加载

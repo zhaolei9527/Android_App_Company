@@ -10,7 +10,7 @@ public class ComeOn {
 
     /**
      * stu : 1
-     * res : {"news":[{"id":"38","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"36","title":"5 questions to ask before selecting face recognition solution"},{"id":"37","title":"Detecting traffic accidents with machine learning"},{"id":"35","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"33","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"2","title":"ALPR: a new philosophy of best practices"},{"id":"34","title":"IFSEC International"},{"id":"40","title":"标题"},{"id":"39","title":"测试动态"}],"shanghu":[{"id":"10011","name":"深圳蓝天公司A","daihao":"DZ9001","hangye":"科技互联网","point":"2","code":"9001"}],"beijingtu":"/Public/uploads/images/logo/59ed51a7c2b0f.png"}
+     * res : {"news":[{"id":"55","title":"New cybersecurity approaches urged after Swedish cybercrime"},{"id":"48","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"49","title":"5 questions to ask before selecting face recognition solution"},{"id":"50","title":"Detecting traffic accidents with machine learning"},{"id":"51","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"52","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"53","title":"ALPR: a new philosophy of best practices"},{"id":"54","title":"IFSEC International"}],"shanghu":[{"id":"10044","name":"HIP global cp.,ltd","daihao":"THAB001","hangye":"Security","point":"0","code":"AB001"},{"id":"10042","name":"THAI SECURITY ASSOCIATION","daihao":"THA001","hangye":"Association","point":"0","code":"A001"},{"id":"10028","name":"EXCEL PROTECT LIMITED","daihao":"HKAA0010","hangye":"Security","point":"0","code":"AA0010"},{"id":"10037","name":"SAMCOM TECHNOLOGY Co.,Ltd.","daihao":"THAA0028","hangye":"Security","point":"2","code":"AA0028"},{"id":"10025","name":"Guard Security Equipment Co,. Ltd.","daihao":"HKAA0021","hangye":"Security","point":"2","code":"AA0021"},{"id":"10024","name":"Beijing ICETech Co.,Ltd.","daihao":"CNAI0010","hangye":"AI","point":"2","code":"AI0010"},{"id":"10015","name":"SHENZHEN YUEYANGXING CABLE &amp; WIRE CO., LTD","daihao":"CNAE0020","hangye":"Security","point":"6","code":"AE0020"},{"id":"10021","name":"七七网络科技","daihao":"HKqiqi10000","hangye":"Security","point":"4","code":"qiqi10000"},{"id":"10019","name":" Shenzhen HQVT Technology Co.,LTD","daihao":"CNAA0013","hangye":"Security","point":"7","code":"AA0013"}],"beijingtu":"/Public/uploads/images/logo/59ff3596131a3.png","bg_img":"/Public/uploads/images/logo/5a02f2f7195d8.jpg","card_img":"/Public/uploads/images/logo/5a02f3b43158b.png"}
      */
 
     private String stu;
@@ -34,12 +34,16 @@ public class ComeOn {
 
     public static class ResBean {
         /**
-         * news : [{"id":"38","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"36","title":"5 questions to ask before selecting face recognition solution"},{"id":"37","title":"Detecting traffic accidents with machine learning"},{"id":"35","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"33","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"2","title":"ALPR: a new philosophy of best practices"},{"id":"34","title":"IFSEC International"},{"id":"40","title":"标题"},{"id":"39","title":"测试动态"}]
-         * shanghu : [{"id":"10011","name":"深圳蓝天公司A","daihao":"DZ9001","hangye":"科技互联网","point":"2","code":"9001"}]
-         * beijingtu : /Public/uploads/images/logo/59ed51a7c2b0f.png
+         * news : [{"id":"55","title":"New cybersecurity approaches urged after Swedish cybercrime"},{"id":"48","title":"ACaaS: How it\u2019s influenced by IoT"},{"id":"49","title":"5 questions to ask before selecting face recognition solution"},{"id":"50","title":"Detecting traffic accidents with machine learning"},{"id":"51","title":"Why Digital Barriers limited its free \u2018missing-person solution\u2019 to young people"},{"id":"52","title":"Face recognition is for known threats. This technology detects the unknown!"},{"id":"53","title":"ALPR: a new philosophy of best practices"},{"id":"54","title":"IFSEC International"}]
+         * shanghu : [{"id":"10044","name":"HIP global cp.,ltd","daihao":"THAB001","hangye":"Security","point":"0","code":"AB001"},{"id":"10042","name":"THAI SECURITY ASSOCIATION","daihao":"THA001","hangye":"Association","point":"0","code":"A001"},{"id":"10028","name":"EXCEL PROTECT LIMITED","daihao":"HKAA0010","hangye":"Security","point":"0","code":"AA0010"},{"id":"10037","name":"SAMCOM TECHNOLOGY Co.,Ltd.","daihao":"THAA0028","hangye":"Security","point":"2","code":"AA0028"},{"id":"10025","name":"Guard Security Equipment Co,. Ltd.","daihao":"HKAA0021","hangye":"Security","point":"2","code":"AA0021"},{"id":"10024","name":"Beijing ICETech Co.,Ltd.","daihao":"CNAI0010","hangye":"AI","point":"2","code":"AI0010"},{"id":"10015","name":"SHENZHEN YUEYANGXING CABLE &amp; WIRE CO., LTD","daihao":"CNAE0020","hangye":"Security","point":"6","code":"AE0020"},{"id":"10021","name":"七七网络科技","daihao":"HKqiqi10000","hangye":"Security","point":"4","code":"qiqi10000"},{"id":"10019","name":" Shenzhen HQVT Technology Co.,LTD","daihao":"CNAA0013","hangye":"Security","point":"7","code":"AA0013"}]
+         * beijingtu : /Public/uploads/images/logo/59ff3596131a3.png
+         * bg_img : /Public/uploads/images/logo/5a02f2f7195d8.jpg
+         * card_img : /Public/uploads/images/logo/5a02f3b43158b.png
          */
 
         private String beijingtu;
+        private String bg_img;
+        private String card_img;
         private List<NewsBean> news;
         private List<ShanghuBean> shanghu;
 
@@ -49,6 +53,22 @@ public class ComeOn {
 
         public void setBeijingtu(String beijingtu) {
             this.beijingtu = beijingtu;
+        }
+
+        public String getBg_img() {
+            return bg_img;
+        }
+
+        public void setBg_img(String bg_img) {
+            this.bg_img = bg_img;
+        }
+
+        public String getCard_img() {
+            return card_img;
+        }
+
+        public void setCard_img(String card_img) {
+            this.card_img = card_img;
         }
 
         public List<NewsBean> getNews() {
@@ -69,8 +89,8 @@ public class ComeOn {
 
         public static class NewsBean {
             /**
-             * id : 38
-             * title : ACaaS: How it’s influenced by IoT
+             * id : 55
+             * title : New cybersecurity approaches urged after Swedish cybercrime
              */
 
             private String id;
@@ -95,12 +115,12 @@ public class ComeOn {
 
         public static class ShanghuBean {
             /**
-             * id : 10011
-             * name : 深圳蓝天公司A
-             * daihao : DZ9001
-             * hangye : 科技互联网
-             * point : 2
-             * code : 9001
+             * id : 10044
+             * name : HIP global cp.,ltd
+             * daihao : THAB001
+             * hangye : Security
+             * point : 0
+             * code : AB001
              */
 
             private String id;

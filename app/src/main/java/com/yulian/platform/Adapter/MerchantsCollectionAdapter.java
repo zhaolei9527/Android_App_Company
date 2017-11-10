@@ -1,6 +1,8 @@
 package com.yulian.platform.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,21 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.umeng.message.PushAgent;
 import com.umeng.message.common.inter.ITagManager;
 import com.umeng.message.tag.TagManager;
+import com.yulian.platform.Acitivity.LoginActivity;
+import com.yulian.platform.Acitivity.MainActivity;
+import com.yulian.platform.Bean.IndexBean;
 import com.yulian.platform.Bean.SXBean;
 import com.yulian.platform.Bean.ShcollBean;
 import com.yulian.platform.R;
@@ -29,6 +40,7 @@ import com.yulian.platform.Volley.VolleyRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -199,6 +211,13 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
         viewHolder.imgConllect.setImageURI(UrlUtils.BaseImg + datas.get(position).getImg());
         viewHolder.tvFenshu.setText(datas.get(position).getPoint());
         viewHolder.tvContent.setText(datas.get(position).getDescription());
+        viewHolder.imgConllect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getindex(datas.get(position).getSh_id());
+            }
+        });
+
 
         if (datas.get(position).getPj_stu().equals("0")) {
             viewHolder.tvHao.setTextColor(context.getResources().getColor(R.color.text_check));
@@ -268,6 +287,77 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
         });
     }
 
+    private Dialog dialog;
+
+    private void getindex(final String shid) {
+        SPUtil.remove(context, "index");
+        SPUtil.remove(context, "demo");
+        SPUtil.remove(context, "product");
+        SPUtil.remove(context, "scheme");
+        dialog = Utils.showLoadingDialog(context);
+        dialog.show();
+        SPUtil.putAndApply(context, "shid", String.valueOf(shid));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUtils.BaseUrl21 + "index", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                String decode = Utils.decode(s);
+                if (decode.isEmpty()) {
+                    dialog.dismiss();
+                    if (context != null)
+                        EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+                } else {
+                    IndexBean indexBean = new Gson().fromJson(decode, IndexBean.class);
+                    if (indexBean.getStu().equals("1")) {
+                        if (context != null) {
+                            dialog.dismiss();
+                            SPUtil.putAndApply(context, "index", s);
+                            context.startActivity(new Intent(context, MainActivity.class));
+                            context.finish();
+                        }
+                    } else {
+                        dialog.dismiss();
+                        if (context != null)
+                            EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                volleyError.printStackTrace();
+                if (context != null)
+                    EasyToast.showShort(context, context.getString(R.string.Abnormalserver));
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("key", UrlUtils.key);
+                map.put("sh_id", shid);
+                String id = (String) SPUtil.get(context, "id", "");
+                if (!id.isEmpty()) {
+                    map.put("uid", id);
+                }
+                return map;
+            }
+        };
+
+        if (Utils.isConnected(context)) {
+            requestQueue.add(stringRequest);
+        } else {
+            if (context != null) {
+                EasyToast.showShort(context, context.getString(R.string.Notconnect));
+                context.startActivity(new Intent(context, LoginActivity.class));
+                context.finish();
+            }
+        }
+
+    }
+
     private void changSx(String s, int position) {
         HashMap<String, String> params = new HashMap<>();
         params.put("key", UrlUtils.key);
@@ -285,6 +375,7 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
                     SXBean sxBean = new Gson().fromJson(decode, SXBean.class);
                 }
             }
+
             @Override
             public void onMyError(VolleyError error) {
                 error.printStackTrace();
@@ -292,6 +383,7 @@ public class MerchantsCollectionAdapter extends BaseAdapter {
             }
         });
     }
+
     static class ViewHolder {
         @BindView(R.id.img_conllect)
         SimpleDraweeView imgConllect;

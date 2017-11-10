@@ -7,9 +7,10 @@ import java.util.List;
  */
 
 public class CollBean {
+
     /**
      * stu : 1
-     * res : [{"gid":"1","id":"1","img":null,"title":"停车场监控套装","price":"100.00","x_num":"2100x"},{"gid":"2","id":"2","img":null,"title":"安防警报系统套装","price":"100.00","x_num":"2010X"},{"gid":"3","id":"3","img":null,"title":"综合布线监控套装","price":"1515.00","x_num":"2010d"},{"gid":"3","id":"3","img":null,"title":"综合布线监控套装","price":"1515.00","x_num":"2010d"},{"gid":"4","id":"4","img":null,"title":"视频监控系统","price":"100.00","x_num":"sd"},{"gid":"5","id":"5","img":null,"title":"停车场明星监控套装","price":"500.00","x_num":"1251"}]
+     * res : [{"gid":"51","id":"51","img":"/Public/uploads/goods/img/2017-10-27/59f2ebc9d34c0.jpg","title":"CMOS TRUE WDR FACE RECOGNITION DOME IP CAMERA-2","price":"0.00","x_num":"I9015-H21H-AV-FR-WIFI PROBE","rmb":"$","sname":" Shenzhen HQVT Technology Co.,LTD"},{"gid":"56","id":"56","img":"/Public/uploads/goods/img/2017-10-27/59f2faa2e4918.jpg","title":"2MP Outdoor LPR Camera","price":"0.00","x_num":"I6009-H21A-AV-PRS","rmb":"$","sname":" Shenzhen HQVT Technology Co.,LTD"},{"gid":"50","id":"50","img":"/Public/uploads/goods/img/2017-10-27/59f2e77ee36af.jpg","title":"CMOS TRUE WDR FACE RECOGNITION DOME IP CAMERA-1","price":"0.00","x_num":"I6009-H21A-AV-FR","rmb":"$","sname":" Shenzhen HQVT Technology Co.,LTD"}]
      */
 
     private String stu;
@@ -33,31 +34,24 @@ public class CollBean {
 
     public static class ResBean {
         /**
-         * gid : 1
-         * id : 1
-         * img : null
-         * title : 停车场监控套装
-         * price : 100.00
-         * x_num : 2100x
+         * gid : 51
+         * id : 51
+         * img : /Public/uploads/goods/img/2017-10-27/59f2ebc9d34c0.jpg
+         * title : CMOS TRUE WDR FACE RECOGNITION DOME IP CAMERA-2
+         * price : 0.00
+         * x_num : I9015-H21H-AV-FR-WIFI PROBE
+         * rmb : $
+         * sname :  Shenzhen HQVT Technology Co.,LTD
          */
 
         private String gid;
         private String id;
-        private Object img;
+        private String img;
         private String title;
         private String price;
         private String x_num;
-
-        public String getRmb() {
-            return rmb;
-        }
-
-        public void setRmb(String rmb) {
-            this.rmb = rmb;
-        }
-
         private String rmb;
-
+        private String sname;
 
         public String getGid() {
             return gid;
@@ -75,11 +69,11 @@ public class CollBean {
             this.id = id;
         }
 
-        public Object getImg() {
+        public String getImg() {
             return img;
         }
 
-        public void setImg(Object img) {
+        public void setImg(String img) {
             this.img = img;
         }
 
@@ -105,6 +99,22 @@ public class CollBean {
 
         public void setX_num(String x_num) {
             this.x_num = x_num;
+        }
+
+        public String getRmb() {
+            return rmb;
+        }
+
+        public void setRmb(String rmb) {
+            this.rmb = rmb;
+        }
+
+        public String getSname() {
+            return sname;
+        }
+
+        public void setSname(String sname) {
+            this.sname = sname;
         }
     }
 }

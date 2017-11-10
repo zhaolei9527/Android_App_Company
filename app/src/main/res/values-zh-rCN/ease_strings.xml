@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
     <string name="back">返回</string>
@@ -74,7 +73,6 @@
     <string name="book_black">通讯录黑名单</string>
     <string name="session">会话</string>
     <string name="address_book">通讯录</string>
-    <string name="setting">设置</string>
     <string name="now_refresh_list">正在刷新联系人</string>
     <string name="Application_and_notify">申请与通知</string>
     <string name="save_new_nickname">保存</string>

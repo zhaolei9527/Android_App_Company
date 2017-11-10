@@ -42,7 +42,7 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/SimpleDraweeView"
             android:layout_width="@dimen/x108"
-            android:layout_height="@dimen/x108"
+            android:layout_height="@dimen/y108"
             android:background="@android:color/white"
             fresco:placeholderImage="@drawable/imgloading" />
 

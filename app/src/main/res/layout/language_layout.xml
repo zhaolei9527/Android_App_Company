@@ -47,7 +47,7 @@
 
         <CheckBox
             android:id="@+id/cb_auto"
-            android:layout_width="@dimen/y15"
+            android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y15"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -82,7 +82,7 @@
 
         <CheckBox
             android:id="@+id/cb_cn"
-            android:layout_width="@dimen/y15"
+            android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y15"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -117,7 +117,7 @@
 
         <CheckBox
             android:id="@+id/cb_en"
-            android:layout_width="@dimen/y15"
+            android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y15"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

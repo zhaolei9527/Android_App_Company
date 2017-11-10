@@ -319,7 +319,9 @@ public class HomeFragment extends BaseFragment implements android.view.View.OnCl
             case R.id.img_Company_IM:
                 if (String.valueOf(SPUtil.get(mActivity, "account", "")).isEmpty()) {
                     startActivity(new Intent(mActivity, LoginActivity.class));
+                    getActivity().finish();
                 } else {
+                    SPUtil.putAndApply(getActivity(), String.valueOf(index.getRes().getJianjie().getId()), String.valueOf(index.getRes().getJianjie().getTitle()));
                     startActivity(new Intent(mActivity, ChatActivity.class).putExtra("userId", String.valueOf(index.getRes().getJianjie().getId())));
                 }
                 break;

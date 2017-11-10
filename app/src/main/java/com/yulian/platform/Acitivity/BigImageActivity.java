@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -47,6 +49,7 @@ public class BigImageActivity extends BaseActivity {
     protected void initview() {
         PhotoDraweeView.setMaximumScale(10);
         String imgurl = getIntent().getStringExtra("imgurl");
+        Log.d("BigImageActivity", imgurl);
         final double x = getIntent().getDoubleExtra("x", 0);
         final double y = getIntent().getDoubleExtra("y", 0);
         Postprocessor redMeshPostprocessor = new BasePostprocessor() {
@@ -66,6 +69,8 @@ public class BigImageActivity extends BaseActivity {
         };
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(imgurl))
                 .setPostprocessor(redMeshPostprocessor)
+//                .setProgressiveRenderingEnabled(false)
+//                .setLowestPermittedRequestLevel(FULL_FETCH)
                 .build();
 
         PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();

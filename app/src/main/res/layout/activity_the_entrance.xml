@@ -6,273 +6,279 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/rukoubg"
-    android:clipChildren="false"
+    android:fitsSystemWindows="true"
     tools:context="com.yulian.platform.Acitivity.BigImageActivity">
 
-    <RelativeLayout
-        android:id="@+id/rl_lin1"
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x10">
+        android:layout_height="match_parent"
+        fresco:actualImageScaleType="fitXY" />
 
-        <Button
-            android:id="@+id/img_back_login"
-            android:layout_width="@dimen/x74"
-            android:layout_height="@dimen/y31"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x23"
-            android:background="@drawable/rukou_login"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/login"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/x15" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_my"
-            android:layout_width="@dimen/x22"
-            android:layout_height="@dimen/x22"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x23"
-            android:background="@mipmap/rukou_shezhi" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/img_rukou_icon"
-        android:layout_width="@dimen/x110"
-        android:layout_height="@dimen/y23"
-        android:layout_below="@id/rl_lin1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/x15"
-        android:background="@mipmap/rukou_icon" />
-
-    <RelativeLayout
-        android:id="@+id/rl_daihao"
-        android:layout_width="@dimen/x192"
-        android:layout_height="@dimen/y33"
-        android:layout_below="@id/img_rukou_icon"
-        android:layout_marginLeft="@dimen/x35"
-        android:layout_marginTop="@dimen/y23"
-        android:background="@drawable/rounded_edittext"
-        android:paddingLeft="@dimen/x15">
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="@dimen/x21"
-            android:layout_height="@dimen/y20"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/rukou_search" />
-
-        <EditText
-            android:id="@+id/et_daihao"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y33"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_toRightOf="@id/img"
-            android:background="@null"
-            android:hint="@string/daihao"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textColorHint="#fff"
-            android:textSize="@dimen/x15" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_go"
-        android:layout_width="@dimen/x70"
-        android:layout_height="@dimen/y31"
-        android:layout_below="@id/img_rukou_icon"
-        android:layout_marginLeft="@dimen/x10"
-        android:layout_marginTop="@dimen/y23"
-        android:layout_toRightOf="@id/rl_daihao"
-        android:background="@drawable/rukou_login"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="@string/go"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/x15" />
-
-    <RelativeLayout
-        android:id="@+id/rl_guanjianci"
-        android:layout_width="@dimen/x192"
-        android:layout_height="@dimen/y33"
-        android:layout_alignLeft="@+id/rl_daihao"
-        android:layout_alignTop="@+id/btn_search"
-        android:background="@drawable/rounded_edittext"
-        android:paddingLeft="@dimen/x15">
-
-        <ImageView
-            android:id="@id/img"
-            android:layout_width="@dimen/x21"
-            android:layout_height="@dimen/y20"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/rukou_search" />
-
-        <EditText
-            android:id="@+id/et_guanjianci"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y33"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_toRightOf="@id/img"
-            android:background="@null"
-            android:hint="@string/guanjianci"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textColorHint="#fff"
-            android:textSize="@dimen/x15" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="@dimen/x70"
-        android:layout_height="@dimen/y31"
-        android:layout_below="@id/rl_daihao"
-        android:layout_marginLeft="@dimen/x10"
-        android:layout_marginTop="@dimen/y23"
-        android:layout_toRightOf="@id/rl_guanjianci"
-        android:background="@drawable/rukou_login"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="@string/search"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/x15" />
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
 
-    <FrameLayout
-        android:id="@+id/img_zhantingdaohang_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rl_news"
-        android:layout_alignStart="@+id/rl_news"
-        android:layout_below="@+id/rl_guanjianci"
-        android:layout_marginTop="24dp">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/SimpleDraweeView"
-            android:layout_width="@dimen/x268"
-            android:layout_height="@dimen/y60"
-            android:textAllCaps="false"
-            android:textColor="#0768FC"
-            android:textSize="@dimen/x20"
-            android:textStyle="bold"
-            fresco:placeholderImage="@mipmap/zhantingdaohang_bg" />
-
-        <TextView
-            android:layout_width="@dimen/x268"
-            android:layout_height="@dimen/y60"
-            android:gravity="center"
-            android:text="@string/zhantingdaohangrukou"
-            android:textAllCaps="false"
-            android:textColor="#0768FC"
-            android:textSize="@dimen/x20"
-            android:textStyle="bold" />
-
-
-    </FrameLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rl_news"
-        android:layout_width="@dimen/x268"
-        android:layout_height="@dimen/y29"
-        android:layout_below="@id/img_zhantingdaohang_bg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y20"
-        android:background="@drawable/price_edittext">
-
-        <TextView
-            android:id="@+id/tv_news"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x5"
-            android:text="@string/News"
-            android:textColor="#1A1A1A"
-            android:textSize="@dimen/x13"
-            android:textStyle="bold" />
-
-        <View
-            android:id="@+id/v_line"
-            android:layout_width="@dimen/x1"
-            android:layout_height="@dimen/y12"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x3"
-            android:layout_toRightOf="@id/tv_news"
-            android:background="#666"></View>
-
-        <com.yulian.platform.View.VerticalTextview
-            android:id="@+id/tv_content"
-            android:layout_width="@dimen/x175"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_toRightOf="@id/v_line"
-            android:textColor="#1A1A1A"
-            android:textSize="@dimen/x13" />
-
-        <LinearLayout
-            android:id="@+id/ll_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_content">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rl_lin1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/more" />
+                android:layout_marginTop="@dimen/x10">
+
+                <Button
+                    android:id="@+id/img_back_login"
+                    android:layout_width="@dimen/x74"
+                    android:layout_height="@dimen/y31"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x23"
+                    android:background="@drawable/rukou_login"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/login"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/x15" />
+
+                <ImageView
+                    android:id="@+id/img_my"
+                    android:layout_width="@dimen/x22"
+                    android:layout_height="@dimen/y22"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x23"
+                    android:background="@mipmap/rukou_shezhi" />
+
+            </RelativeLayout>
 
             <ImageView
-                android:layout_width="@dimen/x13"
-                android:layout_height="@dimen/x13"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/x5"
-                android:background="@mipmap/i_you" />
+                android:id="@+id/img_rukou_icon"
+                android:layout_width="@dimen/x110"
+                android:layout_height="@dimen/y23"
+                android:layout_below="@id/rl_lin1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x15"
+                android:background="@mipmap/rukou_icon" />
 
-        </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_daihao"
+                android:layout_width="@dimen/x192"
+                android:layout_height="@dimen/y33"
+                android:layout_below="@id/img_rukou_icon"
+                android:layout_marginLeft="@dimen/x35"
+                android:layout_marginTop="@dimen/x23"
+                android:background="@drawable/rounded_edittext"
+                android:paddingLeft="@dimen/x15">
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="@dimen/x21"
+                    android:layout_height="@dimen/y20"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/rukou_search" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_news"
-        android:layout_marginLeft="@dimen/x10"
-        android:layout_marginTop="@dimen/y20">
+                <EditText
+                    android:id="@+id/et_daihao"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y33"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_toRightOf="@id/img"
+                    android:background="@null"
+                    android:hint="@string/daihao"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#fff"
+                    android:textSize="@dimen/x15" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
+            </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_addBusinessmen"
+            <Button
+                android:id="@+id/btn_go"
+                android:layout_width="@dimen/x70"
+                android:layout_height="@dimen/y31"
+                android:layout_below="@id/img_rukou_icon"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x23"
+                android:layout_toRightOf="@id/rl_daihao"
+                android:background="@drawable/rukou_login"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/go"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/x15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_guanjianci"
+                android:layout_width="@dimen/x192"
+                android:layout_height="@dimen/y33"
+                android:layout_alignLeft="@+id/rl_daihao"
+                android:layout_alignTop="@+id/btn_search"
+                android:background="@drawable/rounded_edittext"
+                android:paddingLeft="@dimen/x15">
+
+                <ImageView
+                    android:id="@id/img"
+                    android:layout_width="@dimen/x21"
+                    android:layout_height="@dimen/y20"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/rukou_search" />
+
+                <EditText
+                    android:id="@+id/et_guanjianci"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y33"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_toRightOf="@id/img"
+                    android:background="@null"
+                    android:hint="@string/guanjianci"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#fff"
+                    android:textSize="@dimen/x15" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="@dimen/x70"
+                android:layout_height="@dimen/y31"
+                android:layout_below="@id/rl_daihao"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/x23"
+                android:layout_toRightOf="@id/rl_guanjianci"
+                android:background="@drawable/rukou_login"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/search"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/x15" />
+
+
+            <FrameLayout
+                android:id="@+id/img_zhantingdaohang_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/rl_news"
+                android:layout_alignStart="@+id/rl_news"
+                android:layout_below="@+id/rl_guanjianci"
+                android:layout_marginTop="24dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/SimpleDraweeView"
+                    android:layout_width="@dimen/x268"
+                    android:layout_height="@dimen/y60"
+                    fresco:placeholderImage="@mipmap/zhantingdaohang_bg" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_news"
+                android:layout_width="@dimen/x268"
+                android:layout_height="@dimen/y35"
+                android:layout_below="@id/img_zhantingdaohang_bg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x20"
+                android:background="@drawable/new_bg">
+
+                <TextView
+                    android:id="@+id/tv_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:text="@string/News"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/x13"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/v_line"
+                    android:layout_width="@dimen/x1"
+                    android:layout_height="@dimen/y12"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x3"
+                    android:layout_toRightOf="@id/tv_news"
+                    android:background="#fff"></View>
+
+                <com.yulian.platform.View.VerticalTextview
+                    android:id="@+id/tv_content"
+                    android:layout_width="@dimen/x175"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@id/v_line"
+                    android:textColor="#666"
+                    android:textSize="@dimen/x12" />
+
+                <LinearLayout
+                    android:id="@+id/ll_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/more"
+                        android:textColor="#fff" />
+
+                    <ImageView
+                        android:layout_width="@dimen/x13"
+                        android:layout_height="@dimen/y13"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:background="@mipmap/i_you" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_news"
+                android:layout_marginTop="@dimen/x20">
 
-        </HorizontalScrollView>
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/ll_addBusinessmen1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal"></LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_addBusinessmen"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"></LinearLayout>
 
-    </FrameLayout>
+                </HorizontalScrollView>
 
+                <LinearLayout
+                    android:id="@+id/ll_addBusinessmen1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"></LinearLayout>
+
+            </FrameLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

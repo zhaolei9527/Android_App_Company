@@ -22,7 +22,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="#333"
-        android:textSize="@dimen/y13" />
+        android:textSize="@dimen/x13" />
 
     <View
         android:layout_width="match_parent"

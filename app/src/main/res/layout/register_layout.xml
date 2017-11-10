@@ -20,7 +20,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y40"
+        android:layout_marginTop="@dimen/x40"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -52,7 +52,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/rl"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y11"
+        android:layout_marginTop="@dimen/x11"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -85,7 +85,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/rl2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y11"
+        android:layout_marginTop="@dimen/x11"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -117,7 +117,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/rl3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y11"
+        android:layout_marginTop="@dimen/x11"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -150,7 +150,7 @@
         android:layout_height="@dimen/y33"
         android:layout_below="@id/rl4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y11"
+        android:layout_marginTop="@dimen/x11"
         android:background="@drawable/rounded_edittext"
         android:paddingLeft="@dimen/x20">
 
@@ -183,7 +183,7 @@
         android:layout_height="@dimen/y30"
         android:layout_below="@id/rl5"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y20"
+        android:layout_marginTop="@dimen/x20"
         android:background="@drawable/btn_login"
         android:text="@string/regiser"
         android:textColor="#fff" />
@@ -194,7 +194,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/y11"
+        android:layout_marginBottom="@dimen/x11"
         android:text="@string/ishaveaccount"
         android:textColor="@android:color/white" />
 

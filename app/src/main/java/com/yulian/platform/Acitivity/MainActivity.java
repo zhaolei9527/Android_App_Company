@@ -90,7 +90,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public void onResume() {
         super.onResume();
-
+        String usertype = (String) SPUtil.get(context, "usertype", "");
+        if ("2".equals(usertype)) {
+            finish();
+        }
     }
 
     public void onPause() {

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -128,6 +129,7 @@ public class MyCollectActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onResponse(String s) {
                     String decode = Utils.decode(s);
+                    Log.d("MyCollectActivity", decode);
                     if (decode.isEmpty()) {
                         if (swipeToLoadLayout != null)
                             swipeToLoadLayout.setLoadingMore(false);

@@ -11,7 +11,7 @@
         android:layout_width="@dimen/x162"
         android:layout_height="@dimen/y92"
         android:layout_marginLeft="@dimen/x14"
-        android:layout_marginTop="@dimen/y23">
+        android:layout_marginTop="@dimen/x23">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/SimpleDraweeView"
@@ -55,7 +55,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/y16">
+            android:layout_marginTop="@dimen/x16">
 
             <TextView
                 android:id="@+id/tv_dis"
@@ -75,6 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x150"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_marginTop="@dimen/x10"
         android:background="@mipmap/i_sale" />
 </RelativeLayout>

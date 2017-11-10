@@ -157,10 +157,15 @@ public class SchemeFragment extends BaseFragment implements OnLoadMoreListener, 
                             if (foot != null) {
                                 foot.setVisibility(View.VISIBLE);
                                 TextView tv_foot_more = (TextView) foot.findViewById(R.id.tv_foot_more);
-                                tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
-                                if (swipeToLoadLayout != null)
+                                if (tv_foot_more != null) {
+                                    if (SchemeFragment.this != null && SchemeFragment.this.isAdded()) {
+                                        tv_foot_more.setText(getResources().getString(R.string.NOTMORE));
+                                    }
+                                }
+                                if (swipeToLoadLayout != null){
                                     swipeToLoadLayout.setLoadingMore(false);
-                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                    swipeToLoadLayout.setLoadMoreEnabled(false);
+                                }
                             }
                             return;
                         }

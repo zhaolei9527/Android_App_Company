@@ -168,13 +168,24 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
                     Toast.makeText(context, getResources().getString(R.string.Businessisnotonline), Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if(b_detailBean.getRes().getQ_num().equals("0")){
                     Toast.makeText(context, getResources().getString(R.string.Businessisnotonline), Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (b_detailBean.getRes().getSid().isEmpty()) {
+                    Toast.makeText(context, getResources().getString(R.string.Businessisnotonline), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(b_detailBean.getRes().getSid().equals("0")){
+                    Toast.makeText(context, getResources().getString(R.string.Businessisnotonline), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 dialog.show();
-                getindex(b_detailBean.getRes().getQ_num());
+                getindex(b_detailBean.getRes().getSid());
                 break;
         }
     }
@@ -191,6 +202,7 @@ public class ExhibitionDetailsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onResponse(String s) {
                 String decode = Utils.decode(s);
+                Log.d("ExhibitionDetailsActivi", decode);
                 if (decode.isEmpty()) {
                     dialog.dismiss();
                     if (context != null)

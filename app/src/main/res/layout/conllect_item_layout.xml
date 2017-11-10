@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:paddingLeft="@dimen/y9"
-    android:paddingRight="@dimen/y9">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/x9"
+    android:paddingRight="@dimen/x9">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y97">
+        android:layout_height="wrap_content">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_conllect"
-            android:layout_width="@dimen/y75"
+            android:layout_width="@dimen/x75"
             android:layout_height="@dimen/y75"
             android:layout_centerVertical="true"
             fresco:placeholderImage="@drawable/imgloading" />
@@ -23,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x12"
-            android:layout_marginTop="@dimen/y11"
+            android:layout_marginTop="@dimen/x11"
             android:layout_toRightOf="@id/img_conllect"
             android:singleLine="true"
             android:textColor="#333"
             android:textSize="@dimen/x14" />
 
         <TextView
-            android:id="@+id/tv_Company"
+            android:id="@+id/tv_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
@@ -42,10 +43,10 @@
             android:textSize="@dimen/x11" />
 
         <TextView
-            android:id="@+id/tv_model"
+            android:id="@+id/tv_Company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_Company"
+            android:layout_below="@id/tv_model"
             android:layout_marginLeft="@dimen/x12"
             android:layout_marginTop="@dimen/x5"
             android:layout_toRightOf="@id/img_conllect"
@@ -57,7 +58,7 @@
             android:id="@+id/ll_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_model"
+            android:layout_below="@id/tv_Company"
             android:layout_marginLeft="@dimen/x12"
             android:layout_marginTop="@dimen/x9"
             android:layout_toRightOf="@id/img_conllect"
@@ -88,12 +89,16 @@
             android:layout_height="@dimen/y25"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginBottom="@dimen/x5"
             android:background="@drawable/delete_bg"
             android:text="@string/delete"
             android:textColor="#666" />
 
     </RelativeLayout>
 
+    <View
+        android:background="@color/bg"
+        android:layout_width="match_parent"
+        android:layout_height="1px"></View>
 
 </LinearLayout>

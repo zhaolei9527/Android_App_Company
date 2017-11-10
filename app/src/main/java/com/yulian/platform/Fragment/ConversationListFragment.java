@@ -39,7 +39,6 @@ public class ConversationListFragment extends EaseConversationListFragment {
         // register context menu
         registerForContextMenu(conversationListView);
         conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EMConversation conversation = conversationListView.getItem(position);

@@ -72,7 +72,7 @@
                     android:layout_below="@id/tv_title"
                     android:layout_marginLeft="@dimen/x5"
                     android:layout_marginRight="@dimen/x5"
-                    android:layout_marginTop="@dimen/y5">
+                    android:layout_marginTop="@dimen/x5">
 
                     <TextView
                         android:id="@+id/tv_dis"
@@ -88,7 +88,7 @@
                 android:id="@+id/forum_context"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/y10" />
+                android:layout_marginTop="@dimen/x10" />
 
         </LinearLayout>
     </ScrollView>

@@ -14,7 +14,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
+        android:layout_height="@dimen/y1"
         android:background="#999999"></View>
 
     <LinearLayout
@@ -41,7 +41,7 @@
                 <ImageView
                     android:id="@+id/img_home"
                     android:layout_width="@dimen/x15"
-                    android:layout_height="@dimen/x15"
+                    android:layout_height="@dimen/y15"
                     android:background="@mipmap/i_index2"
                     android:saveEnabled="false" />
 
@@ -67,7 +67,7 @@
                 <ImageView
                     android:id="@+id/img_product"
                     android:layout_width="@dimen/x15"
-                    android:layout_height="@dimen/x15"
+                    android:layout_height="@dimen/y15"
                     android:background="@mipmap/i_chanpin1" />
 
                 <TextView
@@ -93,7 +93,7 @@
                     android:id="@+id/img_scheme"
 
                     android:layout_width="@dimen/x15"
-                    android:layout_height="@dimen/x15"
+                    android:layout_height="@dimen/y15"
                     android:background="@mipmap/i_fangan1" />
 
                 <TextView
@@ -119,7 +119,7 @@
                 <ImageView
                     android:id="@+id/img_demo"
                     android:layout_width="@dimen/x15"
-                    android:layout_height="@dimen/x15"
+                    android:layout_height="@dimen/y15"
                     android:background="@mipmap/i_yanshi1" />
 
                 <TextView
@@ -144,7 +144,7 @@
                 <ImageView
                     android:id="@+id/img_me"
                     android:layout_width="@dimen/x15"
-                    android:layout_height="@dimen/x15"
+                    android:layout_height="@dimen/y15"
                     android:background="@mipmap/i_wode1" />
 
                 <TextView

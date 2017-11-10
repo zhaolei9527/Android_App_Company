@@ -3,122 +3,135 @@
     android:layout_width="@dimen/x146"
     android:layout_height="@dimen/y91">
 
-    <LinearLayout
-        android:id="@+id/ll_content"
+
+    <FrameLayout
         android:layout_width="@dimen/x146"
         android:layout_height="@dimen/y91"
         android:layout_marginRight="@dimen/x10"
-        android:background="@mipmap/rukoumingpian"
-        android:orientation="vertical">
+        android:background="@mipmap/rukoumingpian">
 
-        <TextView
-            android:id="@+id/tv_rukou_company_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:padding="@dimen/x10"
-            android:singleLine="true"
-            android:textColor="#fff"
-            android:textSize="@dimen/x11" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#DCE8ED"></View>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/SimpleDraweeView"
+            android:layout_width="@dimen/x146"
+            android:layout_height="@dimen/y91" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/x3">
+            android:id="@+id/ll_content"
+            android:layout_width="@dimen/x146"
+            android:layout_height="@dimen/y91"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/industry"
-                android:textColor="#fff" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_marginRight="@dimen/x5"
-                android:background="#DCE8ED"></View>
-
-            <TextView
-                android:id="@+id/tv_rukou_company_hangye"
+                android:id="@+id/tv_rukou_company_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:padding="@dimen/x10"
                 android:singleLine="true"
                 android:textColor="#fff"
-                android:textSize="@dimen/x10" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/x3">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/score"
-                android:textColor="#fff" />
+                android:textSize="@dimen/x11" />
 
             <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_marginRight="@dimen/x5"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
                 android:background="#DCE8ED"></View>
 
-            <TextView
-                android:id="@+id/tv_rukou_company_pingfen"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="#fff"
-                android:textSize="@dimen/x10" />
+                android:layout_marginLeft="@dimen/x5"
+                android:orientation="horizontal"
+                android:padding="@dimen/x3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/industry"
+                    android:textColor="#fff" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:background="#DCE8ED"></View>
+
+                <TextView
+                    android:id="@+id/tv_rukou_company_hangye"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/x10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:orientation="horizontal"
+                android:padding="@dimen/x3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/score"
+                    android:textColor="#fff" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:background="#DCE8ED"></View>
+
+                <TextView
+                    android:id="@+id/tv_rukou_company_pingfen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/x10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:orientation="horizontal"
+                android:padding="@dimen/x3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Codename"
+                    android:textColor="#fff" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:background="#DCE8ED"></View>
+
+                <TextView
+                    android:id="@+id/tv_rukou_company_daihao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/x10" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:orientation="horizontal"
-            android:padding="@dimen/x3">
+    </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Codename"
-                android:textColor="#fff" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_marginRight="@dimen/x5"
-                android:background="#DCE8ED"></View>
-
-            <TextView
-                android:id="@+id/tv_rukou_company_daihao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="#fff"
-                android:textSize="@dimen/x10" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -6,15 +6,21 @@ import android.support.multidex.MultiDexApplication;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.exceptions.HyphenateException;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.yulian.platform.Service.AdvanceLoadX5Service;
-import com.yulian.platform.Utils.CrashHandler;
+import com.yulian.platform.Utils.DemoHelper;
+import com.yulian.platform.Utils.SPUtil;
 import com.yulian.platform.Utils.Utils;
+
+import java.util.List;
 
 import cn.refactor.multistatelayout.MultiStateConfiguration;
 import cn.refactor.multistatelayout.MultiStateLayout;
@@ -40,9 +46,7 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         queues = Volley.newRequestQueue(getApplicationContext());
-        CrashHandler handler = CrashHandler.getInstance();
-        handler.init(getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(handler);
+
         EMOptions options = new EMOptions();
 // 默认添加好友时，是不需要验证的，改成需要验证
         options.setAcceptInvitationAlways(false);
@@ -80,7 +84,54 @@ public class App extends MultiDexApplication {
         //预加载x5内核
         Intent intent = new Intent(this, AdvanceLoadX5Service.class);
         startService(intent);
+        DemoHelper.getInstance().init(this);
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
     }
+
+    EMMessageListener msgListener = new EMMessageListener() {
+
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            //收到消息
+            for (int i = 0; i < messages.size(); i++) {
+                try {
+                    String uid = messages.get(i).getStringAttribute("uid");
+                    String uname = messages.get(i).getStringAttribute("uname");
+                    if (!uid.isEmpty() && !uname.isEmpty()) {
+                        SPUtil.putAndApply(App.this, uid, uname);
+                    }
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+            //收到透传消息
+        }
+
+        @Override
+        public void onMessageRead(List<EMMessage> messages) {
+            //收到已读回执
+        }
+
+        @Override
+        public void onMessageDelivered(List<EMMessage> message) {
+            //收到已送达回执
+        }
+
+        @Override
+        public void onMessageRecalled(List<EMMessage> messages) {
+            //消息被撤回
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+            //消息状态变动
+        }
+    };
 
     private void preinitX5WebCore() {
         if (!QbSdk.isTbsCoreInited()) {
@@ -88,5 +139,11 @@ public class App extends MultiDexApplication {
         }
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        //记得在不需要的时候移除listener，如在activity的onDestroy()时
+        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+    }
 
 }

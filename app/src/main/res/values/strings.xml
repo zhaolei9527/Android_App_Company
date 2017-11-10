@@ -122,7 +122,7 @@
     <string name="guanjianci">请输入关键词</string>
     <string name="zhantingdaohangrukou">展厅导航入口</string>
     <string name="News">新闻</string>
-    <string name="changeCompany">切换商家</string>
+    <string name="changeCompany">退出商家</string>
     <string name="shareTo">分享到</string>
     <string name="wechat">微信</string>
     <string name="wechatfriend">朋友圈</string>
@@ -158,5 +158,6 @@
     <string name="search">搜索</string>
     <string name="Businessisnotonline">商家未上线</string>
     <string name="appdownload">来自U-linking：</string>
+    <string name="setting">设置</string>
 
 </resources>

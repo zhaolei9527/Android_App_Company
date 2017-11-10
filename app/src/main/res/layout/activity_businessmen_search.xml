@@ -49,13 +49,13 @@
 
             <ImageView
                 android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
+                android:layout_height="@dimen/y15"
                 android:layout_marginLeft="@dimen/x5"
                 android:src="@mipmap/sousuo" />
 
             <EditText
                 android:id="@+id/et_search"
-                android:layout_width="@dimen/x200"
+                android:layout_width="@dimen/x180"
                 android:layout_height="@dimen/y33"
                 android:layout_marginLeft="@dimen/x10"
                 android:background="@null"
@@ -69,7 +69,7 @@
             <ImageView
                 android:id="@+id/img_clear"
                 android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
+                android:layout_height="@dimen/y15"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x5"
                 android:src="@mipmap/clear" />

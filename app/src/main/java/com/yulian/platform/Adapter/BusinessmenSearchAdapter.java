@@ -23,7 +23,7 @@ public class BusinessmenSearchAdapter extends BaseAdapter {
 
     private Context context;
 
-    public ArrayList getDatas() {
+    public ArrayList<ShopsBean.ResBean>  getDatas() {
         return datas;
     }
 

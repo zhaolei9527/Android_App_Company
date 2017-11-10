@@ -72,7 +72,7 @@
                 android:id="@+id/forum_context"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/y10" />
+                android:layout_marginTop="@dimen/x10" />
 
         </LinearLayout>
     </ScrollView>
